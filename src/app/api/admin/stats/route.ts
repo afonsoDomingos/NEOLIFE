@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { getLeadStats } from '@/lib/db/leads';
+import { getLeadStats } from '@/lib/db/leads-mongodb';
 
 export async function GET(request: NextRequest) {
   try {
@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const stats = getLeadStats();
+    const stats = await getLeadStats();
     return NextResponse.json(stats);
   } catch (error) {
     console.error('Error fetching stats:', error);

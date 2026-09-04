@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createLead } from '@/lib/db/leads';
+import { createLead } from '@/lib/db/leads-mongodb';
 import { trackLeadGenerated } from '@/lib/utils/tracking';
 
 export async function POST(request: NextRequest) {
@@ -16,8 +16,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create lead
-    const lead = createLead({
+    // Create lead in MongoDB
+    const lead = await createLead({
       country,
       name,
       phone,
@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     // 3. Track conversion in analytics
     
     return NextResponse.json(
-      { success: true, leadId: lead.id },
+      { success: true, leadId: lead._id.toString() },
       { status: 201 }
     );
   } catch (error) {

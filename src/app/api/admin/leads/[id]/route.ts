@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { updateLead } from '@/lib/db/leads';
+import { updateLead } from '@/lib/db/leads-mongodb';
 
 export async function PATCH(
   request: NextRequest,
@@ -23,7 +23,7 @@ export async function PATCH(
     }
 
     const updates = await request.json();
-    const lead = updateLead(params.id, updates);
+    const lead = await updateLead(params.id, updates);
 
     if (!lead) {
       return NextResponse.json(

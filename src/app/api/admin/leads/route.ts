@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { loadLeads } from '@/lib/db/leads';
+import { getAllLeads, getLeadsByFilters } from '@/lib/db/leads-mongodb';
 
 export async function GET(request: NextRequest) {
   try {
@@ -19,7 +19,23 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const leads = loadLeads();
+    const searchParams = request.nextUrl.searchParams;
+    
+    // Check if there are filters
+    if (searchParams.has('search') || searchParams.has('country') || 
+        searchParams.has('theme') || searchParams.has('status')) {
+      const filters: any = {};
+      
+      if (searchParams.has('search')) filters.search = searchParams.get('search');
+      if (searchParams.has('country')) filters.country = searchParams.get('country');
+      if (searchParams.has('theme')) filters.theme = searchParams.get('theme');
+      if (searchParams.has('status')) filters.status = searchParams.get('status');
+      
+      const leads = await getLeadsByFilters(filters);
+      return NextResponse.json(leads);
+    }
+    
+    const leads = await getAllLeads();
     return NextResponse.json(leads);
   } catch (error) {
     console.error('Error fetching leads:', error);

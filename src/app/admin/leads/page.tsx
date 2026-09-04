@@ -5,11 +5,27 @@ import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input, Select } from '@/components/ui/Input';
 import Link from 'next/link';
-import { Lead, LeadStatus } from '@/types';
+import { LeadStatus } from '@/types';
+
+interface MongoLead {
+  _id: string;
+  country: string;
+  name: string;
+  phone: string;
+  email: string;
+  theme: string;
+  whatsapp?: string;
+  source?: string;
+  campaign?: string;
+  notes?: string;
+  status: LeadStatus;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export default function AdminLeadsPage() {
-  const [leads, setLeads] = useState<Lead[]>([]);
-  const [filteredLeads, setFilteredLeads] = useState<Lead[]>([]);
+  const [leads, setLeads] = useState<MongoLead[]>([]);
+  const [filteredLeads, setFilteredLeads] = useState<MongoLead[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     search: '',
@@ -71,6 +87,7 @@ export default function AdminLeadsPage() {
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFilters(prev => ({ ...prev, [name]: value }));
+    applyFilters();
   };
 
   const updateLeadStatus = async (leadId: string, newStatus: LeadStatus) => {
@@ -244,7 +261,7 @@ export default function AdminLeadsPage() {
                     </tr>
                   ) : (
                     filteredLeads.map((lead) => (
-                      <tr key={lead.id} className="hover:bg-gray-50">
+                      <tr key={lead._id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-black">{lead.name}</div>
                         </td>
@@ -271,7 +288,7 @@ export default function AdminLeadsPage() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <Select
                             value={lead.status}
-                            onChange={(e) => updateLeadStatus(lead.id, e.target.value as LeadStatus)}
+                            onChange={(e) => updateLeadStatus(lead._id.toString(), e.target.value as LeadStatus)}
                             className="text-sm"
                           >
                             <option value="novo">Novo</option>
