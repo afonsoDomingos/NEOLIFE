@@ -111,7 +111,7 @@ export default function AdminDashboard() {
               speed={150}
             />
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Link href="/admin/leads">
               <Card className="hover:shadow-md transition-shadow cursor-pointer">
                 <CardContent className="p-6">
@@ -135,6 +135,15 @@ export default function AdminDashboard() {
                 <CardContent className="p-6">
                   <h3 className="font-semibold text-black mb-2">Gerir Países</h3>
                   <p className="text-sm text-gray-600">Configurar países disponíveis</p>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/admin/banners">
+              <Card className="hover:shadow-md transition-shadow cursor-pointer">
+                <CardContent className="p-6">
+                  <h3 className="font-semibold text-black mb-2">Gerir Banners</h3>
+                  <p className="text-sm text-gray-600">Criar e editar banners dinâmicos</p>
                 </CardContent>
               </Card>
             </Link>

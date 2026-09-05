@@ -3,6 +3,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
+import { DynamicBanner } from '@/components/ui/DynamicBanner';
 import { getActiveThemes } from '@/data/themes';
 import { TypewriterText, SlideUpText, WordByWordText } from '@/components/ui/AnimatedText';
 import Link from 'next/link';
@@ -12,6 +13,9 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Dynamic Banner */}
+      <DynamicBanner />
+
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-gray-50 to-white py-20 md:py-32">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
