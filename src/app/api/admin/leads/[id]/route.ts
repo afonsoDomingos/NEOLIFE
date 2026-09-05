@@ -4,7 +4,7 @@ import { updateLead } from '@/lib/db/leads-mongodb';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     // Bypass authentication in development
@@ -22,8 +22,9 @@ export async function PATCH(
       }
     }
 
+    const { id } = await context.params;
     const updates = await request.json();
-    const lead = await updateLead(params.id, updates);
+    const lead = await updateLead(id, updates);
 
     if (!lead) {
       return NextResponse.json(

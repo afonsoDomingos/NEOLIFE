@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
@@ -9,7 +9,7 @@ import { getThemeBySlug } from '@/data/themes';
 import { TypewriterText, SlideUpText } from '@/components/ui/AnimatedText';
 import Link from 'next/link';
 
-export default function InteressePage() {
+function InteresseContent() {
   const searchParams = useSearchParams();
   const themeSlug = searchParams.get('tema');
   const campaign = searchParams.get('campanha');
@@ -187,5 +187,20 @@ export default function InteressePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function InteressePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
+          <p className="text-gray-600">A carregar...</p>
+        </div>
+      </div>
+    }>
+      <InteresseContent />
+    </Suspense>
   );
 }

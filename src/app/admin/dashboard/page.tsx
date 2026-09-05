@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { SlideUpText, WordByWordText } from '@/components/ui/AnimatedText';
 import Link from 'next/link';
-import { getLeadStats } from '@/lib/db/leads';
+import { getLeadStats } from '@/lib/db/leads-mongodb';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<any>(null);

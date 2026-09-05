@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     // Bypass authentication in development
@@ -21,6 +21,7 @@ export async function PATCH(
       }
     }
 
+    const { id } = await context.params;
     const body = await request.json();
     
     // For now, we'll just return success since we're using static data

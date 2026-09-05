@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { trackPageView, getCampaignDataFromUrl } from '@/lib/utils/tracking';
 
-export const Analytics: React.FC = () => {
+function AnalyticsContent() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -15,6 +15,14 @@ export const Analytics: React.FC = () => {
   }, [pathname, searchParams]);
 
   return null;
+}
+
+export const Analytics: React.FC = () => {
+  return (
+    <Suspense fallback={null}>
+      <AnalyticsContent />
+    </Suspense>
+  );
 };
 
 // Google Analytics initialization

@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
-import { Input } from '@/components/ui/Input';
 import Link from 'next/link';
 import { Country } from '@/types';
 
-export default function AdminCountriesPage() {
+function CountriesContent() {
   const [countries, setCountries] = useState<Country[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -156,5 +155,20 @@ export default function AdminCountriesPage() {
         </Card>
       </div>
     </div>
+  );
+}
+
+export default function AdminCountriesPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
+          <p className="text-gray-600">A carregar...</p>
+        </div>
+      </div>
+    }>
+      <CountriesContent />
+    </Suspense>
   );
 }

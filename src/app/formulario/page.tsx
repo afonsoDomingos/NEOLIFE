@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Input, Select, Textarea } from '@/components/ui/Input';
@@ -8,7 +8,7 @@ import { getCountryById } from '@/data/countries';
 import { getThemeBySlug } from '@/data/themes';
 import Link from 'next/link';
 
-export default function FormularioPage() {
+function FormularioContent() {
   const searchParams = useSearchParams();
   const themeSlug = searchParams.get('tema');
   const countryId = searchParams.get('pais');
@@ -274,5 +274,20 @@ export default function FormularioPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function FormularioPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
+          <p className="text-gray-600">A carregar...</p>
+        </div>
+      </div>
+    }>
+      <FormularioContent />
+    </Suspense>
   );
 }
