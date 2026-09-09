@@ -5,12 +5,17 @@ import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { SlideUpText, WordByWordText } from '@/components/ui/AnimatedText';
 import Link from 'next/link';
+import { getCountryById } from '@/data/countries';
+
 export default function AdminDashboard() {
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [recentLeads, setRecentLeads] = useState<any[]>([]);
+  const [loadingLeads, setLoadingLeads] = useState(true);
 
   useEffect(() => {
     loadStats();
+    loadRecentLeads();
   }, []);
 
   const loadStats = async () => {
@@ -24,6 +29,20 @@ export default function AdminDashboard() {
       console.error('Error loading stats:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadRecentLeads = async () => {
+    try {
+      const response = await fetch('/api/admin/leads');
+      if (response.ok) {
+        const data = await response.json();
+        setRecentLeads(Array.isArray(data) ? data.slice(0, 5) : []);
+      }
+    } catch (error) {
+      console.error('Error loading recent leads:', error);
+    } finally {
+      setLoadingLeads(false);
     }
   };
 
@@ -157,8 +176,7 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Recent Leads */}
-        <Card>
+          <Card>
           <CardHeader>
             <div className="flex justify-between items-center">
               <h2 className="text-lg font-semibold text-black">
@@ -175,14 +193,48 @@ export default function AdminDashboard() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-center py-8 text-gray-500">
-              <p>Funcionalidade em desenvolvimento</p>
-              <Link href="/admin/leads">
-                <Button variant="outline" className="mt-4">
-                  Ver Todos os Leads
-                </Button>
-              </Link>
-            </div>
+            {loadingLeads ? (
+              <div className="space-y-3">
+                {[1,2,3].map(n => (
+                  <div key={n} className="h-10 bg-gray-100 animate-pulse rounded-lg" />
+                ))}
+              </div>
+            ) : recentLeads.length === 0 ? (
+              <div className="text-center py-8 text-gray-400 text-sm">
+                <p>Nenhum lead registado ainda.</p>
+                <p className="mt-1">Os leads aparecerão aqui após o primeiro envio de formulário.</p>
+              </div>
+            ) : (
+              <div className="divide-y divide-gray-100">
+                {recentLeads.map((lead) => {
+                  const country = getCountryById(lead.country);
+                  return (
+                    <div key={lead._id} className="flex items-center justify-between py-3">
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">{lead.name}</p>
+                        <p className="text-xs text-gray-500">
+                          {country ? `${country.flag} ${country.name}` : lead.country} • {lead.theme}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <span className={`px-2 py-0.5 text-xs rounded-full font-medium ${
+                          lead.status === 'novo' ? 'bg-blue-100 text-blue-700' :
+                          lead.status === 'convertido' ? 'bg-emerald-100 text-emerald-700' :
+                          'bg-gray-100 text-gray-600'
+                        }`}>
+                          {lead.status === 'novo' ? 'Novo' :
+                           lead.status === 'contactado' ? 'Contactado' :
+                           lead.status === 'convertido' ? 'Convertido' : lead.status}
+                        </span>
+                        <p className="text-xs text-gray-400 mt-1">
+                          {new Date(lead.createdAt).toLocaleDateString('pt-PT')}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>

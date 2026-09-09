@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Input, Select } from '@/components/ui/Input';
 import Link from 'next/link';
 import { LeadStatus } from '@/types';
+import { getCountryById } from '@/data/countries';
 
 interface MongoLead {
   _id: string;
@@ -94,17 +95,27 @@ export default function AdminLeadsPage() {
     try {
       const response = await fetch(`/api/admin/leads/${leadId}`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
       });
-
-      if (response.ok) {
-        loadLeads();
-      }
+      if (response.ok) loadLeads();
     } catch (error) {
       console.error('Error updating lead:', error);
+    }
+  };
+
+  const deleteLead = async (leadId: string, leadName: string) => {
+    if (!confirm(`Tem a certeza que deseja apagar o lead "${leadName}"? Esta ação é irreversível.`)) return;
+    try {
+      const response = await fetch(`/api/admin/leads/${leadId}`, { method: 'DELETE' });
+      if (response.ok) {
+        loadLeads();
+      } else {
+        alert('Erro ao apagar lead. Por favor, tente novamente.');
+      }
+    } catch (error) {
+      console.error('Error deleting lead:', error);
+      alert('Erro ao apagar lead.');
     }
   };
 
@@ -237,7 +248,7 @@ export default function AdminLeadsPage() {
                       Data
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Ações
+                      Estado / Apagar
                     </th>
                   </tr>
                 </thead>
@@ -260,9 +271,15 @@ export default function AdminLeadsPage() {
                       <tr key={lead._id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm font-medium text-black">{lead.name}</div>
+                          {lead.whatsapp && <div className="text-xs text-emerald-600">WA: {lead.whatsapp}</div>}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-600">{lead.country}</div>
+                          {(() => {
+                            const c = getCountryById(lead.country);
+                            return c
+                              ? <div className="text-sm text-gray-600">{c.flag} {c.name}</div>
+                              : <div className="text-sm text-gray-400">{lead.country}</div>;
+                          })()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-600">{lead.phone}</div>
@@ -270,6 +287,7 @@ export default function AdminLeadsPage() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-600">{lead.theme}</div>
+                          {lead.source && <div className="text-xs text-gray-400">via {lead.source}</div>}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(lead.status)}`}>
@@ -282,18 +300,26 @@ export default function AdminLeadsPage() {
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <Select
-                            value={lead.status}
-                            onChange={(e) => updateLeadStatus(lead._id.toString(), e.target.value as LeadStatus)}
-                            className="text-sm"
-                          >
-                            <option value="novo">Novo</option>
-                            <option value="contactado">Contactado</option>
-                            <option value="acompanhamento">Em Acompanhamento</option>
-                            <option value="interessado">Interessado</option>
-                            <option value="convertido">Convertido</option>
-                            <option value="nao_interessado">Não Interessado</option>
-                          </Select>
+                          <div className="flex flex-col gap-2">
+                            <Select
+                              value={lead.status}
+                              onChange={(e) => updateLeadStatus(lead._id.toString(), e.target.value as LeadStatus)}
+                              className="text-sm"
+                            >
+                              <option value="novo">Novo</option>
+                              <option value="contactado">Contactado</option>
+                              <option value="acompanhamento">Em Acompanhamento</option>
+                              <option value="interessado">Interessado</option>
+                              <option value="convertido">Convertido</option>
+                              <option value="nao_interessado">Não Interessado</option>
+                            </Select>
+                            <button
+                              onClick={() => deleteLead(lead._id.toString(), lead.name)}
+                              className="text-xs text-red-500 hover:text-red-700 hover:underline text-left transition-colors"
+                            >
+                              🗑 Apagar Lead
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))

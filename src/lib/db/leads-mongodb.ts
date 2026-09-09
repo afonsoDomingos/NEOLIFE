@@ -58,6 +58,18 @@ export const getLeadById = async (id: string) => {
   }
 };
 
+export const deleteLead = async (id: string) => {
+  try {
+    await connectDB();
+    
+    const lead = await Lead.findByIdAndDelete(id);
+    return lead;
+  } catch (error) {
+    console.error('Error deleting lead:', error);
+    throw error;
+  }
+};
+
 export const getLeadsByFilters = async (filters: {
   country?: string;
   theme?: string;
