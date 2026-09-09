@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { DynamicBanner } from '@/components/ui/DynamicBanner';
+import { VideoSection } from '@/components/ui/VideoSection';
 import { getActiveThemes as getStaticThemes } from '@/data/themes';
 import { TypewriterText, SlideUpText, WordByWordText } from '@/components/ui/AnimatedText';
 import Link from 'next/link';
@@ -132,6 +133,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Videos Section */}
+      <VideoSection />
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-b from-white via-emerald-50/20 to-emerald-50/40 border-t border-emerald-100/50">

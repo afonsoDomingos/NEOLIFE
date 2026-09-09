@@ -181,7 +181,7 @@ export default function AdminDashboard() {
               speed={150}
             />
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             <Link href="/admin/leads">
               <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
                 <CardContent className="p-5 flex items-start gap-3">
@@ -201,6 +201,18 @@ export default function AdminDashboard() {
                   <div>
                     <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors">Gerir Temas</h3>
                     <p className="text-xs text-gray-600 mt-0.5">Criar e editar cards e imagens</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/admin/videos">
+              <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
+                <CardContent className="p-5 flex items-start gap-3">
+                  <div className="text-2xl p-2 bg-rose-50 rounded-lg group-hover:scale-110 transition-transform">🎥</div>
+                  <div>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors">Gerir Vídeos</h3>
+                    <p className="text-xs text-gray-600 mt-0.5">Adicionar e editar vídeos</p>
                   </div>
                 </CardContent>
               </Card>

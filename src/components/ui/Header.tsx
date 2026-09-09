@@ -27,6 +27,9 @@ export const Header: React.FC = () => {
             <Link href="/#temas" className="text-gray-700 hover:text-emerald-600 font-medium transition-colors text-sm sm:text-base">
               Temas de Interesse
             </Link>
+            <Link href="/#videos" className="text-gray-700 hover:text-emerald-600 font-medium transition-colors text-sm sm:text-base">
+              Vídeos
+            </Link>
           </nav>
           
           <div className="flex items-center space-x-2 sm:space-x-4">
@@ -96,6 +99,13 @@ export const Header: React.FC = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Temas de Interesse
+              </Link>
+              <Link 
+                href="/#videos" 
+                className="text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 px-3 py-2 rounded-lg transition-colors font-medium"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Vídeos
               </Link>
               <Link 
                 href="/admin" 
