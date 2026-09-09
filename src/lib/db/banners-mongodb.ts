@@ -70,9 +70,33 @@ export const getBannerById = async (id: string) => {
   }
 };
 
+const defaultBannerData = {
+  title: 'Construa o Seu Próprio Negócio com a NeoLife em África',
+  description: 'Descubra como transformar a sua saúde, bem-estar e conquistar a sua independência financeira trabalhando a partir de qualquer lugar.',
+  image: '/banner01.jpg',
+  link: '/#temas',
+  buttonText: 'Quero Saber Mais',
+  active: true,
+  order: 1,
+};
+
+const seedDefaultBannerIfEmpty = async () => {
+  try {
+    const count = await Banner.countDocuments();
+    if (count === 0) {
+      console.log('Seeding banner01 into MongoDB...');
+      await Banner.create(defaultBannerData);
+      console.log('Default banner seeded successfully.');
+    }
+  } catch (error) {
+    console.error('Error seeding default banner:', error);
+  }
+};
+
 export const getAllBanners = async () => {
   try {
     await connectDB();
+    await seedDefaultBannerIfEmpty();
     
     const banners = await Banner.find().sort({ order: 1, createdAt: -1 });
     return banners;
@@ -85,6 +109,7 @@ export const getAllBanners = async () => {
 export const getActiveBanners = async () => {
   try {
     await connectDB();
+    await seedDefaultBannerIfEmpty();
     
     const now = new Date();
     
