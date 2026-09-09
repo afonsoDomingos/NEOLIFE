@@ -180,13 +180,51 @@ export const getLeadStats = async () => {
       byStatusObj[item._id as LeadStatus] = item.count;
     });
     
+    // 7 days trend
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 6);
+    sevenDaysAgo.setHours(0, 0, 0, 0);
+
+    const dailyAggregate = await Lead.aggregate([
+      { $match: { createdAt: { $gte: sevenDaysAgo } } },
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: '%Y-%m-%d', date: '$createdAt' }
+          },
+          count: { $sum: 1 }
+        }
+      }
+    ]);
+
+    const dailyMap: Record<string, number> = {};
+    dailyAggregate.forEach((item: any) => {
+      dailyMap[item._id] = item.count;
+    });
+
+    const dayLabels = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    const dailyTrend = [];
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const iso = d.toISOString().split('T')[0];
+      const dayName = i === 0 ? 'Hoje' : dayLabels[d.getDay()];
+      dailyTrend.push({
+        date: iso,
+        label: `${d.getDate()}/${d.getMonth() + 1}`,
+        dayName,
+        count: dailyMap[iso] || 0
+      });
+    }
+
     return {
       total,
       today: todayLeads,
       byCountry: byCountryObj,
       byTheme: byThemeObj,
       byCampaign: byCampaignObj,
-      byStatus: byStatusObj
+      byStatus: byStatusObj,
+      dailyTrend
     };
   } catch (error) {
     console.error('Error fetching lead stats:', error);

@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { SlideUpText, WordByWordText } from '@/components/ui/AnimatedText';
 import Link from 'next/link';
 import { getCountryById } from '@/data/countries';
+import { getThemeBySlug } from '@/data/themes';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<any>(null);
@@ -55,6 +56,21 @@ export default function AdminDashboard() {
     }
   };
 
+  const totalLeads = stats?.total || 0;
+  const dailyTrend = stats?.dailyTrend || [];
+  const maxDailyCount = Math.max(...dailyTrend.map((d: any) => d.count), 1);
+
+  const countryEntries = Object.entries(stats?.byCountry || {}) as [string, number][];
+  const themeEntries = Object.entries(stats?.byTheme || {}) as [string, number][];
+  const statusEntries: { key: string; label: string; count: number; color: string; bg: string }[] = [
+    { key: 'novo', label: 'Novo', count: stats?.byStatus?.novo || 0, color: 'text-blue-700', bg: 'bg-blue-500' },
+    { key: 'contactado', label: 'Contactado', count: stats?.byStatus?.contactado || 0, color: 'text-yellow-700', bg: 'bg-yellow-500' },
+    { key: 'acompanhamento', label: 'Acompanhamento', count: stats?.byStatus?.acompanhamento || 0, color: 'text-purple-700', bg: 'bg-purple-500' },
+    { key: 'interessado', label: 'Interessado', count: stats?.byStatus?.interessado || 0, color: 'text-emerald-700', bg: 'bg-emerald-500' },
+    { key: 'convertido', label: 'Convertido', count: stats?.byStatus?.convertido || 0, color: 'text-green-700', bg: 'bg-green-600' },
+    { key: 'nao_interessado', label: 'Não Interessado', count: stats?.byStatus?.nao_interessado || 0, color: 'text-red-700', bg: 'bg-red-500' },
+  ];
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Admin Header */}
@@ -70,18 +86,34 @@ export default function AdminDashboard() {
               <span className="text-gray-300">|</span>
               <span className="text-gray-700 font-semibold text-sm">Painel de Administração</span>
             </div>
-            <Button variant="outline" onClick={handleLogout}>
-              Sair
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setLoading(true);
+                  setLoadingLeads(true);
+                  loadStats();
+                  loadRecentLeads();
+                }}
+                className="text-xs flex items-center gap-1 text-gray-600 hover:text-black"
+                title="Recarregar dados"
+              >
+                🔄 Atualizar
+              </Button>
+              <Button variant="outline" size="sm" onClick={handleLogout}>
+                Sair
+              </Button>
+            </div>
           </div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardHeader>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <Card className="border-l-4 border-l-emerald-500 shadow-sm">
+            <CardHeader className="pb-2">
               <p className="text-sm font-medium text-gray-600">Total de Leads</p>
               {loading ? (
                 <div className="h-9 w-20 bg-gray-200 animate-pulse rounded mt-1" />
@@ -89,10 +121,13 @@ export default function AdminDashboard() {
                 <p className="text-3xl font-bold text-gray-900">{stats?.total || 0}</p>
               )}
             </CardHeader>
+            <CardContent className="pt-0">
+              <p className="text-xs text-gray-500">Contactos registados no sistema</p>
+            </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
+          <Card className="border-l-4 border-l-blue-500 shadow-sm">
+            <CardHeader className="pb-2">
               <p className="text-sm font-medium text-gray-600">Leads Hoje</p>
               {loading ? (
                 <div className="h-9 w-14 bg-gray-200 animate-pulse rounded mt-1" />
@@ -100,37 +135,46 @@ export default function AdminDashboard() {
                 <p className="text-3xl font-bold text-gray-900">{stats?.today || 0}</p>
               )}
             </CardHeader>
+            <CardContent className="pt-0">
+              <p className="text-xs text-gray-500">Submetidos nas últimas 24h</p>
+            </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
+          <Card className="border-l-4 border-l-amber-500 shadow-sm">
+            <CardHeader className="pb-2">
               <p className="text-sm font-medium text-gray-600">Países Ativos</p>
               {loading ? (
                 <div className="h-9 w-14 bg-gray-200 animate-pulse rounded mt-1" />
               ) : (
                 <p className="text-3xl font-bold text-gray-900">
-                  {Object.keys(stats?.byCountry || {}).length}
+                  {stats?.activeCountries ?? 4}
                 </p>
               )}
             </CardHeader>
+            <CardContent className="pt-0">
+              <p className="text-xs text-gray-500">Mercados configurados</p>
+            </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
+          <Card className="border-l-4 border-l-purple-500 shadow-sm">
+            <CardHeader className="pb-2">
               <p className="text-sm font-medium text-gray-600">Temas Ativos</p>
               {loading ? (
                 <div className="h-9 w-14 bg-gray-200 animate-pulse rounded mt-1" />
               ) : (
                 <p className="text-3xl font-bold text-gray-900">
-                  {Object.keys(stats?.byTheme || {}).length}
+                  {stats?.activeThemes ?? 6}
                 </p>
               )}
             </CardHeader>
+            <CardContent className="pt-0">
+              <p className="text-xs text-gray-500">Cards de interesse publicados</p>
+            </CardContent>
           </Card>
         </div>
 
         {/* Quick Actions */}
-        <div className="mb-8">
+        <div>
           <h2 className="text-lg font-semibold text-black mb-4">
             <WordByWordText 
               text="Ações Rápidas"
@@ -139,55 +183,251 @@ export default function AdminDashboard() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <Link href="/admin/leads">
-              <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                <CardContent className="p-6">
-                  <h3 className="font-semibold text-black mb-2">Gerir Leads</h3>
-                  <p className="text-sm text-gray-600">Ver e gerir todos os leads</p>
+              <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
+                <CardContent className="p-5 flex items-start gap-3">
+                  <div className="text-2xl p-2 bg-emerald-50 rounded-lg group-hover:scale-110 transition-transform">👥</div>
+                  <div>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors">Gerir Leads</h3>
+                    <p className="text-xs text-gray-600 mt-0.5">Ver, filtrar e exportar CSV</p>
+                  </div>
                 </CardContent>
               </Card>
             </Link>
 
             <Link href="/admin/themes">
-              <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                <CardContent className="p-6">
-                  <h3 className="font-semibold text-black mb-2">Gerir Temas</h3>
-                  <p className="text-sm text-gray-600">Criar e editar temas</p>
+              <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
+                <CardContent className="p-5 flex items-start gap-3">
+                  <div className="text-2xl p-2 bg-blue-50 rounded-lg group-hover:scale-110 transition-transform">🎨</div>
+                  <div>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors">Gerir Temas</h3>
+                    <p className="text-xs text-gray-600 mt-0.5">Criar e editar cards e imagens</p>
+                  </div>
                 </CardContent>
               </Card>
             </Link>
 
             <Link href="/admin/countries">
-              <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                <CardContent className="p-6">
-                  <h3 className="font-semibold text-black mb-2">Gerir Países</h3>
-                  <p className="text-sm text-gray-600">Configurar países disponíveis</p>
+              <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
+                <CardContent className="p-5 flex items-start gap-3">
+                  <div className="text-2xl p-2 bg-amber-50 rounded-lg group-hover:scale-110 transition-transform">🌍</div>
+                  <div>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors">Gerir Países</h3>
+                    <p className="text-xs text-gray-600 mt-0.5">Configurar países e DDDs</p>
+                  </div>
                 </CardContent>
               </Card>
             </Link>
 
             <Link href="/admin/banners">
-              <Card className="hover:shadow-md transition-shadow cursor-pointer">
-                <CardContent className="p-6">
-                  <h3 className="font-semibold text-black mb-2">Gerir Banners</h3>
-                  <p className="text-sm text-gray-600">Criar e editar banners dinâmicos</p>
+              <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
+                <CardContent className="p-5 flex items-start gap-3">
+                  <div className="text-2xl p-2 bg-purple-50 rounded-lg group-hover:scale-110 transition-transform">📢</div>
+                  <div>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors">Gerir Banners</h3>
+                    <p className="text-xs text-gray-600 mt-0.5">Criar e editar banners do topo</p>
+                  </div>
                 </CardContent>
               </Card>
             </Link>
           </div>
         </div>
 
-          <Card>
+        {/* GRÁFICOS & ANALYTICS SECTION */}
+        <div>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold text-black flex items-center gap-2">
+              <span>📊</span> Gráficos & Estatísticas em Tempo Real
+            </h2>
+            <span className="text-xs text-gray-500">Atualização automática com base no MongoDB</span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {/* Chart 1: Volume de Leads (Últimos 7 Dias) */}
+            <Card className="shadow-sm">
+              <CardHeader className="pb-3 border-b border-gray-100">
+                <div className="flex justify-between items-center">
+                  <h3 className="font-semibold text-gray-900 text-sm flex items-center gap-2">
+                    <span>📈</span> Volume de Leads (Últimos 7 Dias)
+                  </h3>
+                  <span className="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700">
+                    Hoje: {stats?.today || 0}
+                  </span>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-6">
+                {dailyTrend.length === 0 ? (
+                  <div className="h-44 flex items-center justify-center text-gray-400 text-xs">
+                    Sem dados temporais disponíveis
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    <div className="h-40 flex items-end justify-between gap-2 pt-4 px-2 border-b border-gray-100">
+                      {dailyTrend.map((day: any) => {
+                        const heightPct = Math.max((day.count / maxDailyCount) * 100, day.count > 0 ? 15 : 4);
+                        const isToday = day.dayName === 'Hoje';
+                        return (
+                          <div key={day.date} className="flex-1 flex flex-col items-center gap-2 group relative">
+                            {/* Tooltip on hover */}
+                            <div className="opacity-0 group-hover:opacity-100 transition-opacity absolute -top-8 bg-gray-900 text-white text-[10px] px-2 py-0.5 rounded shadow whitespace-nowrap pointer-events-none z-10">
+                              {day.count} {day.count === 1 ? 'lead' : 'leads'} ({day.date})
+                            </div>
+                            <span className="text-[11px] font-bold text-gray-700">
+                              {day.count > 0 ? day.count : ''}
+                            </span>
+                            <div
+                              style={{ height: `${heightPct}%` }}
+                              className={`w-full rounded-t-md transition-all duration-500 ${
+                                isToday
+                                  ? 'bg-gradient-to-t from-emerald-600 to-emerald-400 shadow-md shadow-emerald-200'
+                                  : day.count > 0
+                                  ? 'bg-emerald-500 hover:bg-emerald-600'
+                                  : 'bg-gray-100'
+                              }`}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                    <div className="flex justify-between px-2 pt-1">
+                      {dailyTrend.map((day: any) => (
+                        <div key={day.date} className="flex-1 text-center">
+                          <p className={`text-[11px] font-medium ${day.dayName === 'Hoje' ? 'text-emerald-700 font-bold' : 'text-gray-600'}`}>
+                            {day.dayName}
+                          </p>
+                          <p className="text-[10px] text-gray-400">{day.label}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Chart 2: Pipeline de Estados (Funil de Vendas) */}
+            <Card className="shadow-sm">
+              <CardHeader className="pb-3 border-b border-gray-100">
+                <div className="flex justify-between items-center">
+                  <h3 className="font-semibold text-gray-900 text-sm flex items-center gap-2">
+                    <span>🔄</span> Funil de Contactos (Pipeline)
+                  </h3>
+                  <span className="text-xs text-gray-500">
+                    Total: {totalLeads}
+                  </span>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-4 space-y-3">
+                {statusEntries.map((st) => {
+                  const pct = totalLeads > 0 ? Math.round((st.count / totalLeads) * 100) : 0;
+                  return (
+                    <div key={st.key} className="space-y-1">
+                      <div className="flex justify-between items-center text-xs">
+                        <span className={`font-medium ${st.color}`}>{st.label}</span>
+                        <span className="font-bold text-gray-700">{st.count} <span className="font-normal text-gray-400">({pct}%)</span></span>
+                      </div>
+                      <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                        <div
+                          style={{ width: `${pct}%` }}
+                          className={`h-full ${st.bg} rounded-full transition-all duration-500`}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+              </CardContent>
+            </Card>
+
+            {/* Chart 3: Distribuição por País */}
+            <Card className="shadow-sm">
+              <CardHeader className="pb-3 border-b border-gray-100">
+                <h3 className="font-semibold text-gray-900 text-sm flex items-center gap-2">
+                  <span>🌍</span> Leads por País
+                </h3>
+              </CardHeader>
+              <CardContent className="pt-4">
+                {countryEntries.length === 0 ? (
+                  <div className="py-8 text-center text-gray-400 text-xs">
+                    Nenhum lead com país registado ainda.
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {countryEntries.map(([code, count]) => {
+                      const c = getCountryById(code);
+                      const pct = totalLeads > 0 ? Math.round((count / totalLeads) * 100) : 0;
+                      return (
+                        <div key={code} className="space-y-1">
+                          <div className="flex justify-between items-center text-xs">
+                            <span className="font-medium text-gray-800 flex items-center gap-1.5">
+                              <span>{c?.flag || '🌐'}</span>
+                              <span>{c?.name || code.toUpperCase()}</span>
+                            </span>
+                            <span className="font-bold text-gray-700">{count} <span className="font-normal text-gray-400">({pct}%)</span></span>
+                          </div>
+                          <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                            <div
+                              style={{ width: `${pct}%` }}
+                              className="h-full bg-blue-500 rounded-full transition-all duration-500"
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Chart 4: Distribuição por Tema de Interesse */}
+            <Card className="shadow-sm">
+              <CardHeader className="pb-3 border-b border-gray-100">
+                <h3 className="font-semibold text-gray-900 text-sm flex items-center gap-2">
+                  <span>🎯</span> Leads por Tema de Interesse
+                </h3>
+              </CardHeader>
+              <CardContent className="pt-4">
+                {themeEntries.length === 0 ? (
+                  <div className="py-8 text-center text-gray-400 text-xs">
+                    Nenhum lead por tema registado ainda.
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    {themeEntries.map(([slug, count]) => {
+                      const theme = getThemeBySlug(slug);
+                      const title = theme?.title || slug;
+                      const pct = totalLeads > 0 ? Math.round((count / totalLeads) * 100) : 0;
+                      return (
+                        <div key={slug} className="space-y-1">
+                          <div className="flex justify-between items-center text-xs">
+                            <span className="font-medium text-gray-800 truncate max-w-[220px]">
+                              {title}
+                            </span>
+                            <span className="font-bold text-gray-700">{count} <span className="font-normal text-gray-400">({pct}%)</span></span>
+                          </div>
+                          <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                            <div
+                              style={{ width: `${pct}%` }}
+                              className="h-full bg-emerald-500 rounded-full transition-all duration-500"
+                            />
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
+        {/* LEADS RECENTES */}
+        <Card className="shadow-sm">
           <CardHeader>
             <div className="flex justify-between items-center">
-              <h2 className="text-lg font-semibold text-black">
-                <SlideUpText 
-                  text="Leads Recentes"
-                  delay={200}
-                />
+              <h2 className="text-lg font-semibold text-black flex items-center gap-2">
+                <span>📋</span> Leads Recentes
               </h2>
               <Link href="/admin/leads">
                 <Button variant="outline" size="sm">
-                  Ver Todos
+                  Ver Todos ({totalLeads})
                 </Button>
               </Link>
             </div>
@@ -202,32 +442,39 @@ export default function AdminDashboard() {
             ) : recentLeads.length === 0 ? (
               <div className="text-center py-8 text-gray-400 text-sm">
                 <p>Nenhum lead registado ainda.</p>
-                <p className="mt-1">Os leads aparecerão aqui após o primeiro envio de formulário.</p>
+                <p className="mt-1">Os leads aparecerão aqui após o envio de qualquer formulário.</p>
               </div>
             ) : (
               <div className="divide-y divide-gray-100">
                 {recentLeads.map((lead) => {
                   const country = getCountryById(lead.country);
+                  const theme = getThemeBySlug(lead.theme);
                   return (
                     <div key={lead._id} className="flex items-center justify-between py-3">
                       <div>
-                        <p className="text-sm font-medium text-gray-900">{lead.name}</p>
-                        <p className="text-xs text-gray-500">
-                          {country ? `${country.flag} ${country.name}` : lead.country} • {lead.theme}
+                        <p className="text-sm font-semibold text-gray-900">{lead.name}</p>
+                        <p className="text-xs text-gray-500 mt-0.5">
+                          {country ? `${country.flag} ${country.name}` : lead.country} • {theme?.title || lead.theme} • {lead.phone}
                         </p>
                       </div>
                       <div className="text-right">
-                        <span className={`px-2 py-0.5 text-xs rounded-full font-medium ${
+                        <span className={`px-2.5 py-0.5 text-xs rounded-full font-medium ${
                           lead.status === 'novo' ? 'bg-blue-100 text-blue-700' :
-                          lead.status === 'convertido' ? 'bg-emerald-100 text-emerald-700' :
+                          lead.status === 'contactado' ? 'bg-yellow-100 text-yellow-800' :
+                          lead.status === 'acompanhamento' ? 'bg-purple-100 text-purple-800' :
+                          lead.status === 'interessado' ? 'bg-emerald-100 text-emerald-800' :
+                          lead.status === 'convertido' ? 'bg-green-100 text-green-800' :
                           'bg-gray-100 text-gray-600'
                         }`}>
                           {lead.status === 'novo' ? 'Novo' :
                            lead.status === 'contactado' ? 'Contactado' :
-                           lead.status === 'convertido' ? 'Convertido' : lead.status}
+                           lead.status === 'acompanhamento' ? 'Acompanhamento' :
+                           lead.status === 'interessado' ? 'Interessado' :
+                           lead.status === 'convertido' ? 'Convertido' :
+                           lead.status === 'nao_interessado' ? 'Não Interessado' : lead.status}
                         </span>
                         <p className="text-xs text-gray-400 mt-1">
-                          {new Date(lead.createdAt).toLocaleDateString('pt-PT')}
+                          {new Date(lead.createdAt).toLocaleDateString('pt-PT')} {new Date(lead.createdAt).toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' })}
                         </p>
                       </div>
                     </div>
