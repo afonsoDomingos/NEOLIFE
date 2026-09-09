@@ -63,15 +63,17 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
       });
 
       if (!response.ok) {
-        throw new Error('Failed to upload image');
+        // Read the actual error message from API
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.error || `Erro ${response.status} ao fazer upload.`);
       }
 
       const data = await response.json();
       onUpload(data.secure_url, data.public_id);
       setError(null);
-    } catch (error) {
-      console.error('Upload error:', error);
-      setError('Erro ao fazer upload da imagem');
+    } catch (err: any) {
+      console.error('Upload error:', err);
+      setError(err?.message || 'Erro ao fazer upload da imagem. Tente novamente.');
       setPreview(currentImage || null);
     } finally {
       setIsUploading(false);
