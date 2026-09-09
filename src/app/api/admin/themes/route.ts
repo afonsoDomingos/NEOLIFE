@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { getActiveThemes } from '@/data/themes';
+import { getAllThemes, createTheme } from '@/lib/db/themes-mongodb';
 
 export async function GET(request: NextRequest) {
   try {
@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const themes = getActiveThemes();
+    const themes = await getAllThemes();
     return NextResponse.json(themes);
   } catch (error) {
     console.error('Error fetching themes:', error);
@@ -48,13 +48,9 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    
-    // For now, we'll just return success since we're using static data
-    // In production, this would update the themes file/database
-    return NextResponse.json(
-      { success: true, message: 'Theme created (Note: Update themes data file directly for now)' },
-      { status: 201 }
-    );
+    const theme = await createTheme(body);
+
+    return NextResponse.json(theme, { status: 201 });
   } catch (error) {
     console.error('Error creating theme:', error);
     return NextResponse.json(

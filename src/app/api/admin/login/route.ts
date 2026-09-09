@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
-// In production, this should use proper authentication with bcrypt, JWT, etc.
-const ADMIN_USERNAME = 'admin';
-const ADMIN_PASSWORD = 'admin123'; // Change this in production!
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
 
 export async function POST(request: NextRequest) {
   try {

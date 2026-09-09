@@ -17,8 +17,25 @@ function InteresseContent() {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [unavailableCountry, setUnavailableCountry] = useState(false);
 
-  const theme = themeSlug ? getThemeBySlug(themeSlug) : null;
+  const [theme, setTheme] = useState<any>(() => themeSlug ? getThemeBySlug(themeSlug) || null : null);
+  const [loadingTheme, setLoadingTheme] = useState(!theme);
   const availableCountries = getAvailableCountries();
+
+  useEffect(() => {
+    if (themeSlug) {
+      fetch(`/api/themes?slug=${encodeURIComponent(themeSlug)}`)
+        .then(res => (res.ok ? res.json() : null))
+        .then(data => {
+          if (data && data.slug) {
+            setTheme(data);
+          }
+        })
+        .catch(err => console.error('Error fetching theme:', err))
+        .finally(() => setLoadingTheme(false));
+    } else {
+      setLoadingTheme(false);
+    }
+  }, [themeSlug]);
 
   useEffect(() => {
     if (selectedCountry) {
@@ -47,6 +64,17 @@ function InteresseContent() {
       window.location.href = `/formulario?${params.toString()}`;
     }
   };
+
+  if (loadingTheme) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
+          <p className="text-gray-600">A carregar...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!theme) {
     return (
@@ -78,8 +106,8 @@ function InteresseContent() {
               delay={500}
             />
           </p>
-          <div className="inline-block bg-gray-100 px-4 py-2 rounded-lg">
-            <span className="text-sm text-gray-700">
+          <div className="inline-block bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-lg">
+            <span className="text-sm font-medium text-emerald-800">
               Passo 1 de 2: Selecionar País
             </span>
           </div>
@@ -100,8 +128,8 @@ function InteresseContent() {
                 key={country.id}
                 className={`cursor-pointer transition-all duration-200 ${
                   selectedCountry === country.id
-                    ? 'border-black border-2 bg-gray-50'
-                    : 'hover:border-gray-400'
+                    ? 'border-emerald-600 border-2 bg-emerald-50/40 shadow-sm'
+                    : 'hover:border-emerald-300'
                 }`}
                 onClick={() => handleCountrySelect(country.id)}
               >
@@ -114,7 +142,7 @@ function InteresseContent() {
                       </span>
                     </div>
                     {selectedCountry === country.id && (
-                      <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center">
+                      <div className="w-6 h-6 bg-emerald-600 rounded-full flex items-center justify-center">
                         <svg
                           className="w-4 h-4 text-white"
                           fill="none"

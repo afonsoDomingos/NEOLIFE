@@ -55,10 +55,17 @@ export default function AdminDashboard() {
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-4">
-              <h1 className="text-xl font-bold text-black">NeoLife Admin</h1>
-              <span className="text-gray-400">|</span>
-              <span className="text-gray-600">Dashboard</span>
+            <div className="flex items-center gap-3">
+              <img
+                src="/logo-neolife.png"
+                alt="NeoLife"
+                className="h-9 w-auto object-contain rounded"
+              />
+              <h1 className="text-xl font-bold text-gray-900">
+                Neo<span className="text-emerald-600">Life</span> Admin
+              </h1>
+              <span className="text-gray-300">|</span>
+              <span className="text-gray-500 text-sm font-medium">Dashboard</span>
             </div>
             <Button variant="outline" onClick={handleLogout}>
               Sair

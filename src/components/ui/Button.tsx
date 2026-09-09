@@ -18,9 +18,9 @@ export const Button: React.FC<ButtonProps> = ({
   const baseStyles = 'font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 touch-action-manipulation';
   
   const variantStyles = {
-    primary: 'bg-black text-white hover:bg-gray-800 focus:ring-black active:bg-gray-900',
-    secondary: 'bg-gray-100 text-black hover:bg-gray-200 focus:ring-gray-400 active:bg-gray-300',
-    outline: 'border-2 border-black text-black hover:bg-gray-50 focus:ring-black active:bg-gray-100'
+    primary: 'bg-emerald-600 text-white hover:bg-emerald-700 focus:ring-emerald-500 shadow-sm active:bg-emerald-800',
+    secondary: 'bg-emerald-50 text-emerald-800 hover:bg-emerald-100 focus:ring-emerald-400 active:bg-emerald-200 border border-emerald-200',
+    outline: 'border-2 border-emerald-600 text-emerald-700 hover:bg-emerald-50 focus:ring-emerald-500 active:bg-emerald-100'
   };
   
   const sizeStyles = {

@@ -50,9 +50,16 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-black mb-2">NeoLife Admin</h1>
-          <p className="text-gray-600">Área Administrativa</p>
+        <div className="text-center mb-8 flex flex-col items-center">
+          <img
+            src="/logo-neolife.png"
+            alt="NeoLife"
+            className="h-16 w-auto object-contain rounded-lg shadow-sm mb-3"
+          />
+          <h1 className="text-2xl font-bold text-gray-900 mb-1">
+            Neo<span className="text-emerald-600">Life</span> Admin
+          </h1>
+          <p className="text-gray-500 text-sm">Painel de Gestão e Captação</p>
         </div>
 
         <Card>
@@ -105,10 +112,24 @@ export default function AdminLoginPage() {
           </CardContent>
         </Card>
 
-        <div className="mt-8 text-center">
+        <div className="mt-8 text-center flex flex-col items-center gap-2">
           <p className="text-xs text-gray-500">
             Área restrita a utilizadores autorizados.
           </p>
+          <a
+            href="https://www.wehosthere.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 text-xs text-gray-400 hover:text-gray-600 transition-colors pt-2"
+          >
+            <span>Powered by</span>
+            <span className="font-semibold text-gray-600">WeHostHere</span>
+            <img
+              src="/logo-wehosthere.png"
+              alt="WeHostHere"
+              className="h-4 w-auto object-contain"
+            />
+          </a>
         </div>
       </div>
     </div>

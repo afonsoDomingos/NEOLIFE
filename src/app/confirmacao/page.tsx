@@ -50,7 +50,7 @@ export default function ConfirmacaoPage() {
             </h3>
             <div className="space-y-3 text-left">
               <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div className="w-6 h-6 bg-emerald-600 text-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-xs font-bold">1</span>
                 </div>
                 <p className="text-gray-600">
@@ -58,7 +58,7 @@ export default function ConfirmacaoPage() {
                 </p>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div className="w-6 h-6 bg-emerald-600 text-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-xs font-bold">2</span>
                 </div>
                 <p className="text-gray-600">
@@ -66,7 +66,7 @@ export default function ConfirmacaoPage() {
                 </p>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div className="w-6 h-6 bg-emerald-600 text-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-xs font-bold">3</span>
                 </div>
                 <p className="text-gray-600">
@@ -74,7 +74,7 @@ export default function ConfirmacaoPage() {
                 </p>
               </div>
               <div className="flex items-start gap-3">
-                <div className="w-6 h-6 bg-black text-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div className="w-6 h-6 bg-emerald-600 text-white rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-xs font-bold">4</span>
                 </div>
                 <p className="text-gray-600">
@@ -88,13 +88,13 @@ export default function ConfirmacaoPage() {
         {/* CTA Buttons */}
         <div className="space-y-4">
           <a
-            href="https://wa.me/1234567890"
+            href={`https://wa.me/${(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '1234567890').replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Olá! Acabei de submeter o formulário no site NeoLife África e gostaria de falar com um consultor.')}`}
             target="_blank"
             rel="noopener noreferrer"
             className="block"
           >
-            <Button size="lg" fullWidth className="bg-green-600 hover:bg-green-700">
-              Falar Connosco pelo WhatsApp
+            <Button size="lg" fullWidth className="bg-emerald-600 hover:bg-emerald-700">
+              💬 Falar Connosco pelo WhatsApp
             </Button>
           </a>
           

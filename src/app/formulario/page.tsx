@@ -26,14 +26,31 @@ function FormularioContent() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  const theme = themeSlug ? getThemeBySlug(themeSlug) : null;
+  const [theme, setTheme] = useState<any>(() => themeSlug ? getThemeBySlug(themeSlug) || null : null);
+  const [loadingTheme, setLoadingTheme] = useState(!theme);
   const country = countryId ? getCountryById(countryId) : null;
 
   useEffect(() => {
-    if (!theme || !country) {
+    if (themeSlug) {
+      fetch(`/api/themes?slug=${encodeURIComponent(themeSlug)}`)
+        .then(res => (res.ok ? res.json() : null))
+        .then(data => {
+          if (data && data.slug) {
+            setTheme(data);
+          }
+        })
+        .catch(err => console.error('Error loading theme:', err))
+        .finally(() => setLoadingTheme(false));
+    } else {
+      setLoadingTheme(false);
+    }
+  }, [themeSlug]);
+
+  useEffect(() => {
+    if (!loadingTheme && (!theme || !country)) {
       window.location.href = '/';
     }
-  }, [theme, country]);
+  }, [loadingTheme, theme, country]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -148,6 +165,17 @@ function FormularioContent() {
     );
   }
 
+  if (loadingTheme || !theme || !country) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
+          <p className="text-gray-600">A carregar formulário...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white py-20">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -162,8 +190,8 @@ function FormularioContent() {
           <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
             <span className="font-medium">{country.flag} {country.name}</span>
           </div>
-          <div className="inline-block bg-gray-100 px-4 py-2 rounded-lg mt-4">
-            <span className="text-sm text-gray-700">
+          <div className="inline-block bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-lg mt-4">
+            <span className="text-sm font-medium text-emerald-800">
               Passo 2 de 2: Preencher Formulário
             </span>
           </div>

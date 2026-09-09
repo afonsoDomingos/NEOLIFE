@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createLead } from '@/lib/db/leads-mongodb';
+import { getThemeBySlug } from '@/lib/db/themes-mongodb';
+import { getThemeBySlug as getStaticThemeBySlug } from '@/data/themes';
+import { getCountryById } from '@/data/countries';
 import { trackLeadGenerated } from '@/lib/utils/tracking';
+import { sendLeadConfirmationEmail, sendAdminNotificationEmail } from '@/lib/utils/email';
 
 export async function POST(request: NextRequest) {
   try {
@@ -36,10 +40,37 @@ export async function POST(request: NextRequest) {
       campaign
     });
 
-    // Here you would typically:
-    // 1. Send automated email/WhatsApp with content
-    // 2. Send notification to admin
-    // 3. Track conversion in analytics
+    // Send automated email to the lead and notification to the admin
+    try {
+      const dbTheme = await getThemeBySlug(theme).catch(() => null);
+      const staticTheme = getStaticThemeBySlug(theme);
+      const matchedTheme = dbTheme || staticTheme;
+      const matchedCountry = getCountryById(country);
+
+      // Automated email to lead with video link
+      await sendLeadConfirmationEmail({
+        name,
+        email,
+        countryName: matchedCountry?.name || country,
+        themeTitle: matchedTheme?.title || theme,
+        themeSlug: matchedTheme?.slug || theme,
+        videoUrl: matchedTheme?.videoUrl,
+      });
+
+      // Automated notification to site administrator
+      await sendAdminNotificationEmail({
+        name,
+        email,
+        phone,
+        whatsapp,
+        country: matchedCountry?.name || country,
+        theme: matchedTheme?.title || theme,
+        campaign,
+        notes,
+      });
+    } catch (emailError) {
+      console.error('Error sending automated emails (lead was successfully saved):', emailError);
+    }
     
     return NextResponse.json(
       { success: true, leadId: lead._id.toString() },

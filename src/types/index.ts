@@ -15,6 +15,7 @@ export interface Theme {
   active: boolean;
   order: number;
   content?: string;
+  videoUrl?: string;
   publicId?: string; // Cloudinary public ID for image deletion
 }
 
