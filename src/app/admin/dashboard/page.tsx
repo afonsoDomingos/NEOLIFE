@@ -46,13 +46,10 @@ export default function AdminDashboard() {
               <img
                 src="/logo-neolife.png"
                 alt="NeoLife"
-                className="h-9 w-auto object-contain rounded"
+                className="h-9 w-auto object-contain"
               />
-              <h1 className="text-xl font-bold text-gray-900">
-                Neo<span className="text-emerald-600">Life</span> Admin
-              </h1>
               <span className="text-gray-300">|</span>
-              <span className="text-gray-500 text-sm font-medium">Dashboard</span>
+              <span className="text-gray-700 font-semibold text-sm">Painel de Administração</span>
             </div>
             <Button variant="outline" onClick={handleLogout}>
               Sair

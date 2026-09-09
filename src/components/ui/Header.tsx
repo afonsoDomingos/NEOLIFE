@@ -11,20 +11,12 @@ export const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo with uploaded logo-neolife */}
-          <Link href="/" className="flex items-center gap-3 group">
+          <Link href="/" className="flex items-center group">
             <img
               src="/logo-neolife.png"
-              alt="NeoLife"
-              className="h-10 w-auto object-contain rounded-md"
+              alt="NeoLife África"
+              className="h-10 sm:h-11 w-auto object-contain"
             />
-            <div className="flex flex-col">
-              <span className="text-xl font-bold tracking-tight text-gray-900 leading-none group-hover:text-emerald-700 transition-colors">
-                Neo<span className="text-emerald-600">Life</span>
-              </span>
-              <span className="text-[10px] uppercase tracking-wider font-semibold text-emerald-600 mt-0.5">
-                África
-              </span>
-            </div>
           </Link>
           
           {/* Desktop Navigation */}
