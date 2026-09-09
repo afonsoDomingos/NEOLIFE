@@ -60,7 +60,7 @@ export const VideoSection: React.FC = () => {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold mb-3">
-            <span>🎥</span> Multimédia & Conteúdos Oficiais
+            Multimédia & Conteúdos Oficiais
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight">
             <TypewriterText 
@@ -101,8 +101,8 @@ export const VideoSection: React.FC = () => {
                   </div>
                 </div>
                 <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 text-xs font-bold rounded-full bg-amber-500 text-white shadow-md flex items-center gap-1">
-                    ⭐ Vídeo em Destaque
+                  <span className="px-3 py-1 text-xs font-bold rounded-full bg-emerald-600 text-white shadow-md">
+                    Vídeo em Destaque
                   </span>
                 </div>
               </div>

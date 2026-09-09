@@ -165,8 +165,8 @@ function VideosContent() {
                 ← Voltar
               </Link>
               <span className="text-gray-300">|</span>
-              <h1 className="text-xl font-bold text-black flex items-center gap-2">
-                <span>🎥</span> Gestão de Vídeos
+              <h1 className="text-xl font-bold text-black">
+                Gestão de Vídeos
               </h1>
             </div>
             <Button
@@ -209,8 +209,7 @@ function VideosContent() {
         {showAddForm && (
           <Card className="border-emerald-200 shadow-md">
             <CardHeader className="border-b border-gray-100">
-              <h2 className="text-lg font-bold text-black flex items-center gap-2">
-                <span>{editingVideo ? '✏️' : '➕'}</span>
+              <h2 className="text-lg font-bold text-black">
                 {editingVideo ? 'Editar Vídeo' : 'Novo Vídeo'}
               </h2>
             </CardHeader>
@@ -256,7 +255,7 @@ function VideosContent() {
 
                 {detectedYouTubeId && (
                   <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-800 flex items-center gap-2">
-                    <span>✅</span> Vídeo do YouTube detetado (ID: <strong>{detectedYouTubeId}</strong>). A capa será obtida automaticamente se não definir outra.
+                    Vídeo do YouTube detetado (ID: <strong>{detectedYouTubeId}</strong>). A capa será obtida automaticamente se não definir outra.
                   </div>
                 )}
 
@@ -319,7 +318,7 @@ function VideosContent() {
                       className="w-5 h-5 text-emerald-600 border-gray-300 rounded focus:ring-emerald-500"
                     />
                     <label htmlFor="featured" className="ml-2 text-sm text-gray-700 font-medium">
-                      ⭐ Vídeo em Destaque Principal
+                      Vídeo em Destaque Principal
                     </label>
                   </div>
 
@@ -367,7 +366,6 @@ function VideosContent() {
             </div>
           ) : videos.length === 0 ? (
             <div className="col-span-full py-16 text-center text-gray-400 bg-white rounded-xl border border-dashed border-gray-300">
-              <p className="text-3xl mb-2">🎥</p>
               <p className="font-semibold text-gray-700">Nenhum vídeo registado</p>
               <p className="text-sm text-gray-500 mt-1">Clique em "+ Novo Vídeo" para adicionar o primeiro vídeo ao site.</p>
             </div>
@@ -404,7 +402,7 @@ function VideosContent() {
                         </span>
                         {v.featured && (
                           <span className="px-2 py-0.5 text-[11px] font-semibold rounded bg-amber-500 text-white shadow">
-                            ⭐ Destaque
+                            Destaque
                           </span>
                         )}
                       </div>
@@ -426,7 +424,7 @@ function VideosContent() {
                         rel="noopener noreferrer"
                         className="text-xs text-blue-600 hover:text-blue-800 truncate block underline font-medium"
                       >
-                        🔗 {v.videoUrl}
+                        {v.videoUrl}
                       </a>
                     </CardContent>
                   </div>

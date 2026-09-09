@@ -96,10 +96,13 @@ export default function AdminDashboard() {
                   loadStats();
                   loadRecentLeads();
                 }}
-                className="text-xs flex items-center gap-1 text-gray-600 hover:text-black"
+                className="text-xs flex items-center gap-1.5 text-gray-600 hover:text-black font-medium"
                 title="Recarregar dados"
               >
-                🔄 Atualizar
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Atualizar
               </Button>
               <Button variant="outline" size="sm" onClick={handleLogout}>
                 Sair
@@ -185,10 +188,14 @@ export default function AdminDashboard() {
             <Link href="/admin/leads">
               <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
                 <CardContent className="p-5 flex items-start gap-3">
-                  <div className="text-2xl p-2 bg-emerald-50 rounded-lg group-hover:scale-110 transition-transform">👥</div>
+                  <div className="p-2.5 bg-emerald-50 text-emerald-700 rounded-lg group-hover:scale-105 transition-transform flex items-center justify-center">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
                   <div>
-                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors">Gerir Leads</h3>
-                    <p className="text-xs text-gray-600 mt-0.5">Ver, filtrar e exportar CSV</p>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Gerir Leads</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">Ver, filtrar e exportar CSV</p>
                   </div>
                 </CardContent>
               </Card>
@@ -197,10 +204,14 @@ export default function AdminDashboard() {
             <Link href="/admin/themes">
               <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
                 <CardContent className="p-5 flex items-start gap-3">
-                  <div className="text-2xl p-2 bg-blue-50 rounded-lg group-hover:scale-110 transition-transform">🎨</div>
+                  <div className="p-2.5 bg-blue-50 text-blue-700 rounded-lg group-hover:scale-105 transition-transform flex items-center justify-center">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                    </svg>
+                  </div>
                   <div>
-                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors">Gerir Temas</h3>
-                    <p className="text-xs text-gray-600 mt-0.5">Criar e editar cards e imagens</p>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Gerir Temas</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">Criar e editar cards</p>
                   </div>
                 </CardContent>
               </Card>
@@ -209,10 +220,14 @@ export default function AdminDashboard() {
             <Link href="/admin/videos">
               <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
                 <CardContent className="p-5 flex items-start gap-3">
-                  <div className="text-2xl p-2 bg-rose-50 rounded-lg group-hover:scale-110 transition-transform">🎥</div>
+                  <div className="p-2.5 bg-rose-50 text-rose-700 rounded-lg group-hover:scale-105 transition-transform flex items-center justify-center">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                    </svg>
+                  </div>
                   <div>
-                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors">Gerir Vídeos</h3>
-                    <p className="text-xs text-gray-600 mt-0.5">Adicionar e editar vídeos</p>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Gerir Vídeos</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">Adicionar e editar vídeos</p>
                   </div>
                 </CardContent>
               </Card>
@@ -221,10 +236,14 @@ export default function AdminDashboard() {
             <Link href="/admin/countries">
               <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
                 <CardContent className="p-5 flex items-start gap-3">
-                  <div className="text-2xl p-2 bg-amber-50 rounded-lg group-hover:scale-110 transition-transform">🌍</div>
+                  <div className="p-2.5 bg-amber-50 text-amber-700 rounded-lg group-hover:scale-105 transition-transform flex items-center justify-center">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
                   <div>
-                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors">Gerir Países</h3>
-                    <p className="text-xs text-gray-600 mt-0.5">Configurar países e DDDs</p>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Gerir Países</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">Configurar países e DDDs</p>
                   </div>
                 </CardContent>
               </Card>
@@ -233,10 +252,14 @@ export default function AdminDashboard() {
             <Link href="/admin/banners">
               <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
                 <CardContent className="p-5 flex items-start gap-3">
-                  <div className="text-2xl p-2 bg-purple-50 rounded-lg group-hover:scale-110 transition-transform">📢</div>
+                  <div className="p-2.5 bg-purple-50 text-purple-700 rounded-lg group-hover:scale-105 transition-transform flex items-center justify-center">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
                   <div>
-                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors">Gerir Banners</h3>
-                    <p className="text-xs text-gray-600 mt-0.5">Criar e editar banners do topo</p>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Gerir Banners</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">Criar banners do topo</p>
                   </div>
                 </CardContent>
               </Card>
@@ -247,8 +270,8 @@ export default function AdminDashboard() {
         {/* GRÁFICOS & ANALYTICS SECTION */}
         <div>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold text-black flex items-center gap-2">
-              <span>📊</span> Gráficos & Estatísticas em Tempo Real
+            <h2 className="text-lg font-semibold text-black">
+              Gráficos & Estatísticas em Tempo Real
             </h2>
             <span className="text-xs text-gray-500">Atualização automática com base no MongoDB</span>
           </div>
@@ -258,8 +281,8 @@ export default function AdminDashboard() {
             <Card className="shadow-sm">
               <CardHeader className="pb-3 border-b border-gray-100">
                 <div className="flex justify-between items-center">
-                  <h3 className="font-semibold text-gray-900 text-sm flex items-center gap-2">
-                    <span>📈</span> Volume de Leads (Últimos 7 Dias)
+                  <h3 className="font-semibold text-gray-900 text-sm">
+                    Volume de Leads (Últimos 7 Dias)
                   </h3>
                   <span className="text-xs font-semibold px-2 py-0.5 rounded bg-emerald-50 text-emerald-700">
                     Hoje: {stats?.today || 0}
@@ -319,8 +342,8 @@ export default function AdminDashboard() {
             <Card className="shadow-sm">
               <CardHeader className="pb-3 border-b border-gray-100">
                 <div className="flex justify-between items-center">
-                  <h3 className="font-semibold text-gray-900 text-sm flex items-center gap-2">
-                    <span>🔄</span> Funil de Contactos (Pipeline)
+                  <h3 className="font-semibold text-gray-900 text-sm">
+                    Funil de Contactos (Pipeline)
                   </h3>
                   <span className="text-xs text-gray-500">
                     Total: {totalLeads}
@@ -351,8 +374,8 @@ export default function AdminDashboard() {
             {/* Chart 3: Distribuição por País */}
             <Card className="shadow-sm">
               <CardHeader className="pb-3 border-b border-gray-100">
-                <h3 className="font-semibold text-gray-900 text-sm flex items-center gap-2">
-                  <span>🌍</span> Leads por País
+                <h3 className="font-semibold text-gray-900 text-sm">
+                  Leads por País
                 </h3>
               </CardHeader>
               <CardContent className="pt-4">
@@ -369,7 +392,6 @@ export default function AdminDashboard() {
                         <div key={code} className="space-y-1">
                           <div className="flex justify-between items-center text-xs">
                             <span className="font-medium text-gray-800 flex items-center gap-1.5">
-                              <span>{c?.flag || '🌐'}</span>
                               <span>{c?.name || code.toUpperCase()}</span>
                             </span>
                             <span className="font-bold text-gray-700">{count} <span className="font-normal text-gray-400">({pct}%)</span></span>
@@ -391,8 +413,8 @@ export default function AdminDashboard() {
             {/* Chart 4: Distribuição por Tema de Interesse */}
             <Card className="shadow-sm">
               <CardHeader className="pb-3 border-b border-gray-100">
-                <h3 className="font-semibold text-gray-900 text-sm flex items-center gap-2">
-                  <span>🎯</span> Leads por Tema de Interesse
+                <h3 className="font-semibold text-gray-900 text-sm">
+                  Leads por Tema de Interesse
                 </h3>
               </CardHeader>
               <CardContent className="pt-4">
@@ -434,8 +456,8 @@ export default function AdminDashboard() {
         <Card className="shadow-sm">
           <CardHeader>
             <div className="flex justify-between items-center">
-              <h2 className="text-lg font-semibold text-black flex items-center gap-2">
-                <span>📋</span> Leads Recentes
+              <h2 className="text-lg font-semibold text-black">
+                Leads Recentes
               </h2>
               <Link href="/admin/leads">
                 <Button variant="outline" size="sm">
