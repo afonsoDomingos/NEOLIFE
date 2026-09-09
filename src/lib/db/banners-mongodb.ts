@@ -90,13 +90,19 @@ export const getActiveBanners = async () => {
     
     const banners = await Banner.find({
       active: true,
-      $or: [
-        { startDate: { $exists: false } },
-        { startDate: { $lte: now } }
-      ],
-      $or: [
-        { endDate: { $exists: false } },
-        { endDate: { $gte: now } }
+      $and: [
+        {
+          $or: [
+            { startDate: { $exists: false } },
+            { startDate: { $lte: now } }
+          ]
+        },
+        {
+          $or: [
+            { endDate: { $exists: false } },
+            { endDate: { $gte: now } }
+          ]
+        }
       ]
     }).sort({ order: 1, createdAt: -1 });
     
