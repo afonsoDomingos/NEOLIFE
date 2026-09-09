@@ -2,7 +2,7 @@ export const siteConfig = {
   name: 'NeoLife',
   description: 'Descubra como a NeoLife pode transformar a sua vida através da saúde, bem-estar e oportunidades de negócio em África.',
   url: process.env.NEXT_PUBLIC_SITE_URL || 'https://neolife.com', // Update with actual URL
-  ogImage: '/og-image.jpg', // Add actual OG image
+  ogImage: '/logo-neolife.png',
   links: {
     twitter: 'https://twitter.com/neolife',
     facebook: 'https://facebook.com/neolife',

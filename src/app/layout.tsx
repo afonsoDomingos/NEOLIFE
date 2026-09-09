@@ -28,6 +28,16 @@ export const metadata: Metadata = {
   creator: seoConfig.creator,
   publisher: seoConfig.publisher,
   formatDetection: seoConfig.formatDetection,
+  icons: {
+    icon: [
+      { url: '/logo-neolife.png' },
+      { url: '/icon.png' },
+    ],
+    apple: [
+      { url: '/logo-neolife.png' },
+    ],
+    shortcut: '/logo-neolife.png',
+  },
   openGraph: seoConfig.openGraph,
   twitter: seoConfig.twitter,
   robots: seoConfig.robots,
