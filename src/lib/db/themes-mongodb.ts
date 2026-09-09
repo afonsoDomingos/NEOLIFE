@@ -1,11 +1,12 @@
 import connectDB from './mongodb';
 import mongoose from 'mongoose';
-
-/** Returns true if the string is a valid MongoDB ObjectId */
-const isValidObjectId = (id: string) => mongoose.Types.ObjectId.isValid(id) && String(new mongoose.Types.ObjectId(id)) === id;
 import Theme, { ITheme } from './models/Theme';
 import { themes as defaultThemes } from '@/data/themes';
 import { deleteImage } from '@/lib/utils/cloudinary';
+
+/** Returns true if the string is a valid MongoDB ObjectId */
+const isValidObjectId = (id: string) =>
+  mongoose.Types.ObjectId.isValid(id) && String(new mongoose.Types.ObjectId(id)) === id;
 
 /**
  * Seeds default themes if collection is empty
