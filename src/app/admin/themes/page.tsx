@@ -274,16 +274,25 @@ function ThemesContent() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Imagem do Tema (Upload direto para Cloudinary)
+                    Imagem do Tema (Upload ou Link Direto)
                   </label>
                   <ImageUpload
                     onUpload={handleImageUpload}
                     currentImage={formData.image}
                     folder="neolife/themes"
                   />
+                  <div className="mt-3">
+                    <Input
+                      label="Ou colar URL/link direto da imagem:"
+                      name="image"
+                      value={formData.image}
+                      onChange={handleInputChange}
+                      placeholder="https://images.unsplash.com/... ou https://exemplo.com/foto.jpg"
+                    />
+                  </div>
                   {formData.image && (
-                    <p className="text-xs text-gray-500 mt-2 truncate">
-                      URL: {formData.image}
+                    <p className="text-xs text-gray-500 mt-1 truncate">
+                      Imagem selecionada: {formData.image}
                     </p>
                   )}
                 </div>

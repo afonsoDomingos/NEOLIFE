@@ -101,6 +101,9 @@ export default function Home() {
                           src={theme.image}
                           alt={theme.title}
                           className="aspect-video w-full object-cover rounded-lg mb-4 group-hover:opacity-95 transition-opacity"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&h=600&fit=crop';
+                          }}
                         />
                       ) : (
                         <div className="aspect-video bg-emerald-50/50 rounded-lg mb-4 flex items-center justify-center border border-emerald-100/50">

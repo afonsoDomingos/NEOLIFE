@@ -26,7 +26,7 @@ export const themes: Theme[] = [
     slug: 'produtos',
     active: true,
     order: 3,
-    image: 'https://images.unsplash.com/photo-1556228578-cca67002c5b4?w=800&h=600&fit=crop'
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&h=600&fit=crop'
   },
   {
     id: 'oportunidade',
