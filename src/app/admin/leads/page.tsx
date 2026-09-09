@@ -119,6 +119,37 @@ export default function AdminLeadsPage() {
     }
   };
 
+  const exportToCSV = () => {
+    if (filteredLeads.length === 0) {
+      alert('Nenhum lead para exportar.');
+      return;
+    }
+    const headers = ['Nome Completo', 'Telefone', 'Email', 'WhatsApp', 'País', 'Tema', 'Estado', 'Origem', 'Notas', 'Data de Registo'];
+    const rows = filteredLeads.map(l => [
+      `"${(l.name || '').replace(/"/g, '""')}"`,
+      `"${(l.phone || '').replace(/"/g, '""')}"`,
+      `"${(l.email || '').replace(/"/g, '""')}"`,
+      `"${(l.whatsapp || '').replace(/"/g, '""')}"`,
+      `"${(getCountryById(l.country)?.name || l.country || '').replace(/"/g, '""')}"`,
+      `"${(l.theme || '').replace(/"/g, '""')}"`,
+      `"${(getStatusLabel(l.status) || '').replace(/"/g, '""')}"`,
+      `"${(l.source || '').replace(/"/g, '""')}"`,
+      `"${(l.notes || '').replace(/"/g, '""')}"`,
+      `"${new Date(l.createdAt).toLocaleDateString('pt-PT')} ${new Date(l.createdAt).toLocaleTimeString('pt-PT')}"`
+    ]);
+
+    const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `leads_neolife_${new Date().toISOString().split('T')[0]}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   const getStatusColor = (status: LeadStatus): string => {
     const colors = {
       novo: 'bg-blue-100 text-blue-800',
@@ -156,8 +187,19 @@ export default function AdminLeadsPage() {
               <span className="text-gray-400">|</span>
               <h1 className="text-xl font-bold text-black">Gestão de Leads</h1>
             </div>
-            <div className="text-sm text-gray-600">
-              {filteredLeads.length} de {leads.length} leads
+            <div className="flex items-center gap-4">
+              <span className="text-sm text-gray-600">
+                {filteredLeads.length} de {leads.length} leads
+              </span>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={exportToCSV}
+                className="flex items-center gap-1.5 border-emerald-500 text-emerald-700 hover:bg-emerald-50 font-medium"
+                title="Descarregar lista de leads em formato CSV (Excel)"
+              >
+                📥 Exportar CSV
+              </Button>
             </div>
           </div>
         </div>
