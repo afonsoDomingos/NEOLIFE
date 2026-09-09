@@ -5,8 +5,6 @@ import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { SlideUpText, WordByWordText } from '@/components/ui/AnimatedText';
 import Link from 'next/link';
-import { getLeadStats } from '@/lib/db/leads-mongodb';
-
 export default function AdminDashboard() {
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -37,17 +35,6 @@ export default function AdminDashboard() {
       console.error('Error logging out:', error);
     }
   };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
-          <p className="text-gray-600">A carregar...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -80,32 +67,48 @@ export default function AdminDashboard() {
           <Card>
             <CardHeader>
               <p className="text-sm font-medium text-gray-600">Total de Leads</p>
-              <p className="text-3xl font-bold text-black">{stats?.total || 0}</p>
+              {loading ? (
+                <div className="h-9 w-20 bg-gray-200 animate-pulse rounded mt-1" />
+              ) : (
+                <p className="text-3xl font-bold text-gray-900">{stats?.total || 0}</p>
+              )}
             </CardHeader>
           </Card>
 
           <Card>
             <CardHeader>
               <p className="text-sm font-medium text-gray-600">Leads Hoje</p>
-              <p className="text-3xl font-bold text-black">{stats?.today || 0}</p>
+              {loading ? (
+                <div className="h-9 w-14 bg-gray-200 animate-pulse rounded mt-1" />
+              ) : (
+                <p className="text-3xl font-bold text-gray-900">{stats?.today || 0}</p>
+              )}
             </CardHeader>
           </Card>
 
           <Card>
             <CardHeader>
-              <p className="text-sm font-medium text-gray-600">Países</p>
-              <p className="text-3xl font-bold text-black">
-                {Object.keys(stats?.byCountry || {}).length}
-              </p>
+              <p className="text-sm font-medium text-gray-600">Países Ativos</p>
+              {loading ? (
+                <div className="h-9 w-14 bg-gray-200 animate-pulse rounded mt-1" />
+              ) : (
+                <p className="text-3xl font-bold text-gray-900">
+                  {Object.keys(stats?.byCountry || {}).length}
+                </p>
+              )}
             </CardHeader>
           </Card>
 
           <Card>
             <CardHeader>
-              <p className="text-sm font-medium text-gray-600">Temas</p>
-              <p className="text-3xl font-bold text-black">
-                {Object.keys(stats?.byTheme || {}).length}
-              </p>
+              <p className="text-sm font-medium text-gray-600">Temas Ativos</p>
+              {loading ? (
+                <div className="h-9 w-14 bg-gray-200 animate-pulse rounded mt-1" />
+              ) : (
+                <p className="text-3xl font-bold text-gray-900">
+                  {Object.keys(stats?.byTheme || {}).length}
+                </p>
+              )}
             </CardHeader>
           </Card>
         </div>

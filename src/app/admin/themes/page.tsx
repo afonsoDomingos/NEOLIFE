@@ -179,17 +179,6 @@ function ThemesContent() {
     });
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
-          <p className="text-gray-600">A carregar temas...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Admin Header */}
@@ -344,7 +333,13 @@ function ThemesContent() {
 
         {/* Themes List */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {themes.map((theme) => {
+          {loading ? (
+            <div className="col-span-full py-16 text-center text-gray-500">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 mx-auto mb-3"></div>
+              <p className="text-sm text-gray-600">A carregar temas da base de dados...</p>
+            </div>
+          ) : (
+            themes.map((theme) => {
             const keyId = theme._id || theme.id || theme.slug;
             return (
               <Card key={keyId}>
@@ -405,7 +400,8 @@ function ThemesContent() {
                 </CardContent>
               </Card>
             );
-          })}
+          })
+        )}
         </div>
       </div>
     </div>

@@ -157,16 +157,7 @@ function BannersContent() {
     });
   };
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-black mx-auto mb-4"></div>
-          <p className="text-gray-600">A carregar banners...</p>
-        </div>
-      </div>
-    );
-  }
+
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -315,61 +306,78 @@ function BannersContent() {
         )}
 
         {/* Banners List */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {banners.map((banner) => (
-            <Card key={banner._id}>
-              <CardHeader>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-semibold text-black">{banner.title}</h3>
-                    <p className="text-sm text-gray-500 mt-1">Ordem: {banner.order}</p>
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="bg-white rounded-xl p-6 border border-gray-100 shadow-sm animate-pulse">
+                <div className="h-5 bg-gray-200 rounded w-1/2 mb-3"></div>
+                <div className="h-32 bg-gray-200 rounded-lg mb-4"></div>
+                <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
+                <div className="h-4 bg-gray-200 rounded w-2/3"></div>
+              </div>
+            ))}
+          </div>
+        ) : banners.length === 0 ? (
+          <div className="text-center py-12 bg-white rounded-xl border border-gray-100 shadow-sm">
+            <p className="text-gray-500">Nenhum banner cadastrado ainda.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {banners.map((banner) => (
+              <Card key={banner._id}>
+                <CardHeader>
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="font-semibold text-black">{banner.title}</h3>
+                      <p className="text-sm text-gray-500 mt-1">Ordem: {banner.order}</p>
+                    </div>
+                    <span className={`px-2 py-1 text-xs rounded-full ${
+                      banner.active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                    }`}>
+                      {banner.active ? 'Ativo' : 'Inativo'}
+                    </span>
                   </div>
-                  <span className={`px-2 py-1 text-xs rounded-full ${
-                    banner.active ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
-                  }`}>
-                    {banner.active ? 'Ativo' : 'Inativo'}
-                  </span>
-                </div>
-              </CardHeader>
-              <CardContent>
-                {banner.image && (
-                  <img
-                    src={banner.image}
-                    alt={banner.title}
-                    className="w-full h-32 object-cover rounded-lg mb-4"
-                  />
-                )}
-                <p className="text-sm text-gray-600 mb-4">{banner.description}</p>
-                {banner.link && (
-                  <p className="text-xs text-gray-500 mb-4">Link: {banner.link}</p>
-                )}
-                {banner.startDate && (
-                  <p className="text-xs text-gray-500 mb-2">
-                    Início: {new Date(banner.startDate).toLocaleDateString('pt-PT')}
-                  </p>
-                )}
-                {banner.endDate && (
-                  <p className="text-xs text-gray-500 mb-4">
-                    Fim: {new Date(banner.endDate).toLocaleDateString('pt-PT')}
-                  </p>
-                )}
-                <div className="flex gap-2">
-                  <Button size="sm" variant="outline" onClick={() => handleEdit(banner)}>
-                    Editar
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    variant="outline" 
-                    onClick={() => handleDelete(banner._id)}
-                    className="text-red-600 hover:text-red-700"
-                  >
-                    Apagar
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+                </CardHeader>
+                <CardContent>
+                  {banner.image && (
+                    <img
+                      src={banner.image}
+                      alt={banner.title}
+                      className="w-full h-32 object-cover rounded-lg mb-4"
+                    />
+                  )}
+                  <p className="text-sm text-gray-600 mb-4">{banner.description}</p>
+                  {banner.link && (
+                    <p className="text-xs text-gray-500 mb-4">Link: {banner.link}</p>
+                  )}
+                  {banner.startDate && (
+                    <p className="text-xs text-gray-500 mb-2">
+                      Início: {new Date(banner.startDate).toLocaleDateString('pt-PT')}
+                    </p>
+                  )}
+                  {banner.endDate && (
+                    <p className="text-xs text-gray-500 mb-4">
+                      Fim: {new Date(banner.endDate).toLocaleDateString('pt-PT')}
+                    </p>
+                  )}
+                  <div className="flex gap-2">
+                    <Button size="sm" variant="outline" onClick={() => handleEdit(banner)}>
+                      Editar
+                    </Button>
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      onClick={() => handleDelete(banner._id)}
+                      className="text-red-600 hover:text-red-700"
+                    >
+                      Apagar
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );
