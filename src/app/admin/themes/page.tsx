@@ -24,6 +24,7 @@ interface ThemeItem {
 function ThemesContent() {
   const [themes, setThemes] = useState<ThemeItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingTheme, setEditingTheme] = useState<ThemeItem | null>(null);
@@ -44,14 +45,23 @@ function ThemesContent() {
   }, []);
 
   const loadThemes = async () => {
+    setLoadError(null);
     try {
       const response = await fetch('/api/admin/themes');
       if (response.ok) {
         const data = await response.json();
-        setThemes(data);
+        if (Array.isArray(data)) {
+          setThemes(data);
+        } else {
+          setLoadError('Resposta inválida da API.');
+        }
+      } else {
+        const errData = await response.json().catch(() => ({}));
+        setLoadError(errData.error || `Erro ${response.status} ao carregar temas.`);
       }
     } catch (error) {
       console.error('Error loading themes:', error);
+      setLoadError('Não foi possível conectar ao servidor. Verifique a ligação à base de dados.');
     } finally {
       setLoading(false);
     }
@@ -340,12 +350,38 @@ function ThemesContent() {
           </Card>
         )}
 
+        {/* Load Error */}
+        {loadError && (
+          <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-200">
+            <div className="flex items-start gap-3">
+              <svg className="w-5 h-5 text-red-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <p className="text-sm font-semibold text-red-800">Erro ao carregar temas</p>
+                <p className="text-sm text-red-700 mt-0.5">{loadError}</p>
+                <button onClick={loadThemes} className="mt-2 text-xs text-red-600 hover:text-red-800 underline font-medium">
+                  Tentar novamente
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Themes List */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {loading ? (
             <div className="col-span-full py-16 text-center text-gray-500">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 mx-auto mb-3"></div>
               <p className="text-sm text-gray-600">A carregar temas da base de dados...</p>
+            </div>
+          ) : themes.length === 0 && !loadError ? (
+            <div className="col-span-full py-16 text-center">
+              <svg className="w-12 h-12 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 10h16M4 14h8" />
+              </svg>
+              <p className="text-gray-500 font-medium">Nenhum tema encontrado</p>
+              <p className="text-sm text-gray-400 mt-1">Clique em &quot;+ Novo Tema&quot; para criar o primeiro.</p>
             </div>
           ) : (
             themes.map((theme) => {

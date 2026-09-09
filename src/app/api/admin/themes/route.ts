@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { getAllThemes, createTheme } from '@/lib/db/themes-mongodb';
+import { themes as staticThemes } from '@/data/themes';
 
 export async function GET(request: NextRequest) {
   try {
@@ -20,13 +21,15 @@ export async function GET(request: NextRequest) {
     }
 
     const themes = await getAllThemes();
+    // If DB returns empty, fall back to static themes so admin is never blank
+    if (!themes || themes.length === 0) {
+      return NextResponse.json(staticThemes);
+    }
     return NextResponse.json(themes);
   } catch (error) {
-    console.error('Error fetching themes:', error);
-    return NextResponse.json(
-      { error: 'Error fetching themes' },
-      { status: 500 }
-    );
+    console.error('Error fetching themes (falling back to static):', error);
+    // Fallback to static data so admin page always shows something
+    return NextResponse.json(staticThemes);
   }
 }
 
