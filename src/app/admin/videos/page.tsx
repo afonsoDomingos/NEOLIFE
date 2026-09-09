@@ -78,12 +78,17 @@ function VideosContent() {
         ? `/api/admin/videos/${videoId}`
         : '/api/admin/videos';
 
-      const method = editingVideo ? 'PUT' : 'POST';
+      const method = videoId ? 'PUT' : 'POST';
+
+      const payload = {
+        ...formData,
+        ...(videoId ? { _id: videoId } : {})
+      };
 
       const response = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       if (response.ok) {

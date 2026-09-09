@@ -105,11 +105,27 @@ export const updateVideo = async (id: string, updates: Partial<IVideo>) => {
     if (updates.videoUrl && !updates.thumbnailUrl) {
       updates.thumbnailUrl = getThumbnail(updates.videoUrl);
     }
-    const video = await Video.findByIdAndUpdate(
-      id,
-      { ...updates, updatedAt: new Date() },
-      { new: true }
-    );
+
+    const mongoose = await import('mongoose');
+    const isValidObjectId = mongoose.default.Types.ObjectId.isValid(id);
+
+    let video = null;
+    if (isValidObjectId) {
+      video = await Video.findByIdAndUpdate(
+        id,
+        { ...updates, updatedAt: new Date() },
+        { new: true }
+      );
+    }
+
+    if (!video) {
+      video = await Video.findOneAndUpdate(
+        { $or: [{ videoUrl: updates.videoUrl }, { title: updates.title }] },
+        { ...updates, updatedAt: new Date() },
+        { new: true, upsert: true }
+      );
+    }
+
     return video;
   } catch (error) {
     console.error('Error updating video:', error);

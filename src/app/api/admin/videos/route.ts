@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { getAllVideos, createVideo } from '@/lib/db/videos-mongodb';
+import { getAllVideos, createVideo, updateVideo } from '@/lib/db/videos-mongodb';
 
 async function checkAuth(isDev: boolean) {
   if (isDev) return true;
@@ -65,4 +65,35 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+export async function PUT(request: NextRequest) {
+  try {
+    const isDevelopment = process.env.NODE_ENV === 'development';
+    const authorized = await checkAuth(isDevelopment);
+    if (!authorized) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const body = await request.json();
+    const id = body._id || body.id;
+
+    if (id) {
+      const video = await updateVideo(id, body);
+      return NextResponse.json(video);
+    } else {
+      const video = await createVideo(body);
+      return NextResponse.json(video);
+    }
+  } catch (error) {
+    console.error('Error in PUT /api/admin/videos:', error);
+    return NextResponse.json(
+      { error: 'Failed to update video' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(request: NextRequest) {
+  return PUT(request);
 }
