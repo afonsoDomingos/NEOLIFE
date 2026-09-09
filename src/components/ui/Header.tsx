@@ -40,9 +40,19 @@ export const Header: React.FC = () => {
           <div className="flex items-center space-x-2 sm:space-x-4">
             <Link 
               href="/admin" 
-              className="text-xs sm:text-sm text-gray-600 hover:text-emerald-700 transition-colors px-3 py-1.5 rounded-md hover:bg-emerald-50 border border-transparent hover:border-emerald-200"
+              title="Área de Administração"
+              aria-label="Área de Administração"
+              className="p-2 rounded-lg text-gray-600 hover:text-emerald-600 hover:bg-emerald-50 transition-colors border border-transparent hover:border-emerald-200 flex items-center justify-center group"
             >
-              Área Admin
+              <svg 
+                className="w-5 h-5 text-gray-600 group-hover:text-emerald-600 transition-colors" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                strokeWidth={1.8}
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+              </svg>
             </Link>
             
             {/* Mobile menu button */}
@@ -97,10 +107,19 @@ export const Header: React.FC = () => {
               </Link>
               <Link 
                 href="/admin" 
-                className="text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 px-3 py-2 rounded-lg transition-colors font-medium"
+                className="flex items-center gap-2 text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 px-3 py-2 rounded-lg transition-colors font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Área Admin
+                <svg 
+                  className="w-4 h-4 text-gray-500" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.8}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                </svg>
+                <span>Área Admin</span>
               </Link>
             </nav>
           </div>
