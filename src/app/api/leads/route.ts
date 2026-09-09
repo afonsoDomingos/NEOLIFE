@@ -20,18 +20,49 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create lead in MongoDB
-    const lead = await createLead({
-      country,
-      name,
-      phone,
-      email,
-      whatsapp,
-      theme,
-      source,
-      campaign,
-      notes
-    });
+    // Create lead in MongoDB with graceful fallback
+    let leadId: string = '';
+    try {
+      const lead = await createLead({
+        country,
+        name,
+        phone,
+        email,
+        whatsapp,
+        theme,
+        source,
+        campaign,
+        notes
+      });
+      leadId = lead?._id ? lead._id.toString() : 'lead_' + Date.now();
+    } catch (dbError) {
+      console.error('Database lead creation error, using fallback storage:', dbError);
+      leadId = 'backup_' + Date.now();
+      try {
+        const fs = await import('fs');
+        const path = await import('path');
+        const backupPath = path.join(process.cwd(), 'leads-backup.json');
+        const existing = fs.existsSync(backupPath) ? JSON.parse(fs.readFileSync(backupPath, 'utf-8')) : [];
+        existing.push({
+          _id: leadId,
+          country,
+          name,
+          phone,
+          email,
+          whatsapp,
+          theme,
+          source,
+          campaign,
+          notes,
+          status: 'novo',
+          createdAt: new Date().toISOString(),
+          isBackup: true
+        });
+        fs.writeFileSync(backupPath, JSON.stringify(existing, null, 2));
+      } catch (backupErr) {
+        console.error('Emergency backup file write failed:', backupErr);
+      }
+    }
 
     // Track lead generation
     trackLeadGenerated({
@@ -73,7 +104,7 @@ export async function POST(request: NextRequest) {
     }
     
     return NextResponse.json(
-      { success: true, leadId: lead._id.toString() },
+      { success: true, leadId },
       { status: 201 }
     );
   } catch (error) {

@@ -1,4 +1,13 @@
 import mongoose from 'mongoose';
+import dns from 'dns';
+
+// Fix Node.js DNS resolution for MongoDB Atlas SRV records (prevent ECONNREFUSED querySrv)
+try {
+  const currentServers = dns.getServers();
+  dns.setServers(['8.8.8.8', '1.1.1.1', ...currentServers]);
+} catch {
+  // Ignore in environments where setServers is unsupported
+}
 
 const MONGODB_URI = process.env.MONGODB_URI || '';
 

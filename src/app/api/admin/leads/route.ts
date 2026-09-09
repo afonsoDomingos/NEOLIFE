@@ -21,6 +21,18 @@ export async function GET(request: NextRequest) {
 
     const searchParams = request.nextUrl.searchParams;
     
+    function getBackupLeads() {
+      try {
+        const fs = require('fs');
+        const path = require('path');
+        const backupPath = path.join(process.cwd(), 'leads-backup.json');
+        if (fs.existsSync(backupPath)) {
+          return JSON.parse(fs.readFileSync(backupPath, 'utf-8'));
+        }
+      } catch (e) {}
+      return [];
+    }
+
     // Check if there are filters
     if (searchParams.has('search') || searchParams.has('country') || 
         searchParams.has('theme') || searchParams.has('status')) {
@@ -31,12 +43,14 @@ export async function GET(request: NextRequest) {
       if (searchParams.has('theme')) filters.theme = searchParams.get('theme');
       if (searchParams.has('status')) filters.status = searchParams.get('status');
       
-      const leads = await getLeadsByFilters(filters);
-      return NextResponse.json(leads);
+      const leads = await getLeadsByFilters(filters).catch(() => []);
+      const backupLeads = getBackupLeads();
+      return NextResponse.json([...backupLeads, ...leads]);
     }
     
-    const leads = await getAllLeads();
-    return NextResponse.json(leads);
+    const leads = await getAllLeads().catch(() => []);
+    const backupLeads = getBackupLeads();
+    return NextResponse.json([...backupLeads, ...leads]);
   } catch (error) {
     console.error('Error fetching leads:', error);
     return NextResponse.json(

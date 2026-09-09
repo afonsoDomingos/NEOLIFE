@@ -121,11 +121,12 @@ function FormularioContent() {
           window.location.href = '/confirmacao';
         }, 1500);
       } else {
-        throw new Error('Failed to submit form');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || 'Erro ao submeter formulário. Por favor, tente novamente.');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error submitting form:', error);
-      setErrors({ submit: 'Erro ao enviar formulário. Por favor, tente novamente.' });
+      setErrors({ submit: error.message || 'Erro ao enviar formulário. Por favor, tente novamente.' });
     } finally {
       setIsSubmitting(false);
     }
