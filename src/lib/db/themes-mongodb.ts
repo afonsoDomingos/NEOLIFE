@@ -1,4 +1,8 @@
 import connectDB from './mongodb';
+import mongoose from 'mongoose';
+
+/** Returns true if the string is a valid MongoDB ObjectId */
+const isValidObjectId = (id: string) => mongoose.Types.ObjectId.isValid(id) && String(new mongoose.Types.ObjectId(id)) === id;
 import Theme, { ITheme } from './models/Theme';
 import { themes as defaultThemes } from '@/data/themes';
 import { deleteImage } from '@/lib/utils/cloudinary';
@@ -64,9 +68,12 @@ export const updateTheme = async (
   try {
     await connectDB();
 
-    // If changing image and theme already has a previous publicId, we can remove the old image
+    // Determine the query — if id is not a valid ObjectId, treat it as a slug
+    const query = isValidObjectId(id) ? { _id: id } : { slug: id };
+
+    // If changing image, clean up old Cloudinary image
     if (updates.publicId) {
-      const existing = await Theme.findById(id);
+      const existing = await Theme.findOne(query);
       if (existing?.publicId && existing.publicId !== updates.publicId) {
         try {
           await deleteImage(existing.publicId);
@@ -76,10 +83,11 @@ export const updateTheme = async (
       }
     }
 
-    const theme = await Theme.findByIdAndUpdate(
-      id,
+    // findOneAndUpdate with upsert: if theme doesn't exist in DB yet (from static data), create it
+    const theme = await Theme.findOneAndUpdate(
+      query,
       { ...updates, updatedAt: new Date() },
-      { new: true }
+      { new: true, upsert: true, setDefaultsOnInsert: true }
     );
 
     return theme;
@@ -93,7 +101,10 @@ export const deleteTheme = async (id: string) => {
   try {
     await connectDB();
 
-    const theme = await Theme.findById(id);
+    // Determine the query — if id is not a valid ObjectId, treat it as a slug
+    const query = isValidObjectId(id) ? { _id: id } : { slug: id };
+
+    const theme = await Theme.findOne(query);
     if (theme?.publicId) {
       try {
         await deleteImage(theme.publicId);
@@ -102,7 +113,7 @@ export const deleteTheme = async (id: string) => {
       }
     }
 
-    await Theme.findByIdAndDelete(id);
+    await Theme.findOneAndDelete(query);
     return { success: true };
   } catch (error) {
     console.error('Error deleting theme:', error);
