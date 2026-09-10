@@ -66,9 +66,19 @@ export async function POST(request: NextRequest) {
       referredBy: referredBy || undefined,
     });
 
-    // Set session cookie
-    const cookieStore = await cookies();
-    cookieStore.set(
+    // Create JSON response
+    const response = NextResponse.json({
+      success: true,
+      member: {
+        id: member._id.toString(),
+        name: member.name,
+        email: member.email,
+        referralCode: member.referralCode,
+      },
+    });
+
+    // Set session cookie directly on response
+    response.cookies.set(
       'member_session',
       JSON.stringify({ id: member._id.toString(), email: member.email }),
       {
@@ -80,19 +90,19 @@ export async function POST(request: NextRequest) {
       }
     );
 
-    return NextResponse.json({
-      success: true,
-      member: {
-        id: member._id.toString(),
-        name: member.name,
-        email: member.email,
-        referralCode: member.referralCode,
-      },
-    });
-  } catch (error) {
+    return response;
+  } catch (error: any) {
     console.error('Register error:', error);
+    
+    if (error?.code === 11000) {
+      return NextResponse.json(
+        { error: 'Este email já está registado. Por favor faça login.' },
+        { status: 409 }
+      );
+    }
+
     return NextResponse.json(
-      { error: 'Erro ao criar conta. Tente novamente.' },
+      { error: error?.message || 'Erro ao criar conta. Tente novamente.' },
       { status: 500 }
     );
   }

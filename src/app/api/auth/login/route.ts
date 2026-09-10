@@ -51,9 +51,20 @@ export async function POST(request: NextRequest) {
     // Update last login
     await Member.findByIdAndUpdate(member._id, { lastLoginAt: new Date() });
 
-    // Set session cookie
-    const cookieStore = await cookies();
-    cookieStore.set(
+    // Create JSON response
+    const response = NextResponse.json({
+      success: true,
+      member: {
+        id: member._id.toString(),
+        name: member.name,
+        email: member.email,
+        plan: member.plan,
+        referralCode: member.referralCode,
+      },
+    });
+
+    // Set session cookie directly on response
+    response.cookies.set(
       'member_session',
       JSON.stringify({ id: member._id.toString(), email: member.email }),
       {
@@ -65,20 +76,11 @@ export async function POST(request: NextRequest) {
       }
     );
 
-    return NextResponse.json({
-      success: true,
-      member: {
-        id: member._id.toString(),
-        name: member.name,
-        email: member.email,
-        plan: member.plan,
-        referralCode: member.referralCode,
-      },
-    });
-  } catch (error) {
+    return response;
+  } catch (error: any) {
     console.error('Login error:', error);
     return NextResponse.json(
-      { error: 'Erro ao fazer login. Tente novamente.' },
+      { error: error?.message || 'Erro ao fazer login. Tente novamente.' },
       { status: 500 }
     );
   }
