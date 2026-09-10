@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/ui/Header";
 import { Footer } from "@/components/ui/Footer";
 import { Analytics } from "@/components/ui/Analytics";
+import { ChatAssistant } from "@/components/ui/ChatAssistant";
 import { seoConfig } from "./metadata";
 
 const geistSans = Geist({
@@ -57,6 +58,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Footer />
+        <ChatAssistant />
       </body>
     </html>
   );

@@ -72,7 +72,88 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Themes Section */}
+      {/* Mentors / Personal Positioning Section */}
+      <section className="py-20 bg-gray-50 border-y border-gray-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Text side */}
+            <div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold mb-6">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                Quem Somos
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+                Uma Equipa Real.<br />
+                <span className="text-emerald-700">Partilha Genuína.</span>
+              </h2>
+              <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                Não somos uma empresa. Somos um casal que encontrou na NeoLife uma forma de melhorar a nossa saúde e criar uma fonte de rendimento adicional — e decidimos partilhar essa descoberta com quem à nossa volta.
+              </p>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                A nossa missão é simples: fornecer informação de qualidade, educar sobre bem-estar e nutrição, e acompanhar as pessoas que queiram explorar esta oportunidade — sem pressão, sem jargões de vendas.
+              </p>
+              <p className="text-gray-600 leading-relaxed mb-8">
+                Se tiver dúvidas, perguntas ou apenas curiosidade — estamos aqui. A conversa é gratuita e sem compromisso.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/oportunidade">
+                  <Button variant="outline">
+                    Conhecer a Oportunidade
+                  </Button>
+                </Link>
+                <Link href="#temas">
+                  <Button>
+                    Explorar Temas de Saúde
+                  </Button>
+                </Link>
+              </div>
+            </div>
+
+            {/* Visual side */}
+            <div className="relative">
+              <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
+                {/* Avatar placeholder — replace src with real couple photo */}
+                <div className="flex gap-4 items-center mb-6">
+                  <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-xl shrink-0">
+                    NL
+                  </div>
+                  <div>
+                    <p className="font-bold text-gray-900">Os seus consultores NeoLife</p>
+                    <p className="text-sm text-emerald-700 font-medium">Moçambique · África do Sul · Angola · Zimbabwe</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  {[
+                    { icon: '📚', text: 'Informação educativa sobre saúde e bem-estar' },
+                    { icon: '💬', text: 'Resposta a dúvidas sem compromisso' },
+                    { icon: '🎯', text: 'Acompanhamento personalizado' },
+                    { icon: '🌍', text: 'Rede ativa em 4 países africanos' },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <span className="text-xl">{item.icon}</span>
+                      <p className="text-gray-700 leading-snug">{item.text}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 pt-6 border-t border-gray-100">
+                  <p className="text-xs text-gray-500 italic">
+                    "A melhor decisão é uma decisão informada. Estamos aqui para garantir que a sua o seja."
+                  </p>
+                </div>
+              </div>
+
+              {/* Decorative badge */}
+              <div className="absolute -bottom-4 -right-4 bg-emerald-600 text-white rounded-2xl px-5 py-3 shadow-lg">
+                <p className="text-xs font-medium opacity-80">Sempre disponíveis</p>
+                <p className="text-sm font-bold">via WhatsApp</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="temas" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -136,6 +217,28 @@ export default function Home() {
 
       {/* Videos Section */}
       <VideoSection />
+
+      {/* Business Opportunity Teaser */}
+      <section className="py-16 bg-emerald-700">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="text-center md:text-left">
+              <p className="text-emerald-300 text-sm font-semibold uppercase tracking-wider mb-2">Para quem procura mais</p>
+              <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+                Conheça a Oportunidade de Negócio
+              </h2>
+              <p className="text-emerald-100 leading-relaxed max-w-xl">
+                Saúde e bem-estar podem ser também a base de um rendimento suplementar ou até de um negócio a tempo inteiro. Sem pressão — apenas informação.
+              </p>
+            </div>
+            <Link href="/oportunidade" className="shrink-0">
+              <Button size="lg" className="bg-white text-emerald-800 hover:bg-emerald-50 font-bold px-8 whitespace-nowrap">
+                Saber Como Funciona
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-b from-white via-emerald-50/20 to-emerald-50/40 border-t border-emerald-100/50">

@@ -4,9 +4,10 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { Input, Select, Textarea } from '@/components/ui/Input';
-import { getCountryById } from '@/data/countries';
+import { getCountryById, getAllowedDialCodes } from '@/data/countries';
 import { getThemeBySlug } from '@/data/themes';
 import Link from 'next/link';
+import { Country } from '@/types';
 
 function FormularioContent() {
   const searchParams = useSearchParams();
@@ -25,10 +26,18 @@ function FormularioContent() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [phoneDialCode, setPhoneDialCode] = useState('');
 
   const [theme, setTheme] = useState<any>(() => themeSlug ? getThemeBySlug(themeSlug) || null : null);
   const [loadingTheme, setLoadingTheme] = useState(!theme);
-  const country = countryId ? getCountryById(countryId) : null;
+  const country: Country | undefined = countryId ? getCountryById(countryId) : undefined;
+
+  // Pre-fill the dial code from the selected country
+  useEffect(() => {
+    if (country?.dialCode) {
+      setPhoneDialCode(country.dialCode);
+    }
+  }, [country]);
 
   useEffect(() => {
     if (themeSlug) {
@@ -60,6 +69,16 @@ function FormularioContent() {
     }
   };
 
+  /**
+   * Validates that the phone number starts with the allowed dial code for
+   * the selected country. Strips spaces and leading zeros before checking.
+   */
+  const isPhoneFromAllowedCountry = (phone: string): boolean => {
+    const allowedCodes = getAllowedDialCodes();
+    const cleaned = phone.trim().replace(/\s+/g, '');
+    return allowedCodes.some(code => cleaned.startsWith(code));
+  };
+
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
 
@@ -69,6 +88,9 @@ function FormularioContent() {
 
     if (!formData.phone.trim()) {
       newErrors.phone = 'Telefone é obrigatório';
+    } else if (!isPhoneFromAllowedCountry(formData.phone)) {
+      newErrors.phone =
+        `O número de telefone deve começar com o indicativo do seu país (ex: ${country?.dialCode || '+258'}). A NeoLife está disponível em Moçambique, África do Sul, Angola e Zimbabwe.`;
     }
 
     if (!formData.email.trim()) {
@@ -116,7 +138,6 @@ function FormularioContent() {
 
       if (response.ok) {
         setSubmitSuccess(true);
-        // Redirect to confirmation page after a short delay
         setTimeout(() => {
           window.location.href = '/confirmacao';
         }, 1500);
@@ -140,27 +161,13 @@ function FormularioContent() {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center max-w-md mx-auto px-4">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg
-              className="w-8 h-8 text-green-600"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M5 13l4 4L19 7"
-              />
+          <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-2xl font-bold text-black mb-4">
-            Formulário Enviado!
-          </h2>
-          <p className="text-gray-600">
-            A redirecionar para a página de confirmação...
-          </p>
+          <h2 className="text-2xl font-bold text-black mb-4">Formulário Enviado!</h2>
+          <p className="text-gray-600">A redirecionar para a página de confirmação...</p>
         </div>
       </div>
     );
@@ -177,14 +184,14 @@ function FormularioContent() {
     );
   }
 
+  const allowedCodes = getAllowedDialCodes();
+
   return (
     <div className="min-h-screen bg-white py-20">
       <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-black mb-4">
-            {theme.title}
-          </h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-black mb-4">{theme.title}</h1>
           <p className="text-lg text-gray-600 mb-4">
             Preencha os seus dados para receber informações personalizadas.
           </p>
@@ -192,10 +199,20 @@ function FormularioContent() {
             <span className="font-medium">{country.flag} {country.name}</span>
           </div>
           <div className="inline-block bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-lg mt-4">
-            <span className="text-sm font-medium text-emerald-800">
-              Passo 2 de 2: Preencher Formulário
-            </span>
+            <span className="text-sm font-medium text-emerald-800">Passo 2 de 2: Preencher Formulário</span>
           </div>
+        </div>
+
+        {/* Geographic restriction notice */}
+        <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg flex items-start gap-3">
+          <svg className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+              d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p className="text-blue-800 text-sm">
+            <strong>Importante:</strong> O seu número de telefone deve começar com o indicativo do seu país
+            ({allowedCodes.join(', ')}). A NeoLife está atualmente disponível em Moçambique, África do Sul, Angola e Zimbabwe.
+          </p>
         </div>
 
         {/* Form */}
@@ -210,15 +227,23 @@ function FormularioContent() {
             required
           />
 
-          <Input
-            label="Telefone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleInputChange}
-            placeholder="Digite o seu número de telefone"
-            error={errors.phone}
-            required
-          />
+          {/* Phone with dial code pre-hint */}
+          <div>
+            <Input
+              label={`Telefone (inclua o indicativo ${country.dialCode})`}
+              name="phone"
+              value={formData.phone}
+              onChange={handleInputChange}
+              placeholder={`${country.dialCode} 84 000 0000`}
+              error={errors.phone}
+              required
+            />
+            {!errors.phone && (
+              <p className="mt-1.5 text-xs text-gray-500">
+                Exemplo: <span className="font-mono font-medium">{country.dialCode} 84 123 4567</span>
+              </p>
+            )}
+          </div>
 
           <Input
             label="E-mail"
@@ -236,7 +261,7 @@ function FormularioContent() {
             name="whatsapp"
             value={formData.whatsapp}
             onChange={handleInputChange}
-            placeholder="Digite o seu número de WhatsApp"
+            placeholder={`${country.dialCode} 84 000 0000`}
           />
 
           <Select
@@ -273,15 +298,9 @@ function FormularioContent() {
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
             <Link href={`/interesse?tema=${themeSlug}${campaign ? `&campanha=${campaign}` : ''}`}>
-              <Button variant="outline" fullWidth>
-                Voltar
-              </Button>
+              <Button variant="outline" fullWidth>Voltar</Button>
             </Link>
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              fullWidth
-            >
+            <Button type="submit" disabled={isSubmitting} fullWidth>
               {isSubmitting ? 'A Enviar...' : 'Receber Informações'}
             </Button>
           </div>

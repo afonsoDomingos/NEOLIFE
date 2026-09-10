@@ -25,10 +25,16 @@ export const Header: React.FC = () => {
               Início
             </Link>
             <Link href="/#temas" className="text-gray-700 hover:text-emerald-600 font-medium transition-colors text-sm sm:text-base">
-              Temas de Interesse
+              Temas
             </Link>
             <Link href="/#videos" className="text-gray-700 hover:text-emerald-600 font-medium transition-colors text-sm sm:text-base">
               Vídeos
+            </Link>
+            <Link
+              href="/oportunidade"
+              className="text-emerald-700 hover:text-emerald-600 font-semibold transition-colors text-sm sm:text-base border border-emerald-200 hover:border-emerald-400 px-3 py-1.5 rounded-lg hover:bg-emerald-50"
+            >
+              Oportunidade
             </Link>
           </nav>
           
@@ -106,6 +112,13 @@ export const Header: React.FC = () => {
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Vídeos
+              </Link>
+              <Link
+                href="/oportunidade"
+                className="text-emerald-700 font-semibold hover:bg-emerald-50 px-3 py-2 rounded-lg transition-colors border border-emerald-200"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Oportunidade de Negócio
               </Link>
               <Link 
                 href="/admin" 

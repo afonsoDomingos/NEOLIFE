@@ -93,8 +93,8 @@ export const DynamicBanner: React.FC = () => {
           100% { background-position: 200% center; }
         }
         @keyframes glowPulse {
-          0%, 100% { text-shadow: 0 0 20px rgba(52,211,153,0.3), 0 2px 4px rgba(0,0,0,0.5); }
-          50%       { text-shadow: 0 0 40px rgba(52,211,153,0.55), 0 2px 8px rgba(0,0,0,0.5); }
+          0%, 100% { text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+          50%       { text-shadow: 0 2px 12px rgba(0,0,0,0.7); }
         }
         @keyframes floatUp {
           0%   { opacity: 0; transform: translateY(16px); }
@@ -121,21 +121,25 @@ export const DynamicBanner: React.FC = () => {
           animation: btnSlide 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.65s both;
         }
         .shimmer-text {
+          color: #ffffff;
+          animation: slideUpFade 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+          text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+          transition: all 0.3s ease;
+        }
+        .shimmer-text:hover {
           background: linear-gradient(
             90deg,
             #ffffff 0%,
-            #ffffff 35%,
+            #ffffff 30%,
             #6ee7b7 50%,
-            #ffffff 65%,
+            #ffffff 70%,
             #ffffff 100%
           );
           background-size: 200% auto;
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          animation: slideUpFade 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both,
-                     shimmer 4s linear 1s infinite,
-                     glowPulse 3.5s ease-in-out 1s infinite;
+          animation: shimmer 1.2s linear forwards;
         }
         .word-reveal span {
           display: inline-block;

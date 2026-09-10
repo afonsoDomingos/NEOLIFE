@@ -4,6 +4,7 @@ export interface Country {
   code: string;
   available: boolean;
   flag?: string;
+  dialCode?: string; // International phone prefix e.g. "+258"
 }
 
 export interface Theme {
