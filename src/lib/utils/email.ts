@@ -167,7 +167,7 @@ export async function sendLeadConfirmationEmail(data: LeadEmailData): Promise<vo
               Prefere tirar dúvidas agora ou ter um acompanhamento direto?
             </p>
             <a href="${whatsappLink}" class="btn-whatsapp" target="_blank">
-              💬 Falar Connosco no WhatsApp
+              Falar Connosco no WhatsApp
             </a>
           </div>
           ` : ''}
@@ -239,7 +239,7 @@ export async function sendAdminNotificationEmail(lead: AdminEmailData): Promise<
 
         <div style="text-align: center;">
           <a href="https://wa.me/${cleanWhatsapp}" class="cta-btn" target="_blank">
-            💬 Iniciar Conversa no WhatsApp
+            Iniciar Conversa no WhatsApp
           </a>
         </div>
       </div>

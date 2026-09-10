@@ -6,7 +6,7 @@ export { extractYouTubeId, getEmbedUrl, getThumbnail };
 
 const defaultVideos = [
   {
-    title: 'Conheça a NeoLife — A Nossa História e Missão',
+    title: 'Conheça a NeoLife - A Nossa História e Missão',
     description: 'Descubra a história da NeoLife, a nossa visão de saúde global e como transformamos vidas em mais de 50 países.',
     videoUrl: 'https://www.youtube.com/watch?v=ScMzIvxBSi4',
     thumbnailUrl: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=450&fit=crop',
@@ -16,7 +16,7 @@ const defaultVideos = [
     order: 1,
   },
   {
-    title: 'Oportunidade de Negócio NeoLife — Como Funciona',
+    title: 'Oportunidade de Negócio NeoLife - Como Funciona',
     description: 'Aprenda como construir o seu negócio independente, gerar rendimento extra e alcançar a liberdade financeira com a NeoLife.',
     videoUrl: 'https://www.youtube.com/watch?v=jNQXAC9IVRw',
     thumbnailUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=450&fit=crop',
@@ -26,7 +26,7 @@ const defaultVideos = [
     order: 2,
   },
   {
-    title: 'Ciência & Nutrição — A Qualidade dos Produtos NeoLife',
+    title: 'Ciência & Nutrição - A Qualidade dos Produtos NeoLife',
     description: 'Conheça o Conselho Científico Consultivo (SAB) da NeoLife e os rigorosos padrões de pureza e eficácia nutricional.',
     videoUrl: 'https://www.youtube.com/watch?v=ScMzIvxBSi4',
     thumbnailUrl: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&h=450&fit=crop',

@@ -12,10 +12,10 @@ interface Message {
 }
 
 const QUICK_PROMPTS = [
-  '🌿 O que é a nutrição celular?',
-  '💼 Como funciona a oportunidade de negócio?',
-  '📦 Como posso encomendar produtos?',
-  '🌍 Quais os países com apoio direto?',
+  'O que é a nutrição celular?',
+  'Como funciona a oportunidade de negócio?',
+  'Como posso encomendar produtos?',
+  'Quais os países com apoio direto?',
 ];
 
 export function ChatAssistant() {
@@ -29,7 +29,7 @@ export function ChatAssistant() {
       id: 'welcome',
       role: 'assistant',
       content:
-        'Olá! Seja muito bem-vindo à nossa plataforma. 👋\n\nSou o assistente virtual da equipa de mentoria e consultoria NeoLife. Estou aqui para esclarecer dúvidas sobre a nossa abordagem à **nutrição celular**, **qualidade científica** ou sobre a **oportunidade de empreender connosco** em família.\n\nComo posso ajudar hoje?',
+        'Olá! Seja muito bem-vindo à nossa plataforma.\n\nSou o assistente virtual da equipa de mentoria e consultoria NeoLife. Estou aqui para esclarecer dúvidas sobre a nossa abordagem à **nutrição celular**, **qualidade científica** ou sobre a **oportunidade de empreender connosco** em família.\n\nComo posso ajudar hoje?',
       time: 'Agora',
     },
   ]);
@@ -201,8 +201,10 @@ export function ChatAssistant() {
           <div className="bg-gradient-to-r from-emerald-800 via-emerald-700 to-emerald-600 text-white px-5 py-4 flex items-center justify-between shadow-sm">
             <div className="flex items-center space-x-3">
               <div className="relative">
-                <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur border border-white/40 flex items-center justify-center font-bold text-lg text-white">
-                  🌿
+                <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur border border-white/40 flex items-center justify-center text-white">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
                 </div>
                 <span className="absolute bottom-0 right-0 w-3 h-3 rounded-full bg-emerald-400 border-2 border-emerald-800"></span>
               </div>
@@ -331,7 +333,7 @@ export function ChatAssistant() {
             </form>
             <div className="mt-2 text-center">
               <span className="text-[10px] text-gray-400">
-                Atendimento consultivo educacional • Não substitui conselho médico
+                Atendimento consultivo educacional - Não substitui conselho médico
               </span>
             </div>
           </div>

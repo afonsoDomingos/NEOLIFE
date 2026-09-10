@@ -87,13 +87,13 @@ export default function Home() {
                 <span className="text-emerald-700">Partilha Genuína.</span>
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                Não somos uma empresa. Somos um casal que encontrou na NeoLife uma forma de melhorar a nossa saúde e criar uma fonte de rendimento adicional — e decidimos partilhar essa descoberta com quem à nossa volta.
+                Não somos uma empresa. Somos um casal que encontrou na NeoLife uma forma de melhorar a nossa saúde e criar uma fonte de rendimento adicional - e decidimos partilhar essa descoberta com quem à nossa volta.
               </p>
               <p className="text-gray-600 leading-relaxed mb-6">
-                A nossa missão é simples: fornecer informação de qualidade, educar sobre bem-estar e nutrição, e acompanhar as pessoas que queiram explorar esta oportunidade — sem pressão, sem jargões de vendas.
+                A nossa missão é simples: fornecer informação de qualidade, educar sobre bem-estar e nutrição, e acompanhar as pessoas que queiram explorar esta oportunidade - sem pressão, sem jargões de vendas.
               </p>
               <p className="text-gray-600 leading-relaxed mb-8">
-                Se tiver dúvidas, perguntas ou apenas curiosidade — estamos aqui. A conversa é gratuita e sem compromisso.
+                Se tiver dúvidas, perguntas ou apenas curiosidade - estamos aqui. A conversa é gratuita e sem compromisso.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/oportunidade">
@@ -112,7 +112,7 @@ export default function Home() {
             {/* Visual side */}
             <div className="relative">
               <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-                {/* Avatar placeholder — replace src with real couple photo */}
+                {/* Avatar placeholder - replace src with real couple photo */}
                 <div className="flex gap-4 items-center mb-6">
                   <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-xl shrink-0">
                     NL
@@ -125,14 +125,18 @@ export default function Home() {
 
                 <div className="space-y-4">
                   {[
-                    { icon: '📚', text: 'Informação educativa sobre saúde e bem-estar' },
-                    { icon: '💬', text: 'Resposta a dúvidas sem compromisso' },
-                    { icon: '🎯', text: 'Acompanhamento personalizado' },
-                    { icon: '🌍', text: 'Rede ativa em 4 países africanos' },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <span className="text-xl">{item.icon}</span>
-                      <p className="text-gray-700 leading-snug">{item.text}</p>
+                    'Informação educativa sobre saúde e bem-estar',
+                    'Resposta a dúvidas sem compromisso',
+                    'Acompanhamento personalizado',
+                    'Rede ativa em 4 países africanos',
+                  ].map((text, i) => (
+                    <div key={i} className="flex items-center gap-3">
+                      <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
+                        <svg className="w-3 h-3 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      <p className="text-gray-700 leading-snug">{text}</p>
                     </div>
                   ))}
                 </div>
@@ -228,7 +232,7 @@ export default function Home() {
                 Conheça a Oportunidade de Negócio
               </h2>
               <p className="text-emerald-100 leading-relaxed max-w-xl">
-                Saúde e bem-estar podem ser também a base de um rendimento suplementar ou até de um negócio a tempo inteiro. Sem pressão — apenas informação.
+                Saúde e bem-estar podem ser também a base de um rendimento suplementar ou até de um negócio a tempo inteiro. Sem pressão - apenas informação.
               </p>
             </div>
             <Link href="/oportunidade" className="shrink-0">

@@ -7,7 +7,7 @@ import Link from 'next/link';
 const faqs = [
   {
     q: 'O que é exactamente a oportunidade de negócio NeoLife?',
-    a: 'A NeoLife é uma empresa líder mundial em nutrição celular e suplementação de alta qualidade. A oportunidade de negócio consiste em partilhar os produtos com outras pessoas, criar a sua própria rede de clientes e parceiros, e construir uma fonte de rendimento suplementar — ou mesmo principal — com flexibilidade total de horário e localização.',
+    a: 'A NeoLife é uma empresa líder mundial em nutrição celular e suplementação de alta qualidade. A oportunidade de negócio consiste em partilhar os produtos com outras pessoas, criar a sua própria rede de clientes e parceiros, e construir uma fonte de rendimento suplementar - ou mesmo principal - com flexibilidade total de horário e localização.',
   },
   {
     q: 'Tenho de vender para ganhar dinheiro?',
@@ -19,7 +19,7 @@ const faqs = [
   },
   {
     q: 'Posso fazer isto a partir de qualquer país?',
-    a: 'A NeoLife está operacional em Moçambique 🇲🇿, África do Sul 🇿🇦, Angola 🇦🇴 e Zimbabwe 🇿🇼. A expansão para outros países africanos está em curso. Se reside num destes países, pode começar hoje.',
+    a: 'A NeoLife está operacional em Moçambique, África do Sul, Angola e Zimbabwe. A expansão para outros países africanos está em curso. Se reside num destes países, pode começar hoje.',
   },
   {
     q: 'Quanto tempo preciso de dedicar?',
@@ -46,7 +46,7 @@ export default function OportunidadePage() {
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-700/60 border border-emerald-500/40 text-emerald-200 text-xs font-semibold mb-6">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            Oportunidade de Negócio — NeoLife África
+            Oportunidade de Negócio - NeoLife África
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
@@ -56,7 +56,7 @@ export default function OportunidadePage() {
 
           <p className="text-lg md:text-xl text-emerald-100 mb-10 max-w-3xl mx-auto leading-relaxed">
             A NeoLife oferece-lhe a possibilidade de criar uma fonte de rendimento partilhando
-            produtos de excelência em nutrição e bem-estar — com apoio real, formação contínua
+            produtos de excelência em nutrição e bem-estar - com apoio real, formação contínua
             e uma equipa que acompanha cada passo da sua jornada.
           </p>
 
@@ -117,7 +117,7 @@ export default function OportunidadePage() {
                   </svg>
                 ),
                 title: 'Rendimento Flexível',
-                desc: 'Comece em part-time, ao seu ritmo. Os seus ganhos crescem à medida que a sua rede e confiança crescem. Não há teto — há pessoas no nosso grupo que substituíram o seu salário em menos de 2 anos.',
+                desc: 'Comece em part-time, ao seu ritmo. Os seus ganhos crescem à medida que a sua rede e confiança crescem. Não há teto - há pessoas no nosso grupo que substituíram o seu salário em menos de 2 anos.',
               },
             ].map((card, i) => (
               <div key={i}
@@ -148,12 +148,12 @@ export default function OportunidadePage() {
               {
                 step: '01',
                 title: 'Conhece os Produtos',
-                desc: 'Começa por experimentar os produtos NeoLife. Quando sente os resultados, a partilha torna-se genuína e natural — não é "venda", é recomendação de algo em que acredita.',
+                desc: 'Começa por experimentar os produtos NeoLife. Quando sente os resultados, a partilha torna-se genuína e natural - não é "venda", é recomendação de algo em que acredita.',
               },
               {
                 step: '02',
                 title: 'Partilha o que Descobriu',
-                desc: 'Conta a sua experiência a família, amigos e conhecidos. Usa os materiais e estratégias que a equipa fornece. Alguns querem saber mais — acompanha-os.',
+                desc: 'Conta a sua experiência a família, amigos e conhecidos. Usa os materiais e estratégias que a equipa fornece. Alguns querem saber mais - acompanha-os.',
               },
               {
                 step: '03',

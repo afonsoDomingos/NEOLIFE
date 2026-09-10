@@ -94,7 +94,7 @@ export default function ConfirmacaoPage() {
             className="block"
           >
             <Button size="lg" fullWidth className="bg-emerald-600 hover:bg-emerald-700">
-              💬 Falar Connosco pelo WhatsApp
+              Falar Connosco pelo WhatsApp
             </Button>
           </a>
           

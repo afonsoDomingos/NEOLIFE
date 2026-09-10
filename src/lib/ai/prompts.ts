@@ -34,7 +34,7 @@ export const FALLBACK_FAQS: FallbackFAQ[] = [
   },
   {
     keywords: ['pais', 'países', 'paises', 'mocambique', 'moçambique', 'angola', 'africa do sul', 'zimbabwe', 'portugal', 'onde opera'],
-    answer: 'Atualmente temos acompanhamento ativo e estruturado para: 🇲🇿 **Moçambique**, 🇿🇦 **África do Sul**, 🇦🇴 **Angola** e 🇿🇼 **Zimbabwe**. Se reside num destes países, podemos apoiá-lo diretamente com entregas locais e mentoria. Outras regiões podem ser avaliadas sob consulta.'
+    answer: 'Atualmente temos acompanhamento ativo e estruturado para: **Moçambique**, **África do Sul**, **Angola** e **Zimbabwe**. Se reside num destes países, podemos apoiá-lo diretamente com entregas locais e mentoria. Outras regiões podem ser avaliadas sob consulta.'
   },
   {
     keywords: ['como comprar', 'como encomendar', 'preco', 'preço', 'comprar', 'encomenda', 'valor'],
