@@ -184,7 +184,7 @@ export default function AdminDashboard() {
               speed={150}
             />
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
             <Link href="/admin/leads">
               <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
                 <CardContent className="p-5 flex items-start gap-3">
@@ -260,6 +260,22 @@ export default function AdminDashboard() {
                   <div>
                     <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Gerir Banners</h3>
                     <p className="text-xs text-gray-500 mt-0.5">Criar banners do topo</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/admin/members">
+              <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
+                <CardContent className="p-5 flex items-start gap-3">
+                  <div className="p-2.5 bg-teal-50 text-teal-700 rounded-lg group-hover:scale-105 transition-transform flex items-center justify-center">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Gerir Membros</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">Contas de clientes</p>
                   </div>
                 </CardContent>
               </Card>

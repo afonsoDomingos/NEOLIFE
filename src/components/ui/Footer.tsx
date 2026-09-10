@@ -24,12 +24,18 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="flex items-center gap-6 text-sm text-gray-400">
+          <div className="flex flex-wrap items-center gap-6 text-sm text-gray-400">
             <Link href="/" className="hover:text-emerald-400 transition-colors">
               Início
             </Link>
             <Link href="/#temas" className="hover:text-emerald-400 transition-colors">
               Temas
+            </Link>
+            <Link href="/oportunidade" className="hover:text-emerald-400 transition-colors">
+              Oportunidade
+            </Link>
+            <Link href="/membro/login" className="text-emerald-400 hover:text-emerald-300 font-medium transition-colors">
+              Área de Membros
             </Link>
             <Link href="/admin" className="hover:text-emerald-400 transition-colors">
               Administração
