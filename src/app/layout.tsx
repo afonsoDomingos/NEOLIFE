@@ -5,6 +5,7 @@ import { Header } from "@/components/ui/Header";
 import { Footer } from "@/components/ui/Footer";
 import { Analytics } from "@/components/ui/Analytics";
 import { ChatAssistant } from "@/components/ui/ChatAssistant";
+import { ScrollNav } from "@/components/ui/ScrollNav";
 import { seoConfig } from "./metadata";
 
 const geistSans = Geist({
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Footer />
+        <ScrollNav />
         <ChatAssistant />
       </body>
     </html>
