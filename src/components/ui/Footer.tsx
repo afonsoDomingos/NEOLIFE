@@ -39,7 +39,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar: Copyright & Powered by WeHostHere */}
         <div className="mt-8 pt-6 border-t border-gray-800/80 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-400">
-          <p>© {new Date().getFullYear()} NeoLife África. Todos os direitos reservados.</p>
+          <p>© {new Date().getFullYear()} NeoLife África · Consultoria & Mentoria por José Sarmento Machado & Ofélia Alfredo Machado.</p>
           
           <a
             href="https://www.wehosthere.com/"

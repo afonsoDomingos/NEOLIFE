@@ -27,7 +27,7 @@ const faqs = [
   },
   {
     q: 'Vou ter apoio e formação?',
-    a: 'Sim, absolutamente. Fazemos questão de acompanhar cada pessoa que decide juntar-se a nós. Isso inclui formação sobre os produtos, suporte na comunicação, estratégias de partilha digital e reuniões periódicas de equipa.',
+    a: 'Sim, absolutamente. O José Sarmento Machado e a Ofélia Alfredo Machado fazem questão de acompanhar pessoalmente cada parceiro que decide integrar a equipa. Isso inclui formação sobre os produtos celulares, suporte na comunicação e reuniões regulares de mentoria.',
   },
 ];
 
@@ -56,8 +56,8 @@ export default function OportunidadePage() {
 
           <p className="text-lg md:text-xl text-emerald-100 mb-10 max-w-3xl mx-auto leading-relaxed">
             A NeoLife oferece-lhe a possibilidade de criar uma fonte de rendimento partilhando
-            produtos de excelência em nutrição e bem-estar - com apoio real, formação contínua
-            e uma equipa que acompanha cada passo da sua jornada.
+            produtos de excelência em nutrição e bem-estar - com a mentoria direta de José Sarmento Machado e Ofélia Alfredo Machado,
+            formação contínua e uma equipa que acompanha cada passo da sua jornada.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -106,8 +106,8 @@ export default function OportunidadePage() {
                       d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 ),
-                title: 'Apoio Real de Equipa',
-                desc: 'Não está sozinho. A nossa equipa fornece formação contínua, materiais de comunicação, reuniões regulares e acompanhamento personalizado desde o primeiro dia.',
+                title: 'Mentoria Próxima de Casal',
+                desc: 'Não está sozinho. O José Sarmento Machado e a Ofélia Alfredo Machado acompanham o seu desenvolvimento com formações regulares, materiais de partilha e apoio direto em cada etapa.',
               },
               {
                 icon: (

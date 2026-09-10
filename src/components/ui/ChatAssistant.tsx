@@ -29,7 +29,7 @@ export function ChatAssistant() {
       id: 'welcome',
       role: 'assistant',
       content:
-        'Olá! Seja muito bem-vindo à nossa plataforma.\n\nSou o assistente virtual da equipa de mentoria e consultoria NeoLife. Estou aqui para esclarecer dúvidas sobre a nossa abordagem à **nutrição celular**, **qualidade científica** ou sobre a **oportunidade de empreender connosco** em família.\n\nComo posso ajudar hoje?',
+        'Olá! Seja muito bem-vindo à nossa plataforma.\n\nSou o assistente virtual da equipa de mentoria liderada por **José Sarmento Machado** e **Ofélia Alfredo Machado**. Estamos aqui para esclarecer dúvidas sobre a nossa abordagem à **nutrição celular**, **qualidade científica** ou sobre a **oportunidade de empreender connosco** em família.\n\nComo posso ajudar hoje?',
       time: 'Agora',
     },
   ]);
@@ -212,7 +212,7 @@ export function ChatAssistant() {
                 <h3 className="text-sm font-bold tracking-tight">Consultoria NeoLife</h3>
                 <p className="text-[11px] text-emerald-100 flex items-center">
                   <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-300 mr-1.5"></span>
-                  Mentoria & Educação Nutricional
+                  Mentoria José & Ofélia Machado
                 </p>
               </div>
             </div>

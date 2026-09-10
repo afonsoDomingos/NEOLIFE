@@ -87,13 +87,13 @@ export default function Home() {
                 <span className="text-emerald-700">Partilha Genuína.</span>
               </h2>
               <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                Não somos uma empresa. Somos um casal que encontrou na NeoLife uma forma de melhorar a nossa saúde e criar uma fonte de rendimento adicional - e decidimos partilhar essa descoberta com quem à nossa volta.
+                Não somos uma corporação distante. Somos o <strong className="font-semibold text-gray-900">José Sarmento Machado</strong> e a <strong className="font-semibold text-gray-900">Ofélia Alfredo Machado</strong>, um casal que encontrou na NeoLife o caminho para transformar a saúde da nossa família e construir uma fonte de rendimento sustentável - e decidimos partilhar essa experiência e mentoria com quem está ao nosso redor.
               </p>
               <p className="text-gray-600 leading-relaxed mb-6">
-                A nossa missão é simples: fornecer informação de qualidade, educar sobre bem-estar e nutrição, e acompanhar as pessoas que queiram explorar esta oportunidade - sem pressão, sem jargões de vendas.
+                A nossa missão é simples: partilhar conhecimento prático e comprovado sobre nutrição celular, esclarecer dúvidas com transparência e acompanhar quem desejar empreender connosco - sem pressão, com acompanhamento próximo e respeito pelo seu tempo.
               </p>
               <p className="text-gray-600 leading-relaxed mb-8">
-                Se tiver dúvidas, perguntas ou apenas curiosidade - estamos aqui. A conversa é gratuita e sem compromisso.
+                Se tiver dúvidas, perguntas ou curiosidade sobre a nossa caminhada - estamos aqui. A conversa é gratuita e sem qualquer compromisso.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link href="/oportunidade">
@@ -112,14 +112,15 @@ export default function Home() {
             {/* Visual side */}
             <div className="relative">
               <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-                {/* Avatar placeholder - replace src with real couple photo */}
+                {/* Mentor Couple Presentation Card */}
                 <div className="flex gap-4 items-center mb-6">
-                  <div className="w-16 h-16 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-xl shrink-0">
-                    NL
+                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-800 text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-md">
+                    JM·OM
                   </div>
                   <div>
-                    <p className="font-bold text-gray-900">Os seus consultores NeoLife</p>
-                    <p className="text-sm text-emerald-700 font-medium">Moçambique · África do Sul · Angola · Zimbabwe</p>
+                    <p className="font-bold text-gray-900 text-lg leading-snug">José & Ofélia Machado</p>
+                    <p className="text-xs text-gray-500 font-medium">Consultores & Mentores de Bem-Estar NeoLife</p>
+                    <p className="text-xs text-emerald-700 font-semibold mt-1">Moçambique · África do Sul · Angola · Zimbabwe</p>
                   </div>
                 </div>
 
@@ -142,8 +143,11 @@ export default function Home() {
                 </div>
 
                 <div className="mt-6 pt-6 border-t border-gray-100">
-                  <p className="text-xs text-gray-500 italic">
+                  <p className="text-xs text-gray-600 italic">
                     "A melhor decisão é uma decisão informada. Estamos aqui para garantir que a sua o seja."
+                  </p>
+                  <p className="text-[11px] font-semibold text-emerald-800 mt-1">
+                    - José Sarmento Machado & Ofélia Alfredo Machado
                   </p>
                 </div>
               </div>
