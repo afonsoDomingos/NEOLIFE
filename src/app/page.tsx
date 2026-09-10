@@ -53,7 +53,7 @@ export default function Home() {
             </h1>
             <p className="text-lg md:text-xl text-gray-600 mb-8 leading-relaxed">
               <SlideUpText 
-                text="Descubra como a NeoLife pode ajudar a alcançar os seus objetivos de saúde, bem-estar e sucesso financeiro. Junte-se a milhares de pessoas que já transformaram as suas vidas."
+                text="Descubra como transformar a sua saúde, bem-estar e criar novas oportunidades financeiras, trabalhando a partir de qualquer lugar."
                 delay={1000}
               />
             </p>

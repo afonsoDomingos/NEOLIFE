@@ -19,7 +19,7 @@ const defaultBanners: Banner[] = [
   {
     _id: 'default-banner-01',
     title: 'Construa o Seu Próprio Negócio com a NeoLife em África',
-    description: 'Descubra como transformar a sua saúde, bem-estar e conquistar a sua independência financeira trabalhando a partir de qualquer lugar.',
+    description: 'Descubra como transformar a sua saúde, bem-estar e criar novas oportunidades financeiras, trabalhando a partir de qualquer lugar.',
     image: '/banner01.jpg',
     link: '/#temas',
     buttonText: 'Quero Saber Mais',
