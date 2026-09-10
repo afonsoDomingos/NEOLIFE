@@ -5,7 +5,7 @@ export const siteConfig = {
   ogImage: '/logo-neolife.png',
   links: {
     twitter: 'https://twitter.com/neolife',
-    facebook: 'https://facebook.com/neolife',
+    facebook: 'https://www.facebook.com/profile.php?id=61581591080342&locale=pt_BR',
     instagram: 'https://instagram.com/neolife',
   },
 };

@@ -50,8 +50,8 @@ export const FALLBACK_FAQS: FallbackFAQ[] = [
     answer: 'O **Scientific Advisory Board (SAB)** da NeoLife foi fundado pelo Dr. Arthur Furst (um dos pais da quimioterapia e toxicologia moderna). Ao contrário de muitas marcas que subcontratam a produção, a NeoLife pesquisa, desenvolve e testa os seus próprios produtos com base em ingredientes de origem alimentar humana e ensaios clínicos publicados em revistas científicas internacionais.'
   },
   {
-    keywords: ['contacto', 'contato', 'whatsapp', 'falar', 'telefone', 'mensagem'],
-    answer: 'Será um enorme prazer conversar consigo! Pode submeter os seus dados no nosso [Formulário de Contacto](/formulario) indicando o seu número de WhatsApp, ou consultar a nossa secção de [Oportunidade](/oportunidade) para agendarmos uma conversa de mentoria sem qualquer compromisso.'
+    keywords: ['contacto', 'contato', 'whatsapp', 'falar', 'telefone', 'mensagem', 'facebook', 'redes sociais'],
+    answer: 'Será um enorme prazer conversar consigo! Pode contactar-nos via WhatsApp através do número **+258 82 305 6900**, ou por chamada para **+258 84 305 6900**. Pode também submeter os seus dados no nosso [Formulário de Contacto](/formulario). Visite também a nossa página no [Facebook](https://www.facebook.com/profile.php?id=61581591080342&locale=pt_BR) para nos acompanhar de perto.'
   }
 ];
 

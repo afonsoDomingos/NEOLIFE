@@ -25,6 +25,16 @@ const defaultBanners: Banner[] = [
     buttonText: 'Quero Saber Mais',
     active: true,
     order: 1,
+  },
+  {
+    _id: 'default-banner-02',
+    title: 'Saúde, Vitalidade e Liberdade Financeira',
+    description: 'Junte-se à família NeoLife e descubra o poder da nutrição celular de alta qualidade científica, ao lado da mentoria de José e Ofélia Machado.',
+    image: '/banneroficial.png',
+    link: '/oportunidade',
+    buttonText: 'Conhecer a Oportunidade',
+    active: true,
+    order: 2,
   }
 ];
 

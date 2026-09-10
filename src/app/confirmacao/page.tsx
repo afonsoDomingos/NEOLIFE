@@ -88,7 +88,7 @@ export default function ConfirmacaoPage() {
         {/* CTA Buttons */}
         <div className="space-y-4">
           <a
-            href={`https://wa.me/${(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '1234567890').replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Olá! Acabei de submeter o formulário no site NeoLife África e gostaria de falar com um consultor.')}`}
+            href={`https://wa.me/${(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '258823056900').replace(/[^0-9]/g, '')}?text=${encodeURIComponent('Olá! Acabei de submeter o formulário no site NeoLife África e gostaria de falar com um consultor.')}`}
             target="_blank"
             rel="noopener noreferrer"
             className="block"
@@ -115,7 +115,7 @@ export default function ConfirmacaoPage() {
           </p>
           <div className="flex justify-center gap-6">
             <a
-              href="https://wa.me/1234567890"
+              href="https://wa.me/258823056900"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-600 hover:text-black transition-colors"
