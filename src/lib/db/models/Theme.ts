@@ -61,7 +61,6 @@ const ThemeSchema: Schema = new Schema(
 );
 
 // Indexes for faster lookups
-ThemeSchema.index({ slug: 1 });
 ThemeSchema.index({ active: 1, order: 1 });
 
 const Theme: Model<ITheme> = mongoose.models.Theme || mongoose.model<ITheme>('Theme', ThemeSchema);

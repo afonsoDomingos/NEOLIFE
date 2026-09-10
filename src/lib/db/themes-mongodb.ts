@@ -9,28 +9,31 @@ const isValidObjectId = (id: string) =>
   mongoose.Types.ObjectId.isValid(id) && String(new mongoose.Types.ObjectId(id)) === id;
 
 /**
- * Seeds default themes if collection is empty
+ * Ensures all default themes exist in MongoDB using $setOnInsert (never overwriting existing edits)
  */
 const seedDefaultThemesIfEmpty = async () => {
   try {
-    const count = await Theme.countDocuments();
-    if (count === 0) {
-      console.log('Seeding default themes into MongoDB...');
-      const themesToInsert = defaultThemes.map(t => ({
-        title: t.title,
-        description: t.description,
-        slug: t.slug,
-        image: t.image || '',
-        publicId: t.publicId || '',
-        active: t.active !== undefined ? t.active : true,
-        order: t.order || 0,
-        content: t.content || '',
-      }));
-      await Theme.insertMany(themesToInsert);
-      console.log('Default themes seeded successfully.');
+    for (const t of defaultThemes) {
+      await Theme.findOneAndUpdate(
+        { slug: t.slug },
+        {
+          $setOnInsert: {
+            title: t.title,
+            description: t.description,
+            slug: t.slug,
+            image: t.image || '',
+            publicId: t.publicId || '',
+            active: t.active !== undefined ? t.active : true,
+            order: t.order || 0,
+            content: t.content || '',
+            videoUrl: t.videoUrl || '',
+          },
+        },
+        { upsert: true, returnDocument: 'after' }
+      );
     }
   } catch (error) {
-    console.error('Error seeding default themes:', error);
+    console.error('Error seeding/syncing default themes:', error);
   }
 };
 
@@ -69,26 +72,33 @@ export const updateTheme = async (
   try {
     await connectDB();
 
-    // Determine the query — if id is not a valid ObjectId, treat it as a slug
-    const query = isValidObjectId(id) ? { _id: id } : { slug: id };
+    const decodedId = decodeURIComponent(id);
 
-    // If changing image, clean up old Cloudinary image
-    if (updates.publicId) {
-      const existing = await Theme.findOne(query);
-      if (existing?.publicId && existing.publicId !== updates.publicId) {
-        try {
+    // Sanitize updates to prevent immutable field errors (_id, id)
+    const sanitizedUpdates = { ...updates };
+    delete (sanitizedUpdates as any)._id;
+    delete (sanitizedUpdates as any).id;
+
+    // Determine query: if valid ObjectId search by _id, otherwise search by slug
+    const query = isValidObjectId(decodedId) ? { _id: decodedId } : { slug: decodedId };
+
+    // If changing image, safely attempt cleanup of old Cloudinary image
+    if (sanitizedUpdates.publicId) {
+      try {
+        const existing = await Theme.findOne(query);
+        if (existing?.publicId && existing.publicId !== sanitizedUpdates.publicId) {
           await deleteImage(existing.publicId);
-        } catch (imgErr) {
-          console.warn('Failed to delete old image from Cloudinary:', imgErr);
         }
+      } catch (imgErr) {
+        console.warn('Failed to delete old image from Cloudinary:', imgErr);
       }
     }
 
-    // findOneAndUpdate with upsert: if theme doesn't exist in DB yet (from static data), create it
+    // Use $set and returnDocument: 'after' for clean Mongoose 8/9 compatibility
     const theme = await Theme.findOneAndUpdate(
       query,
-      { ...updates, updatedAt: new Date() },
-      { new: true, upsert: true, setDefaultsOnInsert: true }
+      { $set: { ...sanitizedUpdates, updatedAt: new Date() } },
+      { returnDocument: 'after', upsert: true, setDefaultsOnInsert: true }
     );
 
     return theme;
@@ -102,8 +112,8 @@ export const deleteTheme = async (id: string) => {
   try {
     await connectDB();
 
-    // Determine the query — if id is not a valid ObjectId, treat it as a slug
-    const query = isValidObjectId(id) ? { _id: id } : { slug: id };
+    const decodedId = decodeURIComponent(id);
+    const query = isValidObjectId(decodedId) ? { _id: decodedId } : { slug: decodedId };
 
     const theme = await Theme.findOne(query);
     if (theme?.publicId) {

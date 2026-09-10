@@ -4,7 +4,7 @@ import { updateTheme, deleteTheme } from '@/lib/db/themes-mongodb';
 
 async function handleUpdate(
   request: NextRequest,
-  context: { params: Promise<{ id: string }> }
+  context: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
     // Bypass authentication in development
@@ -22,7 +22,8 @@ async function handleUpdate(
       }
     }
 
-    const { id } = await context.params;
+    const resolvedParams = await context.params;
+    const id = decodeURIComponent(resolvedParams?.id || '');
     const updates = await request.json();
     const theme = await updateTheme(id, updates);
 
@@ -34,10 +35,10 @@ async function handleUpdate(
     }
 
     return NextResponse.json(theme);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error updating theme:', error);
     return NextResponse.json(
-      { error: 'Error updating theme' },
+      { error: error?.message || 'Error updating theme' },
       { status: 500 }
     );
   }
@@ -77,14 +78,15 @@ export async function DELETE(
       }
     }
 
-    const { id } = await context.params;
+    const resolvedParams = await context.params;
+    const id = decodeURIComponent(resolvedParams?.id || '');
     await deleteTheme(id);
 
     return NextResponse.json({ success: true });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error deleting theme:', error);
     return NextResponse.json(
-      { error: 'Error deleting theme' },
+      { error: error?.message || 'Error deleting theme' },
       { status: 500 }
     );
   }

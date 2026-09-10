@@ -37,8 +37,7 @@ if (!global.mongoose) {
 
 async function connectDB(): Promise<typeof mongoose> {
   if (!MONGODB_URI) {
-    console.warn('MongoDB not configured, skipping connection');
-    return mongoose as any;
+    throw new Error('MONGODB_URI não está definida nas variáveis de ambiente.');
   }
 
   if (cached.conn) {
@@ -47,10 +46,9 @@ async function connectDB(): Promise<typeof mongoose> {
 
   if (!cached.promise) {
     const opts = {
-      bufferCommands: false,
       maxPoolSize: 10,
-      serverSelectionTimeoutMS: 5000, // Timeout after 5s instead of default 30s
-      socketTimeoutMS: 15000,
+      serverSelectionTimeoutMS: 20000, // 20s timeout for reliable connection
+      socketTimeoutMS: 30000,
     };
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
