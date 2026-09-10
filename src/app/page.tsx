@@ -8,6 +8,7 @@ import { VideoSection } from '@/components/ui/VideoSection';
 import { getActiveThemes as getStaticThemes } from '@/data/themes';
 import { TypewriterText, SlideUpText, WordByWordText } from '@/components/ui/AnimatedText';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Theme } from '@/types';
 
 export default function Home() {
@@ -114,8 +115,13 @@ export default function Home() {
               <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
                 {/* Mentor Couple Presentation Card */}
                 <div className="flex gap-4 items-center mb-6">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-600 to-emerald-800 text-white flex items-center justify-center font-bold text-lg shrink-0 shadow-md">
-                    JM·OM
+                  <div className="w-16 h-16 rounded-full overflow-hidden shrink-0 shadow-md border-2 border-emerald-100 relative">
+                    <Image
+                      src="/assistente.png"
+                      alt="José e Ofélia Machado"
+                      fill
+                      className="object-cover"
+                    />
                   </div>
                   <div>
                     <p className="font-bold text-gray-900 text-lg leading-snug">José & Ofélia Machado</p>
