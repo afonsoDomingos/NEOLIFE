@@ -103,8 +103,11 @@ export default function MembroDashboard() {
   };
 
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' });
-    router.push('/membro/login');
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } finally {
+      window.location.href = '/membro/login';
+    }
   };
 
   const copyReferral = () => {

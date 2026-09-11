@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 
 const ADMIN_USERNAME = process.env.ADMIN_USERNAME || 'admin';
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
@@ -9,16 +8,18 @@ export async function POST(request: NextRequest) {
     const { username, password } = await request.json();
 
     if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-      // Set a simple cookie for authentication
-      const cookieStore = await cookies();
-      cookieStore.set('admin_session', 'authenticated', {
+      const response = NextResponse.json({ success: true });
+      
+      // Set session cookie directly on response with root path
+      response.cookies.set('admin_session', 'authenticated', {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'lax',
+        path: '/',
         maxAge: 60 * 60 * 24 // 24 hours
       });
 
-      return NextResponse.json({ success: true });
+      return response;
     }
 
     return NextResponse.json(
