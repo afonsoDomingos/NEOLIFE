@@ -70,3 +70,82 @@ export function getSmartFallbackResponse(userMessage: string): string {
 
   return 'Olá! Agradeço a sua mensagem. Como assistente consultivo da equipa de mentoria NeoLife, estou aqui para esclarecer dúvidas sobre nutrição celular, saúde preventiva ou o nosso modelo de negócio independente. Gostaria de saber mais sobre como melhorar a sua vitalidade através dos produtos, ou deseja conhecer a nossa mentoria para empreender com a NeoLife? Pode também preencher o nosso [Formulário](/formulario) para um contacto direto.';
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ADMIN AI — Prompt e fallbacks para o painel de gestão interno
+// Completamente diferente do prompt público: aqui o foco é CRM, leads,
+// estratégias de vendas e comunicação com parceiros/distribuidores.
+// ─────────────────────────────────────────────────────────────────────────────
+
+export const ADMIN_AI_SYSTEM_PROMPT = `Tu és o Assistente de Gestão Interno da plataforma NeoLife, a trabalhar exclusivamente com a equipa de administração liderada por José Sarmento Machado e Ofélia Alfredo Machado.
+
+O teu papel é apoiar os administradores nas seguintes tarefas:
+
+1. REDIGIR MENSAGENS: Sugeres rascunhos de mensagens para WhatsApp, e-mail ou chamada, adaptadas ao perfil e estado do lead (novo, contactado, acompanhamento, interessado, convertido, não interessado).
+
+2. ESTRATÉGIAS DE ABORDAGEM: Aconselhas sobre como abordar diferentes tipos de leads — alguém interessado em saúde vs. alguém interessado na oportunidade de negócio — com argumentos e linguagem adequados.
+
+3. GESTÃO DE FOLLOW-UP: Sugeres timings e mensagens de seguimento para leads que não responderam, reativação de leads frios, e sequências de nutrição de contacto.
+
+4. QUALIFICAÇÃO DE LEADS: Ajudas a identificar sinais de interesse, a fazer as perguntas certas para qualificar o lead e a perceber em que fase do funil se encontra.
+
+5. COMUNICAÇÃO COM PARCEIROS/DISTRIBUIDORES: Apoias na comunicação com membros já inscritos (parceiros, distribuidores), com sugestões de mensagens de motivação, formação e reconhecimento.
+
+6. ANÁLISE DO NEGÓCIO: Quando questionado sobre métricas, taxas de conversão, ou desempenho, dás sugestões práticas de melhoria baseadas em boas práticas de CRM e vendas diretas.
+
+Contexto da Equipa:
+- Administradores: José Sarmento Machado e Ofélia Alfredo Machado
+- Mercados ativos: Moçambique (+258 82 305 6900), Angola, África do Sul, Zimbabwe
+- Estados de lead no CRM: novo → contactado → acompanhamento → interessado → convertido / não_interessado
+- Temas de interesse dos leads: nutrição/saúde, oportunidade de negócio, mentoria, experiências/testemunhos
+
+Regras Importantes:
+- Fala SEMPRE em modo admin/interno — não uses linguagem de atendimento ao cliente.
+- Quando sugeres mensagens para enviar a leads, coloca-as em blocos claramente delimitados para fácil cópia.
+- Sê direto, prático e objetivo. O admin não precisa de introduções longas.
+- Nunca confundas o teu papel com o do assistente público (que responde a visitantes do site).
+- Se te pedirem informação que não é do teu âmbito (ex.: dúvidas médicas, preços exatos de produtos), indica que devem consultar os recursos internos NeoLife.
+
+Responde sempre em Português, de forma profissional, concisa e orientada para ação.`;
+
+export const ADMIN_FALLBACK_RESPONSES: { keywords: string[]; answer: string }[] = [
+  {
+    keywords: ['mensagem', 'whatsapp', 'redigir', 'rascunho', 'escrever', 'enviar'],
+    answer: '**Rascunho de mensagem WhatsApp — Lead novo:**\n\n"Olá [Nome]! 👋 Sou o José Machado da equipa NeoLife. Vi que demonstrou interesse em [tema]. Gostaria de partilhar mais informação consigo — tem 5 minutos para uma conversa rápida esta semana?"\n\n💡 *Adapte o [Nome] e [tema] ao perfil do lead. Para leads mais frios, comece por partilhar um conteúdo de valor antes de pedir uma conversa.*',
+  },
+  {
+    keywords: ['follow-up', 'seguimento', 'nao respondeu', 'não respondeu', 'frio', 'reativar', 'reativação'],
+    answer: '**Estratégia de follow-up para lead sem resposta:**\n\n1. **Dia 1-2:** Primeira mensagem de apresentação (breve, sem pressão)\n2. **Dia 4-5:** Partilhar conteúdo de valor (artigo, testemunho, vídeo)\n3. **Dia 10:** Mensagem de follow-up leve: *"Olá [Nome], só a verificar se recebeu a informação que partilhei. Estou disponível se quiser saber mais."*\n4. **Dia 20:** Última tentativa: *"Não quero incomodar, mas deixo a porta aberta caso mude de ideias. Qualquer dúvida, estou aqui!"*\n\n💡 *Após 30 dias sem resposta, mude o estado para "não_interessado" e arquive.*',
+  },
+  {
+    keywords: ['qualificar', 'qualificação', 'perguntas', 'perceber interesse', 'avaliar'],
+    answer: '**Perguntas chave para qualificar um lead:**\n\n🟢 **Interesse em saúde:**\n- "Que desafio de saúde quer resolver atualmente?"\n- "Já experimentou suplementação antes? Com que resultado?"\n\n🔵 **Interesse em negócio:**\n- "Procura uma fonte de rendimento extra ou tempo inteiro?"\n- "Tem experiência em vendas ou trabalha atualmente?"\n- "Tem rede de contactos que possa beneficiar destes produtos?"\n\n💡 *Um lead que responde com entusiasmo a 2+ perguntas está qualificado para avançar para apresentação.*',
+  },
+  {
+    keywords: ['novo lead', 'primeiro contacto', 'primeira mensagem', 'abordar'],
+    answer: '**Primeira abordagem — Lead novo:**\n\nMensagem sugerida:\n"Olá [Nome]! 😊 Obrigado pelo seu interesse na NeoLife. Sou [José/Ofélia] Machado e estou aqui para ajudá-lo(a) a perceber se os nossos produtos ou a nossa oportunidade de negócio fazem sentido para si. Que informação recebeu até agora sobre a NeoLife?"\n\n💡 *Começar com uma pergunta aberta ajuda a perceber de imediato o nível de conhecimento e expectativa do lead.*',
+  },
+  {
+    keywords: ['parceiro', 'membro', 'distribuidor', 'motivar', 'reconhecimento', 'equipa'],
+    answer: '**Mensagem de motivação para parceiro/distribuidor:**\n\n"Olá [Nome]! 🌟 Queria reconhecer o seu esforço este mês. Cada passo que dá na construção do seu negócio é investimento no seu futuro e da sua família. Se precisar de apoio, formação ou simplesmente de uma conversa estratégica, estamos aqui. Vamos crescer juntos!"\n\n💡 *O reconhecimento frequente é um dos maiores fatores de retenção em modelos de vendas diretas.*',
+  },
+  {
+    keywords: ['convertido', 'fechar', 'próximo passo', 'inscrever', 'registar', 'como avançar'],
+    answer: '**Processo para converter um lead interessado:**\n\n1. ✅ Enviar o link de registo NeoLife oficial\n2. ✅ Explicar o kit de início (produtos incluídos, custo de entrada)\n3. ✅ Agendar uma videochamada de boas-vindas nas primeiras 48h\n4. ✅ Adicionar ao grupo de formação/WhatsApp da equipa\n5. ✅ Atualizar estado no CRM para "convertido"\n\n💡 *Os primeiros 7 dias são críticos — acompanhamento próximo reduz desistência em 60%.*',
+  },
+];
+
+export function getAdminFallbackResponse(message: string): string {
+  const normalized = message.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  for (const item of ADMIN_FALLBACK_RESPONSES) {
+    const match = item.keywords.some((kw) => {
+      const normKw = kw.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      return normalized.includes(normKw);
+    });
+    if (match) return item.answer;
+  }
+
+  return 'Pronto para ajudar! Pode pedir-me que:\n\n- **Redija mensagens** para WhatsApp ou e-mail para um lead específico\n- **Sugira estratégias** de abordagem ou follow-up\n- **Ajude a qualificar** um lead com as perguntas certas\n- **Proponha mensagens** de motivação para parceiros\n\nBasta indicar o estado e o perfil do lead e eu trato do resto.';
+}
+

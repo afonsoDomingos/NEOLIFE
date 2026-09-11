@@ -20,11 +20,12 @@ interface AdminAIAssistantProps {
 }
 
 const ADMIN_QUICK_PROMPTS = [
-  'Como responder a um lead interessado em nutrição?',
-  'Sugerir mensagem de boas-vindas para novo parceiro',
-  'Como apresentar a oportunidade de negócio?',
-  'Resposta para lead que quer saber preços',
-  'Como fazer o seguimento de um lead frio?',
+  'Redigir mensagem WhatsApp para lead novo',
+  'Estratégia de follow-up para lead que não respondeu',
+  'Como qualificar um lead interessado em negócio?',
+  'Mensagem de reativação para lead frio',
+  'Próximos passos para converter um lead interessado',
+  'Mensagem de motivação para parceiro',
 ];
 
 export function AdminAIAssistant({ leadContext, onCopyText }: AdminAIAssistantProps) {
@@ -37,8 +38,8 @@ export function AdminAIAssistant({ leadContext, onCopyText }: AdminAIAssistantPr
       id: 'welcome',
       role: 'assistant',
       content: leadContext?.name
-        ? `Olá! Estou pronto para ajudar com o lead **${leadContext.name}**${leadContext.country ? ` (${leadContext.country})` : ''}${leadContext.interest ? ` — interesse em ${leadContext.interest}` : ''}.\n\nPosso sugerir mensagens, estratégias de abordagem ou responder dúvidas sobre como avançar com este contacto. O que precisa?`
-        : 'Olá! Sou o seu assistente de IA para ajudar na gestão de leads e parceiros NeoLife.\n\nPosso sugerir mensagens personalizadas, estratégias de abordagem, respostas a dúvidas frequentes e muito mais. Como posso ajudar?',
+        ? `Contexto carregado: **${leadContext.name}**${leadContext.country ? ` — ${leadContext.country}` : ''}${leadContext.interest ? ` | Interesse: ${leadContext.interest}` : ''}${leadContext.status ? ` | Estado: ${leadContext.status}` : ''}\n\nPosso redigir uma mensagem personalizada para este lead, sugerir a próxima ação no CRM ou aconselhar a melhor abordagem. O que precisa?`
+        : 'Assistente de gestão interno ativo. Posso ajudá-lo a:\n\n- **Redigir mensagens** para WhatsApp ou e-mail\n- **Definir estratégias** de follow-up e abordagem\n- **Qualificar leads** com as perguntas certas\n- **Motivar parceiros** e distribuidores\n\nSelecione um lead para contexto automático, ou faça a sua pergunta.',
       time: 'Agora',
     },
   ]);
@@ -74,7 +75,7 @@ export function AdminAIAssistant({ leadContext, onCopyText }: AdminAIAssistantPr
       : '';
 
     try {
-      const res = await fetch('/api/ai/chat', {
+      const res = await fetch('/api/ai/admin-chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -271,7 +272,7 @@ export function AdminAIAssistant({ leadContext, onCopyText }: AdminAIAssistantPr
           {messages.length <= 2 && (
             <div className="px-3 py-2 bg-white border-t border-gray-100">
               <p className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider mb-1.5">
-                Sugestões rápidas
+                Ações rápidas de CRM
               </p>
               <div className="flex flex-wrap gap-1.5">
                 {ADMIN_QUICK_PROMPTS.map((prompt, idx) => (
