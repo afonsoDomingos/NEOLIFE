@@ -194,7 +194,7 @@ export default function AdminDashboard() {
               speed={150}
             />
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <Link href="/admin/leads">
               <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
                 <CardContent className="p-5 flex items-start gap-3">
@@ -286,6 +286,34 @@ export default function AdminDashboard() {
                   <div>
                     <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Gerir Membros</h3>
                     <p className="text-xs text-gray-500 mt-0.5">Contas de clientes</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/admin/anuncios">
+              <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
+                <CardContent className="p-5 flex items-start gap-3">
+                  <div className="p-2.5 bg-orange-50 text-orange-700 rounded-lg group-hover:scale-105 transition-transform flex items-center justify-center">
+                    <span className="text-lg">📣</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Avisos & Anúncios</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">Comunicados aos membros</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+
+            <Link href="/admin/recursos">
+              <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
+                <CardContent className="p-5 flex items-start gap-3">
+                  <div className="p-2.5 bg-indigo-50 text-indigo-700 rounded-lg group-hover:scale-105 transition-transform flex items-center justify-center">
+                    <span className="text-lg">📚</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Recursos & Materiais</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">PDFs, guias e vídeos</p>
                   </div>
                 </CardContent>
               </Card>
