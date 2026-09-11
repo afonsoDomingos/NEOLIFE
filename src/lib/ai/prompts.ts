@@ -10,10 +10,12 @@ O teu papel é:
 Conhecimentos Chave:
 - Mentores da Plataforma: José Sarmento Machado e Ofélia Alfredo Machado, casal dedicado à consultoria de bem-estar e mentoria de novos parceiros empreendedores.
 - Nutrição Celular: A saúde começa nas células. Se a membrana celular for rígida (por falta de lípidos e esteróis essenciais presentes nos grãos integrais, como no Tre-en-en), os nutrientes não entram e as toxinas não saem.
-- Oportunidade NeoLife: Empresa global com mais de 60 anos, presente em dezenas de países. Empreendedorismo de baixo risco com mentoria direta de José e Ofélia Machado, formação contínua e produtos de consumo diário.
-- Mercados com apoio ativo imediato: Moçambique (+258), África do Sul (+27), Angola (+244), Zimbabwe (+263).
+- Oportunidade NeoLife: Empresa global com mais de 60 anos, presente em mais de 50 países em todo o mundo. Empreendedorismo de baixo risco com mentoria direta de José e Ofélia Machado, formação contínua e produtos de consumo diário.
+- Presença Global NeoLife: África (Moçambique, África do Sul, Angola, Zimbabwe, Botswana, Lesoto, Namíbia, Eswatini, Quénia, Tanzânia, Uganda, Nigéria, Gana, Benin, Camarões, Costa do Marfim, Togo), Américas (EUA, Canadá, América Latina), Ásia & Pacífico (Filipinas, Singapura, Japão, Austrália, Nova Zelândia), Europa (Reino Unido, Itália, Alemanha, França, Espanha, Polónia, Suécia, Noruega, Finlândia, Dinamarca, Islândia, Irlanda, Estónia, Letónia, Lituânia, Croácia, Eslovénia, Bósnia-Herzegovina, Hungria, Roménia, Áustria, Suíça, Países Baixos, Chipre, Malta).
+- Mercados com apoio ativo e mentoria direta da equipa: Moçambique (+258 82 305 6900), África do Sul, Angola e Zimbabwe.
 
 Responde sempre em Português claro, cordial e conciso, com formatação limpa (tópicos curtos quando aplicável).`;
+
 
 export interface FallbackFAQ {
   keywords: string[];
@@ -38,8 +40,8 @@ export const FALLBACK_FAQS: FallbackFAQ[] = [
     answer: 'A **Oportunidade NeoLife** permite-lhe construir um negócio independente de bem-estar com o apoio direto da mentoria de **José Sarmento Machado & Ofélia Alfredo Machado**. Terá acesso a formação passo a passo, plataforma digital própria, produtos patenteados de alta procura e um plano de compensação transparente. Pode iniciar em regime de tempo parcial. Saiba mais na nossa página de [Oportunidade](/oportunidade) ou preencha o formulário para falarmos diretamente.'
   },
   {
-    keywords: ['pais', 'países', 'paises', 'mocambique', 'moçambique', 'angola', 'africa do sul', 'zimbabwe', 'portugal', 'onde opera'],
-    answer: 'Atualmente temos acompanhamento ativo e estruturado para: **Moçambique**, **África do Sul**, **Angola** e **Zimbabwe**. Se reside num destes países, podemos apoiá-lo diretamente com entregas locais e mentoria. Outras regiões podem ser avaliadas sob consulta.'
+    keywords: ['pais', 'países', 'paises', 'mocambique', 'moçambique', 'angola', 'africa do sul', 'zimbabwe', 'portugal', 'onde opera', 'global', 'mundo', 'continente', 'europa', 'america', 'asia'],
+    answer: 'A NeoLife está presente em **mais de 50 países** em todo o mundo:\n\n🌍 **África:** Moçambique, África do Sul, Angola, Zimbabwe, Botswana, Lesoto, Namíbia, Eswatini, Quénia, Tanzânia, Uganda, Nigéria, Gana, Benin, Camarões, Costa do Marfim, Togo\n\n🌎 **Américas:** EUA, Canadá, América Latina\n\n🌏 **Ásia & Pacífico:** Filipinas, Singapura, Japão, Austrália, Nova Zelândia\n\n🌍 **Europa:** Reino Unido, Itália, Alemanha, França, Espanha, Polónia, Suécia, Noruega, Finlândia, Dinamarca, e muitos mais.\n\nA nossa equipa de mentoria liderada por **José e Ofélia Machado** tem apoio ativo e estruturado para **Moçambique, África do Sul, Angola e Zimbabwe**. Se reside noutro país, preencha o nosso [Formulário](/formulario) para verificarmos disponibilidade.'
   },
   {
     keywords: ['como comprar', 'como encomendar', 'preco', 'preço', 'comprar', 'encomenda', 'valor'],
