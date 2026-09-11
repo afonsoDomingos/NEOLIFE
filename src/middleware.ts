@@ -6,7 +6,7 @@ export function middleware(request: NextRequest) {
 
   const isAdminPath = pathname.startsWith('/admin');
   const isAdminLogin = pathname === '/admin/login';
-  const isAdminDashboard = pathname === '/admin' || pathname === '/admin/';
+  const isAdminRoot = pathname === '/admin' || pathname === '/admin/';
 
   const isMemberPath = pathname.startsWith('/membro');
   const isMemberLogin = pathname.startsWith('/membro/login');
@@ -16,22 +16,27 @@ export function middleware(request: NextRequest) {
   const memberSession = request.cookies.get('member_session');
 
   const isDevelopment = process.env.NODE_ENV === 'development';
+  const isAdminAuth = adminSession?.value === 'authenticated' || isDevelopment;
 
   // ── Admin routes ──────────────────────────────────────────────
-  if (isAdminDashboard) {
-    return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+  if (isAdminRoot) {
+    const targetUrl = request.nextUrl.clone();
+    targetUrl.pathname = isAdminAuth ? '/admin/dashboard' : '/admin/login';
+    return NextResponse.redirect(targetUrl);
   }
 
   if (isAdminPath && !isAdminLogin) {
-    if (!isDevelopment) {
-      if (!adminSession || adminSession.value !== 'authenticated') {
-        return NextResponse.redirect(new URL('/admin/login', request.url));
-      }
+    if (!isAdminAuth) {
+      const targetUrl = request.nextUrl.clone();
+      targetUrl.pathname = '/admin/login';
+      return NextResponse.redirect(targetUrl);
     }
   }
 
-  if (isAdminLogin && adminSession?.value === 'authenticated' && !isDevelopment) {
-    return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+  if (isAdminLogin && isAdminAuth && !isDevelopment) {
+    const targetUrl = request.nextUrl.clone();
+    targetUrl.pathname = '/admin/dashboard';
+    return NextResponse.redirect(targetUrl);
   }
 
   // ── Member routes ─────────────────────────────────────────────
@@ -46,7 +51,9 @@ export function middleware(request: NextRequest) {
       }
     }
     if (!valid) {
-      return NextResponse.redirect(new URL('/membro/login', request.url));
+      const targetUrl = request.nextUrl.clone();
+      targetUrl.pathname = '/membro/login';
+      return NextResponse.redirect(targetUrl);
     }
   }
 
@@ -54,7 +61,9 @@ export function middleware(request: NextRequest) {
   if ((isMemberLogin || isMemberRegister) && memberSession?.value) {
     try {
       JSON.parse(memberSession.value);
-      return NextResponse.redirect(new URL('/membro/dashboard', request.url));
+      const targetUrl = request.nextUrl.clone();
+      targetUrl.pathname = '/membro/dashboard';
+      return NextResponse.redirect(targetUrl);
     } catch {
       // invalid session - allow through
     }
@@ -64,5 +73,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/membro/:path*'],
+  matcher: ['/admin', '/admin/:path*', '/membro/:path*'],
 };

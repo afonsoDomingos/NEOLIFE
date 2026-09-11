@@ -65,9 +65,6 @@ export const Footer: React.FC = () => {
             <Link href="/membro/login" className="text-emerald-400 hover:text-emerald-300 font-medium transition-colors">
               Área de Membros
             </Link>
-            <Link href="/admin" className="hover:text-emerald-400 transition-colors">
-              Administração
-            </Link>
           </div>
         </div>
 

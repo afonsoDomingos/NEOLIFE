@@ -4,12 +4,9 @@ import { getActiveVideos } from '@/lib/db/videos-mongodb';
 export async function GET() {
   try {
     const videos = await getActiveVideos();
-    return NextResponse.json(videos);
+    return NextResponse.json(Array.isArray(videos) ? videos : []);
   } catch (error) {
-    console.error('Error in /api/videos:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch videos' },
-      { status: 500 }
-    );
+    console.error('Error in /api/videos, returning empty fallback:', error);
+    return NextResponse.json([]);
   }
 }
