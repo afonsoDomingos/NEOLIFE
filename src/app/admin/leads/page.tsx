@@ -7,6 +7,7 @@ import { Input, Select, Textarea } from '@/components/ui/Input';
 import Link from 'next/link';
 import { LeadStatus } from '@/types';
 import { getCountryById } from '@/data/countries';
+import { AdminAIAssistant } from '@/components/admin/AdminAIAssistant';
 
 interface MongoLead {
   _id: string;
@@ -929,6 +930,16 @@ export default function AdminLeadsPage() {
           </div>
         )}
       </div>
+
+      {/* Floating AI Assistant — context-aware for selected lead */}
+      <AdminAIAssistant
+        leadContext={selectedLead ? {
+          name: selectedLead.name,
+          interest: selectedLead.theme,
+          country: getCountryById(selectedLead.country)?.name || selectedLead.country,
+          status: selectedLead.status,
+        } : undefined}
+      />
     </div>
   );
 }

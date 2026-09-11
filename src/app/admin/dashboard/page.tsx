@@ -7,6 +7,7 @@ import { SlideUpText, WordByWordText } from '@/components/ui/AnimatedText';
 import Link from 'next/link';
 import { getCountryById } from '@/data/countries';
 import { getThemeBySlug } from '@/data/themes';
+import { AdminAIAssistant } from '@/components/admin/AdminAIAssistant';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<any>(null);
@@ -544,6 +545,9 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Floating AI Assistant */}
+      <AdminAIAssistant />
     </div>
   );
 }
