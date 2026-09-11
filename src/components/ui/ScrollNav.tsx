@@ -9,12 +9,12 @@ export function ScrollNav() {
   const [isNearTop, setIsNearTop] = useState(true);
   const [isNearBottom, setIsNearBottom] = useState(false);
 
-  // Do not render on admin pages
-  if (pathname && pathname.startsWith('/admin')) {
-    return null;
-  }
-
   useEffect(() => {
+    // Only track scroll if not on admin
+    if (pathname && pathname.startsWith('/admin')) {
+      return;
+    }
+
     const handleScroll = () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const scrollHeight =
@@ -33,7 +33,12 @@ export function ScrollNav() {
     handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [pathname]);
+
+  // Do not render on admin pages (AFTER all hooks)
+  if (pathname && pathname.startsWith('/admin')) {
+    return null;
+  }
 
   const scrollToTop = () => {
     window.scrollTo({

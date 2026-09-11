@@ -38,11 +38,6 @@ export function ChatAssistant() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Do not show widget on admin CRM pages
-  if (pathname && pathname.startsWith('/admin')) {
-    return null;
-  }
-
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -54,6 +49,11 @@ export function ChatAssistant() {
       setTimeout(() => inputRef.current?.focus(), 200);
     }
   }, [isOpen, messages]);
+
+  // Do not render widget on admin CRM pages (AFTER all hooks)
+  if (pathname && pathname.startsWith('/admin')) {
+    return null;
+  }
 
   const handleSend = async (textToSend?: string) => {
     const text = (textToSend || input).trim();

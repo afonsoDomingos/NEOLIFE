@@ -78,15 +78,24 @@ export default function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-3">
-              <img
-                src="/logo-neolife.png"
-                alt="NeoLife"
-                className="h-9 w-auto object-contain"
-              />
+              <Link href="/" title="Ir para o website público" className="flex items-center gap-2">
+                <img
+                  src="/logo-neolife.png"
+                  alt="NeoLife"
+                  className="h-9 w-auto object-contain"
+                />
+              </Link>
               <span className="text-gray-300">|</span>
               <span className="text-gray-700 font-semibold text-sm">Painel de Administração</span>
             </div>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2.5">
+              <Link
+                href="/"
+                className="text-xs flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200 font-semibold transition-colors"
+                title="Abrir o site público"
+              >
+                <span>🌐 Ver Website</span>
+              </Link>
               <Button
                 variant="outline"
                 size="sm"
