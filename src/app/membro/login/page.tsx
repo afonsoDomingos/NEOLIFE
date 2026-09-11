@@ -2,19 +2,19 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 
 export default function MembroLoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [successNotice, setSuccessNotice] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setSuccessNotice('');
     setLoading(true);
 
     try {
@@ -28,13 +28,23 @@ export default function MembroLoginPage() {
 
       if (!res.ok) {
         setError(data.error || 'Erro ao fazer login.');
+        setLoading(false);
         return;
       }
 
-      router.push('/membro/dashboard');
+      if (data.isAdmin) {
+        setSuccessNotice('Acesso de Administrador identificado! A redirecionar para o Painel...');
+        setTimeout(() => {
+          window.location.href = data.redirect || '/admin/dashboard';
+        }, 600);
+      } else {
+        setSuccessNotice('Sessão iniciada com sucesso! A entrar...');
+        setTimeout(() => {
+          window.location.href = data.redirect || '/membro/dashboard';
+        }, 500);
+      }
     } catch {
       setError('Erro de conexão. Tente novamente.');
-    } finally {
       setLoading(false);
     }
   };
@@ -92,7 +102,7 @@ export default function MembroLoginPage() {
               }}>NeoLife</span>
             </div>
           </Link>
-          <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>Area de Membros</p>
+          <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>Área de Membros & Parceiros</p>
         </div>
 
         {/* Card */}
@@ -110,7 +120,7 @@ export default function MembroLoginPage() {
           }}>Bem-vindo de volta</h1>
           <p style={{
             color: '#9ca3af', fontSize: '14px', textAlign: 'center', margin: '0 0 32px',
-          }}>Aceda a sua area exclusiva</p>
+          }}>Aceda à sua área exclusiva</p>
 
           {error && (
             <div style={{
@@ -127,18 +137,33 @@ export default function MembroLoginPage() {
             </div>
           )}
 
+          {successNotice && (
+            <div style={{
+              background: 'rgba(16,185,129,0.15)', border: '1px solid rgba(16,185,129,0.3)',
+              borderRadius: '10px', padding: '12px 16px', marginBottom: '20px',
+              color: '#6ee7b7', fontSize: '14px', display: 'flex', alignItems: 'center', gap: '8px',
+            }}>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6ee7b7" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              {successNotice}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div>
               <label style={{ display: 'block', color: '#d1d5db', fontSize: '13px', fontWeight: 500, marginBottom: '8px' }}>
-                Email
+                Email ou Utilizador
               </label>
               <input
                 id="member-login-email"
-                type="email"
+                type="text"
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
-                placeholder="o-seu-email@exemplo.com"
+                autoCapitalize="none"
+                autoCorrect="off"
+                placeholder="o-seu-email@exemplo.com ou utilizador"
                 style={{
                   width: '100%', padding: '12px 16px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.1)',
                   background: 'rgba(255,255,255,0.05)', color: '#f9fafb', fontSize: '14px',
@@ -216,7 +241,7 @@ export default function MembroLoginPage() {
                 'A entrar...'
               ) : (
                 <>
-                  <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
                   </svg>
                   <span>Entrar</span>
@@ -227,7 +252,7 @@ export default function MembroLoginPage() {
 
           <div style={{ marginTop: '24px', textAlign: 'center' }}>
             <p style={{ color: '#6b7280', fontSize: '13px', margin: 0 }}>
-              Nao tem conta?{' '}
+              Não tem conta?{' '}
               <Link href="/membro/registar" style={{ color: '#10b981', textDecoration: 'none', fontWeight: 500 }}>
                 Criar conta
               </Link>
