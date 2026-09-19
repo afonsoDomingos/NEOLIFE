@@ -28,6 +28,7 @@ function VideosContent() {
   const [editingVideo, setEditingVideo] = useState<VideoItem | null>(null);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [previewModalUrl, setPreviewModalUrl] = useState<string | null>(null);
+  const [filterCategory, setFilterCategory] = useState<string>('all');
 
   const [formData, setFormData] = useState({
     title: '',
@@ -240,12 +241,31 @@ function VideosContent() {
                       onChange={handleInputChange}
                       className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-sm"
                     >
+                      <option value="Business">💼 Business — Blocos da Página Principal</option>
                       <option value="Apresentação">Apresentação Geral</option>
                       <option value="Negócio">Oportunidade de Negócio</option>
                       <option value="Produtos">Produtos & Nutrição</option>
                       <option value="Testemunhos">Testemunhos & Histórias</option>
                       <option value="Tutoriais">Como Começar / Tutoriais</option>
                     </select>
+
+                    {formData.category === 'Business' && (
+                      <div className="mt-2.5 p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-950 leading-relaxed space-y-1">
+                        <p className="font-bold flex items-center gap-1.5 text-emerald-800">
+                          <span>💡</span> Ordem para os Blocos de Business na Página Principal:
+                        </p>
+                        <p className="text-gray-700">
+                          Defina a <strong>Ordem</strong> abaixo de 1 a 5 para preencher o respetivo bloco:
+                        </p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 pt-1 font-mono text-[11px] text-emerald-900">
+                          <div>• <strong>Ordem 1:</strong> Bloco 01 — Fundamentos</div>
+                          <div>• <strong>Ordem 2:</strong> Bloco 02 — Funcionamento</div>
+                          <div>• <strong>Ordem 3:</strong> Bloco 03 — Acompanhamento</div>
+                          <div>• <strong>Ordem 4:</strong> Bloco 04 — Escala & Ganhos</div>
+                          <div>• <strong>Ordem 5:</strong> Bloco 05 — Ação Imediata</div>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -362,6 +382,42 @@ function VideosContent() {
           </Card>
         )}
 
+        {/* Category Filter Pills */}
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs font-semibold text-gray-500 mr-1">Filtrar:</span>
+          {[
+            { id: 'all', label: 'Todos' },
+            { id: 'Business', label: '💼 Business (Principal)' },
+            { id: 'Apresentação', label: 'Apresentação' },
+            { id: 'Negócio', label: 'Negócio' },
+            { id: 'Produtos', label: 'Produtos' },
+            { id: 'Testemunhos', label: 'Testemunhos' },
+            { id: 'Tutoriais', label: 'Tutoriais' },
+          ].map((tab) => {
+            const count = tab.id === 'all' ? videos.length : videos.filter((v) => v.category === tab.id).length;
+            const isSelected = filterCategory === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => setFilterCategory(tab.id)}
+                className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors flex items-center gap-1.5 ${
+                  isSelected
+                    ? 'bg-emerald-700 text-white shadow-xs'
+                    : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+                }`}
+              >
+                <span>{tab.label}</span>
+                <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                  isSelected ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-600'
+                }`}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
         {/* Video Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {loading ? (
@@ -369,13 +425,19 @@ function VideosContent() {
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 mx-auto mb-3"></div>
               <p className="text-sm">A carregar vídeos da base de dados...</p>
             </div>
-          ) : videos.length === 0 ? (
+          ) : videos.filter((v) => filterCategory === 'all' || v.category === filterCategory).length === 0 ? (
             <div className="col-span-full py-16 text-center text-gray-400 bg-white rounded-xl border border-dashed border-gray-300">
-              <p className="font-semibold text-gray-700">Nenhum vídeo registado</p>
-              <p className="text-sm text-gray-500 mt-1">Clique em "+ Novo Vídeo" para adicionar o primeiro vídeo ao site.</p>
+              <p className="font-semibold text-gray-700">Nenhum vídeo nesta categoria</p>
+              <p className="text-sm text-gray-500 mt-1">
+                {filterCategory === 'Business'
+                  ? 'Clique em "+ Novo Vídeo" e escolha a categoria "Business" com ordem de 1 a 5 para preencher os blocos da página principal.'
+                  : 'Clique em "+ Novo Vídeo" para adicionar um vídeo ao site.'}
+              </p>
             </div>
           ) : (
-            videos.map((v) => {
+            videos
+              .filter((v) => filterCategory === 'all' || v.category === filterCategory)
+              .map((v) => {
               const videoId = v._id || v.id || v.videoUrl;
               const thumb = v.thumbnailUrl || (extractYouTubeId(v.videoUrl) ? `https://img.youtube.com/vi/${extractYouTubeId(v.videoUrl)}/hqdefault.jpg` : '');
               const embedUrl = getEmbedUrl(v.videoUrl);

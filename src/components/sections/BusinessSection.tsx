@@ -1,9 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { Button } from '@/components/ui/Button';
+
+interface BusinessVideo {
+  order: number;
+  videoUrl: string;
+  title: string;
+  active: boolean;
+}
 
 interface VideoModalProps {
   isOpen: boolean;
@@ -73,6 +80,20 @@ const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose, title, videoUr
 export const BusinessSection: React.FC = () => {
   const { t } = useLanguage();
   const [activeModal, setActiveModal] = useState<{ title: string; videoUrl?: string } | null>(null);
+  const [businessVideos, setBusinessVideos] = useState<BusinessVideo[]>([]);
+
+  useEffect(() => {
+    fetch('/api/videos?category=Business')
+      .then((r) => r.json())
+      .then((data: BusinessVideo[]) => {
+        if (Array.isArray(data)) setBusinessVideos(data);
+      })
+      .catch(() => {/* silent — placeholder is shown */});
+  }, []);
+
+  // Returns the video URL for a given block order (1-based), or undefined for placeholder
+  const getVideoUrl = (order: number): string | undefined =>
+    businessVideos.find((v) => v.active && v.order === order)?.videoUrl;
 
   const blocks = [
     {
@@ -200,7 +221,7 @@ export const BusinessSection: React.FC = () => {
 
                     <button
                       type="button"
-                      onClick={() => setActiveModal({ title: block.videoTitle })}
+                      onClick={() => setActiveModal({ title: block.videoTitle, videoUrl: getVideoUrl(index + 1) })}
                       className="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 hover:text-emerald-800 hover:underline py-2"
                     >
                       <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -214,7 +235,7 @@ export const BusinessSection: React.FC = () => {
                 {/* Video Window (5 cols) */}
                 <div className="lg:col-span-5">
                   <div
-                    onClick={() => setActiveModal({ title: block.videoTitle })}
+                    onClick={() => setActiveModal({ title: block.videoTitle, videoUrl: getVideoUrl(index + 1) })}
                     className="relative aspect-video rounded-2xl bg-gradient-to-tr from-gray-950 via-gray-900 to-emerald-950 border-2 border-gray-800 shadow-md overflow-hidden cursor-pointer group/video flex flex-col justify-between p-4"
                   >
                     {/* Top video pill */}
