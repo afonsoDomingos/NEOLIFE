@@ -1,71 +1,48 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardHeader } from '@/components/ui/Card';
-import { DynamicBanner } from '@/components/ui/DynamicBanner';
-import { VideoSection } from '@/components/ui/VideoSection';
-import { getActiveThemes as getStaticThemes } from '@/data/themes';
-import { TypewriterText, SlideUpText, WordByWordText } from '@/components/ui/AnimatedText';
+import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Theme } from '@/types';
+import { Button } from '@/components/ui/Button';
+import { DynamicBanner } from '@/components/ui/DynamicBanner';
+import { VideoSection } from '@/components/ui/VideoSection';
+import { HealthSection } from '@/components/sections/HealthSection';
+import { BusinessSection } from '@/components/sections/BusinessSection';
+import { ExperiencesSection } from '@/components/sections/ExperiencesSection';
+import { NeoLifeScienceSection } from '@/components/sections/NeoLifeScienceSection';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function Home() {
-  const [themes, setThemes] = useState<(Theme & { _id?: string })[]>(() => getStaticThemes());
-
-  useEffect(() => {
-    const fetchThemes = async () => {
-      try {
-        const res = await fetch('/api/themes');
-        if (res.ok) {
-          const data = await res.json();
-          if (Array.isArray(data) && data.length > 0) {
-            setThemes(data);
-          }
-        }
-      } catch (err) {
-        console.error('Error loading dynamic themes:', err);
-      }
-    };
-    fetchThemes();
-  }, []);
+  const { t } = useLanguage();
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Dynamic Banner */}
+      {/* Dynamic Announcement Banner */}
       <DynamicBanner />
 
-      {/* Hero Section - 3 Pilares com Pergunta-Guia */}
-      <section className="relative bg-gradient-to-b from-emerald-50/40 via-white to-gray-50/50 py-16 md:py-24 overflow-hidden">
-        {/* Background ambient decorative shapes */}
+      {/* ── HERO SECTION: 3 Pilares com Pergunta-Guia ── */}
+      <section className="relative bg-gradient-to-b from-emerald-50/50 via-white to-gray-50/40 py-16 md:py-24 overflow-hidden">
+        {/* Ambient background glow */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-emerald-200/20 rounded-full blur-3xl pointer-events-none" />
         
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header & Question */}
+          {/* Header & Main Question */}
           <div className="text-center max-w-3xl mx-auto mb-14 md:mb-16">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100/80 border border-emerald-300/60 text-emerald-900 text-xs font-semibold mb-6 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse"></span>
-              NeoLife África • Mentoria & Transformação
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100/90 border border-emerald-300/80 text-emerald-900 text-xs font-bold mb-6 shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
+              {t.hero.badge}
             </div>
             
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight">
-              <TypewriterText 
-                text="O que você está buscando para a sua vida hoje?"
-                speed={60}
-                className="inline-block"
-              />
+              {t.hero.title}
             </h1>
             
             <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
-              <SlideUpText 
-                text="Para a sua jornada, conte com a mentoria próxima e dedicada de Ofélia & José Machado."
-                delay={600}
-              />
+              {t.hero.subtitle}
             </p>
           </div>
 
-          {/* 3 Pillars Cards */}
+          {/* 3 Pillars Overview Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-6xl mx-auto mb-12">
             
             {/* 1. SAÚDE */}
@@ -78,7 +55,7 @@ export default function Home() {
                     </svg>
                   </div>
                   <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-                    Nutrição Celular
+                    Nutrição & Vitalidade
                   </span>
                 </div>
 
@@ -89,23 +66,23 @@ export default function Home() {
                   1. SAÚDE
                 </h3>
                 
-                <blockquote className="text-gray-600 text-base leading-relaxed mb-6 italic border-l-2 border-emerald-300 pl-3">
+                <blockquote className="text-gray-600 text-sm sm:text-base leading-relaxed mb-6 italic border-l-2 border-emerald-300 pl-3">
                   “Eleve a forma como você cuida da sua saúde, de dentro para fora, através da nutrição celular.”
                 </blockquote>
               </div>
 
               <div className="pt-4 border-t border-gray-100">
-                <Link href="/interesse?tema=saude" className="block w-full">
-                  <Button fullWidth variant="outline" className="border-emerald-300 text-emerald-800 hover:bg-emerald-600 hover:text-white group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                    Explorar Saúde
+                <a href="#saude" className="block w-full">
+                  <Button fullWidth variant="outline" className="border-emerald-300 text-emerald-800 hover:bg-emerald-600 hover:text-white group-hover:bg-emerald-600 group-hover:text-white transition-all font-semibold">
+                    Explorar Soluções de Saúde ↓
                   </Button>
-                </Link>
+                </a>
               </div>
             </div>
 
-            {/* 2. LIBERDADE E RENDA */}
+            {/* 2. BUSINESS / OPORTUNIDADE */}
             <div className="group relative bg-gradient-to-b from-emerald-900 via-emerald-850 to-emerald-950 text-white rounded-3xl p-8 shadow-md hover:shadow-2xl border-2 border-emerald-500/40 hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between transform md:-translate-y-2">
-              <div className="absolute -top-3.5 right-6 bg-emerald-500 text-emerald-950 text-xs font-extrabold uppercase px-3 py-1 rounded-full tracking-wider shadow">
+              <div className="absolute -top-3.5 right-6 bg-emerald-400 text-emerald-950 text-xs font-extrabold uppercase px-3 py-1 rounded-full tracking-wider shadow">
                 Empreendedorismo
               </div>
 
@@ -125,24 +102,24 @@ export default function Home() {
                   Pilar 02
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-emerald-300 transition-colors">
-                  2. LIBERDADE E RENDA
+                  2. BUSINESS
                 </h3>
                 
-                <blockquote className="text-emerald-100/90 text-base leading-relaxed mb-6 italic border-l-2 border-emerald-400 pl-3">
-                  “Construa uma nova fonte de renda através do marketing de rede e transforme seu negócio em liberdade para escolher como viver.”
+                <blockquote className="text-emerald-100/90 text-sm sm:text-base leading-relaxed mb-6 italic border-l-2 border-emerald-400 pl-3">
+                  “Construa uma nova fonte de renda sustentável e transforme o seu negócio em liberdade para escolher como viver.”
                 </blockquote>
               </div>
 
               <div className="pt-4 border-t border-emerald-800/80">
-                <Link href="/oportunidade" className="block w-full">
-                  <Button fullWidth className="bg-white text-emerald-900 hover:bg-emerald-50 font-bold shadow-sm">
-                    Conhecer Oportunidade
+                <a href="#negocio" className="block w-full">
+                  <Button fullWidth className="bg-white text-emerald-900 hover:bg-emerald-50 font-bold shadow-xs">
+                    Ver Guião & Vídeos de Negócio ↓
                   </Button>
-                </Link>
+                </a>
               </div>
             </div>
 
-            {/* 3. MUNDO E EXPERIÊNCIAS */}
+            {/* 3. OUTRAS EXPERIÊNCIAS */}
             <div className="group relative bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl border border-emerald-100 hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-6">
@@ -160,29 +137,29 @@ export default function Home() {
                   Pilar 03
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-teal-700 transition-colors">
-                  3. MUNDO E EXPERIÊNCIAS
+                  3. EXPERIÊNCIAS
                 </h3>
                 
-                <blockquote className="text-gray-600 text-base leading-relaxed mb-6 italic border-l-2 border-teal-300 pl-3">
-                  “Expanda seus horizontes, conheça o mundo e transforme seu negócio em novas experiências de vida.”
+                <blockquote className="text-gray-600 text-sm sm:text-base leading-relaxed mb-6 italic border-l-2 border-teal-300 pl-3">
+                  “Expanda os seus horizontes, conheça o mundo e viva experiências únicas de reconhecimento e comunidade.”
                 </blockquote>
               </div>
 
               <div className="pt-4 border-t border-gray-100">
-                <Link href="/interesse?tema=mundo-experiencias" className="block w-full">
-                  <Button fullWidth variant="outline" className="border-teal-300 text-teal-800 hover:bg-teal-600 hover:text-white group-hover:bg-teal-600 group-hover:text-white transition-all">
-                    Descobrir Experiências
+                <a href="#experiencias" className="block w-full">
+                  <Button fullWidth variant="outline" className="border-teal-300 text-teal-800 hover:bg-teal-600 hover:text-white group-hover:bg-teal-600 group-hover:text-white transition-all font-semibold">
+                    Descobrir Experiências ↓
                   </Button>
-                </Link>
+                </a>
               </div>
             </div>
 
           </div>
 
           {/* Mentorship Trust Callout */}
-          <div className="max-w-3xl mx-auto bg-white/80 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-emerald-200/80 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <div className="max-w-3xl mx-auto bg-white/90 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-emerald-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full overflow-hidden shrink-0 border-2 border-emerald-400 relative">
+              <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 border-emerald-400 relative shadow-sm">
                 <Image
                   src="/assistente.png"
                   alt="José e Ofélia Machado"
@@ -191,17 +168,21 @@ export default function Home() {
                 />
               </div>
               <div>
-                <p className="text-xs font-bold text-emerald-800 uppercase tracking-wider">Mentoria Personalizada</p>
-                <p className="text-sm font-semibold text-gray-900">Ofélia & José Machado ao seu lado</p>
+                <p className="text-xs font-bold text-emerald-800 uppercase tracking-wider">
+                  {t.hero.mentorshipBadge}
+                </p>
+                <p className="text-sm font-semibold text-gray-900">
+                  {t.hero.mentorshipText}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <Link href="#temas" className="text-xs font-semibold text-gray-600 hover:text-emerald-700 px-3 py-2">
-                Ver todos os temas ↓
-              </Link>
+              <a href="#saude" className="text-xs font-semibold text-gray-600 hover:text-emerald-700 px-3 py-2">
+                Ver Soluções ↓
+              </a>
               <Link href="/formulario?tema=conheca-neolife&pais=mz">
-                <Button size="sm" className="text-xs font-semibold">
-                  Falar Connosco
+                <Button size="sm" className="text-xs font-bold bg-emerald-700 hover:bg-emerald-800 text-white">
+                  {t.hero.talkToUs}
                 </Button>
               </Link>
             </div>
@@ -209,7 +190,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Mentors / Personal Positioning Section */}
+      {/* ── MENTORS & POSITIONING SECTION ── */}
       <section className="py-20 bg-gray-50 border-y border-gray-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -217,32 +198,32 @@ export default function Home() {
             <div>
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold mb-6">
                 <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                Quem Somos
+                {t.mentors.badge}
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
-                Uma Equipa Real.<br />
-                <span className="text-emerald-700">Partilha Genuína.</span>
+                {t.mentors.title}<br />
+                <span className="text-emerald-700">{t.mentors.highlight}</span>
               </h2>
-              <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                Não somos uma corporação distante. Somos o <strong className="font-semibold text-gray-900">José Sarmento Machado</strong> e a <strong className="font-semibold text-gray-900">Ofélia Alfredo Machado</strong>, um casal que encontrou na NeoLife o caminho para transformar a saúde da nossa família e construir uma fonte de rendimento sustentável - e decidimos partilhar essa experiência e mentoria com quem está ao nosso redor.
+              <p className="text-gray-600 text-base sm:text-lg leading-relaxed mb-5">
+                {t.mentors.p1}
               </p>
-              <p className="text-gray-600 leading-relaxed mb-6">
-                A nossa missão é simples: partilhar conhecimento prático e comprovado sobre nutrição celular, esclarecer dúvidas com transparência e acompanhar quem desejar empreender connosco - sem pressão, com acompanhamento próximo e respeito pelo seu tempo.
+              <p className="text-gray-600 leading-relaxed mb-5">
+                {t.mentors.p2}
               </p>
               <p className="text-gray-600 leading-relaxed mb-8">
-                Se tiver dúvidas, perguntas ou curiosidade sobre a nossa caminhada - estamos aqui. A conversa é gratuita e sem qualquer compromisso.
+                {t.mentors.p3}
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link href="/oportunidade">
-                  <Button variant="outline">
-                    Conhecer a Oportunidade
+                <a href="#negocio">
+                  <Button variant="outline" className="border-emerald-600 text-emerald-800 hover:bg-emerald-50 font-semibold">
+                    {t.hero.exploreBusiness}
                   </Button>
-                </Link>
-                <Link href="#temas">
-                  <Button>
-                    Explorar Temas de Saúde
+                </a>
+                <a href="#saude">
+                  <Button className="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold">
+                    {t.hero.exploreHealth}
                   </Button>
-                </Link>
+                </a>
               </div>
             </div>
 
@@ -260,18 +241,24 @@ export default function Home() {
                     />
                   </div>
                   <div>
-                    <p className="font-bold text-gray-900 text-lg leading-snug">José & Ofélia Machado</p>
-                    <p className="text-xs text-gray-500 font-medium">Consultores & Mentores de Bem-Estar NeoLife</p>
-                    <p className="text-xs text-emerald-700 font-semibold mt-1">Moçambique · África do Sul · Angola · Zimbabwe</p>
+                    <p className="font-bold text-gray-900 text-lg leading-snug">
+                      {t.mentors.coupleTitle}
+                    </p>
+                    <p className="text-xs text-gray-500 font-medium">
+                      {t.mentors.coupleSubtitle}
+                    </p>
+                    <p className="text-xs text-emerald-700 font-semibold mt-1">
+                      {t.mentors.coupleRegions}
+                    </p>
                   </div>
                 </div>
 
                 <div className="space-y-4">
                   {[
-                    'Informação educativa sobre saúde e bem-estar',
-                    'Resposta a dúvidas sem compromisso',
-                    'Acompanhamento personalizado',
-                    'Rede ativa em 4 países africanos',
+                    t.mentors.bullet1,
+                    t.mentors.bullet2,
+                    t.mentors.bullet3,
+                    t.mentors.bullet4,
                   ].map((text, i) => (
                     <div key={i} className="flex items-center gap-3">
                       <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
@@ -279,14 +266,14 @@ export default function Home() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                         </svg>
                       </div>
-                      <p className="text-gray-700 leading-snug">{text}</p>
+                      <p className="text-gray-700 text-sm leading-snug">{text}</p>
                     </div>
                   ))}
                 </div>
 
                 <div className="mt-6 pt-6 border-t border-gray-100">
                   <p className="text-xs text-gray-600 italic">
-                    "A melhor decisão é uma decisão informada. Estamos aqui para garantir que a sua o seja."
+                    {t.mentors.quote}
                   </p>
                   <p className="text-[11px] font-semibold text-emerald-800 mt-1">
                     - José Sarmento Machado & Ofélia Alfredo Machado
@@ -294,124 +281,67 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Decorative badge */}
-              <div className="absolute -bottom-4 -right-4 bg-emerald-600 text-white rounded-2xl px-5 py-3 shadow-lg">
-                <p className="text-xs font-medium opacity-80">Sempre disponíveis</p>
-                <p className="text-sm font-bold">via WhatsApp</p>
-              </div>
+              {/* Decorative WhatsApp badge */}
+              <a
+                href="https://wa.me/258823056900"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute -bottom-4 -right-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl px-5 py-3 shadow-lg transition-all"
+              >
+                <p className="text-xs font-medium opacity-80">{t.mentors.alwaysAvailable}</p>
+                <p className="text-sm font-bold flex items-center gap-1.5">
+                  <span>+258 82 305 6900</span>
+                  <span>➔</span>
+                </p>
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="temas" className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
-              <WordByWordText 
-                text="Escolha o Seu Interesse"
-                speed={150}
-              />
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              <SlideUpText 
-                text="Selecione o tema que mais lhe interessa e receba informações personalizadas."
-                delay={800}
-              />
-            </p>
-          </div>
+      {/* ── A DIFERENÇA NEOLIFE: Natureza + Ciência ── */}
+      <NeoLifeScienceSection />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {themes.map((theme, index) => {
-              const themeKey = theme._id || theme.id || theme.slug;
-              return (
-                <Link key={themeKey} href={`/interesse?tema=${theme.slug}`}>
-                  <Card className="h-full hover:shadow-xl hover:border-emerald-300 transition-all duration-300 group border border-gray-100">
-                    <CardHeader>
-                      {theme.image ? (
-                        <img
-                          src={theme.image}
-                          alt={theme.title}
-                          className="aspect-video w-full object-cover rounded-lg mb-4 group-hover:opacity-95 transition-opacity"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&h=600&fit=crop';
-                          }}
-                        />
-                      ) : (
-                        <div className="aspect-video bg-emerald-50/50 rounded-lg mb-4 flex items-center justify-center border border-emerald-100/50">
-                          <span className="text-emerald-700 text-sm font-medium">NeoLife {theme.title}</span>
-                        </div>
-                      )}
-                      <h3 className="text-xl font-semibold text-gray-900 group-hover:text-emerald-700 transition-colors mb-2">
-                        <SlideUpText 
-                          text={theme.title}
-                          delay={index * 100}
-                        />
-                      </h3>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-gray-600 mb-6">
-                        {theme.description}
-                      </p>
-                      <Button variant="outline" fullWidth>
-                        Quero Saber Mais
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+      {/* ── PILAR 1: SAÚDE (Categorias, Outras Soluções & Pacotes Oficiais) ── */}
+      <HealthSection />
 
-      {/* Videos Section */}
+      {/* ── PILAR 2: BUSINESS (Guião em Blocos & Janelas de Vídeo) ── */}
+      <BusinessSection />
+
+      {/* ── PILAR 3: OUTRAS EXPERIÊNCIAS (Estrutura Preparada) ── */}
+      <ExperiencesSection />
+
+      {/* ── VIDEOS DA COMUNIDADE ── */}
       <VideoSection />
 
-      {/* Business Opportunity Teaser */}
-      <section className="py-16 bg-emerald-700">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-            <div className="text-center md:text-left">
-              <p className="text-emerald-300 text-sm font-semibold uppercase tracking-wider mb-2">Para quem procura mais</p>
-              <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-                Conheça a Oportunidade de Negócio
-              </h2>
-              <p className="text-emerald-100 leading-relaxed max-w-xl">
-                Saúde e bem-estar podem ser também a base de um rendimento suplementar ou até de um negócio a tempo inteiro. Sem pressão - apenas informação.
-              </p>
-            </div>
-            <Link href="/oportunidade" className="shrink-0">
-              <Button size="lg" className="bg-white text-emerald-800 hover:bg-emerald-50 font-bold px-8 whitespace-nowrap">
-                Saber Como Funciona
+      {/* ── FINAL CTA SECTION ── */}
+      <section className="py-20 bg-gradient-to-b from-white via-emerald-50/30 to-emerald-100/40 border-t border-emerald-100">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6">
+            {t.cta.readyTitle}
+          </h2>
+          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+            {t.cta.readyText}
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a
+              href="https://wa.me/258823056900"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button size="lg" className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-8 shadow-md">
+                {t.cta.startNow}
+              </Button>
+            </a>
+            <Link href="/formulario?tema=conheca-neolife&pais=mz">
+              <Button size="lg" variant="outline" className="border-emerald-400 text-emerald-800 hover:bg-emerald-50 font-bold px-8">
+                Preencher Formulário
               </Button>
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-b from-white via-emerald-50/20 to-emerald-50/40 border-t border-emerald-100/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-6">
-              <TypewriterText 
-                text="Pronto para Começar?"
-                speed={100}
-              />
-            </h2>
-            <p className="text-lg text-gray-600 mb-8">
-              <SlideUpText 
-                text="Não perca tempo. Escolha um tema acima e receba informações personalizadas agora mesmo."
-                delay={500}
-              />
-            </p>
-            <Link href="#temas">
-              <Button size="lg">
-                Começar Agora
-              </Button>
-            </Link>
-          </div>
+          <p className="mt-6 text-xs text-gray-500 font-mono">
+            {t.cta.directContact}
+          </p>
         </div>
       </section>
     </div>

@@ -63,6 +63,33 @@ export const themes: Theme[] = [
     active: true,
     order: 7,
     image: 'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&h=600&fit=crop'
+  },
+  {
+    id: 'oportunidade-negocio',
+    title: 'Oportunidade de Negócio & Empreendedorismo',
+    description: 'Construa o seu negócio independente e uma fonte de rendimento sustentável com a NeoLife.',
+    slug: 'oportunidade-negocio',
+    active: true,
+    order: 8,
+    image: 'https://images.unsplash.com/photo-1553028826-f4804a6dba3b?w=800&h=600&fit=crop'
+  },
+  {
+    id: 'outras-solucoes',
+    title: 'Outras Soluções de Saúde & Bem-Estar',
+    description: 'Atendimento personalizado para encontrar exatamente a solução ou produto NeoLife que procura.',
+    slug: 'outras-solucoes',
+    active: true,
+    order: 9,
+    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=600&fit=crop'
+  },
+  {
+    id: 'suplementos',
+    title: 'Suplementos Nutricionais NeoLife',
+    description: 'Nutrição celular avançada para energia, vitalidade e bem-estar diário.',
+    slug: 'suplementos',
+    active: true,
+    order: 10,
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&h=600&fit=crop'
   }
 ];
 

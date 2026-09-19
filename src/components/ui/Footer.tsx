@@ -1,7 +1,13 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { LanguageSelector } from '@/components/ui/LanguageSelector';
 
 export const Footer: React.FC = () => {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-gray-900 text-gray-300 border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
@@ -15,16 +21,18 @@ export const Footer: React.FC = () => {
             />
             <div>
               <span className="text-lg font-bold text-white tracking-tight">
-                Neo<span className="text-emerald-400">Life</span> África
+                Neo<span className="text-emerald-400">Life</span> África & Global
               </span>
               <p className="text-gray-400 text-xs mt-0.5">
-                Saúde, Vitalidade e Liberdade Financeira
+                {t.footer.slogan}
               </p>
             </div>
           </div>
 
-          {/* Contact & Social Links */}
+          {/* Contact, Social & Language Selector */}
           <div className="flex flex-wrap items-center justify-center gap-4 text-sm mt-4 md:mt-0">
+            <LanguageSelector variant="footer" />
+
             <a 
               href="https://wa.me/258823056900" 
               target="_blank" 
@@ -34,7 +42,7 @@ export const Footer: React.FC = () => {
               <svg className="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2z"/>
               </svg>
-              <span>82 305 6900</span>
+              <span>+258 82 305 6900</span>
             </a>
             
             <a
@@ -52,25 +60,28 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="flex flex-wrap items-center gap-6 text-sm text-gray-400">
+          <div className="flex flex-wrap items-center gap-5 text-sm text-gray-400">
             <Link href="/" className="hover:text-emerald-400 transition-colors">
-              Início
+              {t.nav.home}
             </Link>
-            <Link href="/#temas" className="hover:text-emerald-400 transition-colors">
-              Temas
+            <Link href="/#saude" className="hover:text-emerald-400 transition-colors">
+              {t.nav.health}
             </Link>
-            <Link href="/oportunidade" className="hover:text-emerald-400 transition-colors">
-              Oportunidade
+            <Link href="/#negocio" className="hover:text-emerald-400 transition-colors">
+              {t.nav.business}
+            </Link>
+            <Link href="/#experiencias" className="hover:text-emerald-400 transition-colors">
+              {t.nav.experiences}
             </Link>
             <Link href="/membro/login" className="text-emerald-400 hover:text-emerald-300 font-medium transition-colors">
-              Área de Membros
+              {t.nav.membersArea}
             </Link>
           </div>
         </div>
 
         {/* Bottom Bar: Copyright & Powered by WeHostHere */}
         <div className="mt-8 pt-6 border-t border-gray-800/80 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-400">
-          <p>© {new Date().getFullYear()} NeoLife África · Consultoria & Mentoria por José Sarmento Machado & Ofélia Alfredo Machado.</p>
+          <p>© {new Date().getFullYear()} NeoLife África & Global · José Sarmento Machado & Ofélia Alfredo Machado. {t.footer.rights}</p>
           
           <a
             href="https://www.wehosthere.com/"

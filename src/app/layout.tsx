@@ -46,6 +46,8 @@ export const metadata: Metadata = {
   verification: seoConfig.verification,
 };
 
+import { LanguageProvider } from "@/lib/i18n/LanguageContext";
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
@@ -53,14 +55,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Analytics />
-        <Header />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer />
-        <ScrollNav />
-        <ChatAssistant />
+        <LanguageProvider>
+          <Analytics />
+          <Header />
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+          <ScrollNav />
+          <ChatAssistant />
+        </LanguageProvider>
       </body>
     </html>
   );

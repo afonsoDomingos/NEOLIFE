@@ -14,6 +14,7 @@ function FormularioContent() {
   const themeSlug = searchParams.get('tema');
   const countryId = searchParams.get('pais');
   const campaign = searchParams.get('campanha');
+  const initialNotes = searchParams.get('notas') || searchParams.get('notes') || '';
 
   const [formData, setFormData] = useState({
     name: '',
@@ -21,7 +22,7 @@ function FormularioContent() {
     email: '',
     whatsapp: '',
     source: '',
-    notes: ''
+    notes: initialNotes
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
