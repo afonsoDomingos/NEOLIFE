@@ -3,11 +3,13 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { useSelection } from '@/lib/context/SelectionContext';
 import { LanguageSelector } from '@/components/ui/LanguageSelector';
 
 export const Header: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useLanguage();
+  const { totalItemsCount } = useSelection();
 
   return (
     <header className="bg-white/95 backdrop-blur-sm border-b border-gray-100 sticky top-0 z-50">
@@ -27,13 +29,13 @@ export const Header: React.FC = () => {
             <Link href="/" className="text-gray-700 hover:text-emerald-600 font-medium transition-colors text-sm">
               {t.nav.home}
             </Link>
-            <Link href="/#saude" className="text-gray-700 hover:text-emerald-600 font-medium transition-colors text-sm">
+            <Link href="/saude" className="text-gray-700 hover:text-emerald-600 font-medium transition-colors text-sm">
               {t.nav.health}
             </Link>
-            <Link href="/#negocio" className="text-emerald-700 hover:text-emerald-600 font-semibold transition-colors text-sm px-2.5 py-1 rounded-lg hover:bg-emerald-50">
+            <Link href="/business" className="text-emerald-700 hover:text-emerald-600 font-semibold transition-colors text-sm px-2.5 py-1 rounded-lg hover:bg-emerald-50">
               {t.nav.business}
             </Link>
-            <Link href="/#experiencias" className="text-gray-700 hover:text-emerald-600 font-medium transition-colors text-sm">
+            <Link href="/experiencias" className="text-gray-700 hover:text-emerald-600 font-medium transition-colors text-sm">
               {t.nav.experiences}
             </Link>
             <Link href="/#videos" className="text-gray-700 hover:text-emerald-600 font-medium transition-colors text-sm">
@@ -42,6 +44,21 @@ export const Header: React.FC = () => {
           </nav>
           
           <div className="flex items-center space-x-2 sm:space-x-3">
+            {/* Selection Cart Badge */}
+            {totalItemsCount > 0 && (
+              <Link
+                href="/formulario?origem=header"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold bg-emerald-100 text-emerald-950 border border-emerald-300 hover:bg-emerald-200 transition-all shadow-xs"
+                title="Ver Itens Selecionados"
+              >
+                <span>🛒</span>
+                <span className="hidden sm:inline">Seleção</span>
+                <span className="w-5 h-5 rounded-full bg-emerald-700 text-white text-[11px] font-black flex items-center justify-center">
+                  {totalItemsCount}
+                </span>
+              </Link>
+            )}
+
             {/* Language Switcher */}
             <LanguageSelector />
 
@@ -99,21 +116,21 @@ export const Header: React.FC = () => {
                 {t.nav.home}
               </Link>
               <Link 
-                href="/#saude" 
+                href="/saude" 
                 className="text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 px-3 py-2 rounded-lg transition-colors font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {t.nav.health}
               </Link>
               <Link 
-                href="/#negocio" 
+                href="/business" 
                 className="text-emerald-700 font-semibold hover:bg-emerald-50 px-3 py-2 rounded-lg transition-colors border border-emerald-200"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {t.nav.business}
               </Link>
               <Link 
-                href="/#experiencias" 
+                href="/experiencias" 
                 className="text-gray-700 hover:text-emerald-600 hover:bg-emerald-50 px-3 py-2 rounded-lg transition-colors font-medium"
                 onClick={() => setMobileMenuOpen(false)}
               >

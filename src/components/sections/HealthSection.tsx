@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { useSelection } from '@/lib/context/SelectionContext';
 import { Button } from '@/components/ui/Button';
 import {
   cellular4Supplements,
@@ -13,11 +14,17 @@ import {
 export const HealthSection: React.FC = () => {
   const { language } = useLanguage();
   const isPt = language === 'pt';
+  const {
+    toggleHealthPack,
+    isHealthPackSelected,
+    customHealthNeed,
+    setCustomHealthNeed,
+    totalItemsCount
+  } = useSelection();
 
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [activePackModal, setActivePackModal] = useState<HealthSolutionPack | null>(null);
-  const [customNeed, setCustomNeed] = useState('');
-  const [needSent, setNeedSent] = useState(false);
+  const [needSaved, setNeedSaved] = useState(false);
 
   const categories = [
     { id: 'all', labelPt: '🌟 Todos os Pacotes', labelEn: '🌟 All Packs' },
@@ -36,19 +43,11 @@ export const HealthSection: React.FC = () => {
       ? healthSolutionPacks
       : healthSolutionPacks.filter((p) => p.category === selectedCategory);
 
-  const handleSendCustomNeed = (e: React.FormEvent) => {
+  const handleSaveCustomNeed = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!customNeed.trim()) return;
-
-    const params = new URLSearchParams();
-    params.set('tema', 'outras-solucoes');
-    params.set('pais', 'mz');
-    params.set('notas', customNeed.trim());
-
-    setNeedSent(true);
-    setTimeout(() => {
-      window.location.href = `/formulario?${params.toString()}`;
-    }, 600);
+    if (!customHealthNeed.trim()) return;
+    setNeedSaved(true);
+    setTimeout(() => setNeedSaved(false), 5000);
   };
 
   const getWhatsAppLink = (packTitle: string) => {
@@ -251,11 +250,45 @@ export const HealthSection: React.FC = () => {
 
                 {/* Action Buttons */}
                 <div className="pt-4 border-t border-gray-100 space-y-2">
+                  {/* Primary Add to Selection Button */}
+                  {(() => {
+                    const isSelected = isHealthPackSelected(pack.id);
+                    return (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          toggleHealthPack({
+                            id: pack.id,
+                            title: isPt ? pack.titlePt : pack.titleEn,
+                            category: pack.category,
+                            subtitle: isPt ? pack.tagPt : pack.tagEn,
+                          })
+                        }
+                        className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
+                          isSelected
+                            ? 'bg-emerald-600 text-white shadow-md ring-2 ring-emerald-400'
+                            : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-600 hover:text-white border border-emerald-300'
+                        }`}
+                      >
+                        {isSelected ? (
+                          <>
+                            <span>✓ {isPt ? 'Selecionado para o Pedido' : 'Selected for Order'}</span>
+                            <span className="text-[10px] opacity-80 font-normal">({isPt ? 'clique para remover' : 'click to remove'})</span>
+                          </>
+                        ) : (
+                          <>
+                            <span>+ {isPt ? 'Adicionar à Minha Seleção' : 'Add to My Selection'}</span>
+                          </>
+                        )}
+                      </button>
+                    );
+                  })()}
+
                   <div className="flex gap-2">
                     <button
                       type="button"
                       onClick={() => setActivePackModal(pack)}
-                      className="flex-1 py-2 px-3 rounded-xl text-xs font-semibold border border-emerald-300 text-emerald-800 hover:bg-emerald-50 transition-colors text-center"
+                      className="flex-1 py-1.5 px-3 rounded-xl text-xs font-semibold border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors text-center"
                     >
                       {isPt ? 'Ver Detalhes' : 'View Details'}
                     </button>
@@ -264,9 +297,9 @@ export const HealthSection: React.FC = () => {
                       href={getWhatsAppLink(isPt ? pack.titlePt : pack.titleEn)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 py-2 px-3 rounded-xl text-xs font-bold bg-emerald-700 hover:bg-emerald-800 text-white transition-colors text-center shadow-xs flex items-center justify-center gap-1"
+                      className="py-1.5 px-3 rounded-xl text-xs font-semibold text-emerald-700 hover:text-emerald-800 transition-colors text-center flex items-center justify-center gap-1"
                     >
-                      <span>{isPt ? 'Quero Este' : 'Order Pack'}</span>
+                      <span>WhatsApp</span>
                       <span>➔</span>
                     </a>
                   </div>
@@ -291,37 +324,42 @@ export const HealthSection: React.FC = () => {
                 : '“Tell us what you are looking for or what your specific need is, and we will get in touch to find the best option for you.”'}
             </p>
 
-            <form onSubmit={handleSendCustomNeed} className="space-y-4">
+            <form onSubmit={handleSaveCustomNeed} className="space-y-4">
               <textarea
                 rows={3}
-                value={customNeed}
-                onChange={(e) => setCustomNeed(e.target.value)}
+                value={customHealthNeed}
+                onChange={(e) => setCustomHealthNeed(e.target.value)}
                 placeholder={
                   isPt
-                    ? 'Escreva aqui a sua necessidade, dúvida de saúde ou produto que procura...'
-                    : 'Write your specific wellness need, health question, or product inquiry here...'
+                    ? 'Escreva aqui a sua necessidade, dúvida de saúde ou produto que procura (fica salvo automaticamente)...'
+                    : 'Write your specific wellness need, health question, or product inquiry here (saved automatically)...'
                 }
                 className="w-full text-sm p-4 rounded-2xl bg-white/10 border border-emerald-400/40 text-white placeholder-emerald-200/60 focus:outline-none focus:ring-2 focus:ring-emerald-400 resize-none transition-all shadow-inner"
-                required
               />
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <button
                   type="submit"
-                  disabled={needSent}
                   className="w-full sm:w-auto py-3 px-8 rounded-xl text-sm font-bold bg-emerald-400 hover:bg-emerald-300 text-emerald-950 shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
                 >
-                  {needSent ? (
-                    <span>{isPt ? 'Mensagem Recebida! A encaminhar...' : 'Message Received! Redirecting...'}</span>
+                  {needSaved ? (
+                    <span>✓ {isPt ? 'Guardado no Seu Pedido!' : 'Saved to Your Selection!'}</span>
                   ) : (
                     <>
-                      <span>{isPt ? 'Enviar a Minha Necessidade' : 'Submit My Request'}</span>
+                      <span>{isPt ? 'Confirmar Pedido Especial' : 'Save Special Request'}</span>
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                       </svg>
                     </>
                   )}
                 </button>
+
+                <Link
+                  href="/formulario?origem=outras-solucoes"
+                  className="w-full sm:w-auto py-3 px-6 rounded-xl text-sm font-semibold bg-white/15 hover:bg-white/25 text-white border border-white/20 transition-all text-center"
+                >
+                  {isPt ? 'Concluir no Formulário ➔' : 'Complete in Form ➔'}
+                </Link>
 
                 <a
                   href="https://wa.me/258823056900"

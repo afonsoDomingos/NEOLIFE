@@ -6,9 +6,6 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { DynamicBanner } from '@/components/ui/DynamicBanner';
 import { VideoSection } from '@/components/ui/VideoSection';
-import { HealthSection } from '@/components/sections/HealthSection';
-import { BusinessSection } from '@/components/sections/BusinessSection';
-import { ExperiencesSection } from '@/components/sections/ExperiencesSection';
 import { NeoLifeScienceSection } from '@/components/sections/NeoLifeScienceSection';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 
@@ -72,23 +69,24 @@ export default function Home() {
               </div>
 
               <div className="pt-4 border-t border-gray-100">
-                <a href="#saude" className="block w-full">
-                  <Button fullWidth variant="outline" className="border-emerald-300 text-emerald-800 hover:bg-emerald-600 hover:text-white group-hover:bg-emerald-600 group-hover:text-white transition-all font-semibold">
-                    Explorar Soluções de Saúde ↓
-                  </Button>
-                </a>
+                <Link href="/saude" className="block w-full">
+                  <button className="w-full py-3.5 px-4 rounded-2xl font-bold text-sm bg-emerald-700 hover:bg-emerald-800 text-white shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 group-hover:bg-emerald-600">
+                    <span>Explorar Soluções de Saúde</span>
+                    <span>➔</span>
+                  </button>
+                </Link>
               </div>
             </div>
 
             {/* 2. BUSINESS / OPORTUNIDADE */}
-            <div className="group relative bg-gradient-to-b from-emerald-900 via-emerald-850 to-emerald-950 text-white rounded-3xl p-8 shadow-md hover:shadow-2xl border-2 border-emerald-500/40 hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between transform md:-translate-y-2">
+            <div className="group relative bg-gradient-to-b from-emerald-950 via-emerald-900 to-gray-950 text-white rounded-3xl p-8 shadow-xl hover:shadow-2xl border-2 border-emerald-500/50 hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between transform md:-translate-y-2">
               <div className="absolute -top-3.5 right-6 bg-emerald-400 text-emerald-950 text-xs font-extrabold uppercase px-3 py-1 rounded-full tracking-wider shadow">
                 Empreendedorismo
               </div>
 
               <div>
                 <div className="flex items-center justify-between mb-6">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-700/60 border border-emerald-500/40 flex items-center justify-center text-emerald-200 group-hover:scale-110 group-hover:bg-white group-hover:text-emerald-900 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-800/80 border border-emerald-500/40 flex items-center justify-center text-emerald-300 group-hover:scale-110 group-hover:bg-white group-hover:text-emerald-900 transition-all duration-300">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" />
                     </svg>
@@ -111,16 +109,17 @@ export default function Home() {
               </div>
 
               <div className="pt-4 border-t border-emerald-800/80">
-                <a href="#negocio" className="block w-full">
-                  <Button fullWidth className="bg-white text-emerald-900 hover:bg-emerald-50 font-bold shadow-xs">
-                    Ver Guião & Vídeos de Negócio ↓
-                  </Button>
-                </a>
+                <Link href="/business" className="block w-full">
+                  <button className="w-full py-3.5 px-4 rounded-2xl font-black text-sm bg-emerald-400 hover:bg-emerald-300 text-emerald-950 shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-2">
+                    <span>Conhecer o Business</span>
+                    <span>➔</span>
+                  </button>
+                </Link>
               </div>
             </div>
 
             {/* 3. OUTRAS EXPERIÊNCIAS */}
-            <div className="group relative bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl border border-emerald-100 hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between">
+            <div className="group relative bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl border border-teal-100 hover:border-teal-400 transition-all duration-300 flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between mb-6">
                   <div className="w-12 h-12 rounded-2xl bg-teal-100/80 flex items-center justify-center text-teal-700 group-hover:scale-110 group-hover:bg-teal-600 group-hover:text-white transition-all duration-300">
@@ -146,11 +145,12 @@ export default function Home() {
               </div>
 
               <div className="pt-4 border-t border-gray-100">
-                <a href="#experiencias" className="block w-full">
-                  <Button fullWidth variant="outline" className="border-teal-300 text-teal-800 hover:bg-teal-600 hover:text-white group-hover:bg-teal-600 group-hover:text-white transition-all font-semibold">
-                    Descobrir Experiências ↓
-                  </Button>
-                </a>
+                <Link href="/experiencias" className="block w-full">
+                  <button className="w-full py-3.5 px-4 rounded-2xl font-bold text-sm bg-teal-700 hover:bg-teal-800 text-white shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 group-hover:bg-teal-600">
+                    <span>Descobrir Experiências</span>
+                    <span>➔</span>
+                  </button>
+                </Link>
               </div>
             </div>
 
@@ -302,14 +302,67 @@ export default function Home() {
       {/* ── A DIFERENÇA NEOLIFE: Natureza + Ciência ── */}
       <NeoLifeScienceSection />
 
-      {/* ── PILAR 1: SAÚDE (Categorias, Outras Soluções & Pacotes Oficiais) ── */}
-      <HealthSection />
+      {/* ── NAVEGAÇÃO RÁPIDA: AS 3 ÁREAS PRINCIPAIS ── */}
+      <section className="py-16 bg-white border-b border-gray-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-3">
+            Escolha o Seu Próximo Passo
+          </h3>
+          <p className="text-gray-600 text-sm max-w-xl mx-auto mb-10">
+            Aceda diretamente à área que procura para ver todas as opções disponíveis e adicionar à sua seleção personalizada.
+          </p>
 
-      {/* ── PILAR 2: BUSINESS (Guião em Blocos & Janelas de Vídeo) ── */}
-      <BusinessSection />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Link href="/saude" className="group p-6 rounded-3xl bg-emerald-50/60 hover:bg-emerald-100/70 border border-emerald-200 transition-all text-left flex flex-col justify-between">
+              <div>
+                <span className="text-2xl mb-3 block">🌿</span>
+                <h4 className="font-bold text-gray-900 text-lg mb-1 group-hover:text-emerald-800 transition-colors">
+                  1. Área de Saúde
+                </h4>
+                <p className="text-xs text-gray-600 leading-relaxed mb-4">
+                  Suplementos, nutrição celular, higiene pessoal, limpeza ecológica e agricultura.
+                </p>
+              </div>
+              <span className="text-xs font-bold text-emerald-800 flex items-center gap-1">
+                <span>Explorar Soluções</span>
+                <span>➔</span>
+              </span>
+            </Link>
 
-      {/* ── PILAR 3: OUTRAS EXPERIÊNCIAS (Estrutura Preparada) ── */}
-      <ExperiencesSection />
+            <Link href="/business" className="group p-6 rounded-3xl bg-gray-950 text-white hover:bg-emerald-950 border border-emerald-500/30 transition-all text-left flex flex-col justify-between shadow-lg">
+              <div>
+                <span className="text-2xl mb-3 block">💼</span>
+                <h4 className="font-bold text-white text-lg mb-1 group-hover:text-emerald-300 transition-colors">
+                  2. Oportunidade Business
+                </h4>
+                <p className="text-xs text-gray-300 leading-relaxed mb-4">
+                  Os 5 módulos em vídeo, plano de ganhos e mentoria com José & Ofélia Machado.
+                </p>
+              </div>
+              <span className="text-xs font-bold text-emerald-400 flex items-center gap-1">
+                <span>Ver Módulos & Vídeos</span>
+                <span>➔</span>
+              </span>
+            </Link>
+
+            <Link href="/experiencias" className="group p-6 rounded-3xl bg-teal-50/60 hover:bg-teal-100/70 border border-teal-200 transition-all text-left flex flex-col justify-between">
+              <div>
+                <span className="text-2xl mb-3 block">✈️</span>
+                <h4 className="font-bold text-gray-900 text-lg mb-1 group-hover:text-teal-800 transition-colors">
+                  3. Experiências & Viagens
+                </h4>
+                <p className="text-xs text-gray-600 leading-relaxed mb-4">
+                  Viagens internacionais, reconhecimento, convenções e comunidade global.
+                </p>
+              </div>
+              <span className="text-xs font-bold text-teal-800 flex items-center gap-1">
+                <span>Descobrir Mais</span>
+                <span>➔</span>
+              </span>
+            </Link>
+          </div>
+        </div>
+      </section>
 
       {/* ── VIDEOS DA COMUNIDADE ── */}
       <VideoSection />

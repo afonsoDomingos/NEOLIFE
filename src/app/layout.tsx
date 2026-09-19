@@ -47,6 +47,8 @@ export const metadata: Metadata = {
 };
 
 import { LanguageProvider } from "@/lib/i18n/LanguageContext";
+import { SelectionProvider } from "@/lib/context/SelectionContext";
+import { FloatingSelectionBar } from "@/components/ui/FloatingSelectionBar";
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
@@ -56,14 +58,17 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <LanguageProvider>
-          <Analytics />
-          <Header />
-          <main className="flex-grow">
-            {children}
-          </main>
-          <Footer />
-          <ScrollNav />
-          <ChatAssistant />
+          <SelectionProvider>
+            <Analytics />
+            <Header />
+            <main className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+            <ScrollNav />
+            <ChatAssistant />
+            <FloatingSelectionBar />
+          </SelectionProvider>
         </LanguageProvider>
       </body>
     </html>

@@ -3,10 +3,13 @@
 import React from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { useSelection } from '@/lib/context/SelectionContext';
 import { Button } from '@/components/ui/Button';
 
 export const ExperiencesSection: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isPt = language === 'pt';
+  const { toggleExperienceInterest, isExperienceInterestSelected } = useSelection();
 
   const items = [
     {
@@ -133,13 +136,23 @@ export const ExperiencesSection: React.FC = () => {
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-gray-200/50 flex items-center justify-between">
-                <span className="text-[11px] font-bold text-teal-700 uppercase tracking-wider">
-                  Experiência NeoLife
-                </span>
-                <span className="text-xs text-gray-400 group-hover:text-teal-600 font-bold transition-colors">
-                  Em Breve ➔
-                </span>
+              <div className="pt-4 border-t border-gray-200/50 flex flex-col gap-2">
+                {(() => {
+                  const isSelected = isExperienceInterestSelected(item.title);
+                  return (
+                    <button
+                      type="button"
+                      onClick={() => toggleExperienceInterest(item.title)}
+                      className={`w-full py-2 px-3 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                        isSelected
+                          ? 'bg-teal-700 text-white shadow-sm ring-2 ring-teal-500'
+                          : 'bg-teal-50 text-teal-800 hover:bg-teal-100 border border-teal-200'
+                      }`}
+                    >
+                      <span>{isSelected ? (isPt ? '✓ Tenho Interesse' : '✓ Interested') : (isPt ? '+ Quero Saber Mais' : '+ Add Interest')}</span>
+                    </button>
+                  );
+                })()}
               </div>
             </div>
           ))}

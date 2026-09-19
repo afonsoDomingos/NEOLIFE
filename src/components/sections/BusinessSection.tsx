@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { useSelection } from '@/lib/context/SelectionContext';
 import { Button } from '@/components/ui/Button';
 
 interface BusinessVideo {
@@ -78,9 +79,19 @@ const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose, title, videoUr
 };
 
 export const BusinessSection: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isPt = language === 'pt';
+  const { toggleBusinessGoal, isBusinessGoalSelected, businessGoals } = useSelection();
   const [activeModal, setActiveModal] = useState<{ title: string; videoUrl?: string } | null>(null);
   const [businessVideos, setBusinessVideos] = useState<BusinessVideo[]>([]);
+
+  const availableGoals = [
+    { id: 'extra-income', labelPt: '💰 Rendimento Extra Sustentável', labelEn: '💰 Extra Sustainable Income' },
+    { id: 'full-time', labelPt: '🏢 Negócio Próprio / Carreira Independente', labelEn: '🏢 Full-Time Independent Business' },
+    { id: 'mentorship', labelPt: '🤝 Mentoria Direta com José e Ofélia', labelEn: '🤝 Direct Mentorship with José & Ofélia' },
+    { id: 'time-freedom', labelPt: '⏳ Liberdade de Tempo & Horários Flexíveis', labelEn: '⏳ Time Freedom & Flexible Hours' },
+    { id: 'global-scale', labelPt: '🌍 Expansão Internacional (50+ Países)', labelEn: '🌍 Global Business (50+ Countries)' },
+  ];
 
   useEffect(() => {
     fetch('/api/videos?category=Business')
@@ -169,6 +180,47 @@ export const BusinessSection: React.FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <span>{t.business.flowNotice}</span>
+          </div>
+        </div>
+
+        {/* Interactive Goals Selector */}
+        <div className="max-w-4xl mx-auto mb-14 bg-white rounded-3xl p-6 sm:p-8 border border-emerald-200 shadow-sm">
+          <div className="text-center max-w-xl mx-auto mb-6">
+            <span className="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+              {isPt ? 'Personalize o seu Percurso' : 'Customize Your Journey'}
+            </span>
+            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mt-2">
+              {isPt ? 'O que mais procura alcançar com a NeoLife?' : 'What do you most want to achieve with NeoLife?'}
+            </h3>
+            <p className="text-xs text-gray-500 mt-1">
+              {isPt ? 'Selecione uma ou mais opções. Ficarão guardadas no seu pedido para personalizarmos a sua conversa.' : 'Select one or more goals to save them into your consultation request.'}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-2.5 justify-center">
+            {availableGoals.map((goal) => {
+              const label = isPt ? goal.labelPt : goal.labelEn;
+              const isSelected = isBusinessGoalSelected(label);
+              return (
+                <button
+                  key={goal.id}
+                  type="button"
+                  onClick={() => toggleBusinessGoal(label)}
+                  className={`px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 ${
+                    isSelected
+                      ? 'bg-emerald-700 text-white shadow-md ring-2 ring-emerald-500 scale-102'
+                      : 'bg-gray-50 text-gray-700 hover:bg-emerald-50 hover:text-emerald-800 border border-gray-200'
+                  }`}
+                >
+                  <span>{label}</span>
+                  <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] ${
+                    isSelected ? 'bg-white text-emerald-800 font-black' : 'border border-gray-300 text-transparent'
+                  }`}>
+                    ✓
+                  </span>
+                </button>
+              );
+            })}
           </div>
         </div>
 

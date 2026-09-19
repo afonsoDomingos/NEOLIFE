@@ -64,13 +64,13 @@ export const Footer: React.FC = () => {
             <Link href="/" className="hover:text-emerald-400 transition-colors">
               {t.nav.home}
             </Link>
-            <Link href="/#saude" className="hover:text-emerald-400 transition-colors">
+            <Link href="/saude" className="hover:text-emerald-400 transition-colors">
               {t.nav.health}
             </Link>
-            <Link href="/#negocio" className="hover:text-emerald-400 transition-colors">
+            <Link href="/business" className="hover:text-emerald-400 transition-colors">
               {t.nav.business}
             </Link>
-            <Link href="/#experiencias" className="hover:text-emerald-400 transition-colors">
+            <Link href="/experiencias" className="hover:text-emerald-400 transition-colors">
               {t.nav.experiences}
             </Link>
             <Link href="/membro/login" className="text-emerald-400 hover:text-emerald-300 font-medium transition-colors">
