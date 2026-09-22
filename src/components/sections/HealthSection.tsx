@@ -27,6 +27,8 @@ export const HealthSection: React.FC = () => {
   const [needSaved, setNeedSaved] = useState(false);
   const [expandedSupplements, setExpandedSupplements] = useState<Set<number>>(new Set());
   const [expandedShake, setExpandedShake] = useState(false);
+  const [productLinks, setProductLinks] = useState<Record<string, { available: boolean; purchaseUrl: string | null; customMessage?: string }>>({});
+  const [loadingLinks, setLoadingLinks] = useState<Set<string>>(new Set());
 
   const categories = [
     { id: 'all', labelPt: '🌟 Todos os Pacotes', labelEn: '🌟 All Packs' },
@@ -57,6 +59,27 @@ export const HealthSection: React.FC = () => {
       ? `Olá José e Ofélia, tenho interesse no "${packTitle}" da Neolife. Gostaria de saber mais informações e como encomendar.`
       : `Hello José and Ofélia, I am interested in the "${packTitle}" from Neolife. I would like more details on how to order.`;
     return `https://wa.me/258823056900?text=${encodeURIComponent(text)}`;
+  };
+
+  const loadProductLink = async (productId: string) => {
+    if (productLinks[productId]) return; // Já carregado
+
+    setLoadingLinks(prev => new Set(prev).add(productId));
+    try {
+      const response = await fetch(`/api/product-links?productId=${productId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setProductLinks(prev => ({ ...prev, [productId]: data }));
+      }
+    } catch (error) {
+      console.error('Error loading product link:', error);
+    } finally {
+      setLoadingLinks(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(productId);
+        return newSet;
+      });
+    }
   };
 
   return (
@@ -311,51 +334,62 @@ export const HealthSection: React.FC = () => {
 
                 {/* Action Buttons */}
                 <div className="pt-4 border-t border-gray-100 space-y-2">
-                  {/* Primary Add to Selection Button */}
+                  {/* Primary Purchase Button */}
                   {(() => {
-                    const isSelected = isHealthPackSelected(pack.id);
+                    const linkData = productLinks[pack.id];
+                    const isLoading = loadingLinks.has(pack.id);
+
+                    // Carregar link se ainda não foi carregado
+                    if (!linkData && !isLoading) {
+                      loadProductLink(pack.id);
+                    }
+
+                    if (isLoading) {
+                      return (
+                        <button
+                          disabled
+                          className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-gray-100 text-gray-400 border border-gray-200 flex items-center justify-center gap-2"
+                        >
+                          <span className="animate-spin">⏳</span>
+                          <span>{isPt ? 'Carregando...' : 'Loading...'}</span>
+                        </button>
+                      );
+                    }
+
+                    if (!linkData || !linkData.available) {
+                      // Produto não disponível ou não configurado
+                      return (
+                        <button
+                          disabled
+                          className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-gray-100 text-gray-500 border border-gray-200 flex items-center justify-center gap-2 cursor-not-allowed"
+                        >
+                          <span>🔒</span>
+                          <span>
+                            {linkData?.customMessage || (isPt ? 'Produto Indisponível' : 'Product Unavailable')}
+                          </span>
+                        </button>
+                      );
+                    }
+
+                    // Produto disponível com link de compra
                     return (
-                      <button
-                        type="button"
-                        onClick={() =>
-                          toggleHealthPack({
-                            id: pack.id,
-                            title: isPt ? pack.titlePt : pack.titleEn,
-                            category: pack.category,
-                            subtitle: isPt ? pack.tagPt : pack.tagEn,
-                          })
-                        }
-                        className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 ${
-                          isSelected
-                            ? 'bg-emerald-600 text-white shadow-md ring-2 ring-emerald-400'
-                            : 'bg-emerald-50 text-emerald-800 hover:bg-emerald-600 hover:text-white border border-emerald-300'
-                        }`}
+                      <a
+                        href={linkData.purchaseUrl!}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block w-full"
                       >
-                        {isSelected ? (
-                          <>
-                            <span>✓ {isPt ? 'Selecionado para o Pedido' : 'Selected for Order'}</span>
-                            <span className="text-[10px] opacity-80 font-normal">({isPt ? 'clique para remover' : 'click to remove'})</span>
-                          </>
-                        ) : (
-                          <>
-                            <span>+ {isPt ? 'Adicionar à Minha Seleção' : 'Add to My Selection'}</span>
-                          </>
-                        )}
-                      </button>
+                        <button
+                          type="button"
+                          className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-300 transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                        >
+                          <span>🛒</span>
+                          <span>{isPt ? 'Comprar Aqui' : 'Buy Here'}</span>
+                          <span>➔</span>
+                        </button>
+                      </a>
                     );
                   })()}
-
-                  {/* Immediate Action: Complete in Form when this item is selected */}
-                  {isHealthPackSelected(pack.id) && (
-                    <Link href="/formulario?origem=pack-selecionado" className="block w-full">
-                      <button
-                        type="button"
-                        className="w-full py-2.5 px-3 rounded-xl text-xs font-black bg-emerald-950 hover:bg-black text-emerald-300 transition-all flex items-center justify-center gap-2 shadow-sm animate-pulse"
-                      >
-                        <span>{isPt ? '➔ Concluir Pedido no Formulário' : '➔ Complete in Form'}</span>
-                      </button>
-                    </Link>
-                  )}
 
                   <div className="flex gap-2">
                     <button
