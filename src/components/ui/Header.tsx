@@ -16,12 +16,15 @@ export const Header: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo with uploaded logo-neolife */}
-          <Link href="/" className="flex items-center group">
+          <Link href="/" className="flex flex-col items-center group">
             <img
               src="/logo-neolife.png"
-              alt="NeoLife África"
-              className="h-10 sm:h-11 w-auto object-contain"
+              alt="Neolife África"
+              className="h-8 sm:h-9 w-auto object-contain"
             />
+            <span className="text-[9px] sm:text-[10px] text-gray-500 font-medium tracking-wide uppercase mt-0.5">
+              Distribuidor Independente
+            </span>
           </Link>
           
           {/* Desktop Navigation */}

@@ -119,11 +119,11 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
     descEn: 'A practical, nutrient-dense, and balanced 30-day program to start every morning with sustained vitality.',
     productsPt: [
       '1 caixa de ProVitality (30 saquetas diárias)',
-      '2 pacotes de NeoLifeShake (15 porções cada)',
+      '2 pacotes de NeolifeShake (15 porções cada)',
     ],
     productsEn: [
       '1 box of ProVitality (30 daily sachets)',
-      '2 packs of NeoLifeShake (15 servings each)',
+      '2 packs of NeolifeShake (15 servings each)',
     ],
     benefitsPt: [
       'Começo de dia prático, nutritivo e saboroso',
@@ -155,11 +155,11 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
     descEn: 'A structured 30-day program rich in protein and fiber to control portions and support healthy body composition.',
     productsPt: [
       '1 caixa de ProVitality (30 saquetas completas)',
-      '4 pacotes de NeoLifeShake (15 porções cada - substituição de refeições)',
+      '4 pacotes de NeolifeShake (15 porções cada - substituição de refeições)',
     ],
     productsEn: [
       '1 box of ProVitality (30 complete daily packs)',
-      '4 packs of NeoLifeShake (15 servings each - meal replacement)',
+      '4 packs of NeolifeShake (15 servings each - meal replacement)',
     ],
     benefitsPt: [
       'Controlo saudável de calorias sem perder energia nem massa muscular',
@@ -181,8 +181,8 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
     id: 'programa-detox',
     slug: 'programa-detox',
     category: 'digest',
-    titlePt: 'Programa de Detox NeoLife',
-    titleEn: 'NeoLife Comprehensive Detox Program',
+    titlePt: 'Programa de Detox Neolife',
+    titleEn: 'Neolife Comprehensive Detox Program',
     badgePt: 'Limpeza & Renovação Interna',
     badgeEn: 'Internal Cleanse & Renewal',
     tagPt: 'Desintoxicação & Digestão',
@@ -194,7 +194,7 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
       'Garlic Allium Complex™ (compostos ativos de alho e alicina)',
       'Beta Guard™ (antioxidantes, zinco e proteção celular)',
       'Acidophilus Plus™ / Fiber Tablets (flora intestinal benéfica e fibras)',
-      'NeoLifeTea™ (energia natural, foco e termogénese)',
+      'NeolifeTea™ (energia natural, foco e termogénese)',
       'Brochura Guia de Detox + Vitamin Chest (organizador diário)',
     ],
     productsEn: [
@@ -202,7 +202,7 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
       'Garlic Allium Complex™ (garlic phytonutrients and allicin)',
       'Beta Guard™ (antioxidants, zinc, and environmental defense)',
       'Acidophilus Plus™ / Fiber Tablets (probiotics & cleansing fibers)',
-      'NeoLifeTea™ (natural stamina, focus, and thermogenesis)',
+      'NeolifeTea™ (natural stamina, focus, and thermogenesis)',
       'Detox Guide Brochure + Vitamin Chest organizer',
     ],
     benefitsPt: [
@@ -264,12 +264,12 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
     descEn: 'A high-impact combination to nourish brain tissues, support retention, focus, and mental alertness throughout demanding days.',
     productsPt: [
       'Mind Enhancement Complex™ (extratos botânicos para a memória e foco)',
-      'NeoLifeTea™ (mistura botânica energizante com chá verde e ervas)',
+      'NeolifeTea™ (mistura botânica energizante com chá verde e ervas)',
       'Omega-3 Salmon Oil Plus™ (EPA e DHA para a função neuronal)',
     ],
     productsEn: [
       'Mind Enhancement Complex™ (botanicals for memory & clarity)',
-      'NeoLifeTea™ (energizing herbal green tea blend)',
+      'NeolifeTea™ (energizing herbal green tea blend)',
       'Omega-3 Salmon Oil Plus™ (EPA & DHA for neuronal health)',
     ],
     benefitsPt: [
@@ -360,13 +360,13 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
     descPt: 'Combinação completa de proteínas, vitaminas, minerais e nutrientes celulares para apoiar o organismo da mãe e o desenvolvimento fetal.',
     descEn: 'A holistic blend of protein, vitamins, minerals, and cellular nutrition to support maternal health and healthy fetal growth.',
     productsPt: [
-      'NeoLifeShake (proteínas vegetais puras, vitaminas e fibras)',
+      'NeolifeShake (proteínas vegetais puras, vitaminas e fibras)',
       'ProVitality™ (30 saquetas completas com Tre-en-en, Carotenoid e Omega-3)',
       'Vegan D (vitamina D natural de alta pureza)',
       'Chelated Cal-Mag® (suporte aos ossos e sistema muscular)',
     ],
     productsEn: [
-      'NeoLifeShake (pure plant proteins, vitamins & fibers)',
+      'NeolifeShake (pure plant proteins, vitamins & fibers)',
       'ProVitality™ (30 complete packets with cellular nutrients & Omega-3)',
       'Vegan D (naturally derived high-potency Vitamin D)',
       'Chelated Cal-Mag® (bone structure & muscle relaxation)',
@@ -398,25 +398,25 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
       'CoQ10 Mitochondrial Energy Complex™ (Coenzima Q10 biodisponível)',
       'Mag-Ion Complex™ (magnésio quelatado para os músculos e sistema nervoso)',
       'Vitamin B-Complex™ (todas as 8 vitaminas B para o metabolismo)',
-      'NeoLifeTea™ (energia imediata, disposição e antioxidantes)',
+      'NeolifeTea™ (energia imediata, disposição e antioxidantes)',
     ],
     productsEn: [
       'CoQ10 Mitochondrial Energy Complex™ (highly bioavailable CoQ10)',
       'Mag-Ion Complex™ (chelated magnesium for muscles & nerves)',
       'Vitamin B-Complex™ (all 8 essential B vitamins for ATP synthesis)',
-      'NeoLifeTea™ (instant invigorating natural herbal refreshment)',
+      'NeolifeTea™ (instant invigorating natural herbal refreshment)',
     ],
     benefitsPt: [
       'Apoio à produção celular de energia (ATP) nas mitocôndrias',
       'Magnésio para redução do cansaço e suporte à função muscular',
       'Complexo B para transformar os alimentos em energia utilizável',
-      'NeoLifeTea para foco e estado de alerta limpo',
+      'NeolifeTea para foco e estado de alerta limpo',
     ],
     benefitsEn: [
       'Stimulates mitochondrial cellular energy (ATP) synthesis',
       'Magnesium helps reduce physical fatigue and muscle cramping',
       'B-Complex converts food carbohydrates and fats into usable fuel',
-      'Clean alertness and antioxidant defense from NeoLifeTea',
+      'Clean alertness and antioxidant defense from NeolifeTea',
     ],
   },
   {

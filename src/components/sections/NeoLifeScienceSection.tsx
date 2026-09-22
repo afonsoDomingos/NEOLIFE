@@ -25,9 +25,9 @@ export const NeoLifeScienceSection: React.FC = () => {
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight leading-tight">
             {isPt ? (
-              <>A Diferença que a <span className="text-emerald-400">NeoLife Traz</span></>
+              <>A Diferença que a <span className="text-emerald-400">Neolife Traz</span></>
             ) : (
-              <>The Difference <span className="text-emerald-400">NeoLife Delivers</span></>
+              <>The Difference <span className="text-emerald-400">Neolife Delivers</span></>
             )}
           </h2>
 
@@ -37,8 +37,8 @@ export const NeoLifeScienceSection: React.FC = () => {
 
           <p className="text-gray-300 text-sm sm:text-base leading-relaxed">
             {isPt
-              ? 'A NeoLife combina os melhores ingredientes naturais, conhecimento científico rigoroso e biotecnologia avançada para apoiar a saúde integral das pessoas em mais de 50 países.'
-              : 'NeoLife unites the finest natural ingredients, rigorous scientific insight, and advanced biotechnology to foster complete health for families across 50+ countries.'}
+              ? 'A Neolife combina os melhores ingredientes naturais, conhecimento científico rigoroso e biotecnologia avançada para apoiar a saúde integral das pessoas em mais de 50 países.'
+              : 'Neolife unites the finest natural ingredients, rigorous scientific insight, and advanced biotechnology to foster complete health for families across 50+ countries.'}
           </p>
         </div>
 
@@ -68,8 +68,11 @@ export const NeoLifeScienceSection: React.FC = () => {
         <div className="text-center pt-8 border-t border-emerald-800/50">
           <p className="text-emerald-300 text-xs sm:text-sm font-semibold uppercase tracking-widest">
             {isPt
-              ? 'NeoLife — Pessoas mais saudáveis. Um mundo melhor.'
-              : 'NeoLife — Healthier People. A Better World.'}
+              ? 'Neolife — Pessoas mais saudáveis. Um mundo melhor.'
+              : 'Neolife — Healthier People. A Better World.'}
+          </p>
+          <p className="text-[10px] text-emerald-400/70 font-medium tracking-wide uppercase mt-2">
+            Distribuidor Independente
           </p>
         </div>
 

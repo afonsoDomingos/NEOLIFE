@@ -211,7 +211,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       membersArea: 'Área de Membros',
     },
     hero: {
-      badge: 'NeoLife Global & África • Mentoria & Transformação',
+      badge: 'Neolife Global & África • Mentoria & Transformação',
       title: 'O que você está buscando para a sua vida hoje?',
       subtitle: 'Para a sua jornada, conte com a mentoria próxima e dedicada de Ofélia & José Machado.',
       mentorshipBadge: 'Mentoria Personalizada',
@@ -224,11 +224,11 @@ export const translations: Record<Language, TranslationDictionary> = {
       badge: 'Quem Somos',
       title: 'Uma Equipa Real.',
       highlight: 'Partilha Genuína.',
-      p1: 'Não somos uma corporação distante. Somos o José Sarmento Machado e a Ofélia Alfredo Machado, um casal que encontrou na NeoLife o caminho para transformar a saúde da nossa família e construir uma fonte de rendimento sustentável — e decidimos partilhar essa experiência e mentoria com quem está ao nosso redor.',
+      p1: 'Não somos uma corporação distante. Somos o José Sarmento Machado e a Ofélia Alfredo Machado, um casal que encontrou na Neolife o caminho para transformar a saúde da nossa família e construir uma fonte de rendimento sustentável — e decidimos partilhar essa experiência e mentoria com quem está ao nosso redor.',
       p2: 'A nossa missão é simples: partilhar conhecimento prático e comprovado sobre nutrição celular, esclarecer dúvidas com transparência e acompanhar quem desejar empreender connosco — sem pressão, com acompanhamento próximo e respeito pelo seu tempo.',
       p3: 'Se tiver dúvidas, perguntas ou curiosidade sobre a nossa caminhada — estamos aqui. A conversa é gratuita e sem qualquer compromisso.',
       coupleTitle: 'José & Ofélia Machado',
-      coupleSubtitle: 'Consultores & Mentores de Bem-Estar NeoLife',
+      coupleSubtitle: 'Consultores & Mentores de Bem-Estar Neolife',
       coupleRegions: 'Moçambique · África do Sul · Angola · Zimbabwe · Presença Global',
       bullet1: 'Informação educativa sobre saúde celular e bem-estar',
       bullet2: 'Resposta a dúvidas com total clareza e sem compromisso',
@@ -241,7 +241,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       badge: 'Pilar 01 • Saúde & Nutrição Celular',
       title: 'Soluções Completas para a Sua Saúde',
       subtitle: 'Organização simples para que encontre rapidamente exatamente aquilo que o seu corpo e lar precisam.',
-      categoriesTitle: 'Categorias de Soluções NeoLife',
+      categoriesTitle: 'Categorias de Soluções Neolife',
       categoriesSubtitle: 'Explore cada uma das nossas linhas de produtos pioneiros baseados na natureza e comprovados pela ciência.',
       categories: {
         supplements: {
@@ -279,8 +279,8 @@ export const translations: Record<Language, TranslationDictionary> = {
           successMsg: 'Mensagem recebida! Iremos responder com a melhor recomendação para si.',
         },
       },
-      packsTitle: 'Pacotes de Saúde Oficiais Recomendados NeoLife',
-      packsSubtitle: 'Combinações comprovadas pela equipa científica NeoLife (SAB) para resultados rápidos e sustentáveis.',
+      packsTitle: 'Pacotes de Saúde Oficiais Recomendados Neolife',
+      packsSubtitle: 'Combinações comprovadas pela equipa científica Neolife (SAB) para resultados rápidos e sustentáveis.',
       packs: {
         vitality: {
           title: 'Pacote Vitalidade & Energia Celular',
@@ -315,9 +315,9 @@ export const translations: Record<Language, TranslationDictionary> = {
       blocks: {
         intro: {
           number: '01',
-          theme: 'O Que É a NeoLife & A Nossa Filosofia',
+          theme: 'O Que É a Neolife & A Nossa Filosofia',
           text: 'Uma empresa com mais de 65 anos de história global sólida, com produtos pioneiros em nutrição e um modelo ético baseado na partilha de valor e melhoria de vidas.',
-          videoTitle: 'Vídeo 1: Visão Geral da NeoLife',
+          videoTitle: 'Vídeo 1: Visão Geral da Neolife',
           cta: 'Continuar para o Modelo ➔',
         },
         model: {
@@ -410,7 +410,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       membersArea: 'Member Area',
     },
     hero: {
-      badge: 'NeoLife Global & Africa • Mentorship & Transformation',
+      badge: 'Neolife Global & Africa • Mentorship & Transformation',
       title: 'What are you looking to transform in your life today?',
       subtitle: 'For your journey, count on the close and dedicated mentorship of Ofélia & José Machado.',
       mentorshipBadge: 'Personal Mentorship',
@@ -423,11 +423,11 @@ export const translations: Record<Language, TranslationDictionary> = {
       badge: 'About Us',
       title: 'A Real Team.',
       highlight: 'Genuine Sharing.',
-      p1: 'We are not a distant corporation. We are José Sarmento Machado and Ofélia Alfredo Machado, a couple that found in NeoLife the path to transform our family’s health and build a sustainable income stream — and we decided to share this experience and mentorship with everyone around us.',
+      p1: 'We are not a distant corporation. We are José Sarmento Machado and Ofélia Alfredo Machado, a couple that found in Neolife the path to transform our family’s health and build a sustainable income stream — and we decided to share this experience and mentorship with everyone around us.',
       p2: 'Our mission is simple: share practical, science-backed knowledge about cellular nutrition, clarify doubts with transparency, and mentor those who wish to build a business with us — without pressure, with close guidance and respect for your time.',
       p3: 'If you have questions or curiosity about our journey — we are here. A conversation is free and without obligation.',
       coupleTitle: 'José & Ofélia Machado',
-      coupleSubtitle: 'NeoLife Wellness Mentors & Consultants',
+      coupleSubtitle: 'Neolife Wellness Mentors & Consultants',
       coupleRegions: 'Mozambique · South Africa · Angola · Zimbabwe · Global Presence',
       bullet1: 'Educational insight on cellular wellness and vitality',
       bullet2: 'Clear answers to your questions without pressure',
@@ -440,7 +440,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       badge: 'Pillar 01 • Health & Cellular Nutrition',
       title: 'Complete Solutions for Your Health',
       subtitle: 'A straightforward layout so you can quickly identify exactly what your body and home need.',
-      categoriesTitle: 'NeoLife Solution Categories',
+      categoriesTitle: 'Neolife Solution Categories',
       categoriesSubtitle: 'Explore our pioneering product lines, rooted in nature and validated by science.',
       categories: {
         supplements: {
@@ -478,7 +478,7 @@ export const translations: Record<Language, TranslationDictionary> = {
           successMsg: 'Message received! We will follow up with the best recommendation for you.',
         },
       },
-      packsTitle: 'Official NeoLife Recommended Health Packs',
+      packsTitle: 'Official Neolife Recommended Health Packs',
       packsSubtitle: 'Scientifically validated combinations by the Scientific Advisory Board (SAB) for lasting results.',
       packs: {
         vitality: {
@@ -514,9 +514,9 @@ export const translations: Record<Language, TranslationDictionary> = {
       blocks: {
         intro: {
           number: '01',
-          theme: 'What NeoLife Is & Our Core Values',
+          theme: 'What Neolife Is & Our Core Values',
           text: 'A global company with over 65 years of stability, pioneering nutrition products, and an ethical model built on uplifting lives.',
-          videoTitle: 'Video 1: NeoLife Global Overview',
+          videoTitle: 'Video 1: Neolife Global Overview',
           cta: 'Continue to Business Model ➔',
         },
         model: {

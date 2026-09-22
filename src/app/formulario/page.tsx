@@ -59,7 +59,7 @@ function FormularioContent() {
 
   const [theme, setTheme] = useState<any>(() =>
     themeSlug ? getThemeBySlug(themeSlug) || null : {
-      title: isPt ? 'Aconselhamento Personalizado NeoLife' : 'Personalized NeoLife Consultation',
+      title: isPt ? 'Aconselhamento Personalizado Neolife' : 'Personalized Neolife Consultation',
       description: isPt
         ? 'Revisão dos seus produtos e objetivos de saúde e negócio com os nossos mentores.'
         : 'Review your selected products and wellness/business goals with our mentors.',
@@ -208,8 +208,8 @@ function FormularioContent() {
   const getWhatsAppDirectUrl = () => {
     const compiled = buildCompiledNotes();
     const text = isPt
-      ? `Olá José e Ofélia! Submeti o meu interesse na NeoLife:\n\n👤 Nome: ${formData.name || '(Novo Contacto)'}\n📞 Telefone: ${formData.phone || ''}\n\n${compiled}`
-      : `Hello José & Ofélia! I have submitted my interest in NeoLife:\n\n👤 Name: ${formData.name || '(New Lead)'}\n\n${compiled}`;
+      ? `Olá José e Ofélia! Submeti o meu interesse na Neolife:\n\n👤 Nome: ${formData.name || '(Novo Contacto)'}\n📞 Telefone: ${formData.phone || ''}\n\n${compiled}`
+      : `Hello José & Ofélia! I have submitted my interest in Neolife:\n\n👤 Name: ${formData.name || '(New Lead)'}\n\n${compiled}`;
     return `https://wa.me/258823056900?text=${encodeURIComponent(text)}`;
   };
 
@@ -254,7 +254,7 @@ function FormularioContent() {
             {isPt ? 'Formulário de Aconselhamento & Encomenda' : 'Consultation & Order Form'}
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight">
-            {theme?.title || 'Aconselhamento Personalizado NeoLife'}
+            {theme?.title || 'Aconselhamento Personalizado Neolife'}
           </h1>
           <p className="text-gray-600 text-sm sm:text-base max-w-xl mx-auto">
             {isPt
@@ -490,7 +490,7 @@ function FormularioContent() {
             />
 
             <Select
-              label={isPt ? 'Como conheceu a NeoLife? (Opcional)' : 'How did you hear about NeoLife? (Optional)'}
+              label={isPt ? 'Como conheceu a Neolife? (Opcional)' : 'How did you hear about Neolife? (Optional)'}
               name="source"
               value={formData.source}
               onChange={handleInputChange}

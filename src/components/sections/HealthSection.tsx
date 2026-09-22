@@ -52,8 +52,8 @@ export const HealthSection: React.FC = () => {
 
   const getWhatsAppLink = (packTitle: string) => {
     const text = isPt
-      ? `Olá José e Ofélia, tenho interesse no "${packTitle}" da NeoLife. Gostaria de saber mais informações e como encomendar.`
-      : `Hello José and Ofélia, I am interested in the "${packTitle}" from NeoLife. I would like more details on how to order.`;
+      ? `Olá José e Ofélia, tenho interesse no "${packTitle}" da Neolife. Gostaria de saber mais informações e como encomendar.`
+      : `Hello José and Ofélia, I am interested in the "${packTitle}" from Neolife. I would like more details on how to order.`;
     return `https://wa.me/258823056900?text=${encodeURIComponent(text)}`;
   };
 
@@ -65,7 +65,7 @@ export const HealthSection: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100/90 border border-emerald-300 text-emerald-900 text-xs font-bold uppercase tracking-wider mb-4 shadow-xs">
             <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
-            {isPt ? 'Pilar 01 • Soluções de Saúde NeoLife' : 'Pillar 01 • NeoLife Health Solutions'}
+            {isPt ? 'Pilar 01 • Soluções de Saúde Neolife' : 'Pillar 01 • Neolife Health Solutions'}
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
             {isPt ? 'Nutrição Celular & Soluções Completas' : 'Cellular Nutrition & Complete Solutions'}
@@ -130,12 +130,12 @@ export const HealthSection: React.FC = () => {
                 <span>{isPt ? 'Nutrição Diária Deliciosa' : 'Daily Wholesome Protein'}</span>
               </div>
               <h4 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
-                NeoLifeShake • Proteína, Fibras & Vitaminas
+                NeolifeShake • Proteína, Fibras & Vitaminas
               </h4>
               <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">
                 {isPt
-                  ? 'A proteína é essencial para a manutenção dos músculos, tecidos, enzimas e hormonas. O NeoLifeShake combina proteínas vegetais puras (soja e ervilha), fibras digestivas, 22 aminoácidos e 25 vitaminas e minerais com tecnologia de controlo glicémico.'
-                  : 'Protein is vital for muscle tissue, enzymatic balance, and cellular repair. NeoLifeShake delivers wholesome plant protein (soy & pea), dietary fibers, 22 amino acids, and 25 vitamins & minerals.'}
+                  ? 'A proteína é essencial para a manutenção dos músculos, tecidos, enzimas e hormonas. O NeolifeShake combina proteínas vegetais puras (soja e ervilha), fibras digestivas, 22 aminoácidos e 25 vitaminas e minerais com tecnologia de controlo glicémico.'
+                  : 'Protein is vital for muscle tissue, enzymatic balance, and cellular repair. NeolifeShake delivers wholesome plant protein (soy & pea), dietary fibers, 22 amino acids, and 25 vitamins & minerals.'}
               </p>
               <div className="flex flex-wrap gap-2 text-xs font-semibold text-emerald-800">
                 <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">✓ Saciedade Saudável</span>
@@ -148,7 +148,7 @@ export const HealthSection: React.FC = () => {
             <div className="shrink-0 flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto">
               <a href="#catalogo-pacotes" className="w-full">
                 <Button size="sm" className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold whitespace-nowrap">
-                  {isPt ? 'Ver Packs com NeoLifeShake ↓' : 'See Packs with NeoLifeShake ↓'}
+                  {isPt ? 'Ver Packs com NeolifeShake ↓' : 'See Packs with NeolifeShake ↓'}
                 </Button>
               </a>
               <Link href="/formulario?tema=produtos&pais=mz" className="w-full">

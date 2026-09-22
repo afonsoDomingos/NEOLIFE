@@ -30,7 +30,7 @@ export const themes: Theme[] = [
   },
   {
     id: 'conheca-neolife',
-    title: 'Conheça a NeoLife',
+    title: 'Conheça a Neolife',
     description: 'Descubra quem somos, a nossa missão e como podemos ajudar a transformar a sua vida.',
     slug: 'conheca-neolife',
     active: true,
@@ -49,7 +49,7 @@ export const themes: Theme[] = [
   {
     id: 'oportunidade',
     title: 'Oportunidade de Negócio',
-    description: 'Descubra como pode construir o seu próprio negócio independente com a NeoLife.',
+    description: 'Descubra como pode construir o seu próprio negócio independente com a Neolife.',
     slug: 'oportunidade',
     active: true,
     order: 6,
@@ -67,7 +67,7 @@ export const themes: Theme[] = [
   {
     id: 'oportunidade-negocio',
     title: 'Oportunidade de Negócio & Empreendedorismo',
-    description: 'Construa o seu negócio independente e uma fonte de rendimento sustentável com a NeoLife.',
+    description: 'Construa o seu negócio independente e uma fonte de rendimento sustentável com a Neolife.',
     slug: 'oportunidade-negocio',
     active: true,
     order: 8,
@@ -76,7 +76,7 @@ export const themes: Theme[] = [
   {
     id: 'outras-solucoes',
     title: 'Outras Soluções de Saúde & Bem-Estar',
-    description: 'Atendimento personalizado para encontrar exatamente a solução ou produto NeoLife que procura.',
+    description: 'Atendimento personalizado para encontrar exatamente a solução ou produto Neolife que procura.',
     slug: 'outras-solucoes',
     active: true,
     order: 9,
@@ -84,7 +84,7 @@ export const themes: Theme[] = [
   },
   {
     id: 'suplementos',
-    title: 'Suplementos Nutricionais NeoLife',
+    title: 'Suplementos Nutricionais Neolife',
     description: 'Nutrição celular avançada para energia, vitalidade e bem-estar diário.',
     slug: 'suplementos',
     active: true,

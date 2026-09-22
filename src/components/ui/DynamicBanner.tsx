@@ -197,9 +197,14 @@ export const DynamicBanner: React.FC = () => {
           <div key={`content-${animKey}`} className="max-w-4xl mx-auto text-center text-white">
 
             {/* Tag */}
-            <div className="banner-tag inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-400/40 text-emerald-300 text-xs font-semibold uppercase tracking-wider mb-5 shadow-sm">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              NeoLife África • Destaque
+            <div className="banner-tag inline-flex flex-col items-center gap-1 px-3.5 py-1.5 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-400/40 text-emerald-300 text-xs font-semibold uppercase tracking-wider mb-5 shadow-sm">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                Neolife África • Destaque
+              </div>
+              <span className="text-[9px] text-emerald-400/80 font-medium tracking-wide uppercase">
+                Distribuidor Independente
+              </span>
             </div>
 
             {/* Title with shimmer gradient effect */}
