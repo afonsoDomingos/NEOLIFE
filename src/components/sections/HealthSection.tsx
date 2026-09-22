@@ -25,6 +25,8 @@ export const HealthSection: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [activePackModal, setActivePackModal] = useState<HealthSolutionPack | null>(null);
   const [needSaved, setNeedSaved] = useState(false);
+  const [expandedSupplements, setExpandedSupplements] = useState<Set<number>>(new Set());
+  const [expandedShake, setExpandedShake] = useState(false);
 
   const categories = [
     { id: 'all', labelPt: '🌟 Todos os Pacotes', labelEn: '🌟 All Packs' },
@@ -93,69 +95,128 @@ export const HealthSection: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {cellular4Supplements.map((supp, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-2xl p-6 border border-emerald-100/80 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-100">
-                      0{index + 1}
-                    </span>
-                    <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider">
-                      {supp.tag}
-                    </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            {cellular4Supplements.map((supp, index) => {
+              const isExpanded = expandedSupplements.has(index);
+              return (
+                <div
+                  key={index}
+                  className="bg-white rounded-2xl border border-emerald-100/80 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-300 overflow-hidden"
+                >
+                  {/* Compact Header - Always Visible */}
+                  <button
+                    onClick={() => {
+                      const newExpanded = new Set(expandedSupplements);
+                      if (newExpanded.has(index)) {
+                        newExpanded.delete(index);
+                      } else {
+                        newExpanded.add(index);
+                      }
+                      setExpandedSupplements(newExpanded);
+                    }}
+                    className="w-full p-4 text-left flex items-center justify-between group"
+                  >
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+                          0{index + 1}
+                        </span>
+                        <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
+                          {supp.tag}
+                        </span>
+                      </div>
+                      <h4 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-emerald-700 transition-colors">
+                        {supp.name}
+                      </h4>
+                    </div>
+                    <svg
+                      className={`w-5 h-5 text-emerald-600 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  {/* Expandable Content */}
+                  <div
+                    className={`px-4 pb-4 transition-all duration-300 ${
+                      isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+                    }`}
+                  >
+                    <p className="text-xs font-semibold text-emerald-700 mb-2">
+                      {isPt ? supp.subtitlePt : supp.subtitleEn}
+                    </p>
+                    <p className="text-xs text-gray-600 leading-relaxed">
+                      {isPt ? supp.descPt : supp.descEn}
+                    </p>
                   </div>
-                  <h4 className="text-lg font-bold text-gray-900 mb-1 leading-snug">
-                    {supp.name}
-                  </h4>
-                  <p className="text-xs font-semibold text-emerald-700 mb-3">
-                    {isPt ? supp.subtitlePt : supp.subtitleEn}
-                  </p>
-                  <p className="text-xs text-gray-600 leading-relaxed">
-                    {isPt ? supp.descPt : supp.descEn}
-                  </p>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* ── 2.2 PROTEÍNA DIÁRIA — NEOLIFESHAKE ── */}
-          <div className="bg-white rounded-2xl p-6 sm:p-8 border border-emerald-200/80 shadow-xs flex flex-col lg:flex-row items-center justify-between gap-6">
-            <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-800 bg-emerald-100/70 px-3 py-1 rounded-full mb-3">
-                <span>🥛</span>
-                <span>{isPt ? 'Nutrição Diária Deliciosa' : 'Daily Wholesome Protein'}</span>
+          <div className="bg-white rounded-2xl border border-emerald-200/80 shadow-xs overflow-hidden">
+            {/* Compact Header - Always Visible */}
+            <button
+              onClick={() => setExpandedShake(!expandedShake)}
+              className="w-full p-5 sm:p-6 text-left flex items-center justify-between group"
+            >
+              <div className="flex items-center gap-4">
+                <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-800 bg-emerald-100/70 px-3 py-1 rounded-full">
+                  <span>🥛</span>
+                  <span>{isPt ? 'Nutrição Diária Deliciosa' : 'Daily Wholesome Protein'}</span>
+                </div>
+                <h4 className="text-lg sm:text-xl font-bold text-gray-900 group-hover:text-emerald-700 transition-colors">
+                  NeolifeShake • Proteína, Fibras & Vitaminas
+                </h4>
               </div>
-              <h4 className="text-xl sm:text-2xl font-bold text-gray-900 mb-2">
-                NeolifeShake • Proteína, Fibras & Vitaminas
-              </h4>
-              <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">
-                {isPt
-                  ? 'A proteína é essencial para a manutenção dos músculos, tecidos, enzimas e hormonas. O NeolifeShake combina proteínas vegetais puras (soja e ervilha), fibras digestivas, 22 aminoácidos e 25 vitaminas e minerais com tecnologia de controlo glicémico.'
-                  : 'Protein is vital for muscle tissue, enzymatic balance, and cellular repair. NeolifeShake delivers wholesome plant protein (soy & pea), dietary fibers, 22 amino acids, and 25 vitamins & minerals.'}
-              </p>
-              <div className="flex flex-wrap gap-2 text-xs font-semibold text-emerald-800">
-                <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">✓ Saciedade Saudável</span>
-                <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">✓ Massa Muscular</span>
-                <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">✓ Controlo Glicémico</span>
-                <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">✓ Deliciosos Sabores</span>
-              </div>
-            </div>
+              <svg
+                className={`w-6 h-6 text-emerald-600 transition-transform duration-300 ${expandedShake ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
 
-            <div className="shrink-0 flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto">
-              <a href="#catalogo-pacotes" className="w-full">
-                <Button size="sm" className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold whitespace-nowrap">
-                  {isPt ? 'Ver Packs com NeolifeShake ↓' : 'See Packs with NeolifeShake ↓'}
-                </Button>
-              </a>
-              <Link href="/formulario?tema=produtos&pais=mz" className="w-full">
-                <Button variant="outline" size="sm" className="w-full border-emerald-300 text-emerald-800 hover:bg-emerald-50 font-semibold whitespace-nowrap">
-                  {isPt ? 'Pedir Informações' : 'Request Info'}
-                </Button>
-              </Link>
+            {/* Expandable Content */}
+            <div
+              className={`px-5 sm:p-6 pb-6 transition-all duration-300 ${
+                expandedShake ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+              }`}
+            >
+              <div className="flex flex-col lg:flex-row items-start justify-between gap-6">
+                <div className="max-w-2xl">
+                  <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">
+                    {isPt
+                      ? 'A proteína é essencial para a manutenção dos músculos, tecidos, enzimas e hormonas. O NeolifeShake combina proteínas vegetais puras (soja e ervilha), fibras digestivas, 22 aminoácidos e 25 vitaminas e minerais com tecnologia de controlo glicémico.'
+                      : 'Protein is vital for muscle tissue, enzymatic balance, and cellular repair. NeolifeShake delivers wholesome plant protein (soy & pea), dietary fibers, 22 amino acids, and 25 vitamins & minerals.'}
+                  </p>
+                  <div className="flex flex-wrap gap-2 text-xs font-semibold text-emerald-800">
+                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">✓ Saciedade Saudável</span>
+                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">✓ Massa Muscular</span>
+                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">✓ Controlo Glicémico</span>
+                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">✓ Deliciosos Sabores</span>
+                  </div>
+                </div>
+
+                <div className="shrink-0 flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto">
+                  <a href="#catalogo-pacotes" className="w-full">
+                    <Button size="sm" className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold whitespace-nowrap">
+                      {isPt ? 'Ver Packs com NeolifeShake ↓' : 'See Packs with NeolifeShake ↓'}
+                    </Button>
+                  </a>
+                  <Link href="/formulario?tema=produtos&pais=mz" className="w-full">
+                    <Button variant="outline" size="sm" className="w-full border-emerald-300 text-emerald-800 hover:bg-emerald-50 font-semibold whitespace-nowrap">
+                      {isPt ? 'Pedir Informações' : 'Request Info'}
+                    </Button>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
