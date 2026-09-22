@@ -6,6 +6,10 @@ export async function isAuthenticated(): Promise<boolean> {
   return session?.value === 'authenticated';
 }
 
+export async function isAdmin(): Promise<boolean> {
+  return await isAuthenticated();
+}
+
 export async function requireAuth(): Promise<void> {
   const auth = await isAuthenticated();
   if (!auth) {

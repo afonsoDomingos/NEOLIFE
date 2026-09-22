@@ -131,29 +131,29 @@ function FormularioContent() {
     const lines: string[] = [];
 
     if (selectedHealthPacks.length > 0) {
-      lines.push(`🌿 PACOTES DE SAÚDE SELECIONADOS:`);
+      lines.push(`PACOTES DE SAÚDE SELECIONADOS:`);
       selectedHealthPacks.forEach((p, idx) => {
         lines.push(`  ${idx + 1}. ${p.title} (${p.category})`);
       });
     }
 
     if (customHealthNeed.trim()) {
-      lines.push(`\n📝 OUTRAS NECESSIDADES DE SAÚDE ESPECIFICADAS:`);
+      lines.push(`\nOUTRAS NECESSIDADES DE SAÚDE ESPECIFICADAS:`);
       lines.push(`  "${customHealthNeed.trim()}"`);
     }
 
     if (businessGoals.length > 0) {
-      lines.push(`\n💼 METAS DE NEGÓCIO DE INTERESSE:`);
+      lines.push(`\nMETAS DE NEGÓCIO DE INTERESSE:`);
       businessGoals.forEach((g) => lines.push(`  • ${g}`));
     }
 
     if (experienceInterests.length > 0) {
-      lines.push(`\n✈️ EXPERIÊNCIAS / ESTILO DE VIDA:`);
+      lines.push(`\nEXPERIÊNCIAS / ESTILO DE VIDA:`);
       experienceInterests.forEach((e) => lines.push(`  • ${e}`));
     }
 
     if (formData.notes.trim()) {
-      lines.push(`\n💬 OBSERVAÇÕES DO CLIENTE:`);
+      lines.push(`\nOBSERVAÇÕES DO CLIENTE:`);
       lines.push(`  ${formData.notes.trim()}`);
     }
 
@@ -208,8 +208,8 @@ function FormularioContent() {
   const getWhatsAppDirectUrl = () => {
     const compiled = buildCompiledNotes();
     const text = isPt
-      ? `Olá José e Ofélia! Submeti o meu interesse na Neolife:\n\n👤 Nome: ${formData.name || '(Novo Contacto)'}\n📞 Telefone: ${formData.phone || ''}\n\n${compiled}`
-      : `Hello José & Ofélia! I have submitted my interest in Neolife:\n\n👤 Name: ${formData.name || '(New Lead)'}\n\n${compiled}`;
+      ? `Olá José e Ofélia! Submeti o meu interesse na Neolife:\n\nNome: ${formData.name || '(Novo Contacto)'}\nTelefone: ${formData.phone || ''}\n\n${compiled}`
+      : `Hello José & Ofélia! I have submitted my interest in Neolife:\n\nName: ${formData.name || '(New Lead)'}\n\n${compiled}`;
     return `https://wa.me/258823056900?text=${encodeURIComponent(text)}`;
   };
 
@@ -267,7 +267,6 @@ function FormularioContent() {
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-emerald-200 shadow-md mb-8">
           <div className="flex items-center justify-between pb-4 border-b border-gray-100 mb-5">
             <div className="flex items-center gap-2.5">
-              <span className="text-xl">🛒</span>
               <div>
                 <h2 className="font-extrabold text-gray-900 text-base sm:text-lg">
                   {isPt ? 'Resumo da Sua Seleção' : 'Your Selection Summary'}
@@ -320,7 +319,7 @@ function FormularioContent() {
               {selectedHealthPacks.length > 0 && (
                 <div>
                   <p className="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-2">
-                    🌿 {isPt ? 'Pacotes de Saúde Escolhidos:' : 'Selected Health Packs:'}
+                    {isPt ? 'Pacotes de Saúde Escolhidos:' : 'Selected Health Packs:'}
                   </p>
                   <div className="space-y-2">
                     {selectedHealthPacks.map((pack) => (
@@ -340,7 +339,7 @@ function FormularioContent() {
                           className="text-red-500 hover:text-red-700 font-bold px-2 py-1 rounded hover:bg-red-50"
                           title={isPt ? 'Remover' : 'Remove'}
                         >
-                          ✕
+                          X
                         </button>
                       </div>
                     ))}
@@ -353,14 +352,14 @@ function FormularioContent() {
                 <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs">
                   <div className="flex items-center justify-between mb-1">
                     <span className="font-bold text-amber-900">
-                      📝 {isPt ? 'Pedido / Necessidade Especial:' : 'Special Request:'}
+                      {isPt ? 'Pedido / Necessidade Especial:' : 'Special Request:'}
                     </span>
                     <button
                       type="button"
                       onClick={() => setCustomHealthNeed('')}
                       className="text-amber-700 hover:text-amber-900 text-[11px] font-bold"
                     >
-                      ✕ {isPt ? 'Apagar' : 'Clear'}
+                      X {isPt ? 'Apagar' : 'Clear'}
                     </button>
                   </div>
                   <p className="text-gray-700 italic">“{customHealthNeed}”</p>
@@ -371,7 +370,7 @@ function FormularioContent() {
               {businessGoals.length > 0 && (
                 <div>
                   <p className="text-xs font-bold uppercase tracking-wider text-emerald-800 mb-2">
-                    💼 {isPt ? 'Objetivos de Negócio:' : 'Business Goals:'}
+                    {isPt ? 'Objetivos de Negócio:' : 'Business Goals:'}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {businessGoals.map((goal, idx) => (
@@ -385,7 +384,7 @@ function FormularioContent() {
                           onClick={() => toggleBusinessGoal(goal)}
                           className="text-gray-400 hover:text-red-600 font-bold ml-1"
                         >
-                          ✕
+                          X
                         </button>
                       </span>
                     ))}
@@ -397,7 +396,7 @@ function FormularioContent() {
               {experienceInterests.length > 0 && (
                 <div>
                   <p className="text-xs font-bold uppercase tracking-wider text-teal-800 mb-2">
-                    ✈️ {isPt ? 'Interesse em Experiências:' : 'Experience Interests:'}
+                    {isPt ? 'Interesse em Experiências:' : 'Experience Interests:'}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {experienceInterests.map((exp, idx) => (
@@ -411,7 +410,7 @@ function FormularioContent() {
                           onClick={() => toggleExperienceInterest(exp)}
                           className="text-teal-400 hover:text-red-600 font-bold ml-1"
                         >
-                          ✕
+                          X
                         </button>
                       </span>
                     ))}
@@ -544,7 +543,6 @@ function FormularioContent() {
                 rel="noopener noreferrer"
                 className="text-xs font-bold text-emerald-800 hover:underline inline-flex items-center gap-1.5"
               >
-                <span>💬</span>
                 <span>{isPt ? 'Prefere enviar diretamente no WhatsApp dos mentores?' : 'Prefer to send directly via WhatsApp?'}</span>
               </a>
             </div>

@@ -95,7 +95,7 @@ export default function AdminDashboard() {
                 className="text-xs flex items-center gap-1 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-200 font-semibold transition-colors"
                 title="Abrir o site público"
               >
-                <span>🌐 Ver Website</span>
+                <span>Ver Website</span>
               </Link>
               <Button
                 variant="outline"
@@ -311,7 +311,6 @@ export default function AdminDashboard() {
               <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
                 <CardContent className="p-5 flex items-start gap-3">
                   <div className="p-2.5 bg-orange-50 text-orange-700 rounded-lg group-hover:scale-105 transition-transform flex items-center justify-center">
-                    <span className="text-lg">📣</span>
                   </div>
                   <div>
                     <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Avisos & Anúncios</h3>
@@ -324,9 +323,6 @@ export default function AdminDashboard() {
             <Link href="/admin/recursos">
               <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
                 <CardContent className="p-5 flex items-start gap-3">
-                  <div className="p-2.5 bg-indigo-50 text-indigo-700 rounded-lg group-hover:scale-105 transition-transform flex items-center justify-center">
-                    <span className="text-lg">📚</span>
-                  </div>
                   <div>
                     <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Recursos & Materiais</h3>
                     <p className="text-xs text-gray-500 mt-0.5">PDFs, guias e vídeos</p>

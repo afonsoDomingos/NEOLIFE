@@ -144,7 +144,7 @@ export async function sendLeadConfirmationEmail(data: LeadEmailData): Promise<vo
           <p style="margin: 8px 0 0 0; opacity: 0.9; font-size: 15px;">A sua jornada para uma vida com mais saúde e liberdade financeira</p>
         </div>
         <div class="content">
-          <div class="greeting">Olá, ${data.name}! 👋</div>
+          <div class="greeting">Olá, ${data.name}!</div>
           <p class="text">
             Obrigado por demonstrar interesse na oportunidade e produtos da <strong>NeoLife</strong> em <strong>${data.countryName}</strong>.
           </p>
@@ -222,7 +222,7 @@ export async function sendAdminNotificationEmail(lead: AdminEmailData): Promise<
     </head>
     <body>
       <div class="card">
-        <h2>🔥 Novo Lead Registado!</h2>
+        <h2>Novo Lead Registado!</h2>
         <p>Um novo contacto acabou de submeter o formulário no website NeoLife África:</p>
         
         <table>
@@ -249,7 +249,7 @@ export async function sendAdminNotificationEmail(lead: AdminEmailData): Promise<
 
   await sendEmail({
     to: adminEmail,
-    subject: `🔥 Novo Lead: ${lead.name} (${lead.country}) - ${lead.theme}`,
+    subject: `Novo Lead: ${lead.name} (${lead.country}) - ${lead.theme}`,
     html,
   });
 }

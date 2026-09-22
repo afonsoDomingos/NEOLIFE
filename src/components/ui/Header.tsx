@@ -54,7 +54,6 @@ export const Header: React.FC = () => {
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold bg-emerald-100 text-emerald-950 border border-emerald-300 hover:bg-emerald-200 transition-all shadow-xs"
                 title="Ver Itens Selecionados"
               >
-                <span>🛒</span>
                 <span className="hidden sm:inline">Seleção</span>
                 <span className="w-5 h-5 rounded-full bg-emerald-700 text-white text-[11px] font-black flex items-center justify-center">
                   {totalItemsCount}
@@ -151,9 +150,6 @@ export const Header: React.FC = () => {
                 className="flex items-center gap-2 text-emerald-800 bg-emerald-50 hover:bg-emerald-100 px-3 py-2 rounded-lg transition-colors font-semibold border border-emerald-200"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7 0 3.75 3.75 0 017 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                </svg>
                 <span>{t.nav.membersArea}</span>
               </Link>
             </nav>

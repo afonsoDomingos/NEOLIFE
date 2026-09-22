@@ -241,7 +241,7 @@ function VideosContent() {
                       onChange={handleInputChange}
                       className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-sm"
                     >
-                      <option value="Business">💼 Business — Blocos da Página Principal</option>
+                      <option value="Business">Business — Blocos da Página Principal</option>
                       <option value="Apresentação">Apresentação Geral</option>
                       <option value="Negócio">Oportunidade de Negócio</option>
                       <option value="Produtos">Produtos & Nutrição</option>
@@ -252,7 +252,7 @@ function VideosContent() {
                     {formData.category === 'Business' && (
                       <div className="mt-2.5 p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-950 leading-relaxed space-y-1">
                         <p className="font-bold flex items-center gap-1.5 text-emerald-800">
-                          <span>💡</span> Ordem para os Blocos de Business na Página Principal:
+                          Ordem para os Blocos de Business na Página Principal:
                         </p>
                         <p className="text-gray-700">
                           Defina a <strong>Ordem</strong> abaixo de 1 a 5 para preencher o respetivo bloco:
@@ -387,7 +387,7 @@ function VideosContent() {
           <span className="text-xs font-semibold text-gray-500 mr-1">Filtrar:</span>
           {[
             { id: 'all', label: 'Todos' },
-            { id: 'Business', label: '💼 Business (Principal)' },
+            { id: 'Business', label: 'Business (Principal)' },
             { id: 'Apresentação', label: 'Apresentação' },
             { id: 'Negócio', label: 'Negócio' },
             { id: 'Produtos', label: 'Produtos' },
@@ -533,7 +533,7 @@ function VideosContent() {
               onClick={() => setPreviewModalUrl(null)}
               className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/20 hover:bg-white/40 text-white flex items-center justify-center text-lg transition-colors"
             >
-              ✕
+              X
             </button>
             <iframe
               src={`${previewModalUrl}?autoplay=1`}

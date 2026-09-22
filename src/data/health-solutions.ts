@@ -29,7 +29,7 @@ export interface HealthSolutionPack {
 export const sciencePillars = [
   {
     id: 'researched',
-    icon: '🔬',
+    icon: '',
     titlePt: 'Pesquisados',
     titleEn: 'Researched',
     descPt: 'Desenvolvidos com base em conhecimentos e pesquisas científicas de ponta.',
@@ -37,7 +37,7 @@ export const sciencePillars = [
   },
   {
     id: 'pure',
-    icon: '🌱',
+    icon: '',
     titlePt: 'Puros',
     titleEn: 'Pure',
     descPt: 'Ingredientes selecionados com os mais elevados padrões de pureza e qualidade.',
@@ -45,7 +45,7 @@ export const sciencePillars = [
   },
   {
     id: 'potent',
-    icon: '⚡',
+    icon: '',
     titlePt: 'Potentes',
     titleEn: 'Potent',
     descPt: 'Tecnologia avançada para concentrar e otimizar a biodisponibilidade dos nutrientes.',
@@ -53,7 +53,7 @@ export const sciencePillars = [
   },
   {
     id: 'tested',
-    icon: '🧪',
+    icon: '',
     titlePt: 'Testados',
     titleEn: 'Tested',
     descPt: 'Submetidos a testes rigorosos em laboratórios de nível mundial quanto à segurança.',
@@ -61,7 +61,7 @@ export const sciencePillars = [
   },
   {
     id: 'proven',
-    icon: '📚',
+    icon: '',
     titlePt: 'Comprovados',
     titleEn: 'Proven',
     descPt: 'Estudos clínicos independentes apoiam a eficácia e absorção dos nossos produtos.',
@@ -238,16 +238,16 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
       'Omega-3 Salmon Oil Plus™ (pure salmon oil capsules)',
     ],
     benefitsPt: [
-      '❤️ Coração e sistema cardiovascular saudável',
-      '🧠 Cérebro, memória e função cognitiva refinada',
-      '🦴 Articulações flexíveis e resposta inflamatória equilibrada',
-      '🛡️ Testado para mais de 200 contaminantes com tolerância zero para mercúrio e chumbo',
+      'Coração e sistema cardiovascular saudável',
+      'Cérebro, memória e função cognitiva refinada',
+      'Articulações flexíveis e resposta inflamatória equilibrada',
+      'Testado para mais de 200 contaminantes com tolerância zero para mercúrio e chumbo',
     ],
     benefitsEn: [
-      '❤️ Healthy cardiovascular and circulatory performance',
-      '🧠 Brain, memory, and cognitive sharpness',
-      '🦴 Flexible joints and balanced inflammatory response',
-      '🛡️ Tested for 200+ contaminants with zero tolerance for heavy metals',
+      'Healthy cardiovascular and circulatory performance',
+      'Brain, memory, and cognitive sharpness',
+      'Flexible joints and balanced inflammatory response',
+      'Tested for 200+ contaminants with zero tolerance for heavy metals',
     ],
   },
   {

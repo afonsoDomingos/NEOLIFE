@@ -352,7 +352,7 @@ export default function MembroDashboard() {
       {/* Main Content */}
       <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '32px 24px 60px' }}>
 
-        {/* 📣 1. ANÚNCIOS DO ADMIN (EM DESTAQUE NO TOPO) */}
+        {/* 1. ANÚNCIOS DO ADMIN (EM DESTAQUE NO TOPO) */}
         {visibleAnnouncements.length > 0 && (
           <div style={{ marginBottom: '24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {visibleAnnouncements.map(ann => {
@@ -366,7 +366,7 @@ export default function MembroDashboard() {
                 success: 'linear-gradient(135deg, rgba(6, 78, 59, 0.25), rgba(15, 23, 42, 0.4))',
                 warning: 'linear-gradient(135deg, rgba(120, 53, 15, 0.25), rgba(15, 23, 42, 0.4))',
               };
-              const icons = { info: 'ℹ️', success: '🎉', warning: '⚠️' };
+              const icons = { info: 'Info', success: 'Sucesso', warning: 'Alerta' };
               const accentColor = ann.type === 'warning' ? '#f59e0b' : ann.type === 'success' ? '#10b981' : '#3b82f6';
 
               return (
@@ -422,7 +422,7 @@ export default function MembroDashboard() {
                       flexShrink: 0,
                     }}
                   >
-                    ✕
+                    X
                   </button>
                 </div>
               );
@@ -436,14 +436,14 @@ export default function MembroDashboard() {
             color: '#f9fafb', fontSize: '28px', fontWeight: 700, margin: '0 0 6px',
             letterSpacing: '-0.5px',
           }}>
-            Olá, {getFirstName(member.name)} 👋
+            Olá, {getFirstName(member.name)}
           </h1>
           <p style={{ color: '#6b7280', fontSize: '15px', margin: 0 }}>
             Membro desde {getMemberSince(member.createdAt)} • Bem-vindo à tua área exclusiva NeoLife
           </p>
         </div>
 
-        {/* 📊 2. ESTADO DO PERCURSO / CRM DO LEAD VINCULADO */}
+        {/* 2. ESTADO DO PERCURSO / CRM DO LEAD VINCULADO */}
         {leadStatus && leadStatus.status !== 'nao_interessado' && (
           <div style={{
             marginBottom: '32px',
@@ -463,14 +463,6 @@ export default function MembroDashboard() {
               marginBottom: '18px',
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <div style={{
-                  width: '36px', height: '36px', borderRadius: '10px',
-                  background: `${currentStatusInfo.color}20`,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: currentStatusInfo.color, fontSize: '18px',
-                }}>
-                  📍
-                </div>
                 <div>
                   <h3 style={{ color: '#f3f4f6', fontSize: '16px', fontWeight: 700, margin: '0 0 2px' }}>
                     O Teu Percurso com a NeoLife
@@ -542,7 +534,6 @@ export default function MembroDashboard() {
                 marginTop: '12px',
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
-                  <span style={{ fontSize: '13px' }}>💬</span>
                   <span style={{ color: '#10b981', fontSize: '12px', fontWeight: 600 }}>
                     Nota da Liderança para Ti:
                   </span>
@@ -632,7 +623,7 @@ export default function MembroDashboard() {
               </div>
             </div>
 
-            {/* 📚 3. BIBLIOTECA DE RECURSOS & FORMAÇÃO (PUBLICADA PELO ADMIN) */}
+            {/* 3. BIBLIOTECA DE RECURSOS & FORMAÇÃO (PUBLICADA PELO ADMIN) */}
             <div id="materiais" style={{
               background: 'rgba(255,255,255,0.02)',
               border: '1px solid rgba(255,255,255,0.07)',
@@ -649,7 +640,7 @@ export default function MembroDashboard() {
               }}>
                 <div>
                   <h3 style={{ color: '#f3f4f6', fontSize: '17px', fontWeight: 700, margin: '0 0 4px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <span>📚</span> Recursos & Materiais Exclusivos
+                    Recursos & Materiais Exclusivos
                   </h3>
                   <p style={{ color: '#6b7280', fontSize: '13px', margin: 0 }}>
                     Documentos oficiais, guias técnicos e vídeos carregados pela equipa de gestão
@@ -694,7 +685,7 @@ export default function MembroDashboard() {
                   borderRadius: '12px',
                   border: '1px dashed rgba(255,255,255,0.06)',
                 }}>
-                  <span style={{ fontSize: '32px' }}>📂</span>
+
                   <p style={{ color: '#9ca3af', fontSize: '14px', margin: '8px 0 2px' }}>
                     Nenhum material publicado nesta categoria no momento.
                   </p>
@@ -705,7 +696,7 @@ export default function MembroDashboard() {
               ) : (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '12px' }}>
                   {filteredResources.map(item => {
-                    const icons = { pdf: '📄', video: '🎥', guide: '📘', link: '🔗' };
+                    const icons = { pdf: 'PDF', video: 'Video', guide: 'Guia', link: 'Link' };
                     const badgeColors = {
                       pdf: { bg: 'rgba(244,63,94,0.15)', text: '#fb7185' },
                       video: { bg: 'rgba(99,102,241,0.15)', text: '#818cf8' },

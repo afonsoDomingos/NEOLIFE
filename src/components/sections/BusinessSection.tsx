@@ -86,11 +86,11 @@ export const BusinessSection: React.FC = () => {
   const [businessVideos, setBusinessVideos] = useState<BusinessVideo[]>([]);
 
   const availableGoals = [
-    { id: 'extra-income', labelPt: '💰 Rendimento Extra Sustentável', labelEn: '💰 Extra Sustainable Income' },
-    { id: 'full-time', labelPt: '🏢 Negócio Próprio / Carreira Independente', labelEn: '🏢 Full-Time Independent Business' },
-    { id: 'mentorship', labelPt: '🤝 Mentoria Direta com José e Ofélia', labelEn: '🤝 Direct Mentorship with José & Ofélia' },
-    { id: 'time-freedom', labelPt: '⏳ Liberdade de Tempo & Horários Flexíveis', labelEn: '⏳ Time Freedom & Flexible Hours' },
-    { id: 'global-scale', labelPt: '🌍 Expansão Internacional (50+ Países)', labelEn: '🌍 Global Business (50+ Countries)' },
+    { id: 'extra-income', labelPt: 'Rendimento Extra Sustentável', labelEn: 'Extra Sustainable Income' },
+    { id: 'full-time', labelPt: 'Negócio Próprio / Carreira Independente', labelEn: 'Full-Time Independent Business' },
+    { id: 'mentorship', labelPt: 'Mentoria Direta com José e Ofélia', labelEn: 'Direct Mentorship with José & Ofélia' },
+    { id: 'time-freedom', labelPt: 'Liberdade de Tempo & Horários Flexíveis', labelEn: 'Time Freedom & Flexible Hours' },
+    { id: 'global-scale', labelPt: 'Expansão Internacional (50+ Países)', labelEn: 'Global Business (50+ Countries)' },
   ];
 
   useEffect(() => {
@@ -216,7 +216,7 @@ export const BusinessSection: React.FC = () => {
                   <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] ${
                     isSelected ? 'bg-white text-emerald-800 font-black' : 'border border-gray-300 text-transparent'
                   }`}>
-                    ✓
+                    •
                   </span>
                 </button>
               );

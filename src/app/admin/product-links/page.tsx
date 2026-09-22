@@ -188,7 +188,7 @@ export default function ProductLinksPage() {
                       }`}
                       title={link.available ? 'Disponível' : 'Indisponível'}
                     >
-                      {link.available ? '✓' : '✕'}
+                      {link.available ? 'Sim' : 'Não'}
                     </button>
                   </div>
                 </div>

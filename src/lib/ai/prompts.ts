@@ -41,7 +41,7 @@ export const FALLBACK_FAQS: FallbackFAQ[] = [
   },
   {
     keywords: ['pais', 'países', 'paises', 'mocambique', 'moçambique', 'angola', 'africa do sul', 'zimbabwe', 'portugal', 'onde opera', 'global', 'mundo', 'continente', 'europa', 'america', 'asia'],
-    answer: 'A NeoLife está presente em **mais de 50 países** em todo o mundo:\n\n🌍 **África:** Moçambique, África do Sul, Angola, Zimbabwe, Botswana, Lesoto, Namíbia, Eswatini, Quénia, Tanzânia, Uganda, Nigéria, Gana, Benin, Camarões, Costa do Marfim, Togo\n\n🌎 **Américas:** EUA, Canadá, América Latina\n\n🌏 **Ásia & Pacífico:** Filipinas, Singapura, Japão, Austrália, Nova Zelândia\n\n🌍 **Europa:** Reino Unido, Itália, Alemanha, França, Espanha, Polónia, Suécia, Noruega, Finlândia, Dinamarca, e muitos mais.\n\nA nossa equipa de mentoria liderada por **José e Ofélia Machado** tem apoio ativo e estruturado para **Moçambique, África do Sul, Angola e Zimbabwe**. Se reside noutro país, preencha o nosso [Formulário](/formulario) para verificarmos disponibilidade.'
+    answer: 'A NeoLife está presente em **mais de 50 países** em todo o mundo:\n\n**África:** Moçambique, África do Sul, Angola, Zimbabwe, Botswana, Lesoto, Namíbia, Eswatini, Quénia, Tanzânia, Uganda, Nigéria, Gana, Benin, Camarões, Costa do Marfim, Togo\n\n**Américas:** EUA, Canadá, América Latina\n\n**Ásia & Pacífico:** Filipinas, Singapura, Japão, Austrália, Nova Zelândia\n\n**Europa:** Reino Unido, Itália, Alemanha, França, Espanha, Polónia, Suécia, Noruega, Finlândia, Dinamarca, e muitos mais.\n\nA nossa equipa de mentoria liderada por **José e Ofélia Machado** tem apoio ativo e estruturado para **Moçambique, África do Sul, Angola e Zimbabwe**. Se reside noutro país, preencha o nosso [Formulário](/formulario) para verificarmos disponibilidade.'
   },
   {
     keywords: ['como comprar', 'como encomendar', 'preco', 'preço', 'comprar', 'encomenda', 'valor'],
@@ -113,27 +113,27 @@ Responde sempre em Português, de forma profissional, concisa e orientada para a
 export const ADMIN_FALLBACK_RESPONSES: { keywords: string[]; answer: string }[] = [
   {
     keywords: ['mensagem', 'whatsapp', 'redigir', 'rascunho', 'escrever', 'enviar'],
-    answer: '**Rascunho de mensagem WhatsApp — Lead novo:**\n\n"Olá [Nome]! 👋 Sou o José Machado da equipa NeoLife. Vi que demonstrou interesse em [tema]. Gostaria de partilhar mais informação consigo — tem 5 minutos para uma conversa rápida esta semana?"\n\n💡 *Adapte o [Nome] e [tema] ao perfil do lead. Para leads mais frios, comece por partilhar um conteúdo de valor antes de pedir uma conversa.*',
+    answer: '**Rascunho de mensagem WhatsApp — Lead novo:**\n\n"Olá [Nome]! Sou o José Machado da equipa NeoLife. Vi que demonstrou interesse em [tema]. Gostaria de partilhar mais informação consigo — tem 5 minutos para uma conversa rápida esta semana?"\n\n*Adapte o [Nome] e [tema] ao perfil do lead. Para leads mais frios, comece por partilhar um conteúdo de valor antes de pedir uma conversa.*',
   },
   {
     keywords: ['follow-up', 'seguimento', 'nao respondeu', 'não respondeu', 'frio', 'reativar', 'reativação'],
-    answer: '**Estratégia de follow-up para lead sem resposta:**\n\n1. **Dia 1-2:** Primeira mensagem de apresentação (breve, sem pressão)\n2. **Dia 4-5:** Partilhar conteúdo de valor (artigo, testemunho, vídeo)\n3. **Dia 10:** Mensagem de follow-up leve: *"Olá [Nome], só a verificar se recebeu a informação que partilhei. Estou disponível se quiser saber mais."*\n4. **Dia 20:** Última tentativa: *"Não quero incomodar, mas deixo a porta aberta caso mude de ideias. Qualquer dúvida, estou aqui!"*\n\n💡 *Após 30 dias sem resposta, mude o estado para "não_interessado" e arquive.*',
+    answer: '**Estratégia de follow-up para lead sem resposta:**\n\n1. **Dia 1-2:** Primeira mensagem de apresentação (breve, sem pressão)\n2. **Dia 4-5:** Partilhar conteúdo de valor (artigo, testemunho, vídeo)\n3. **Dia 10:** Mensagem de follow-up leve: *"Olá [Nome], só a verificar se recebeu a informação que partilhei. Estou disponível se quiser saber mais."*\n4. **Dia 20:** Última tentativa: *"Não quero incomodar, mas deixo a porta aberta caso mude de ideias. Qualquer dúvida, estou aqui!"*\n\n*Após 30 dias sem resposta, mude o estado para "não_interessado" e arquive.*',
   },
   {
     keywords: ['qualificar', 'qualificação', 'perguntas', 'perceber interesse', 'avaliar'],
-    answer: '**Perguntas chave para qualificar um lead:**\n\n🟢 **Interesse em saúde:**\n- "Que desafio de saúde quer resolver atualmente?"\n- "Já experimentou suplementação antes? Com que resultado?"\n\n🔵 **Interesse em negócio:**\n- "Procura uma fonte de rendimento extra ou tempo inteiro?"\n- "Tem experiência em vendas ou trabalha atualmente?"\n- "Tem rede de contactos que possa beneficiar destes produtos?"\n\n💡 *Um lead que responde com entusiasmo a 2+ perguntas está qualificado para avançar para apresentação.*',
+    answer: '**Perguntas chave para qualificar um lead:**\n\n**Interesse em saúde:**\n- "Que desafio de saúde quer resolver atualmente?"\n- "Já experimentou suplementação antes? Com que resultado?"\n\n**Interesse em negócio:**\n- "Procura uma fonte de rendimento extra ou tempo inteiro?"\n- "Tem experiência em vendas ou trabalha atualmente?"\n- "Tem rede de contactos que possa beneficiar destes produtos?"\n\n*Um lead que responde com entusiasmo a 2+ perguntas está qualificado para avançar para apresentação.*',
   },
   {
     keywords: ['novo lead', 'primeiro contacto', 'primeira mensagem', 'abordar'],
-    answer: '**Primeira abordagem — Lead novo:**\n\nMensagem sugerida:\n"Olá [Nome]! 😊 Obrigado pelo seu interesse na NeoLife. Sou [José/Ofélia] Machado e estou aqui para ajudá-lo(a) a perceber se os nossos produtos ou a nossa oportunidade de negócio fazem sentido para si. Que informação recebeu até agora sobre a NeoLife?"\n\n💡 *Começar com uma pergunta aberta ajuda a perceber de imediato o nível de conhecimento e expectativa do lead.*',
+    answer: '**Primeira abordagem — Lead novo:**\n\nMensagem sugerida:\n"Olá [Nome]! Obrigado pelo seu interesse na NeoLife. Sou [José/Ofélia] Machado e estou aqui para ajudá-lo(a) a perceber se os nossos produtos ou a nossa oportunidade de negócio fazem sentido para si. Que informação recebeu até agora sobre a NeoLife?"\n\n*Começar com uma pergunta aberta ajuda a perceber de imediato o nível de conhecimento e expectativa do lead.*',
   },
   {
     keywords: ['parceiro', 'membro', 'distribuidor', 'motivar', 'reconhecimento', 'equipa'],
-    answer: '**Mensagem de motivação para parceiro/distribuidor:**\n\n"Olá [Nome]! 🌟 Queria reconhecer o seu esforço este mês. Cada passo que dá na construção do seu negócio é investimento no seu futuro e da sua família. Se precisar de apoio, formação ou simplesmente de uma conversa estratégica, estamos aqui. Vamos crescer juntos!"\n\n💡 *O reconhecimento frequente é um dos maiores fatores de retenção em modelos de vendas diretas.*',
+    answer: '**Mensagem de motivação para parceiro/distribuidor:**\n\n"Olá [Nome]! Queria reconhecer o seu esforço este mês. Cada passo que dá na construção do seu negócio é investimento no seu futuro e da sua família. Se precisar de apoio, formação ou simplesmente de uma conversa estratégica, estamos aqui. Vamos crescer juntos!"\n\n*O reconhecimento frequente é um dos maiores fatores de retenção em modelos de vendas diretas.*',
   },
   {
     keywords: ['convertido', 'fechar', 'próximo passo', 'inscrever', 'registar', 'como avançar'],
-    answer: '**Processo para converter um lead interessado:**\n\n1. ✅ Enviar o link de registo NeoLife oficial\n2. ✅ Explicar o kit de início (produtos incluídos, custo de entrada)\n3. ✅ Agendar uma videochamada de boas-vindas nas primeiras 48h\n4. ✅ Adicionar ao grupo de formação/WhatsApp da equipa\n5. ✅ Atualizar estado no CRM para "convertido"\n\n💡 *Os primeiros 7 dias são críticos — acompanhamento próximo reduz desistência em 60%.*',
+    answer: '**Processo para converter um lead interessado:**\n\n1. Enviar o link de registo NeoLife oficial\n2. Explicar o kit de início (produtos incluídos, custo de entrada)\n3. Agendar uma videochamada de boas-vindas nas primeiras 48h\n4. Adicionar ao grupo de formação/WhatsApp da equipa\n5. Atualizar estado no CRM para "convertido"\n\n*Os primeiros 7 dias são críticos — acompanhamento próximo reduz desistência em 60%.*',
   },
 ];
 

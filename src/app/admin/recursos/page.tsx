@@ -124,22 +124,22 @@ export default function AdminRecursosPage() {
     pdf: {
       label: 'PDF / Documento',
       badge: 'bg-rose-100 text-rose-800 border-rose-200',
-      icon: '📄',
+      icon: 'PDF',
     },
     video: {
       label: 'Vídeo / Aula',
       badge: 'bg-indigo-100 text-indigo-800 border-indigo-200',
-      icon: '🎥',
+      icon: 'Video',
     },
     link: {
       label: 'Link Útil',
       badge: 'bg-blue-100 text-blue-800 border-blue-200',
-      icon: '🔗',
+      icon: 'Link',
     },
     guide: {
       label: 'Guia / Apresentação',
       badge: 'bg-emerald-100 text-emerald-800 border-emerald-200',
-      icon: '📘',
+      icon: 'Guia',
     },
   };
 
@@ -160,14 +160,14 @@ export default function AdminRecursosPage() {
               </Link>
               <span className="text-gray-300">|</span>
               <h1 className="text-xl font-bold text-black flex items-center gap-2">
-                <span>📚</span> Biblioteca de Recursos & Materiais
+                Biblioteca de Recursos & Materiais
               </h1>
             </div>
             <Button
               onClick={() => setShowAddForm(!showAddForm)}
               className="bg-indigo-600 hover:bg-indigo-700 text-white"
             >
-              {showAddForm ? '✕ Cancelar' : '+ Novo Recurso'}
+              {showAddForm ? 'Cancelar' : '+ Novo Recurso'}
             </Button>
           </div>
         </div>
@@ -176,7 +176,6 @@ export default function AdminRecursosPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         {/* Info card */}
         <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-4 text-sm text-indigo-950 flex items-start gap-3">
-          <span className="text-xl mt-0.5">📂</span>
           <div>
             <p className="font-semibold">Materiais e Formação para a Tua Equipa</p>
             <p className="text-xs text-indigo-800 mt-0.5">
@@ -234,10 +233,10 @@ export default function AdminRecursosPage() {
                       onChange={handleInputChange}
                       className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                     >
-                      <option value="pdf">📄 PDF / Documento</option>
-                      <option value="video">🎥 Vídeo / Aula Gravada</option>
-                      <option value="link">🔗 Link Externo / Portal</option>
-                      <option value="guide">📘 Guia / Apresentação</option>
+                      <option value="pdf">PDF / Documento</option>
+                      <option value="video">Vídeo / Aula Gravada</option>
+                      <option value="link">Link Externo / Portal</option>
+                      <option value="guide">Guia / Apresentação</option>
                     </select>
                   </div>
                 </div>
@@ -319,7 +318,7 @@ export default function AdminRecursosPage() {
               onClick={loadResources}
               className="text-xs text-gray-600 self-end sm:self-auto"
             >
-              🔄 Atualizar
+              Atualizar
             </Button>
           </div>
 
@@ -332,7 +331,6 @@ export default function AdminRecursosPage() {
           ) : filteredResources.length === 0 ? (
             <Card className="text-center py-12">
               <CardContent>
-                <span className="text-4xl">📚</span>
                 <h3 className="text-base font-semibold text-gray-900 mt-2">Nenhum recurso encontrado</h3>
                 <p className="text-xs text-gray-500 mt-1 max-w-sm mx-auto">
                   Adiciona materiais de apoio, manuais ou vídeos para ajudar os teus membros a terem sucesso.
@@ -415,7 +413,7 @@ export default function AdminRecursosPage() {
                             onClick={() => handleDelete(item._id)}
                             className="text-[11px] px-2 py-1 h-7 text-red-600 hover:bg-red-50 hover:border-red-300"
                           >
-                            🗑️
+                            Apagar
                           </Button>
                         </div>
                       </div>

@@ -123,19 +123,19 @@ export default function AdminAnunciosPage() {
     info: {
       badge: 'bg-blue-100 text-blue-800 border-blue-200',
       banner: 'bg-blue-50 border-blue-400 text-blue-900',
-      icon: 'ℹ️',
+      icon: 'Info',
       label: 'Informação',
     },
     success: {
       badge: 'bg-emerald-100 text-emerald-800 border-emerald-200',
       banner: 'bg-emerald-50 border-emerald-400 text-emerald-900',
-      icon: '🎉',
+      icon: 'Sucesso',
       label: 'Sucesso / Novidade',
     },
     warning: {
       badge: 'bg-amber-100 text-amber-800 border-amber-200',
       banner: 'bg-amber-50 border-amber-400 text-amber-900',
-      icon: '⚠️',
+      icon: 'Alerta',
       label: 'Alerta Importante',
     },
   };
@@ -152,14 +152,14 @@ export default function AdminAnunciosPage() {
               </Link>
               <span className="text-gray-300">|</span>
               <h1 className="text-xl font-bold text-black flex items-center gap-2">
-                <span>📣</span> Anúncios & Avisos aos Membros
+                Anúncios & Avisos aos Membros
               </h1>
             </div>
             <Button
               onClick={() => setShowAddForm(!showAddForm)}
               className="bg-emerald-600 hover:bg-emerald-700 text-white"
             >
-              {showAddForm ? '✕ Cancelar' : '+ Novo Anúncio'}
+              {showAddForm ? 'Cancelar' : '+ Novo Anúncio'}
             </Button>
           </div>
         </div>
@@ -168,7 +168,6 @@ export default function AdminAnunciosPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         {/* Info banner */}
         <div className="bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200 rounded-xl p-4 text-sm text-emerald-900 flex items-start gap-3">
-          <span className="text-xl mt-0.5">💡</span>
           <div>
             <p className="font-semibold text-emerald-950">Comunicação Direta com Membros</p>
             <p className="text-xs text-emerald-800 mt-0.5">
@@ -197,7 +196,7 @@ export default function AdminAnunciosPage() {
           <Card className="border-2 border-emerald-500/30 shadow-lg animate-in fade-in duration-200">
             <CardHeader className="bg-emerald-50/50 border-b border-emerald-100">
               <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                <span>✍️</span> Criar Novo Comunicado
+                Criar Novo Comunicado
               </h2>
               <p className="text-xs text-gray-500">
                 Preenche os campos abaixo para exibir o comunicado na área dos membros.
@@ -226,9 +225,9 @@ export default function AdminAnunciosPage() {
                       onChange={handleInputChange}
                       className="w-full px-3 py-2.5 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                     >
-                      <option value="info">ℹ️ Informativo (Azul)</option>
-                      <option value="success">🎉 Sucesso / Conquista (Verde)</option>
-                      <option value="warning">⚠️ Urgente / Alerta (Amarelo)</option>
+                      <option value="info">Informativo (Azul)</option>
+                      <option value="success">Sucesso / Conquista (Verde)</option>
+                      <option value="warning">Urgente / Alerta (Amarelo)</option>
                     </select>
                   </div>
                 </div>
@@ -313,7 +312,7 @@ export default function AdminAnunciosPage() {
               onClick={loadAnnouncements}
               className="text-xs text-gray-600"
             >
-              🔄 Atualizar
+              Atualizar
             </Button>
           </div>
 
@@ -326,7 +325,6 @@ export default function AdminAnunciosPage() {
           ) : announcements.length === 0 ? (
             <Card className="text-center py-12">
               <CardContent>
-                <span className="text-4xl">📢</span>
                 <h3 className="text-base font-semibold text-gray-900 mt-2">Nenhum anúncio registado</h3>
                 <p className="text-xs text-gray-500 mt-1 max-w-sm mx-auto">
                   Cria o primeiro comunicado acima para informar os membros sobre eventos, produtos ou novidades NeoLife.
@@ -417,7 +415,7 @@ export default function AdminAnunciosPage() {
                           className="text-xs text-red-600 hover:bg-red-50 hover:border-red-300"
                           title="Eliminar permanentemente"
                         >
-                          🗑️
+                          Apagar
                         </Button>
                       </div>
                     </div>

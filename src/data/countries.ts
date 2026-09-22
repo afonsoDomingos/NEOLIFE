@@ -185,7 +185,7 @@ export const countries: Country[] = [
     name: 'América Latina',
     code: 'LA',
     available: false,
-    flag: '🌎',
+    flag: '',
     dialCode: undefined,
     region: 'Américas',
   },

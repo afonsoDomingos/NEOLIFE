@@ -23,7 +23,7 @@ export const FloatingSelectionBar: React.FC = () => {
           </div>
           <div className="truncate">
             <p className="text-xs font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-              <span>✓</span>
+              <span>•</span>
               <span>{isPt ? 'A Sua Seleção Atual' : 'Your Current Selection'}</span>
             </p>
             <p className="text-xs text-gray-200 truncate font-medium mt-0.5">

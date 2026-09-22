@@ -533,7 +533,7 @@ export default function AdminLeadsPage() {
                                   className="text-emerald-700 hover:text-emerald-900 font-semibold underline text-[11px]"
                                   title="Enviar e-mail diretamente pelo painel"
                                 >
-                                  ✉️ Enviar
+                                  Enviar Email
                                 </button>
                               </div>
                             </div>
@@ -545,7 +545,7 @@ export default function AdminLeadsPage() {
                             </span>
                             {lead.notes && (
                               <div className="text-xs text-gray-500 italic max-w-xs truncate mt-1" title={lead.notes}>
-                                💬 &ldquo;{lead.notes}&rdquo;
+                                &ldquo;{lead.notes}&rdquo;
                               </div>
                             )}
                           </td>
@@ -619,7 +619,7 @@ export default function AdminLeadsPage() {
                   onClick={() => setSelectedLead(null)}
                   className="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-gray-800 transition-colors"
                 >
-                  ✕
+                  X
                 </button>
               </div>
 
@@ -652,7 +652,6 @@ export default function AdminLeadsPage() {
               <div className="p-4 rounded-2xl bg-emerald-50/80 border border-emerald-200 mb-6">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <span className="text-base">💬</span>
                     <span className="text-sm font-bold text-emerald-950">Mandar Mensagem WhatsApp em 1-Clique</span>
                   </div>
                   <span className="text-xs text-emerald-700 font-semibold">{selectedLead.whatsapp || selectedLead.phone}</span>
@@ -707,14 +706,14 @@ export default function AdminLeadsPage() {
                     <div>
                       <span className="text-xs font-semibold text-gray-500 block mb-1">Telefone Principal</span>
                       <a href={`tel:${selectedLead.phone}`} className="text-sm font-bold text-gray-900 hover:text-emerald-700">
-                        📞 {selectedLead.phone}
+                        {selectedLead.phone}
                       </a>
                     </div>
                     <button
                       onClick={() => copyToClipboard(selectedLead.phone, 'modal-phone')}
                       className="px-2 py-1 rounded bg-white text-xs font-semibold border border-gray-200 hover:bg-gray-100 text-gray-700 transition-colors"
                     >
-                      {copiedId === 'modal-phone' ? '✓ Copiado!' : 'Copiar'}
+                      {copiedId === 'modal-phone' ? 'Copiado!' : 'Copiar'}
                     </button>
                   </div>
 
@@ -728,13 +727,13 @@ export default function AdminLeadsPage() {
                         onClick={() => copyToClipboard(selectedLead.email, 'modal-email')}
                         className="px-2 py-1 rounded bg-white text-xs font-semibold border border-gray-200 hover:bg-gray-100 text-gray-700 transition-colors"
                       >
-                        {copiedId === 'modal-email' ? '✓ Copiado!' : 'Copiar'}
+                        {copiedId === 'modal-email' ? 'Copiado!' : 'Copiar'}
                       </button>
                       <button
                         onClick={() => openEmailModal(selectedLead)}
                         className="px-2 py-1 rounded bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700 transition-colors"
                       >
-                        ✉️ Enviar
+                        Enviar Email
                       </button>
                     </div>
                   </div>
@@ -792,7 +791,7 @@ export default function AdminLeadsPage() {
                     onClick={() => openEmailModal(selectedLead)}
                     className="px-4 py-2 rounded-xl border border-emerald-300 text-emerald-800 font-bold text-sm hover:bg-emerald-50"
                   >
-                    ✉️ Enviar E-mail
+                    Enviar E-mail
                   </button>
                   <a
                     href={`https://wa.me/${cleanPhoneForWhatsApp(selectedLead.whatsapp || selectedLead.phone)}?text=${encodeURIComponent(getWhatsAppMessage(selectedLead, waTemplate))}`}
@@ -822,7 +821,7 @@ export default function AdminLeadsPage() {
                   onClick={() => setEmailModalLead(null)}
                   className="p-2 rounded-full hover:bg-gray-100 text-gray-500 hover:text-gray-800"
                 >
-                  ✕
+                  X
                 </button>
               </div>
 
@@ -835,21 +834,21 @@ export default function AdminLeadsPage() {
                     onClick={() => applyEmailTemplate('boas-vindas')}
                     className="text-xs px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-emerald-100 text-gray-700 font-medium"
                   >
-                    👋 Boas-Vindas
+                    Boas-Vindas
                   </button>
                   <button
                     type="button"
                     onClick={() => applyEmailTemplate('saude')}
                     className="text-xs px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-emerald-100 text-gray-700 font-medium"
                   >
-                    🌿 Saúde & Nutrição
+                    Saúde & Nutrição
                   </button>
                   <button
                     type="button"
                     onClick={() => applyEmailTemplate('renda')}
                     className="text-xs px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-emerald-100 text-gray-700 font-medium"
                   >
-                    💼 Oportunidade & Renda
+                    Oportunidade & Renda
                   </button>
                 </div>
               </div>
@@ -864,7 +863,7 @@ export default function AdminLeadsPage() {
                       onClick={() => copyToClipboard(emailModalLead.email, 'composer-email')}
                       className="text-xs text-emerald-700 font-semibold"
                     >
-                      {copiedId === 'composer-email' ? '✓ Copiado!' : 'Copiar'}
+                      {copiedId === 'composer-email' ? 'Copiado!' : 'Copiar'}
                     </button>
                   </div>
                 </div>

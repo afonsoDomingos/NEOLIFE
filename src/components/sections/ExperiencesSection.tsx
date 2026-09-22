@@ -149,7 +149,7 @@ export const ExperiencesSection: React.FC = () => {
                           : 'bg-teal-50 text-teal-800 hover:bg-teal-100 border border-teal-200'
                       }`}
                     >
-                      <span>{isSelected ? (isPt ? '✓ Tenho Interesse' : '✓ Interested') : (isPt ? '+ Quero Saber Mais' : '+ Add Interest')}</span>
+                      <span>{isSelected ? (isPt ? 'Tenho Interesse' : 'Interested') : (isPt ? '+ Quero Saber Mais' : '+ Add Interest')}</span>
                     </button>
                   );
                 })()}

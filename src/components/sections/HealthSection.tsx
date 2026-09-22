@@ -8,38 +8,34 @@ import { Button } from '@/components/ui/Button';
 import {
   cellular4Supplements,
   healthSolutionPacks,
-  HealthSolutionPack,
 } from '@/data/health-solutions';
 
 export const HealthSection: React.FC = () => {
   const { language } = useLanguage();
   const isPt = language === 'pt';
   const {
-    toggleHealthPack,
-    isHealthPackSelected,
     customHealthNeed,
-    setCustomHealthNeed,
-    totalItemsCount
+    setCustomHealthNeed
   } = useSelection();
 
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [activePackModal, setActivePackModal] = useState<HealthSolutionPack | null>(null);
   const [needSaved, setNeedSaved] = useState(false);
   const [expandedSupplements, setExpandedSupplements] = useState<Set<number>>(new Set());
   const [expandedShake, setExpandedShake] = useState(false);
+  const [expandedPacks, setExpandedPacks] = useState<Set<string>>(new Set());
   const [productLinks, setProductLinks] = useState<Record<string, { available: boolean; purchaseUrl: string | null; customMessage?: string }>>({});
   const [loadingLinks, setLoadingLinks] = useState<Set<string>>(new Set());
 
   const categories = [
-    { id: 'all', labelPt: '🌟 Todos os Pacotes', labelEn: '🌟 All Packs' },
-    { id: 'weight', labelPt: '⚖️ Pequeno Almoço & Peso', labelEn: '⚖️ Breakfast & Weight' },
-    { id: 'cell', labelPt: '🧬 Nutrição Celular & Ómega-3', labelEn: '🧬 Cellular & Omega-3' },
-    { id: 'gender', labelPt: '👨🌸 Homem, Mulher & Maternidade', labelEn: '👨🌸 Men, Women & Mother' },
-    { id: 'energy', labelPt: '⚡ Energia & Foco Mental', labelEn: '⚡ Energy & Mental Focus' },
-    { id: 'joints', labelPt: '🦴 Articulações & Mobilidade', labelEn: '🦴 Joints & Mobility' },
-    { id: 'digest', labelPt: '🌿 Digestão & Programa Detox', labelEn: '🌿 Digestion & Detox' },
-    { id: 'immunity', labelPt: '🛡️ Imunidade PhytoDefence', labelEn: '🛡️ Immunity PhytoDefence' },
-    { id: 'kids', labelPt: '👧 Crianças & Jovens', labelEn: '👧 Kids & Youth' },
+    { id: 'all', labelPt: 'Todos os Pacotes', labelEn: 'All Packs' },
+    { id: 'weight', labelPt: 'Pequeno Almoço & Peso', labelEn: 'Breakfast & Weight' },
+    { id: 'cell', labelPt: 'Nutrição Celular & Ómega-3', labelEn: 'Cellular & Omega-3' },
+    { id: 'gender', labelPt: 'Homem, Mulher & Maternidade', labelEn: 'Men, Women & Mother' },
+    { id: 'energy', labelPt: 'Energia & Foco Mental', labelEn: 'Energy & Mental Focus' },
+    { id: 'joints', labelPt: 'Articulações & Mobilidade', labelEn: 'Joints & Mobility' },
+    { id: 'digest', labelPt: 'Digestão & Programa Detox', labelEn: 'Digestion & Detox' },
+    { id: 'immunity', labelPt: 'Imunidade PhytoDefence', labelEn: 'Immunity PhytoDefence' },
+    { id: 'kids', labelPt: 'Crianças & Jovens', labelEn: 'Kids & Youth' },
   ];
 
   const filteredPacks =
@@ -54,15 +50,9 @@ export const HealthSection: React.FC = () => {
     setTimeout(() => setNeedSaved(false), 5000);
   };
 
-  const getWhatsAppLink = (packTitle: string) => {
-    const text = isPt
-      ? `Olá José e Ofélia, tenho interesse no "${packTitle}" da Neolife. Gostaria de saber mais informações e como encomendar.`
-      : `Hello José and Ofélia, I am interested in the "${packTitle}" from Neolife. I would like more details on how to order.`;
-    return `https://wa.me/258823056900?text=${encodeURIComponent(text)}`;
-  };
-
   const loadProductLink = async (productId: string) => {
     if (productLinks[productId]) return; // Já carregado
+    if (typeof window === 'undefined') return; // Não carregar durante build estático
 
     setLoadingLinks(prev => new Set(prev).add(productId));
     try {
@@ -189,7 +179,6 @@ export const HealthSection: React.FC = () => {
             >
               <div className="flex items-center gap-4">
                 <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-800 bg-emerald-100/70 px-3 py-1 rounded-full">
-                  <span>🥛</span>
                   <span>{isPt ? 'Nutrição Diária Deliciosa' : 'Daily Wholesome Protein'}</span>
                 </div>
                 <h4 className="text-lg sm:text-xl font-bold text-gray-900 group-hover:text-emerald-700 transition-colors">
@@ -220,10 +209,10 @@ export const HealthSection: React.FC = () => {
                       : 'Protein is vital for muscle tissue, enzymatic balance, and cellular repair. NeolifeShake delivers wholesome plant protein (soy & pea), dietary fibers, 22 amino acids, and 25 vitamins & minerals.'}
                   </p>
                   <div className="flex flex-wrap gap-2 text-xs font-semibold text-emerald-800">
-                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">✓ Saciedade Saudável</span>
-                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">✓ Massa Muscular</span>
-                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">✓ Controlo Glicémico</span>
-                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">✓ Deliciosos Sabores</span>
+                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">Saciedade Saudável</span>
+                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">Massa Muscular</span>
+                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">Controlo Glicémico</span>
+                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">Deliciosos Sabores</span>
                   </div>
                 </div>
 
@@ -276,143 +265,138 @@ export const HealthSection: React.FC = () => {
             ))}
           </div>
 
-          {/* Packs Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {filteredPacks.map((pack) => (
-              <div
-                key={pack.id}
-                className="bg-white rounded-3xl p-6 sm:p-7 border border-gray-200 hover:border-emerald-400 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-                      {isPt ? pack.badgePt : pack.badgeEn}
-                    </span>
-                    <span className="text-xs text-gray-400 font-semibold">
-                      {isPt ? pack.tagPt : pack.tagEn}
-                    </span>
-                  </div>
+          {/* Packs Grid - Simplified: Only titles, expandable */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {filteredPacks.map((pack) => {
+              const isExpanded = expandedPacks.has(pack.id);
+              const linkData = productLinks[pack.id];
+              const isLoading = loadingLinks.has(pack.id);
 
-                  <h4 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-emerald-700 transition-colors leading-snug">
-                    {isPt ? pack.titlePt : pack.titleEn}
-                  </h4>
+              // Carregar link se ainda não foi carregado
+              if (!linkData && !isLoading) {
+                loadProductLink(pack.id);
+              }
 
-                  <p className="text-xs text-gray-600 leading-relaxed mb-5">
-                    {isPt ? pack.descPt : pack.descEn}
-                  </p>
+              return (
+                <div
+                  key={pack.id}
+                  className="bg-white rounded-2xl border border-gray-200 hover:border-emerald-400 shadow-xs hover:shadow-md transition-all duration-300 overflow-hidden"
+                >
+                  {/* Compact Header - Always Visible */}
+                  <button
+                    onClick={() => {
+                      const newExpanded = new Set(expandedPacks);
+                      if (newExpanded.has(pack.id)) {
+                        newExpanded.delete(pack.id);
+                      } else {
+                        newExpanded.add(pack.id);
+                      }
+                      setExpandedPacks(newExpanded);
+                    }}
+                    className="w-full p-5 text-left flex items-center justify-between group"
+                  >
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+                          {isPt ? pack.badgePt : pack.badgeEn}
+                        </span>
+                        <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
+                          {isPt ? pack.tagPt : pack.tagEn}
+                        </span>
+                      </div>
+                      <h4 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-emerald-700 transition-colors">
+                        {isPt ? pack.titlePt : pack.titleEn}
+                      </h4>
+                    </div>
+                    <svg
+                      className={`w-5 h-5 text-emerald-600 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
 
-                  {/* Included Products List */}
-                  <div className="mb-5 bg-gray-50/80 rounded-2xl p-4 border border-gray-100">
-                    <p className="text-[11px] font-bold text-gray-700 uppercase tracking-wider mb-2">
-                      {isPt ? 'O Pack Inclui:' : 'Pack Includes:'}
+                  {/* Expandable Content */}
+                  <div
+                    className={`px-5 pb-5 transition-all duration-300 ${
+                      isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+                    }`}
+                  >
+                    <p className="text-xs text-gray-600 leading-relaxed mb-4">
+                      {isPt ? pack.descPt : pack.descEn}
                     </p>
-                    <ul className="space-y-1.5">
-                      {(isPt ? pack.productsPt : pack.productsEn).map((prod, i) => (
-                        <li key={i} className="flex items-start gap-2 text-xs text-gray-800">
-                          <span className="text-emerald-600 font-bold shrink-0">✓</span>
-                          <span>{prod}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
 
-                  {/* Key Benefits */}
-                  <div className="mb-6">
-                    <p className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider mb-2">
-                      {isPt ? 'Benefícios Principais:' : 'Key Benefits:'}
-                    </p>
-                    <ul className="space-y-1">
-                      {(isPt ? pack.benefitsPt : pack.benefitsEn).slice(0, 3).map((ben, i) => (
-                        <li key={i} className="text-xs text-gray-600 flex items-center gap-1.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-                          <span>{ben}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
+                    {/* Included Products List */}
+                    <div className="mb-4 bg-gray-50/80 rounded-xl p-3 border border-gray-100">
+                      <p className="text-[10px] font-bold text-gray-700 uppercase tracking-wider mb-2">
+                        {isPt ? 'O Pack Inclui:' : 'Pack Includes:'}
+                      </p>
+                      <ul className="space-y-1">
+                        {(isPt ? pack.productsPt : pack.productsEn).map((prod, i) => (
+                          <li key={i} className="flex items-start gap-2 text-xs text-gray-800">
+                            <span className="text-emerald-600 font-bold shrink-0">•</span>
+                            <span>{prod}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                {/* Action Buttons */}
-                <div className="pt-4 border-t border-gray-100 space-y-2">
-                  {/* Primary Purchase Button */}
-                  {(() => {
-                    const linkData = productLinks[pack.id];
-                    const isLoading = loadingLinks.has(pack.id);
+                    {/* Key Benefits */}
+                    <div className="mb-4">
+                      <p className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider mb-2">
+                        {isPt ? 'Benefícios Principais:' : 'Key Benefits:'}
+                      </p>
+                      <ul className="space-y-1">
+                        {(isPt ? pack.benefitsPt : pack.benefitsEn).slice(0, 3).map((ben, i) => (
+                          <li key={i} className="text-xs text-gray-600 flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                            <span>{ben}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
 
-                    // Carregar link se ainda não foi carregado
-                    if (!linkData && !isLoading) {
-                      loadProductLink(pack.id);
-                    }
-
-                    if (isLoading) {
-                      return (
+                    {/* Purchase Button */}
+                    <div className="pt-3 border-t border-gray-100">
+                      {isLoading ? (
                         <button
                           disabled
                           className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-gray-100 text-gray-400 border border-gray-200 flex items-center justify-center gap-2"
                         >
-                          <span className="animate-spin">⏳</span>
                           <span>{isPt ? 'Carregando...' : 'Loading...'}</span>
                         </button>
-                      );
-                    }
-
-                    if (!linkData || !linkData.available) {
-                      // Produto não disponível ou não configurado
-                      return (
+                      ) : !linkData || !linkData.available ? (
                         <button
                           disabled
                           className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-gray-100 text-gray-500 border border-gray-200 flex items-center justify-center gap-2 cursor-not-allowed"
                         >
-                          <span>🔒</span>
                           <span>
                             {linkData?.customMessage || (isPt ? 'Produto Indisponível' : 'Product Unavailable')}
                           </span>
                         </button>
-                      );
-                    }
-
-                    // Produto disponível com link de compra
-                    return (
-                      <a
-                        href={linkData.purchaseUrl!}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block w-full"
-                      >
-                        <button
-                          type="button"
-                          className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-300 transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                      ) : (
+                        <a
+                          href={linkData.purchaseUrl!}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block w-full"
                         >
-                          <span>🛒</span>
-                          <span>{isPt ? 'Comprar Aqui' : 'Buy Here'}</span>
-                          <span>➔</span>
-                        </button>
-                      </a>
-                    );
-                  })()}
-
-                  <div className="flex gap-2">
-                    <button
-                      type="button"
-                      onClick={() => setActivePackModal(pack)}
-                      className="flex-1 py-1.5 px-3 rounded-xl text-xs font-semibold border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors text-center"
-                    >
-                      {isPt ? 'Ver Detalhes' : 'View Details'}
-                    </button>
-
-                    <a
-                      href={getWhatsAppLink(isPt ? pack.titlePt : pack.titleEn)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="py-1.5 px-3 rounded-xl text-xs font-semibold text-emerald-700 hover:text-emerald-800 transition-colors text-center flex items-center justify-center gap-1"
-                    >
-                      <span>WhatsApp</span>
-                      <span>➔</span>
-                    </a>
+                          <button
+                            type="button"
+                            className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-300 transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                          >
+                            <span>{isPt ? 'Comprar' : 'Buy'}</span>
+                            <span>➔</span>
+                          </button>
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -450,14 +434,9 @@ export const HealthSection: React.FC = () => {
                   className="w-full sm:w-auto py-3 px-8 rounded-xl text-sm font-bold bg-emerald-400 hover:bg-emerald-300 text-emerald-950 shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2"
                 >
                   {needSaved ? (
-                    <span>✓ {isPt ? 'Guardado no Seu Pedido!' : 'Saved to Your Selection!'}</span>
+                    <span>{isPt ? 'Guardado no Seu Pedido!' : 'Saved to Your Selection!'}</span>
                   ) : (
-                    <>
-                      <span>{isPt ? 'Confirmar Pedido Especial' : 'Save Special Request'}</span>
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                      </svg>
-                    </>
+                    <span>{isPt ? 'Confirmar Pedido Especial' : 'Save Special Request'}</span>
                   )}
                 </button>
 
@@ -482,88 +461,6 @@ export const HealthSection: React.FC = () => {
         </div>
 
       </div>
-
-      {/* ── MODAL DE DETALHES DO PACK ── */}
-      {activePackModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
-          <div className="relative w-full max-w-2xl bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-gray-100 max-h-[90vh] overflow-y-auto">
-            <button
-              onClick={() => setActivePackModal(null)}
-              className="absolute top-5 right-5 p-2 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-
-            <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-              {isPt ? activePackModal.badgePt : activePackModal.badgeEn}
-            </span>
-
-            <h3 className="text-2xl font-bold text-gray-900 mt-3 mb-2">
-              {isPt ? activePackModal.titlePt : activePackModal.titleEn}
-            </h3>
-
-            <p className="text-sm text-gray-600 leading-relaxed mb-6">
-              {isPt ? activePackModal.descPt : activePackModal.descEn}
-            </p>
-
-            <div className="space-y-4 mb-6">
-              <div className="bg-gray-50 rounded-2xl p-4 border border-gray-200/70">
-                <h5 className="text-xs font-bold text-gray-800 uppercase tracking-wider mb-2">
-                  {isPt ? 'Produtos Incluídos Neste Pack:' : 'Products Included in This Pack:'}
-                </h5>
-                <ul className="space-y-1.5">
-                  {(isPt ? activePackModal.productsPt : activePackModal.productsEn).map((prod, i) => (
-                    <li key={i} className="text-xs text-gray-700 flex items-center gap-2">
-                      <span className="text-emerald-600 font-bold">✓</span>
-                      <span>{prod}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="bg-emerald-50/50 rounded-2xl p-4 border border-emerald-100">
-                <h5 className="text-xs font-bold text-emerald-900 uppercase tracking-wider mb-2">
-                  {isPt ? 'Todos os Benefícios:' : 'Full Benefits:'}
-                </h5>
-                <ul className="space-y-1.5">
-                  {(isPt ? activePackModal.benefitsPt : activePackModal.benefitsEn).map((ben, i) => (
-                    <li key={i} className="text-xs text-emerald-950 flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-1.5 shrink-0" />
-                      <span>{ben}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              {activePackModal.notePt && (
-                <p className="text-xs text-gray-500 italic border-l-2 border-emerald-400 pl-3">
-                  {isPt ? activePackModal.notePt : activePackModal.noteEn}
-                </p>
-              )}
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center gap-3 pt-4 border-t border-gray-100">
-              <a
-                href={getWhatsAppLink(isPt ? activePackModal.titlePt : activePackModal.titleEn)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:flex-1 py-3 px-6 rounded-xl text-xs font-bold bg-emerald-700 hover:bg-emerald-800 text-white text-center shadow-md transition-all"
-              >
-                {isPt ? 'Pedir Informações no WhatsApp' : 'Order via WhatsApp'}
-              </a>
-
-              <Link
-                href={`/formulario?tema=saude&pais=mz&pack=${activePackModal.slug}`}
-                className="w-full sm:flex-1 py-3 px-6 rounded-xl text-xs font-bold border border-emerald-300 text-emerald-800 hover:bg-emerald-50 text-center transition-all"
-              >
-                {isPt ? 'Preencher Formulário' : 'Fill Form'}
-              </Link>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 };

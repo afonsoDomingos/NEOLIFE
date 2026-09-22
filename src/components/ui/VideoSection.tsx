@@ -234,7 +234,7 @@ export const VideoSection: React.FC = () => {
                 className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/30 text-white flex items-center justify-center text-base transition-colors"
                 aria-label="Fechar"
               >
-                ✕
+                X
               </button>
             </div>
 
