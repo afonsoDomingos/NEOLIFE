@@ -284,6 +284,18 @@ export const HealthSection: React.FC = () => {
                     );
                   })()}
 
+                  {/* Immediate Action: Complete in Form when this item is selected */}
+                  {isHealthPackSelected(pack.id) && (
+                    <Link href="/formulario?origem=pack-selecionado" className="block w-full">
+                      <button
+                        type="button"
+                        className="w-full py-2.5 px-3 rounded-xl text-xs font-black bg-emerald-950 hover:bg-black text-emerald-300 transition-all flex items-center justify-center gap-2 shadow-sm animate-pulse"
+                      >
+                        <span>{isPt ? '➔ Concluir Pedido no Formulário' : '➔ Complete in Form'}</span>
+                      </button>
+                    </Link>
+                  )}
+
                   <div className="flex gap-2">
                     <button
                       type="button"

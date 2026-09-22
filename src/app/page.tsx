@@ -2,15 +2,13 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { Button } from '@/components/ui/Button';
 import { DynamicBanner } from '@/components/ui/DynamicBanner';
-import { VideoSection } from '@/components/ui/VideoSection';
-import { NeoLifeScienceSection } from '@/components/sections/NeoLifeScienceSection';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function Home() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
+  const isPt = language === 'pt';
 
   return (
     <div className="min-h-screen bg-white">
@@ -57,14 +55,14 @@ export default function Home() {
                 </div>
 
                 <div className="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-1">
-                  Pilar 01
+                  {isPt ? 'Pilar 01' : 'Pillar 01'}
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-emerald-700 transition-colors">
-                  1. SAÚDE
+                  {isPt ? '1. SAÚDE' : '1. HEALTH'}
                 </h3>
                 
                 <blockquote className="text-gray-600 text-sm sm:text-base leading-relaxed mb-6 italic border-l-2 border-emerald-300 pl-3">
-                  “Eleve a forma como você cuida da sua saúde, de dentro para fora, através da nutrição celular.”
+                  {isPt ? '“Eleve a forma como você cuida da sua saúde, de dentro para fora, através da nutrição celular.”' : '“Elevate how you care for your health, from the inside out, through cellular nutrition.”'}
                 </blockquote>
               </div>
 
@@ -81,7 +79,7 @@ export default function Home() {
             {/* 2. BUSINESS / OPORTUNIDADE */}
             <div className="group relative bg-gradient-to-b from-emerald-950 via-emerald-900 to-gray-950 text-white rounded-3xl p-8 shadow-xl hover:shadow-2xl border-2 border-emerald-500/50 hover:border-emerald-400 transition-all duration-300 flex flex-col justify-between transform md:-translate-y-2">
               <div className="absolute -top-3.5 right-6 bg-emerald-400 text-emerald-950 text-xs font-extrabold uppercase px-3 py-1 rounded-full tracking-wider shadow">
-                Empreendedorismo
+                {isPt ? 'Empreendedorismo' : 'Entrepreneurship'}
               </div>
 
               <div>
@@ -97,14 +95,14 @@ export default function Home() {
                 </div>
 
                 <div className="text-xs font-bold text-emerald-300 uppercase tracking-widest mb-1">
-                  Pilar 02
+                  {isPt ? 'Pilar 02' : 'Pillar 02'}
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-emerald-300 transition-colors">
                   2. BUSINESS
                 </h3>
                 
                 <blockquote className="text-emerald-100/90 text-sm sm:text-base leading-relaxed mb-6 italic border-l-2 border-emerald-400 pl-3">
-                  “Construa uma nova fonte de renda sustentável e transforme o seu negócio em liberdade para escolher como viver.”
+                  {isPt ? '“Construa uma nova fonte de renda sustentável e transforme o seu negócio em liberdade para escolher como viver.”' : '“Build a sustainable income stream and turn your ambition into the freedom to choose how you live.”'}
                 </blockquote>
               </div>
 
@@ -133,14 +131,14 @@ export default function Home() {
                 </div>
 
                 <div className="text-xs font-bold text-teal-600 uppercase tracking-widest mb-1">
-                  Pilar 03
+                  {isPt ? 'Pilar 03' : 'Pillar 03'}
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-teal-700 transition-colors">
-                  3. EXPERIÊNCIAS
+                  {isPt ? '3. EXPERIÊNCIAS' : '3. EXPERIENCES'}
                 </h3>
                 
                 <blockquote className="text-gray-600 text-sm sm:text-base leading-relaxed mb-6 italic border-l-2 border-teal-300 pl-3">
-                  “Expanda os seus horizontes, conheça o mundo e viva experiências únicas de reconhecimento e comunidade.”
+                  {isPt ? '“Expanda os seus horizontes, conheça o mundo e viva experiências únicas de reconhecimento e comunidade.”' : '“Expand your horizons, see the world and live unique experiences of recognition and community.”'}
                 </blockquote>
               </div>
 
@@ -155,217 +153,8 @@ export default function Home() {
             </div>
 
           </div>
-
-          {/* Mentorship Trust Callout */}
-          <div className="max-w-3xl mx-auto bg-white/90 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border border-emerald-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 border-emerald-400 relative shadow-sm">
-                <Image
-                  src="/assistente.png"
-                  alt="José e Ofélia Machado"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-emerald-800 uppercase tracking-wider">
-                  {t.hero.mentorshipBadge}
-                </p>
-                <p className="text-sm font-semibold text-gray-900">
-                  {t.hero.mentorshipText}
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2">
-              <a href="#saude" className="text-xs font-semibold text-gray-600 hover:text-emerald-700 px-3 py-2">
-                Ver Soluções ↓
-              </a>
-              <Link href="/formulario?tema=conheca-neolife&pais=mz">
-                <Button size="sm" className="text-xs font-bold bg-emerald-700 hover:bg-emerald-800 text-white">
-                  {t.hero.talkToUs}
-                </Button>
-              </Link>
-            </div>
-          </div>
         </div>
       </section>
-
-      {/* ── MENTORS & POSITIONING SECTION ── */}
-      <section className="py-20 bg-gray-50 border-y border-gray-100">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Text side */}
-            <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold mb-6">
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                {t.mentors.badge}
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
-                {t.mentors.title}<br />
-                <span className="text-emerald-700">{t.mentors.highlight}</span>
-              </h2>
-              <p className="text-gray-600 text-base sm:text-lg leading-relaxed mb-5">
-                {t.mentors.p1}
-              </p>
-              <p className="text-gray-600 leading-relaxed mb-5">
-                {t.mentors.p2}
-              </p>
-              <p className="text-gray-600 leading-relaxed mb-8">
-                {t.mentors.p3}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <a href="#negocio">
-                  <Button variant="outline" className="border-emerald-600 text-emerald-800 hover:bg-emerald-50 font-semibold">
-                    {t.hero.exploreBusiness}
-                  </Button>
-                </a>
-                <a href="#saude">
-                  <Button className="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold">
-                    {t.hero.exploreHealth}
-                  </Button>
-                </a>
-              </div>
-            </div>
-
-            {/* Visual side */}
-            <div className="relative">
-              <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-                {/* Mentor Couple Presentation Card */}
-                <div className="flex gap-4 items-center mb-6">
-                  <div className="w-16 h-16 rounded-full overflow-hidden shrink-0 shadow-md border-2 border-emerald-100 relative">
-                    <Image
-                      src="/assistente.png"
-                      alt="José e Ofélia Machado"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <p className="font-bold text-gray-900 text-lg leading-snug">
-                      {t.mentors.coupleTitle}
-                    </p>
-                    <p className="text-xs text-gray-500 font-medium">
-                      {t.mentors.coupleSubtitle}
-                    </p>
-                    <p className="text-xs text-emerald-700 font-semibold mt-1">
-                      {t.mentors.coupleRegions}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="space-y-4">
-                  {[
-                    t.mentors.bullet1,
-                    t.mentors.bullet2,
-                    t.mentors.bullet3,
-                    t.mentors.bullet4,
-                  ].map((text, i) => (
-                    <div key={i} className="flex items-center gap-3">
-                      <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
-                        <svg className="w-3 h-3 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                        </svg>
-                      </div>
-                      <p className="text-gray-700 text-sm leading-snug">{text}</p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="mt-6 pt-6 border-t border-gray-100">
-                  <p className="text-xs text-gray-600 italic">
-                    {t.mentors.quote}
-                  </p>
-                  <p className="text-[11px] font-semibold text-emerald-800 mt-1">
-                    - José Sarmento Machado & Ofélia Alfredo Machado
-                  </p>
-                </div>
-              </div>
-
-              {/* Decorative WhatsApp badge */}
-              <a
-                href="https://wa.me/258823056900"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute -bottom-4 -right-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-2xl px-5 py-3 shadow-lg transition-all"
-              >
-                <p className="text-xs font-medium opacity-80">{t.mentors.alwaysAvailable}</p>
-                <p className="text-sm font-bold flex items-center gap-1.5">
-                  <span>+258 82 305 6900</span>
-                  <span>➔</span>
-                </p>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── A DIFERENÇA NEOLIFE: Natureza + Ciência ── */}
-      <NeoLifeScienceSection />
-
-      {/* ── NAVEGAÇÃO RÁPIDA: AS 3 ÁREAS PRINCIPAIS ── */}
-      <section className="py-16 bg-white border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-3">
-            Escolha o Seu Próximo Passo
-          </h3>
-          <p className="text-gray-600 text-sm max-w-xl mx-auto mb-10">
-            Aceda diretamente à área que procura para ver todas as opções disponíveis e adicionar à sua seleção personalizada.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Link href="/saude" className="group p-6 rounded-3xl bg-emerald-50/60 hover:bg-emerald-100/70 border border-emerald-200 transition-all text-left flex flex-col justify-between">
-              <div>
-                <span className="text-2xl mb-3 block">🌿</span>
-                <h4 className="font-bold text-gray-900 text-lg mb-1 group-hover:text-emerald-800 transition-colors">
-                  1. Área de Saúde
-                </h4>
-                <p className="text-xs text-gray-600 leading-relaxed mb-4">
-                  Suplementos, nutrição celular, higiene pessoal, limpeza ecológica e agricultura.
-                </p>
-              </div>
-              <span className="text-xs font-bold text-emerald-800 flex items-center gap-1">
-                <span>Explorar Soluções</span>
-                <span>➔</span>
-              </span>
-            </Link>
-
-            <Link href="/business" className="group p-6 rounded-3xl bg-gray-950 text-white hover:bg-emerald-950 border border-emerald-500/30 transition-all text-left flex flex-col justify-between shadow-lg">
-              <div>
-                <span className="text-2xl mb-3 block">💼</span>
-                <h4 className="font-bold text-white text-lg mb-1 group-hover:text-emerald-300 transition-colors">
-                  2. Oportunidade Business
-                </h4>
-                <p className="text-xs text-gray-300 leading-relaxed mb-4">
-                  Os 5 módulos em vídeo, plano de ganhos e mentoria com José & Ofélia Machado.
-                </p>
-              </div>
-              <span className="text-xs font-bold text-emerald-400 flex items-center gap-1">
-                <span>Ver Módulos & Vídeos</span>
-                <span>➔</span>
-              </span>
-            </Link>
-
-            <Link href="/experiencias" className="group p-6 rounded-3xl bg-teal-50/60 hover:bg-teal-100/70 border border-teal-200 transition-all text-left flex flex-col justify-between">
-              <div>
-                <span className="text-2xl mb-3 block">✈️</span>
-                <h4 className="font-bold text-gray-900 text-lg mb-1 group-hover:text-teal-800 transition-colors">
-                  3. Experiências & Viagens
-                </h4>
-                <p className="text-xs text-gray-600 leading-relaxed mb-4">
-                  Viagens internacionais, reconhecimento, convenções e comunidade global.
-                </p>
-              </div>
-              <span className="text-xs font-bold text-teal-800 flex items-center gap-1">
-                <span>Descobrir Mais</span>
-                <span>➔</span>
-              </span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── VIDEOS DA COMUNIDADE ── */}
-      <VideoSection />
 
       {/* ── FINAL CTA SECTION ── */}
       <section className="py-20 bg-gradient-to-b from-white via-emerald-50/30 to-emerald-100/40 border-t border-emerald-100">

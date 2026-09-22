@@ -13,32 +13,33 @@ export const FloatingSelectionBar: React.FC = () => {
   if (totalItemsCount === 0) return null;
 
   return (
-    <aside aria-label={isPt ? 'Resumo da Seleção' : 'Selection Summary'} className="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:bottom-6 z-40 animate-fade-in">
-      <div className="bg-emerald-950/95 backdrop-blur-md text-white rounded-2xl p-4 shadow-2xl border border-emerald-500/40 flex items-center justify-between gap-4 max-w-lg mx-auto sm:max-w-md">
+    <aside aria-label={isPt ? 'Resumo da Seleção' : 'Selection Summary'} className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[94%] sm:w-auto min-w-[320px] sm:min-w-[480px] max-w-xl animate-fade-in pointer-events-auto">
+      <div className="bg-gray-950/95 backdrop-blur-md text-white rounded-2xl p-3.5 sm:p-4 shadow-2xl border-2 border-emerald-400 flex items-center justify-between gap-3 sm:gap-6 ring-4 ring-emerald-500/20">
         
         {/* Counter Badge & Summary */}
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-10 h-10 rounded-xl bg-emerald-500 text-emerald-950 font-black flex items-center justify-center shrink-0 text-base shadow-sm">
+          <div className="w-11 h-11 rounded-xl bg-emerald-400 text-emerald-950 font-black flex items-center justify-center shrink-0 text-lg shadow-md animate-pulse">
             {totalItemsCount}
           </div>
           <div className="truncate">
-            <p className="text-xs font-bold uppercase tracking-wider text-emerald-300">
-              {isPt ? 'A Sua Seleção' : 'Your Selection'}
+            <p className="text-xs font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+              <span>✓</span>
+              <span>{isPt ? 'A Sua Seleção Atual' : 'Your Current Selection'}</span>
             </p>
-            <p className="text-xs text-gray-200 truncate font-medium">
-              {selectedHealthPacks.length > 0 && `${selectedHealthPacks.length} ${isPt ? 'pacote(s)' : 'pack(s)'}`}
-              {customHealthNeed.trim() && `${selectedHealthPacks.length > 0 ? ', ' : ''}${isPt ? 'Pedido Especial' : 'Special Request'}`}
-              {businessGoals.length > 0 && `${(selectedHealthPacks.length > 0 || customHealthNeed.trim()) ? ', ' : ''}${businessGoals.length} ${isPt ? 'meta(s) Business' : 'Business goal(s)'}`}
-              {experienceInterests.length > 0 && `, ${experienceInterests.length} ${isPt ? 'experiência(s)' : 'experience(s)'}`}
+            <p className="text-xs text-gray-200 truncate font-medium mt-0.5">
+              {selectedHealthPacks.length > 0 && `${selectedHealthPacks.length} ${isPt ? 'pacote(s) de saúde' : 'health pack(s)'}`}
+              {customHealthNeed.trim() && `${selectedHealthPacks.length > 0 ? ' + ' : ''}${isPt ? 'Pedido Especial' : 'Special Request'}`}
+              {businessGoals.length > 0 && `${(selectedHealthPacks.length > 0 || customHealthNeed.trim()) ? ' + ' : ''}${businessGoals.length} ${isPt ? 'meta(s)' : 'goal(s)'}`}
+              {experienceInterests.length > 0 && ` + ${experienceInterests.length} ${isPt ? 'experiência(s)' : 'exp(s)'}`}
             </p>
           </div>
         </div>
 
         {/* Action Button */}
         <Link href="/formulario?origem=cesto" className="shrink-0">
-          <button className="bg-emerald-400 hover:bg-emerald-300 text-emerald-950 text-xs sm:text-sm font-extrabold px-4 py-2.5 rounded-xl transition-all shadow-md flex items-center gap-1.5 active:scale-95">
-            <span>{isPt ? 'Submeter' : 'Submit'}</span>
-            <span>➔</span>
+          <button className="bg-emerald-400 hover:bg-emerald-300 active:scale-95 text-emerald-950 text-xs sm:text-sm font-black px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl transition-all shadow-lg hover:shadow-emerald-500/30 flex items-center gap-2 whitespace-nowrap">
+            <span>{isPt ? 'Concluir Pedido' : 'Submit Order'}</span>
+            <span className="text-base">➔</span>
           </button>
         </Link>
       </div>
