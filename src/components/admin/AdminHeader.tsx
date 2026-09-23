@@ -33,7 +33,7 @@ export function AdminHeader({
           <div className="flex items-center gap-3">
             <Link href="/admin/dashboard" title="Voltar ao Dashboard" className="flex items-center gap-2">
               <img
-                src="/logo-neolife.png"
+                src="/neolifelogo.png"
                 alt="NeoLife"
                 className="h-9 w-auto object-contain"
               />

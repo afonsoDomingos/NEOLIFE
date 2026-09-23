@@ -15,7 +15,7 @@ export const Footer: React.FC = () => {
           {/* Neolife Logo & Slogan */}
           <div className="flex items-center gap-3">
             <img
-              src="/logo-neolife.png"
+              src="/neolifelogo.png"
               alt="Neolife"
               className="h-10 w-auto object-contain rounded"
             />

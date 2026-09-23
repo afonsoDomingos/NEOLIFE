@@ -32,13 +32,13 @@ export const metadata: Metadata = {
   formatDetection: seoConfig.formatDetection,
   icons: {
     icon: [
-      { url: '/logo-neolife.png' },
+      { url: '/neolifelogo.png' },
       { url: '/icon.png' },
     ],
     apple: [
-      { url: '/logo-neolife.png' },
+      { url: '/neolifelogo.png' },
     ],
-    shortcut: '/logo-neolife.png',
+    shortcut: '/neolifelogo.png',
   },
   openGraph: seoConfig.openGraph,
   twitter: seoConfig.twitter,
