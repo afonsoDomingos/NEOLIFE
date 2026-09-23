@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
+import { AdminHeader } from '@/components/admin/AdminHeader';
 
 interface Member {
   _id: string;
@@ -145,31 +146,17 @@ export default function AdminMembersPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-3">
-              <img src="/logo-neolife.png" alt="NeoLife" className="h-9 w-auto object-contain" />
-              <span className="text-gray-300">|</span>
-              <span className="text-gray-700 font-semibold text-sm">Painel de Administracao</span>
-            </div>
-            <div className="flex items-center gap-3">
-              <Link href="/admin/dashboard">
-                <Button variant="outline" size="sm" className="text-xs text-gray-600">
-                  Dashboard
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <AdminHeader
+        title="Gestão de Membros"
+        showRefresh={true}
+        onRefresh={loadMembers}
+      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Page title */}
-        <div className="flex justify-between items-start mb-6">
+      {/* Page-specific toolbar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="flex justify-between items-start">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Gestao de Membros</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Gestão de Membros</h1>
             <p className="text-sm text-gray-500 mt-1">{total} membro(s) registado(s)</p>
           </div>
           <button
@@ -189,6 +176,9 @@ export default function AdminMembersPage() {
             Novo Membro
           </button>
         </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
         {/* Filters */}
         <div className="flex gap-3 mb-6 flex-wrap">
@@ -210,15 +200,6 @@ export default function AdminMembersPage() {
             <option value="pending">Pendente</option>
             <option value="suspended">Suspenso</option>
           </select>
-          <button
-            onClick={loadMembers}
-            style={{
-              padding: '9px 16px', borderRadius: '8px', border: '1px solid #e5e7eb',
-              background: 'white', color: '#374151', fontSize: '14px', cursor: 'pointer',
-            }}
-          >
-            Atualizar
-          </button>
         </div>
 
         {/* Stats */}

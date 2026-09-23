@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { healthSolutionPacks } from '@/data/health-solutions';
 import { cellular4Supplements } from '@/data/health-solutions';
+import { AdminHeader } from '@/components/admin/AdminHeader';
 
 interface ProductLink {
   _id?: string;
@@ -134,17 +135,19 @@ export default function ProductLinksPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Links de Compra de Produtos
-            </h1>
-            <p className="text-gray-600">
-              Configure os links de compra para cada produto. Quando não configurado, o produto aparecerá como "não disponível".
-            </p>
-          </div>
+    <div className="min-h-screen bg-gray-50">
+      <AdminHeader
+        title="Links de Compra de Produtos"
+        showRefresh={true}
+        onRefresh={loadLinks}
+      />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        {/* Page-specific toolbar */}
+        <div className="flex items-center justify-between mb-6">
+          <p className="text-gray-600">
+            Configure os links de compra para cada produto. Quando não configurado, o produto aparecerá como "não disponível".
+          </p>
           <Button
             onClick={() => {
               setEditingLink({

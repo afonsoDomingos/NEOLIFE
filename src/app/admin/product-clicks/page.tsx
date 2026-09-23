@@ -4,6 +4,7 @@ import React, { useEffect, useState, Suspense } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
+import { AdminHeader } from '@/components/admin/AdminHeader';
 
 interface ClickStats {
   totalClicks: number;
@@ -77,35 +78,30 @@ function ProductClicksContent() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Admin Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-4">
-              <Link href="/admin/dashboard" className="text-gray-600 hover:text-black">
-                ← Voltar
-              </Link>
-              <span className="text-gray-400">|</span>
-              <h1 className="text-xl font-bold text-black">Estatísticas de Cliques</h1>
-            </div>
-            <div className="flex items-center gap-2">
-              <select
-                value={period}
-                onChange={(e) => setPeriod(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black"
-              >
-                <option value="7d">Últimos 7 dias</option>
-                <option value="30d">Últimos 30 dias</option>
-                <option value="90d">Últimos 90 dias</option>
-                <option value="all">Todo o período</option>
-              </select>
-              <Button onClick={handleExport} variant="outline" size="sm">
-                Exportar CSV
-              </Button>
-            </div>
-          </div>
+      <AdminHeader
+        title="Estatísticas de Cliques"
+        showRefresh={true}
+        onRefresh={loadStats}
+      />
+
+      {/* Page-specific toolbar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="flex items-center gap-2">
+          <select
+            value={period}
+            onChange={(e) => setPeriod(e.target.value)}
+            className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-black"
+          >
+            <option value="7d">Últimos 7 dias</option>
+            <option value="30d">Últimos 30 dias</option>
+            <option value="90d">Últimos 90 dias</option>
+            <option value="all">Todo o período</option>
+          </select>
+          <Button onClick={handleExport} variant="outline" size="sm">
+            Exportar CSV
+          </Button>
         </div>
-      </header>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {loading ? (

@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { Country } from '@/types';
+import { AdminHeader } from '@/components/admin/AdminHeader';
 
 function CountriesContent() {
   const [countries, setCountries] = useState<Country[]>([]);
@@ -59,23 +60,18 @@ function CountriesContent() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Admin Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-4">
-              <Link href="/admin/dashboard" className="text-gray-600 hover:text-black">
-                ← Voltar
-              </Link>
-              <span className="text-gray-400">|</span>
-              <h1 className="text-xl font-bold text-black">Gestão de Países</h1>
-            </div>
-            <div className="text-sm text-gray-600">
-              {countries.filter(c => c.available).length} de {countries.length} disponíveis
-            </div>
-          </div>
+      <AdminHeader
+        title="Gestão de Países"
+        showRefresh={true}
+        onRefresh={loadCountries}
+      />
+
+      {/* Page-specific toolbar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div className="text-sm text-gray-600">
+          {countries.filter(c => c.available).length} de {countries.length} disponíveis
         </div>
-      </header>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Card>

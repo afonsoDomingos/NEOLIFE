@@ -7,6 +7,7 @@ import { Input, Textarea } from '@/components/ui/Input';
 import { ImageUpload } from '@/components/ui/ImageUpload';
 import Link from 'next/link';
 import { healthSolutionPacks, cellular4Supplements } from '@/data/health-solutions';
+import { AdminHeader } from '@/components/admin/AdminHeader';
 
 interface HealthProduct {
   id: string;
@@ -365,23 +366,18 @@ function HealthProductsContent() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Admin Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-4">
-              <Link href="/admin/dashboard" className="text-gray-600 hover:text-black">
-                ← Voltar
-              </Link>
-              <span className="text-gray-400">|</span>
-              <h1 className="text-xl font-bold text-black">Gestão de Produtos de Saúde</h1>
-            </div>
-            <Button onClick={() => setShowAddForm(true)}>
-              + Adicionar Produto
-            </Button>
-          </div>
-        </div>
-      </header>
+      <AdminHeader
+        title="Gestão de Produtos de Saúde"
+        showRefresh={true}
+        onRefresh={loadProducts}
+      />
+
+      {/* Page-specific toolbar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <Button onClick={() => setShowAddForm(true)}>
+          + Adicionar Produto
+        </Button>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Add/Edit Form */}

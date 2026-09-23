@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { Input, Textarea } from '@/components/ui/Input';
 import Link from 'next/link';
 import { extractYouTubeId, getEmbedUrl } from '@/lib/utils/video';
+import { AdminHeader } from '@/components/admin/AdminHeader';
 
 interface VideoItem {
   _id?: string;
@@ -162,44 +163,37 @@ function VideosContent() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Admin Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-4">
-              <Link href="/admin/dashboard" className="text-gray-600 hover:text-black font-medium text-sm">
-                ← Voltar
-              </Link>
-              <span className="text-gray-300">|</span>
-              <h1 className="text-xl font-bold text-black">
-                Gestão de Vídeos
-              </h1>
-            </div>
-            <Button
-              onClick={() => {
-                if (showAddForm && !editingVideo) {
-                  setShowAddForm(false);
-                } else {
-                  setEditingVideo(null);
-                  setFormData({
-                    title: '',
-                    description: '',
-                    videoUrl: '',
-                    thumbnailUrl: '',
-                    category: 'Apresentação',
-                    featured: false,
-                    active: true,
-                    order: videos.length + 1,
-                  });
-                  setShowAddForm(true);
-                }
-              }}
-            >
-              {showAddForm && !editingVideo ? 'Fechar Formulário' : '+ Novo Vídeo'}
-            </Button>
-          </div>
-        </div>
-      </header>
+      <AdminHeader
+        title="Gestão de Vídeos"
+        showRefresh={true}
+        onRefresh={loadVideos}
+      />
+
+      {/* Page-specific toolbar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <Button
+          onClick={() => {
+            if (showAddForm && !editingVideo) {
+              setShowAddForm(false);
+            } else {
+              setEditingVideo(null);
+              setFormData({
+                title: '',
+                description: '',
+                videoUrl: '',
+                thumbnailUrl: '',
+                category: 'Apresentação',
+                featured: false,
+                active: true,
+                order: videos.length + 1,
+              });
+              setShowAddForm(true);
+            }
+          }}
+        >
+          {showAddForm && !editingVideo ? 'Fechar Formulário' : '+ Novo Vídeo'}
+        </Button>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         {/* Feedback Message */}

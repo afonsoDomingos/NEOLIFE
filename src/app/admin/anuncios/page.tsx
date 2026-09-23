@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input, Textarea } from '@/components/ui/Input';
 import Link from 'next/link';
+import { AdminHeader } from '@/components/admin/AdminHeader';
 
 interface AnnouncementItem {
   _id: string;
@@ -142,28 +143,21 @@ export default function AdminAnunciosPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-4">
-              <Link href="/admin/dashboard" className="text-gray-600 hover:text-black text-sm flex items-center gap-1">
-                ← Voltar ao Painel
-              </Link>
-              <span className="text-gray-300">|</span>
-              <h1 className="text-xl font-bold text-black flex items-center gap-2">
-                Anúncios & Avisos aos Membros
-              </h1>
-            </div>
-            <Button
-              onClick={() => setShowAddForm(!showAddForm)}
-              className="bg-emerald-600 hover:bg-emerald-700 text-white"
-            >
-              {showAddForm ? 'Cancelar' : '+ Novo Anúncio'}
-            </Button>
-          </div>
-        </div>
-      </header>
+      <AdminHeader
+        title="Anúncios & Avisos aos Membros"
+        showRefresh={true}
+        onRefresh={loadAnnouncements}
+      />
+
+      {/* Page-specific toolbar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <Button
+          onClick={() => setShowAddForm(!showAddForm)}
+          className="bg-emerald-600 hover:bg-emerald-700 text-white"
+        >
+          {showAddForm ? 'Cancelar' : '+ Novo Anúncio'}
+        </Button>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         {/* Info banner */}
@@ -302,19 +296,9 @@ export default function AdminAnunciosPage() {
 
         {/* Announcements List */}
         <div className="space-y-4">
-          <div className="flex justify-between items-center">
-            <h2 className="text-base font-bold text-gray-900">
-              Todos os Anúncios ({announcements.length})
-            </h2>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={loadAnnouncements}
-              className="text-xs text-gray-600"
-            >
-              Atualizar
-            </Button>
-          </div>
+          <h2 className="text-base font-bold text-gray-900">
+            Todos os Anúncios ({announcements.length})
+          </h2>
 
           {loading ? (
             <div className="space-y-3">

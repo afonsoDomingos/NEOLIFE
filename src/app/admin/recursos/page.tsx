@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input, Textarea } from '@/components/ui/Input';
 import Link from 'next/link';
+import { AdminHeader } from '@/components/admin/AdminHeader';
 
 interface ResourceItem {
   _id: string;
@@ -150,28 +151,21 @@ export default function AdminRecursosPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-4">
-              <Link href="/admin/dashboard" className="text-gray-600 hover:text-black text-sm flex items-center gap-1">
-                ← Voltar ao Painel
-              </Link>
-              <span className="text-gray-300">|</span>
-              <h1 className="text-xl font-bold text-black flex items-center gap-2">
-                Biblioteca de Recursos & Materiais
-              </h1>
-            </div>
-            <Button
-              onClick={() => setShowAddForm(!showAddForm)}
-              className="bg-indigo-600 hover:bg-indigo-700 text-white"
-            >
-              {showAddForm ? 'Cancelar' : '+ Novo Recurso'}
-            </Button>
-          </div>
-        </div>
-      </header>
+      <AdminHeader
+        title="Biblioteca de Recursos & Materiais"
+        showRefresh={true}
+        onRefresh={loadResources}
+      />
+
+      {/* Page-specific toolbar */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <Button
+          onClick={() => setShowAddForm(!showAddForm)}
+          className="bg-indigo-600 hover:bg-indigo-700 text-white"
+        >
+          {showAddForm ? 'Cancelar' : '+ Novo Recurso'}
+        </Button>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
         {/* Info card */}
@@ -295,31 +289,20 @@ export default function AdminRecursosPage() {
 
         {/* Resources Filter & List */}
         <div className="space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
-              {['all', 'pdf', 'video', 'link', 'guide'].map(t => (
-                <button
-                  key={t}
-                  onClick={() => setFilterType(t)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize whitespace-nowrap transition-colors ${
-                    filterType === t
-                      ? 'bg-indigo-600 text-white shadow-sm'
-                      : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-100'
-                  }`}
-                >
-                  {t === 'all' ? `Todos (${resources.length})` : `${typeConfig[t as keyof typeof typeConfig]?.label || t}`}
-                </button>
-              ))}
-            </div>
-
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={loadResources}
-              className="text-xs text-gray-600 self-end sm:self-auto"
-            >
-              Atualizar
-            </Button>
+          <div className="flex items-center gap-2 overflow-x-auto pb-1">
+            {['all', 'pdf', 'video', 'link', 'guide'].map(t => (
+              <button
+                key={t}
+                onClick={() => setFilterType(t)}
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold capitalize whitespace-nowrap transition-colors ${
+                  filterType === t
+                    ? 'bg-indigo-600 text-white shadow-sm'
+                    : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-100'
+                }`}
+              >
+                {t === 'all' ? `Todos (${resources.length})` : `${typeConfig[t as keyof typeof typeConfig]?.label || t}`}
+              </button>
+            ))}
           </div>
 
           {loading ? (

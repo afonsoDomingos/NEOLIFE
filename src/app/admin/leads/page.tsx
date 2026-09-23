@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { LeadStatus } from '@/types';
 import { getCountryById } from '@/data/countries';
 import { AdminAIAssistant } from '@/components/admin/AdminAIAssistant';
+import { AdminHeader } from '@/components/admin/AdminHeader';
 
 interface MongoLead {
   _id: string;
@@ -296,37 +297,34 @@ export default function AdminLeadsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Admin Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-4">
-              <Link href="/admin/dashboard" className="text-gray-600 hover:text-black font-medium text-sm">
-                ← Voltar ao Painel
-              </Link>
-              <span className="text-gray-300">|</span>
-              <h1 className="text-xl font-bold text-gray-900">Gestão de Leads & Contactos</h1>
-            </div>
-            <div className="flex items-center gap-3">
-              <span className="text-xs sm:text-sm text-gray-600 font-medium">
-                {filteredLeads.length} de {leads.length} leads
-              </span>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={exportToCSV}
-                className="flex items-center gap-1.5 border-emerald-600 text-emerald-800 hover:bg-emerald-50 font-semibold text-xs"
-                title="Descarregar lista de leads em formato CSV (Excel)"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                </svg>
-                Exportar CSV
-              </Button>
-            </div>
+      <AdminHeader 
+        title="Gestão de Leads & Contactos"
+        showRefresh={true}
+        onRefresh={loadLeads}
+      />
+
+      {/* Page-specific actions toolbar */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <div className="flex justify-between items-center">
+            <span className="text-xs sm:text-sm text-gray-600 font-medium">
+              {filteredLeads.length} de {leads.length} leads
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={exportToCSV}
+              className="flex items-center gap-1.5 border-emerald-600 text-emerald-800 hover:bg-emerald-50 font-semibold text-xs"
+              title="Descarregar lista de leads em formato CSV (Excel)"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+              Exportar CSV
+            </Button>
           </div>
         </div>
-      </header>
+      </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Filters */}
