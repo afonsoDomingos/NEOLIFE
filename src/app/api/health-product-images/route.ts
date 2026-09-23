@@ -13,26 +13,24 @@ async function getDatabase(): Promise<Db> {
   return db;
 }
 
-// GET - Fetch all product images
+// GET - Fetch all product data
 export async function GET() {
   try {
     const database = await getDatabase();
-    const collection = database.collection('health_product_images');
-    const images = await collection.find({}).toArray();
+    const collection = database.collection('health_products');
+    const products = await collection.find({}).toArray();
     
     // Transform to a map for easy lookup
-    const imageMap: Record<string, string> = {};
-    images.forEach((img: any) => {
-      if (img.image) {
-        imageMap[img.id] = img.image;
-      }
+    const productMap: Record<string, any> = {};
+    products.forEach((prod: any) => {
+      productMap[prod.id] = prod;
     });
     
-    return NextResponse.json(imageMap);
+    return NextResponse.json(productMap);
   } catch (error) {
-    console.error('Error fetching health product images:', error);
+    console.error('Error fetching health products:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch product images' },
+      { error: 'Failed to fetch products' },
       { status: 500 }
     );
   }

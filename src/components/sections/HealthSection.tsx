@@ -25,7 +25,7 @@ export const HealthSection: React.FC = () => {
   const [expandedPacks, setExpandedPacks] = useState<Set<string>>(new Set());
   const [productLinks, setProductLinks] = useState<Record<string, { available: boolean; purchaseUrl: string | null; customMessage?: string }>>({});
   const [loadingLinks, setLoadingLinks] = useState<Set<string>>(new Set());
-  const [productImages, setProductImages] = useState<Record<string, string>>({});
+  const [dynamicProducts, setDynamicProducts] = useState<Record<string, any>>({});
 
   const categories = [
     { id: 'all', labelPt: 'Todos os Pacotes', labelEn: 'All Packs' },
@@ -44,21 +44,64 @@ export const HealthSection: React.FC = () => {
       ? healthSolutionPacks
       : healthSolutionPacks.filter((p) => p.category === selectedCategory);
 
-  // Load product images from database
+  // Load dynamic product data from database
   useEffect(() => {
-    const loadProductImages = async () => {
+    const loadDynamicProducts = async () => {
       try {
         const response = await fetch('/api/health-product-images');
         if (response.ok) {
           const data = await response.json();
-          setProductImages(data);
+          setDynamicProducts(data);
         }
       } catch (error) {
-        console.error('Error loading product images:', error);
+        console.error('Error loading dynamic products:', error);
       }
     };
-    loadProductImages();
+    loadDynamicProducts();
   }, []);
+
+  // Helper function to merge dynamic data with static data
+  const getMergedPack = (pack: any) => {
+    const dynamicData = dynamicProducts[pack.id];
+    if (!dynamicData) return pack;
+    
+    return {
+      ...pack,
+      image: dynamicData.image || pack.image,
+      titlePt: dynamicData.titlePt || pack.titlePt,
+      titleEn: dynamicData.titleEn || pack.titleEn,
+      badgePt: dynamicData.badgePt || pack.badgePt,
+      badgeEn: dynamicData.badgeEn || pack.badgeEn,
+      tagPt: dynamicData.tagPt || pack.tagPt,
+      tagEn: dynamicData.tagEn || pack.tagEn,
+      descPt: dynamicData.descPt || pack.descPt,
+      descEn: dynamicData.descEn || pack.descEn,
+      productsPt: dynamicData.productsPt || pack.productsPt,
+      productsEn: dynamicData.productsEn || pack.productsEn,
+      benefitsPt: dynamicData.benefitsPt || pack.benefitsPt,
+      benefitsEn: dynamicData.benefitsEn || pack.benefitsEn,
+      notePt: dynamicData.notePt || pack.notePt,
+      noteEn: dynamicData.noteEn || pack.noteEn,
+      featured: dynamicData.featured !== undefined ? dynamicData.featured : pack.featured,
+    };
+  };
+
+  const getMergedSupplement = (supp: any, index: number) => {
+    const supplementId = `supplement-${index}`;
+    const dynamicData = dynamicProducts[supplementId];
+    if (!dynamicData) return supp;
+    
+    return {
+      ...supp,
+      image: dynamicData.image || supp.image,
+      name: dynamicData.name || supp.name,
+      subtitlePt: dynamicData.subtitlePt || supp.subtitlePt,
+      subtitleEn: dynamicData.subtitleEn || supp.subtitleEn,
+      descPt: dynamicData.descPt || supp.descPt,
+      descEn: dynamicData.descEn || supp.descEn,
+      tag: dynamicData.tag || supp.tag,
+    };
+  };
 
   const handleSaveCustomNeed = (e: React.FormEvent) => {
     e.preventDefault();
@@ -128,8 +171,7 @@ export const HealthSection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             {cellular4Supplements.map((supp, index) => {
               const isExpanded = expandedSupplements.has(index);
-              const supplementId = `supplement-${index}`;
-              const dynamicImage = productImages[supplementId] || supp.image;
+              const mergedSupp = getMergedSupplement(supp, index);
               return (
                 <div
                   key={index}
@@ -154,11 +196,11 @@ export const HealthSection: React.FC = () => {
                           0{index + 1}
                         </span>
                         <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
-                          {supp.tag}
+                          {mergedSupp.tag}
                         </span>
                       </div>
                       <h4 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-emerald-700 transition-colors">
-                        {supp.name}
+                        {mergedSupp.name}
                       </h4>
                     </div>
                     <svg
@@ -177,20 +219,20 @@ export const HealthSection: React.FC = () => {
                       isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
                     }`}
                   >
-                    {dynamicImage && (
+                    {mergedSupp.image && (
                       <div className="mb-3">
                         <img
-                          src={dynamicImage}
-                          alt={supp.name}
+                          src={mergedSupp.image}
+                          alt={mergedSupp.name}
                           className="w-full h-32 object-cover rounded-lg border border-emerald-100"
                         />
                       </div>
                     )}
                     <p className="text-xs font-semibold text-emerald-700 mb-2">
-                      {isPt ? supp.subtitlePt : supp.subtitleEn}
+                      {isPt ? mergedSupp.subtitlePt : mergedSupp.subtitleEn}
                     </p>
                     <p className="text-xs text-gray-600 leading-relaxed">
-                      {isPt ? supp.descPt : supp.descEn}
+                      {isPt ? mergedSupp.descPt : mergedSupp.descEn}
                     </p>
                   </div>
                 </div>
@@ -299,7 +341,7 @@ export const HealthSection: React.FC = () => {
               const isExpanded = expandedPacks.has(pack.id);
               const linkData = productLinks[pack.id];
               const isLoading = loadingLinks.has(pack.id);
-              const dynamicImage = productImages[pack.id] || pack.image;
+              const mergedPack = getMergedPack(pack);
 
               // Carregar link se ainda não foi carregado
               if (!linkData && !isLoading) {
@@ -327,14 +369,14 @@ export const HealthSection: React.FC = () => {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2">
                         <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
-                          {isPt ? pack.badgePt : pack.badgeEn}
+                          {isPt ? mergedPack.badgePt : mergedPack.badgeEn}
                         </span>
                         <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
-                          {isPt ? pack.tagPt : pack.tagEn}
+                          {isPt ? mergedPack.tagPt : mergedPack.tagEn}
                         </span>
                       </div>
                       <h4 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-emerald-700 transition-colors">
-                        {isPt ? pack.titlePt : pack.titleEn}
+                        {isPt ? mergedPack.titlePt : mergedPack.titleEn}
                       </h4>
                     </div>
                     <svg
@@ -353,17 +395,17 @@ export const HealthSection: React.FC = () => {
                       isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
                     }`}
                   >
-                    {dynamicImage && (
+                    {mergedPack.image && (
                       <div className="mb-4">
                         <img
-                          src={dynamicImage}
-                          alt={isPt ? pack.titlePt : pack.titleEn}
+                          src={mergedPack.image}
+                          alt={isPt ? mergedPack.titlePt : mergedPack.titleEn}
                           className="w-full h-40 object-cover rounded-lg border border-gray-200"
                         />
                       </div>
                     )}
                     <p className="text-xs text-gray-600 leading-relaxed mb-4">
-                      {isPt ? pack.descPt : pack.descEn}
+                      {isPt ? mergedPack.descPt : mergedPack.descEn}
                     </p>
 
                     {/* Included Products List */}
@@ -372,7 +414,7 @@ export const HealthSection: React.FC = () => {
                         {isPt ? 'O Pack Inclui:' : 'Pack Includes:'}
                       </p>
                       <ul className="space-y-1">
-                        {(isPt ? pack.productsPt : pack.productsEn).map((prod, i) => (
+                        {(isPt ? mergedPack.productsPt : mergedPack.productsEn).map((prod: string, i: number) => (
                           <li key={i} className="flex items-start gap-2 text-xs text-gray-800">
                             <span className="text-emerald-600 font-bold shrink-0">•</span>
                             <span>{prod}</span>
@@ -387,7 +429,7 @@ export const HealthSection: React.FC = () => {
                         {isPt ? 'Benefícios Principais:' : 'Key Benefits:'}
                       </p>
                       <ul className="space-y-1">
-                        {(isPt ? pack.benefitsPt : pack.benefitsEn).slice(0, 3).map((ben, i) => (
+                        {(isPt ? mergedPack.benefitsPt : mergedPack.benefitsEn).slice(0, 3).map((ben: string, i: number) => (
                           <li key={i} className="text-xs text-gray-600 flex items-center gap-1.5">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                             <span>{ben}</span>
