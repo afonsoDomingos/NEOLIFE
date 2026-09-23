@@ -52,7 +52,7 @@ export default function AdminLoginPage() {
       <div className="max-w-md w-full">
         <div className="text-center mb-8 flex flex-col items-center">
           <img
-            src="/neolifelogo.png"
+            src="/neolifelogopreto.png"
             alt="NeoLife"
             className="h-16 w-auto object-contain rounded-lg shadow-sm mb-3"
           />
