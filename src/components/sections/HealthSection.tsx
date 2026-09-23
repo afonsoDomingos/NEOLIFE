@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { useSelection } from '@/lib/context/SelectionContext';
@@ -25,6 +25,7 @@ export const HealthSection: React.FC = () => {
   const [expandedPacks, setExpandedPacks] = useState<Set<string>>(new Set());
   const [productLinks, setProductLinks] = useState<Record<string, { available: boolean; purchaseUrl: string | null; customMessage?: string }>>({});
   const [loadingLinks, setLoadingLinks] = useState<Set<string>>(new Set());
+  const [productImages, setProductImages] = useState<Record<string, string>>({});
 
   const categories = [
     { id: 'all', labelPt: 'Todos os Pacotes', labelEn: 'All Packs' },
@@ -42,6 +43,22 @@ export const HealthSection: React.FC = () => {
     selectedCategory === 'all'
       ? healthSolutionPacks
       : healthSolutionPacks.filter((p) => p.category === selectedCategory);
+
+  // Load product images from database
+  useEffect(() => {
+    const loadProductImages = async () => {
+      try {
+        const response = await fetch('/api/health-product-images');
+        if (response.ok) {
+          const data = await response.json();
+          setProductImages(data);
+        }
+      } catch (error) {
+        console.error('Error loading product images:', error);
+      }
+    };
+    loadProductImages();
+  }, []);
 
   const handleSaveCustomNeed = (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,6 +128,8 @@ export const HealthSection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
             {cellular4Supplements.map((supp, index) => {
               const isExpanded = expandedSupplements.has(index);
+              const supplementId = `supplement-${index}`;
+              const dynamicImage = productImages[supplementId] || supp.image;
               return (
                 <div
                   key={index}
@@ -158,6 +177,15 @@ export const HealthSection: React.FC = () => {
                       isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
                     }`}
                   >
+                    {dynamicImage && (
+                      <div className="mb-3">
+                        <img
+                          src={dynamicImage}
+                          alt={supp.name}
+                          className="w-full h-32 object-cover rounded-lg border border-emerald-100"
+                        />
+                      </div>
+                    )}
                     <p className="text-xs font-semibold text-emerald-700 mb-2">
                       {isPt ? supp.subtitlePt : supp.subtitleEn}
                     </p>
@@ -271,6 +299,7 @@ export const HealthSection: React.FC = () => {
               const isExpanded = expandedPacks.has(pack.id);
               const linkData = productLinks[pack.id];
               const isLoading = loadingLinks.has(pack.id);
+              const dynamicImage = productImages[pack.id] || pack.image;
 
               // Carregar link se ainda não foi carregado
               if (!linkData && !isLoading) {
@@ -324,6 +353,15 @@ export const HealthSection: React.FC = () => {
                       isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
                     }`}
                   >
+                    {dynamicImage && (
+                      <div className="mb-4">
+                        <img
+                          src={dynamicImage}
+                          alt={isPt ? pack.titlePt : pack.titleEn}
+                          className="w-full h-40 object-cover rounded-lg border border-gray-200"
+                        />
+                      </div>
+                    )}
                     <p className="text-xs text-gray-600 leading-relaxed mb-4">
                       {isPt ? pack.descPt : pack.descEn}
                     </p>

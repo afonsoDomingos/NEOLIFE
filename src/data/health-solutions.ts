@@ -2,6 +2,7 @@ export interface HealthProduct {
   name: string;
   role: string;
   desc: string;
+  image?: string;
 }
 
 export interface HealthSolutionPack {
@@ -24,6 +25,7 @@ export interface HealthSolutionPack {
   notePt?: string;
   noteEn?: string;
   featured?: boolean;
+  image?: string;
 }
 
 export const sciencePillars = [
@@ -77,6 +79,7 @@ export const cellular4Supplements = [
     descPt: 'O primeiro suplemento celular do mundo de lípidos e esteróis vegetais, permitindo que a membrana da célula se mantenha flexível para absorver nutrientes e eliminar resíduos.',
     descEn: 'The world’s first cellular lipid and sterol supplement, keeping cell membranes flexible to absorb nutrients and eliminate cellular waste.',
     tag: 'Base Celular',
+    image: '',
   },
   {
     name: 'Carotenoid Complex®',
@@ -85,6 +88,7 @@ export const cellular4Supplements = [
     descPt: 'Fornece o perfil completo de carotenoides de alimentos integrais. Clinicamente comprovado pelo USDA por aumentar a resposta imunitária global em 37% em apenas 20 dias.',
     descEn: 'Delivers the complete carotenoid spectrum from whole foods. Clinically proven by USDA researchers to boost overall immune capacity by 37% in 20 days.',
     tag: 'Defesa & Imunidade',
+    image: '',
   },
   {
     name: 'Omega-3 Salmon Oil Plus™',
@@ -93,6 +97,7 @@ export const cellular4Supplements = [
     descPt: 'Óleo puro de salmão com todos os 8 membros da família ómega-3 humana (EPA, DHA, DPA, etc.). Testado para mais de 200 contaminantes com tolerância zero.',
     descEn: 'Pure salmon oil with all 8 members of the human omega-3 family. Tested for over 200 potential contaminants with zero tolerance.',
     tag: 'Coração & Cérebro',
+    image: '',
   },
   {
     name: 'Essential Vitamin & Mineral Complex',
@@ -101,6 +106,7 @@ export const cellular4Supplements = [
     descPt: 'Combinação equilibrada de micronutrientes essenciais para complementar as lacunas da alimentação moderna e garantir o suporte metabólico diário.',
     descEn: 'Balanced blend of vital micronutrients to bridge dietary gaps and sustain optimal daily metabolic performance.',
     tag: 'Metabolismo Diário',
+    image: '',
   },
 ];
 
@@ -140,6 +146,7 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
     notePt: 'Uma escolha simples para quem não tem tempo a perder pela manhã mas recusa abdicar de uma saúde de excelência.',
     noteEn: 'The perfect solution for busy mornings without compromising complete cellular nourishment.',
     featured: true,
+    image: '',
   },
   {
     id: 'pack-perda-peso',
@@ -176,6 +183,7 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
     notePt: 'Ideal para quem deseja cuidar da alimentação, controlar porções e manter uma rotina saudável e consistente.',
     noteEn: 'Ideal for those seeking disciplined portion control and steady healthy weight goals.',
     featured: true,
+    image: '',
   },
   {
     id: 'programa-detox',
@@ -218,6 +226,7 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
       'Clear step-by-step instructions with daily organizers',
     ],
     featured: true,
+    image: '',
   },
   {
     id: 'omega-3-salmon',
@@ -249,6 +258,7 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
       'Flexible joints and balanced inflammatory response',
       'Tested for 200+ contaminants with zero tolerance for heavy metals',
     ],
+    image: '',
   },
   {
     id: 'pensa-rapido',
@@ -282,6 +292,7 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
       'Sustained mental alertness without sudden crashes',
       'Antioxidant shield for brain cells against oxidative stress',
     ],
+    image: '',
   },
   {
     id: 'feito-para-o-homem',
@@ -315,6 +326,7 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
       'Chelated zinc aids normal testosterone and reproductive function',
       'Daily digestive harmony with premium whole-leaf Aloe Vera',
     ],
+    image: '',
   },
   {
     id: 'feito-para-mulheres',
@@ -346,6 +358,7 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
       'Time-tested botanicals for hormonal and emotional rhythm',
       'Supports muscle relaxation and healthy stress response',
     ],
+    image: '',
   },
   {
     id: 'nutricao-pre-natal',
@@ -381,6 +394,7 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
       'Omega-3 DHA/EPA essential for infant brain and eye development',
       'Calcium and Vitamin D for maternal bone resilience and fetal skeletal growth',
     ],
+    image: '',
   },
   {
     id: 'aumente-sua-energia',
@@ -418,6 +432,7 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
       'B-Complex converts food carbohydrates and fats into usable fuel',
       'Clean alertness and antioxidant defense from NeolifeTea',
     ],
+    image: '',
   },
   {
     id: 'melhore-flexibilidade',
@@ -451,6 +466,7 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
       'Calcium and magnesium maintain strong skeletal foundation',
       'Omega-3 fatty acids soothe joint stiffness and physical discomfort',
     ],
+    image: '',
   },
   {
     id: 'apoio-digestao',
@@ -484,6 +500,7 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
       'Stage 6: gentle, occasional natural bowel relief',
       'Aloe Vera Plus: soothing nourishment for sensitive stomachs',
     ],
+    image: '',
   },
   {
     id: 'imunidade-phytodefence',
@@ -518,6 +535,7 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
       'Synergistic fusion of multiple phytonutrient plant families',
     ],
     featured: true,
+    image: '',
   },
   {
     id: 'nutricao-infantil',
@@ -557,5 +575,6 @@ export const healthSolutionPacks: HealthSolutionPack[] = [
       'Delicious chewables and liquids free from artificial colorants',
       'Consistent natural immune support throughout the school year',
     ],
+    image: '',
   },
 ];
