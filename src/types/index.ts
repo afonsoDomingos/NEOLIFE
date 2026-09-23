@@ -5,7 +5,8 @@ export interface Country {
   available: boolean;
   flag?: string;
   dialCode?: string; // International phone prefix e.g. "+258"
-  region?: string;   // Continent / region group e.g. "África", "Europa", "Américas"
+  region?: string;   // Continent / region group e.g. "África", "Europa", "América"
+  language?: string; // Language variant e.g. "en", "pt", "fr", "es"
 }
 
 export interface Theme {

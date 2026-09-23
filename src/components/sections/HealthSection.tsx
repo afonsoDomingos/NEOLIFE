@@ -328,7 +328,7 @@ export const HealthSection: React.FC = () => {
                       {isPt ? 'Ver Packs com NeolifeShake ↓' : 'See Packs with NeolifeShake ↓'}
                     </Button>
                   </a>
-                  <Link href="/formulario?tema=produtos&pais=mz" className="w-full">
+                  <Link href="/formulario?tema=produtos&pais=mz-pt" className="w-full">
                     <Button variant="outline" size="sm" className="w-full border-emerald-300 text-emerald-800 hover:bg-emerald-50 font-semibold whitespace-nowrap">
                       {isPt ? 'Pedir Informações' : 'Request Info'}
                     </Button>

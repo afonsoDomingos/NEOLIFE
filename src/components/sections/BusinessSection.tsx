@@ -154,7 +154,7 @@ export const BusinessSection: React.FC = () => {
       text: t.business.blocks.start.text,
       videoTitle: t.business.blocks.start.videoTitle,
       cta: t.business.blocks.start.cta,
-      link: '/formulario?tema=oportunidade-negocio&pais=mz',
+      link: '/formulario?tema=oportunidade-negocio&pais=mz-pt',
       badge: 'Ação Imediata',
     },
   ];
@@ -342,7 +342,7 @@ export const BusinessSection: React.FC = () => {
               Ofélia e José Machado respondem pessoalmente sem qualquer pressão ou compromisso.
             </p>
           </div>
-          <Link href="/formulario?tema=oportunidade-negocio&pais=mz" className="shrink-0">
+          <Link href="/formulario?tema=oportunidade-negocio&pais=mz-pt" className="shrink-0">
             <Button size="lg" className="bg-white text-emerald-900 hover:bg-emerald-50 font-bold px-8 shadow-md">
               Marcar Conversa Gratuita
             </Button>

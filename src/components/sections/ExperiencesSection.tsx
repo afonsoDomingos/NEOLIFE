@@ -167,7 +167,7 @@ export const ExperiencesSection: React.FC = () => {
             Acompanhe de perto as novidades, convenções e viagens que partilhamos com os nossos parceiros.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/formulario?tema=mundo-experiencias&pais=mz">
+            <Link href="/formulario?tema=mundo-experiencias&pais=mz-pt">
               <Button className="bg-teal-700 hover:bg-teal-800 text-white font-semibold">
                 Quero Receber Atualizações
               </Button>

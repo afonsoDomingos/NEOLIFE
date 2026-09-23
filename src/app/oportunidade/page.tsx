@@ -61,7 +61,7 @@ export default function OportunidadePage() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/formulario?tema=oportunidade-negocio&pais=mz">
+            <Link href="/formulario?tema=oportunidade-negocio&pais=mz-pt">
               <Button size="lg" className="bg-white text-emerald-800 hover:bg-emerald-50 font-bold px-8">
                 Quero Saber Mais
               </Button>

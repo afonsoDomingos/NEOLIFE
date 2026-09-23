@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { DynamicBanner } from '@/components/ui/DynamicBanner';
+import { TypewriterText } from '@/components/ui/TypewriterText';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function Home() {
@@ -29,7 +30,7 @@ export default function Home() {
             </div>
             
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight">
-              {t.hero.title}
+              <TypewriterText text={t.hero.title} speed={50} />
             </h1>
             
             <p className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
@@ -175,7 +176,7 @@ export default function Home() {
                 {t.cta.startNow}
               </Button>
             </a>
-            <Link href="/formulario?tema=conheca-neolife&pais=mz">
+            <Link href="/formulario?tema=conheca-neolife&pais=mz-pt">
               <Button size="lg" variant="outline" className="border-emerald-400 text-emerald-800 hover:bg-emerald-50 font-bold px-8">
                 Preencher Formulário
               </Button>

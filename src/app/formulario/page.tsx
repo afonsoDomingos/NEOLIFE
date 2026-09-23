@@ -14,7 +14,7 @@ import { Country } from '@/types';
 function FormularioContent() {
   const searchParams = useSearchParams();
   const themeSlug = searchParams.get('tema');
-  const countryId = searchParams.get('pais') || 'mz';
+  const countryId = searchParams.get('pais') || 'mz-pt';
   const campaign = searchParams.get('campanha');
   const initialNotes = searchParams.get('notas') || searchParams.get('notes') || '';
 
@@ -48,9 +48,9 @@ function FormularioContent() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
   // Fallback country and theme so the form NEVER kicks the user out
-  const country: Country = getCountryById(selectedCountryId) || getCountryById('mz') || {
-    id: 'mz',
-    name: 'Moçambique',
+  const country: Country = getCountryById(selectedCountryId) || getCountryById('mz-pt') || {
+    id: 'mz-pt',
+    name: 'Moçambique (Português)',
     code: 'MZ',
     flag: '🇲🇿',
     dialCode: '+258',
