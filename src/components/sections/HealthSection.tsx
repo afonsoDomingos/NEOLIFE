@@ -132,6 +132,36 @@ export const HealthSection: React.FC = () => {
     }
   };
 
+  const trackProductClick = async (productId: string, productType: 'pack' | 'supplement', productName: string) => {
+    try {
+      // Get campaign data from URL
+      const searchParams = new URLSearchParams(window.location.search);
+      const campaign = searchParams.get('campanha') || searchParams.get('campaign') || undefined;
+      const source = searchParams.get('source') || searchParams.get('utm_source') || undefined;
+      
+      // Get country from selection context if available
+      const country = typeof window !== 'undefined' ? localStorage.getItem('selectedCountry') : undefined;
+
+      await fetch('/api/product-clicks', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          productId,
+          productType,
+          productName,
+          country,
+          source,
+          campaign,
+        }),
+      });
+    } catch (error) {
+      console.error('Error tracking product click:', error);
+      // Don't block the user action if tracking fails
+    }
+  };
+
   return (
     <section id="saude" className="py-20 md:py-28 bg-white border-t border-emerald-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -287,7 +317,13 @@ export const HealthSection: React.FC = () => {
                 </div>
 
                 <div className="shrink-0 flex flex-col sm:flex-row lg:flex-col gap-3 w-full lg:w-auto">
-                  <a href="#catalogo-pacotes" className="w-full">
+                  <a 
+                    href="#catalogo-pacotes" 
+                    className="w-full"
+                    onClick={(e) => {
+                      trackProductClick('neolife-shake-cta', 'pack', 'NeolifeShake CTA');
+                    }}
+                  >
                     <Button size="sm" className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold whitespace-nowrap">
                       {isPt ? 'Ver Packs com NeolifeShake ↓' : 'See Packs with NeolifeShake ↓'}
                     </Button>
@@ -462,6 +498,7 @@ export const HealthSection: React.FC = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="block w-full"
+                          onClick={() => trackProductClick(pack.id, 'pack', mergedPack.titlePt)}
                         >
                           <button
                             type="button"
