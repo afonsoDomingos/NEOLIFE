@@ -2,43 +2,59 @@ import { Country } from '@/types';
 
 export const countries: Country[] = [
 
+  // ── AMÉRICA ───────────────────────────────────────────────────────────────
+  {
+    id: 'us-en',
+    name: 'United States (English)',
+    code: 'US',
+    available: false,
+    flag: '🇺🇸',
+    dialCode: '+1',
+    region: 'América',
+    language: 'en',
+  },
+  {
+    id: 'us-es',
+    name: 'United States (Español)',
+    code: 'US',
+    available: false,
+    flag: '��',
+    dialCode: '+1',
+    region: 'América',
+    language: 'es',
+  },
+  {
+    id: 'ca-en',
+    name: 'Canada (English)',
+    code: 'CA',
+    available: false,
+    flag: '�🇦',
+    dialCode: '+1',
+    region: 'América',
+    language: 'en',
+  },
+  {
+    id: 'ca-fr',
+    name: 'Canada (Français)',
+    code: 'CA',
+    available: false,
+    flag: '🇨🇦',
+    dialCode: '+1',
+    region: 'América',
+    language: 'fr',
+  },
+  {
+    id: 'la',
+    name: 'Latino Americano',
+    code: 'LA',
+    available: false,
+    flag: '�',
+    dialCode: undefined,
+    region: 'América',
+    language: 'es',
+  },
+
   // ── ÁFRICA — Southern Africa ──────────────────────────────────────────────
-  {
-    id: 'mz',
-    name: 'Moçambique',
-    code: 'MZ',
-    available: true,
-    flag: '🇲🇿',
-    dialCode: '+258',
-    region: 'África',
-  },
-  {
-    id: 'za',
-    name: 'África do Sul',
-    code: 'ZA',
-    available: true,
-    flag: '🇿🇦',
-    dialCode: '+27',
-    region: 'África',
-  },
-  {
-    id: 'ao',
-    name: 'Angola',
-    code: 'AO',
-    available: true,
-    flag: '🇦🇴',
-    dialCode: '+244',
-    region: 'África',
-  },
-  {
-    id: 'zw',
-    name: 'Zimbabwe',
-    code: 'ZW',
-    available: true,
-    flag: '🇿🇼',
-    dialCode: '+263',
-    region: 'África',
-  },
   {
     id: 'bw',
     name: 'Botswana',
@@ -50,7 +66,7 @@ export const countries: Country[] = [
   },
   {
     id: 'ls',
-    name: 'Lesoto',
+    name: 'Lesotho',
     code: 'LS',
     available: false,
     flag: '🇱🇸',
@@ -58,12 +74,41 @@ export const countries: Country[] = [
     region: 'África',
   },
   {
+    id: 'mz-en',
+    name: 'Mozambique (English)',
+    code: 'MZ',
+    available: true,
+    flag: '🇲🇿',
+    dialCode: '+258',
+    region: 'África',
+    language: 'en',
+  },
+  {
+    id: 'mz-pt',
+    name: 'Moçambique (Português)',
+    code: 'MZ',
+    available: true,
+    flag: '🇲🇿',
+    dialCode: '+258',
+    region: 'África',
+    language: 'pt',
+  },
+  {
     id: 'na',
-    name: 'Namíbia',
+    name: 'Namibia',
     code: 'NA',
     available: false,
     flag: '🇳🇦',
     dialCode: '+264',
+    region: 'África',
+  },
+  {
+    id: 'za',
+    name: 'South Africa',
+    code: 'ZA',
+    available: true,
+    flag: '🇿🇦',
+    dialCode: '+27',
     region: 'África',
   },
   {
@@ -79,7 +124,7 @@ export const countries: Country[] = [
   // ── ÁFRICA — East Africa ──────────────────────────────────────────────────
   {
     id: 'ke',
-    name: 'Quénia',
+    name: 'Kenya',
     code: 'KE',
     available: false,
     flag: '🇰🇪',
@@ -88,7 +133,7 @@ export const countries: Country[] = [
   },
   {
     id: 'tz',
-    name: 'Tanzânia',
+    name: 'Tanzania',
     code: 'TZ',
     available: false,
     flag: '🇹🇿',
@@ -107,93 +152,99 @@ export const countries: Country[] = [
 
   // ── ÁFRICA — West Africa ──────────────────────────────────────────────────
   {
-    id: 'bj',
-    name: 'Benin',
+    id: 'bj-en',
+    name: 'Benin (English)',
     code: 'BJ',
     available: false,
     flag: '🇧🇯',
     dialCode: '+229',
     region: 'África',
+    language: 'en',
   },
   {
-    id: 'cm',
-    name: 'Camarões',
+    id: 'bj-fr',
+    name: 'Bénin (Français)',
+    code: 'BJ',
+    available: false,
+    flag: '��',
+    dialCode: '+229',
+    region: 'África',
+    language: 'fr',
+  },
+  {
+    id: 'cm-en',
+    name: 'Cameroon (English)',
     code: 'CM',
     available: false,
-    flag: '🇨🇲',
+    flag: '��',
     dialCode: '+237',
     region: 'África',
+    language: 'en',
+  },
+  {
+    id: 'cm-fr',
+    name: 'Cameroun (Français)',
+    code: 'CM',
+    available: false,
+    flag: '🇨�',
+    dialCode: '+237',
+    region: 'África',
+    language: 'fr',
   },
   {
     id: 'gh',
-    name: 'Gana',
+    name: 'Ghana',
     code: 'GH',
     available: false,
-    flag: '🇬🇭',
+    flag: '🇭',
     dialCode: '+233',
     region: 'África',
   },
   {
-    id: 'ci',
-    name: 'Costa do Marfim',
+    id: 'ci-fr',
+    name: 'Côte d\'Ivoire (Français)',
     code: 'CI',
     available: false,
-    flag: '🇨🇮',
+    flag: '��',
     dialCode: '+225',
     region: 'África',
+    language: 'fr',
   },
   {
     id: 'ng',
-    name: 'Nigéria',
+    name: 'Nigeria',
     code: 'NG',
     available: false,
-    flag: '🇳🇬',
+    flag: '��',
     dialCode: '+234',
     region: 'África',
   },
   {
-    id: 'tg',
-    name: 'Togo',
+    id: 'tg-en',
+    name: 'Togo (English)',
+    code: 'TG',
+    available: false,
+    flag: '��',
+    dialCode: '+228',
+    region: 'África',
+    language: 'en',
+  },
+  {
+    id: 'tg-fr',
+    name: 'Togo (Français)',
     code: 'TG',
     available: false,
     flag: '🇹🇬',
     dialCode: '+228',
     region: 'África',
+    language: 'fr',
   },
 
-  // ── AMÉRICAS ──────────────────────────────────────────────────────────────
-  {
-    id: 'us',
-    name: 'Estados Unidos',
-    code: 'US',
-    available: false,
-    flag: '🇺🇸',
-    dialCode: '+1',
-    region: 'Américas',
-  },
-  {
-    id: 'ca',
-    name: 'Canadá',
-    code: 'CA',
-    available: false,
-    flag: '🇨🇦',
-    dialCode: '+1',
-    region: 'Américas',
-  },
-  {
-    id: 'la',
-    name: 'América Latina',
-    code: 'LA',
-    available: false,
-    flag: '',
-    dialCode: undefined,
-    region: 'Américas',
-  },
-
-  // ── ÁSIA & PACÍFICO ───────────────────────────────────────────────────────
+  // ── ÁSIA & SOUTH PACIFIC ───────────────────────────────────────────────────
+  // South-East Asia
   {
     id: 'ph',
-    name: 'Filipinas',
+    name: 'Philippines',
     code: 'PH',
     available: false,
     flag: '🇵🇭',
@@ -202,25 +253,27 @@ export const countries: Country[] = [
   },
   {
     id: 'sg',
-    name: 'Singapura',
+    name: 'Singapore',
     code: 'SG',
     available: false,
     flag: '🇸🇬',
     dialCode: '+65',
     region: 'Ásia & Pacífico',
   },
+  // North-East Asia
   {
     id: 'jp',
-    name: 'Japão',
+    name: 'Japan (日本)',
     code: 'JP',
     available: false,
     flag: '🇯🇵',
     dialCode: '+81',
     region: 'Ásia & Pacífico',
   },
+  // South Pacific
   {
     id: 'au',
-    name: 'Austrália',
+    name: 'Australia',
     code: 'AU',
     available: false,
     flag: '🇦🇺',
@@ -229,7 +282,7 @@ export const countries: Country[] = [
   },
   {
     id: 'nz',
-    name: 'Nova Zelândia',
+    name: 'New Zealand',
     code: 'NZ',
     available: false,
     flag: '🇳🇿',
@@ -237,28 +290,28 @@ export const countries: Country[] = [
     region: 'Ásia & Pacífico',
   },
 
-  // ── EUROPA — Norte ────────────────────────────────────────────────────────
-  {
-    id: 'gb',
-    name: 'Reino Unido',
-    code: 'GB',
-    available: false,
-    flag: '🇬🇧',
-    dialCode: '+44',
-    region: 'Europa',
-  },
+  // ── EUROPA — Northern Europe ───────────────────────────────────────────────
   {
     id: 'ee',
-    name: 'Estónia',
+    name: 'Estonia',
     code: 'EE',
     available: false,
-    flag: '🇪🇪',
+    flag: '��',
     dialCode: '+372',
     region: 'Europa',
   },
   {
+    id: 'gb',
+    name: 'United Kingdom',
+    code: 'GB',
+    available: false,
+    flag: '��',
+    dialCode: '+44',
+    region: 'Europa',
+  },
+  {
     id: 'dk',
-    name: 'Dinamarca',
+    name: 'Denmark',
     code: 'DK',
     available: false,
     flag: '🇩🇰',
@@ -267,7 +320,7 @@ export const countries: Country[] = [
   },
   {
     id: 'fi',
-    name: 'Finlândia',
+    name: 'Finland',
     code: 'FI',
     available: false,
     flag: '🇫🇮',
@@ -276,7 +329,7 @@ export const countries: Country[] = [
   },
   {
     id: 'is',
-    name: 'Islândia',
+    name: 'Iceland',
     code: 'IS',
     available: false,
     flag: '🇮🇸',
@@ -285,7 +338,7 @@ export const countries: Country[] = [
   },
   {
     id: 'ie',
-    name: 'Irlanda',
+    name: 'Ireland',
     code: 'IE',
     available: false,
     flag: '🇮🇪',
@@ -294,7 +347,7 @@ export const countries: Country[] = [
   },
   {
     id: 'lv',
-    name: 'Letónia',
+    name: 'Latvia',
     code: 'LV',
     available: false,
     flag: '🇱🇻',
@@ -303,7 +356,7 @@ export const countries: Country[] = [
   },
   {
     id: 'lt',
-    name: 'Lituânia',
+    name: 'Lithuania',
     code: 'LT',
     available: false,
     flag: '🇱🇹',
@@ -312,7 +365,7 @@ export const countries: Country[] = [
   },
   {
     id: 'no',
-    name: 'Noruega',
+    name: 'Norway',
     code: 'NO',
     available: false,
     flag: '🇳🇴',
@@ -321,7 +374,7 @@ export const countries: Country[] = [
   },
   {
     id: 'pl',
-    name: 'Polónia',
+    name: 'Poland',
     code: 'PL',
     available: false,
     flag: '🇵🇱',
@@ -330,7 +383,7 @@ export const countries: Country[] = [
   },
   {
     id: 'se',
-    name: 'Suécia',
+    name: 'Sweden',
     code: 'SE',
     available: false,
     flag: '🇸🇪',
@@ -338,10 +391,10 @@ export const countries: Country[] = [
     region: 'Europa',
   },
 
-  // ── EUROPA — Sul ──────────────────────────────────────────────────────────
+  // ── EUROPA — Southern Europe ───────────────────────────────────────────────
   {
     id: 'ba',
-    name: 'Bósnia-Herzegovina',
+    name: 'Bosnia Herzegovina',
     code: 'BA',
     available: false,
     flag: '🇧🇦',
@@ -350,7 +403,7 @@ export const countries: Country[] = [
   },
   {
     id: 'hr',
-    name: 'Croácia',
+    name: 'Croatia',
     code: 'HR',
     available: false,
     flag: '🇭🇷',
@@ -359,7 +412,7 @@ export const countries: Country[] = [
   },
   {
     id: 'hu',
-    name: 'Hungria',
+    name: 'Hungary',
     code: 'HU',
     available: false,
     flag: '🇭🇺',
@@ -368,7 +421,7 @@ export const countries: Country[] = [
   },
   {
     id: 'it',
-    name: 'Itália',
+    name: 'Italia',
     code: 'IT',
     available: false,
     flag: '🇮🇹',
@@ -377,7 +430,7 @@ export const countries: Country[] = [
   },
   {
     id: 'ro',
-    name: 'Roménia',
+    name: 'Romania',
     code: 'RO',
     available: false,
     flag: '🇷🇴',
@@ -386,7 +439,7 @@ export const countries: Country[] = [
   },
   {
     id: 'si',
-    name: 'Eslovénia',
+    name: 'Slovenia',
     code: 'SI',
     available: false,
     flag: '🇸🇮',
@@ -394,10 +447,10 @@ export const countries: Country[] = [
     region: 'Europa',
   },
 
-  // ── EUROPA — Outros ───────────────────────────────────────────────────────
+  // ── EUROPA — Other European Countries ─────────────────────────────────────
   {
     id: 'at',
-    name: 'Áustria',
+    name: 'Austria',
     code: 'AT',
     available: false,
     flag: '🇦🇹',
@@ -406,7 +459,7 @@ export const countries: Country[] = [
   },
   {
     id: 'cy',
-    name: 'Chipre',
+    name: 'Cyprus',
     code: 'CY',
     available: false,
     flag: '🇨🇾',
@@ -415,7 +468,7 @@ export const countries: Country[] = [
   },
   {
     id: 'fr',
-    name: 'França',
+    name: 'France',
     code: 'FR',
     available: false,
     flag: '🇫🇷',
@@ -424,7 +477,7 @@ export const countries: Country[] = [
   },
   {
     id: 'de',
-    name: 'Alemanha',
+    name: 'Germany',
     code: 'DE',
     available: false,
     flag: '🇩🇪',
@@ -442,7 +495,7 @@ export const countries: Country[] = [
   },
   {
     id: 'nl',
-    name: 'Países Baixos',
+    name: 'Netherlands',
     code: 'NL',
     available: false,
     flag: '🇳🇱',
@@ -451,7 +504,7 @@ export const countries: Country[] = [
   },
   {
     id: 'es',
-    name: 'Espanha',
+    name: 'Spain',
     code: 'ES',
     available: false,
     flag: '🇪🇸',
@@ -460,7 +513,7 @@ export const countries: Country[] = [
   },
   {
     id: 'ch',
-    name: 'Suíça',
+    name: 'Switzerland',
     code: 'CH',
     available: false,
     flag: '🇨🇭',
@@ -506,4 +559,4 @@ export const getCountriesByRegion = (): Record<string, Country[]> => {
 };
 
 /** Order in which regions should appear in dropdowns */
-export const REGION_ORDER = ['África', 'Américas', 'Ásia & Pacífico', 'Europa'];
+export const REGION_ORDER = ['América', 'África', 'Ásia & Pacífico', 'Europa'];

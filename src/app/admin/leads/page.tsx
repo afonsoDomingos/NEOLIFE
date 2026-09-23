@@ -352,10 +352,9 @@ export default function AdminLeadsPage() {
                 onChange={handleFilterChange}
               >
                 <option value="">Todos os países</option>
-                <option value="mz">Moçambique</option>
-                <option value="za">África do Sul</option>
-                <option value="ao">Angola</option>
-                <option value="zw">Zimbabwe</option>
+                <option value="mz-pt">Moçambique (Português)</option>
+                <option value="mz-en">Mozambique (English)</option>
+                <option value="za">South Africa</option>
               </Select>
 
               <Select
