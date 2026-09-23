@@ -72,7 +72,7 @@ export const NeoLifeScienceSection: React.FC = () => {
               : 'Neolife — Healthier People. A Better World.'}
           </p>
           <p className="text-[10px] text-emerald-400/70 font-medium tracking-wide uppercase mt-2">
-            Distribuidor Independente
+            Ofélia & José Machado
           </p>
         </div>
 

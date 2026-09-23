@@ -23,7 +23,7 @@ export const Header: React.FC = () => {
               className="h-8 sm:h-9 w-auto object-contain"
             />
             <span className="text-[9px] sm:text-[10px] text-gray-500 font-medium tracking-wide uppercase mt-0.5">
-              Distribuidor Independente
+              Ofélia & José Machado
             </span>
           </Link>
           

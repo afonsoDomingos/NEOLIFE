@@ -203,7 +203,7 @@ export const DynamicBanner: React.FC = () => {
                 Neolife África • Destaque
               </div>
               <span className="text-[9px] text-emerald-400/80 font-medium tracking-wide uppercase">
-                Distribuidor Independente
+                Ofélia & José Machado
               </span>
             </div>
 

@@ -27,7 +27,7 @@ export const Footer: React.FC = () => {
                 {t.footer.slogan}
               </p>
               <p className="text-[10px] text-gray-500 font-medium tracking-wide uppercase mt-0.5">
-                Distribuidor Independente
+                Ofélia & José Machado
               </p>
             </div>
           </div>
