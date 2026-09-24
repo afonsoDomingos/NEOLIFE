@@ -40,6 +40,7 @@ export const HealthSection: React.FC = () => {
   ];
 
   const [dynamicPacks, setDynamicPacks] = useState<Record<string, any>>({});
+  const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
 
   // Use dynamic packs if available, otherwise fall back to static
   const allPacks = Object.keys(dynamicPacks).length > 0 
@@ -432,7 +433,10 @@ export const HealthSection: React.FC = () => {
                   >
                     <div className="flex items-center gap-4 flex-1">
                       {mergedPack.image && (
-                        <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 border border-gray-200">
+                        <div 
+                          className="w-16 h-16 rounded-lg overflow-hidden shrink-0 border border-gray-200 cursor-pointer hover:border-emerald-400 transition-colors"
+                          onClick={() => setFullscreenImage(mergedPack.image)}
+                        >
                           <img
                             src={mergedPack.image}
                             alt={isPt ? mergedPack.titlePt : mergedPack.titleEn}
@@ -606,6 +610,33 @@ export const HealthSection: React.FC = () => {
             </form>
           </div>
         </div>
+
+        {/* Fullscreen Image Modal */}
+        {fullscreenImage && (
+          <div 
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setFullscreenImage(null)}
+          >
+            <div className="relative max-w-5xl max-h-[90vh]">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setFullscreenImage(null);
+                }}
+                className="absolute -top-12 right-0 text-white hover:text-emerald-400 transition-colors"
+              >
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <img
+                src={fullscreenImage}
+                alt="Fullscreen product image"
+                className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+              />
+            </div>
+          </div>
+        )}
 
       </div>
     </section>
