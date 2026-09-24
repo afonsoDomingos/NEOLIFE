@@ -137,9 +137,10 @@ function GateContent() {
 
         setSubmitSuccess(true);
         
-        // Redirect after success
+        // Redirect to intro page after success
         setTimeout(() => {
-          window.location.href = redirectTo;
+          const introUrl = `/intro?pillar=${pillar}&redirect=${encodeURIComponent(redirectTo)}`;
+          window.location.href = introUrl;
         }, 1000);
       } else {
         const errorData = await response.json().catch(() => ({}));
