@@ -1,16 +1,16 @@
 import React from 'react';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'> {
   label?: string;
   error?: string;
-  size?: 'sm' | 'md' | 'lg';
+  inputSize?: 'sm' | 'md' | 'lg';
 }
 
 export const Input: React.FC<InputProps> = ({
   label,
   error,
   className = '',
-  size = 'md',
+  inputSize = 'md',
   ...props
 }) => {
   const sizeClasses = {
@@ -28,16 +28,16 @@ export const Input: React.FC<InputProps> = ({
   return (
     <div className="w-full">
       {label && (
-        <label className={`block font-medium text-gray-700 ${labelSizeClasses[size]}`}>
+        <label className={`block font-medium text-gray-700 ${labelSizeClasses[inputSize]}`}>
           {label}
         </label>
       )}
       <input
-        className={`w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-200 ${sizeClasses[size]} ${error ? 'border-red-500' : ''} ${className}`}
+        className={`w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-transparent transition-all duration-200 ${sizeClasses[inputSize]} ${error ? 'border-red-500' : ''} ${className}`}
         {...props}
       />
       {error && (
-        <p className={`mt-1 text-red-600 ${size === 'sm' ? 'text-xs' : 'text-sm'}`}>{error}</p>
+        <p className={`mt-1 text-red-600 ${inputSize === 'sm' ? 'text-xs' : 'text-sm'}`}>{error}</p>
       )}
     </div>
   );

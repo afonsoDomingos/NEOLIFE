@@ -310,7 +310,7 @@ function GateContent() {
                   placeholder={isPt ? 'Digite o seu nome completo' : 'Enter your full name'}
                   error={errors.name}
                   required
-                  size="sm"
+                  inputSize="sm"
                 />
               </div>
             )}
@@ -327,7 +327,7 @@ function GateContent() {
                     placeholder={`${country.dialCode} 84 000 0000`}
                     error={errors.phone}
                     required
-                    size="sm"
+                    inputSize="sm"
                   />
                   {!errors.phone && (
                     <p className="mt-1 text-xs text-gray-500">
@@ -345,7 +345,7 @@ function GateContent() {
                   placeholder={isPt ? 'exemplo@email.com' : 'example@email.com'}
                   error={errors.email}
                   required
-                  size="sm"
+                  inputSize="sm"
                 />
               </div>
             )}
