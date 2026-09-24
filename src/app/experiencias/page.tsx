@@ -69,6 +69,187 @@ export default function ExperienciasPage() {
         <ExperiencesSection />
       </div>
 
+      {/* ── PACOTE DE INCENTIVOS DA NEOLIFE ── */}
+      <section className="py-16 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              {isPt ? 'Pacote de Incentivos da NeoLife' : 'NeoLife Incentives Package'}
+            </h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              {isPt
+                ? 'À medida que cresces na carreira, aumenta também o acesso a reconhecimento, formação, bónus e experiências exclusivas.'
+                : 'As you grow in your career, access to recognition, training, bonuses and exclusive experiences increases.'}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Novos Sapphire Directors */}
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300">
+              <div className="h-48 bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                <div className="text-white text-center">
+                  <div className="text-4xl mb-2">🎓</div>
+                  <div className="text-sm font-bold">Leadership School</div>
+                  <div className="text-xs opacity-80">Pretória</div>
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                  {isPt ? 'Novos Sapphire Directors' : 'New Sapphire Directors'}
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  {isPt
+                    ? 'Formação e desenvolvimento para novos Sapphire Directors que cumpram os critérios de qualificação. Exclusivo também para Emerald Directors.'
+                    : 'Training and development for new Sapphire Directors who meet qualification criteria. Also exclusive for Emerald Directors.'}
+                </p>
+                <div className="h-32 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
+                  <span className="text-sm text-gray-400">
+                    {isPt ? 'Adicionar imagem...' : 'Add image...'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Sapphire Directors */}
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300">
+              <div className="h-48 bg-gradient-to-br from-emerald-500 to-emerald-600 flex items-center justify-center">
+                <div className="text-white text-center">
+                  <div className="text-4xl mb-2">🌍</div>
+                  <div className="text-sm font-bold">Vacations</div>
+                  <div className="text-xs opacity-80">Destinos Internacionais</div>
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                  {isPt ? 'Sapphire Directors' : 'Sapphire Directors'}
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  {isPt
+                    ? 'Viagens e experiências internacionais em diferentes destinos. Os destinos variam de acordo com o programa de incentivos.'
+                    : 'International trips and experiences in different destinations. Destinations vary according to the incentive program.'}
+                </p>
+                <div className="h-32 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
+                  <span className="text-sm text-gray-400">
+                    {isPt ? 'Adicionar imagem...' : 'Add image...'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Novos Ruby Directors */}
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300">
+              <div className="h-48 bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center">
+                <div className="text-white text-center">
+                  <div className="text-4xl mb-2">🇿🇦</div>
+                  <div className="text-sm font-bold">President's Club Pursuit</div>
+                  <div className="text-xs opacity-80">África do Sul</div>
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                  {isPt ? 'Novos Ruby Directors' : 'New Ruby Directors'}
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  {isPt
+                    ? 'Experiência especial para novos Ruby Directors que alcançam este nível. Combinação de viagem, lazer, networking e reconhecimento.'
+                    : 'Special experience for new Ruby Directors reaching this level. Combination of travel, leisure, networking and recognition.'}
+                </p>
+                <div className="h-32 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
+                  <span className="text-sm text-gray-400">
+                    {isPt ? 'Adicionar imagem...' : 'Add image...'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* President's Team */}
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300">
+              <div className="h-48 bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+                <div className="text-white text-center">
+                  <div className="text-4xl mb-2">🌟</div>
+                  <div className="text-sm font-bold">Diamond Experience</div>
+                  <div className="text-xs opacity-80">Internacional</div>
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                  {isPt ? "President's Team" : "President's Team"}
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  {isPt
+                    ? 'Experiência internacional em destinos de grande destaque como Europa ou EUA. Oportunidade de conviver com outros líderes e celebrar o crescimento.'
+                    : 'International experience in high-profile destinations like Europe or USA. Opportunity to network with other leaders and celebrate growth.'}
+                </p>
+                <div className="h-32 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
+                  <span className="text-sm text-gray-400">
+                    {isPt ? 'Adicionar imagem...' : 'Add image...'}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Diamond Step-Ups */}
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 md:col-span-2">
+              <div className="h-48 bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                <div className="text-white text-center">
+                  <div className="text-4xl mb-2">🛥️</div>
+                  <div className="text-sm font-bold">Silverado Yacht</div>
+                  <div className="text-xs opacity-80">México</div>
+                </div>
+              </div>
+              <div className="p-6">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">
+                  {isPt ? 'Diamond Step-Ups' : 'Diamond Step-Ups'}
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  {isPt
+                    ? 'Experiências especiais associadas aos diferentes níveis Diamond. Inclui viagem aérea, alojamento, transporte, refeições e excursões especiais.'
+                    : 'Special experiences associated with different Diamond levels. Includes air travel, accommodation, transport, meals and special excursions.'}
+                </p>
+                <div className="h-32 bg-gray-100 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center">
+                  <span className="text-sm text-gray-400">
+                    {isPt ? 'Adicionar imagem...' : 'Add image...'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Career Path Summary */}
+          <div className="mt-12 bg-gradient-to-r from-teal-500 to-teal-600 rounded-2xl p-8 text-white">
+            <h3 className="text-xl font-bold mb-4 text-center">
+              {isPt ? '🌟 Caminho de Carreira' : '🌟 Career Path'}
+            </h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+              <div className="p-4 bg-white/10 rounded-lg">
+                <div className="text-2xl mb-2">👤</div>
+                <div className="text-sm font-semibold">{isPt ? 'Distribuidor' : 'Distributor'}</div>
+              </div>
+              <div className="p-4 bg-white/10 rounded-lg">
+                <div className="text-2xl mb-2">📈</div>
+                <div className="text-sm font-semibold">{isPt ? 'Manager' : 'Manager'}</div>
+              </div>
+              <div className="p-4 bg-white/10 rounded-lg">
+                <div className="text-2xl mb-2">🚀</div>
+                <div className="text-sm font-semibold">{isPt ? 'Senior Manager' : 'Senior Manager'}</div>
+              </div>
+              <div className="p-4 bg-white/10 rounded-lg">
+                <div className="text-2xl mb-2">⭐</div>
+                <div className="text-sm font-semibold">{isPt ? 'Executive Manager' : 'Executive Manager'}</div>
+              </div>
+              <div className="p-4 bg-white/10 rounded-lg">
+                <div className="text-2xl mb-2">👑</div>
+                <div className="text-sm font-semibold">{isPt ? 'Director' : 'Director'}</div>
+              </div>
+              <div className="p-4 bg-white/10 rounded-lg">
+                <div className="text-2xl mb-2">🏆</div>
+                <div className="text-sm font-semibold">{isPt ? 'Liderança' : 'Leadership'}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── VÍDEOS DA COMUNIDADE ── */}
       <VideoSection />
     </div>
