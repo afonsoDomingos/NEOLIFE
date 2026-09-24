@@ -56,9 +56,19 @@ function ProductImagesContent() {
 
   const handleSave = async () => {
     try {
-      const payload = editingImage 
+      if (!formData.productId || !formData.productType || !formData.imageUrl) {
+        alert('Por favor, preencha todos os campos obrigatórios');
+        return;
+      }
+
+      const payload = editingImage
         ? { ...formData, _id: editingImage._id }
         : formData;
+
+      console.log('Saving image payload:', {
+        ...payload,
+        imageUrl: payload.imageUrl?.substring(0, 100) + '...'
+      });
 
       const method = editingImage ? 'PUT' : 'POST';
       const response = await fetch('/api/admin/product-images', {
@@ -67,14 +77,20 @@ function ProductImagesContent() {
         body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
-        await loadImages();
-        setShowModal(false);
-        setEditingImage(null);
-        resetForm();
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Save failed:', errorData);
+        alert(`Erro ao salvar: ${errorData.error || 'Erro desconhecido'}`);
+        return;
       }
+
+      await loadImages();
+      setShowModal(false);
+      setEditingImage(null);
+      resetForm();
     } catch (error) {
       console.error('Error saving image:', error);
+      alert('Erro ao salvar imagem. Tente novamente.');
     }
   };
 

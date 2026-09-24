@@ -81,7 +81,8 @@ export async function POST(request: NextRequest) {
     );
   } catch (error) {
     console.error('Error creating product image:', error);
-    return NextResponse.json({ error: 'Failed to create product image' }, { status: 500 });
+    console.error('Request body:', { productId, productType, imageUrl: imageUrl?.substring(0, 100) + '...' });
+    return NextResponse.json({ error: 'Failed to create product image', details: error instanceof Error ? error.message : 'Unknown error' }, { status: 500 });
   }
 }
 
