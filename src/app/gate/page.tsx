@@ -198,29 +198,29 @@ function GateContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 py-16 md:py-24">
-      <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
         
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100/90 border border-emerald-300 text-emerald-900 text-xs font-bold mb-4">
+        <div className="text-center mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100/90 border border-emerald-300 text-emerald-900 text-xs font-bold mb-2">
             <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
             {isPt ? 'Acesso Rápido' : 'Quick Access'}
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-3 tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2 tracking-tight">
             {isPt ? 'Antes de Continuar' : 'Before You Continue'}
           </h1>
-          <p className="text-gray-600 text-sm max-w-xs mx-auto mb-6">
+          <p className="text-gray-600 text-xs max-w-xs mx-auto mb-3">
             {isPt
               ? 'Para proporcionar um atendimento personalizado, precisamos de alguns dados básicos.'
               : 'To provide personalized service, we need some basic information.'}
           </p>
 
           {/* Pillar Preview Card */}
-          <div className="bg-white rounded-2xl p-4 border border-emerald-200 shadow-sm mb-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+          <div className="bg-white rounded-xl p-3 border border-emerald-200 shadow-sm mb-4">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 00 11-18 0 9 0 0118 0z" />
                 </svg>
               </div>
@@ -228,26 +228,26 @@ function GateContent() {
                 <p className="text-xs font-bold text-emerald-800 uppercase tracking-wider">
                   {isPt ? 'Você está acessando:' : 'You are accessing:'}
                 </p>
-                <p className="text-sm font-bold text-gray-900">
+                <p className="text-xs font-bold text-gray-900">
                   {pillarTitles[pillar as keyof typeof pillarTitles]}
                 </p>
               </div>
             </div>
-            <p className="text-xs text-gray-600 mt-3 text-left">
+            <p className="text-xs text-gray-600 mt-2 text-left">
               {pillarDescriptions[pillar as keyof typeof pillarDescriptions]}
             </p>
           </div>
         </div>
 
         {/* Form */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-lg">
+        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-gray-200 shadow-lg">
           
           {/* Progress Indicator */}
-          <div className="mb-6">
+          <div className="mb-4">
             <div className="flex items-center justify-between mb-2">
               {[1, 2, 3].map((step) => (
                 <div key={step} className="flex items-center">
-                  <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold transition-all ${
+                  <div className={`flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold transition-all ${
                     step === currentStep
                       ? 'bg-emerald-600 text-white scale-110'
                       : step < currentStep
@@ -257,7 +257,7 @@ function GateContent() {
                     {step < currentStep ? '✓' : step}
                   </div>
                   {step < 3 && (
-                    <div className={`w-12 h-1 mx-2 rounded transition-all ${
+                    <div className={`w-8 h-1 mx-1 rounded transition-all ${
                       step < currentStep ? 'bg-emerald-500' : 'bg-gray-200'
                     }`} />
                   )}
@@ -278,13 +278,13 @@ function GateContent() {
             } else {
               handleSubmit(e);
             }
-          }} className="space-y-5">
+          }} className="space-y-3">
             
             {/* Step 1: Country & Name */}
             {currentStep === 1 && (
-              <div className="space-y-5 animate-fade-in">
+              <div className="space-y-3 animate-fade-in">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                  <label className="block text-xs font-semibold text-gray-700 mb-1">
                     {isPt ? 'País de Residência' : 'Country of Residence'}
                   </label>
                   <select
@@ -296,7 +296,7 @@ function GateContent() {
                         setFormData((prev) => ({ ...prev, phone: `${newC.dialCode} ` }));
                       }
                     }}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
                   >
                     {countries.filter((c) => c.available).map((c) => (
                       <option key={c.id} value={c.id}>
@@ -314,13 +314,14 @@ function GateContent() {
                   placeholder={isPt ? 'Digite o seu nome completo' : 'Enter your full name'}
                   error={errors.name}
                   required
+                  size="sm"
                 />
               </div>
             )}
 
             {/* Step 2: Phone & Email */}
             {currentStep === 2 && (
-              <div className="space-y-5 animate-fade-in">
+              <div className="space-y-3 animate-fade-in">
                 <div>
                   <Input
                     label={`${isPt ? 'Telefone / WhatsApp' : 'Phone / WhatsApp'} (${country.dialCode})`}
@@ -330,6 +331,7 @@ function GateContent() {
                     placeholder={`${country.dialCode} 84 000 0000`}
                     error={errors.phone}
                     required
+                    size="sm"
                   />
                   {!errors.phone && (
                     <p className="mt-1 text-xs text-gray-500">
@@ -347,18 +349,19 @@ function GateContent() {
                   placeholder={isPt ? 'exemplo@email.com' : 'example@email.com'}
                   error={errors.email}
                   required
+                  size="sm"
                 />
               </div>
             )}
 
             {/* Step 3: Confirmation */}
             {currentStep === 3 && (
-              <div className="space-y-5 animate-fade-in">
-                <div className="bg-emerald-50 rounded-2xl p-4 border border-emerald-200">
-                  <h3 className="text-sm font-bold text-emerald-900 mb-3">
+              <div className="space-y-3 animate-fade-in">
+                <div className="bg-emerald-50 rounded-xl p-3 border border-emerald-200">
+                  <h3 className="text-xs font-bold text-emerald-900 mb-2">
                     {isPt ? 'Confirme seus dados:' : 'Confirm your details:'}
                   </h3>
-                  <div className="space-y-2 text-sm">
+                  <div className="space-y-1 text-xs">
                     <div className="flex justify-between">
                       <span className="text-gray-600">{isPt ? 'Nome:' : 'Name:'}</span>
                       <span className="font-semibold text-gray-900">{formData.name}</span>
@@ -385,19 +388,19 @@ function GateContent() {
             )}
 
             {errors.submit && (
-              <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700">
+              <div className="p-2 bg-red-50 border border-red-200 rounded-lg text-xs text-red-700">
                 {errors.submit}
               </div>
             )}
 
             {/* Navigation Buttons */}
-            <div className="flex gap-3 pt-2">
+            <div className="flex gap-2 pt-1">
               {currentStep > 1 && (
                 <Button
                   type="button"
                   variant="outline"
                   onClick={handlePreviousStep}
-                  className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-3.5 rounded-xl text-sm"
+                  className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-2 rounded-lg text-xs"
                 >
                   {isPt ? '← Voltar' : '← Back'}
                 </Button>
@@ -406,7 +409,7 @@ function GateContent() {
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className={`flex-1 bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold py-3.5 rounded-xl shadow-md text-sm ${
+                className={`flex-1 bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold py-2 rounded-lg shadow-md text-xs ${
                   currentStep === 1 ? 'ml-auto' : ''
                 }`}
               >
@@ -418,14 +421,14 @@ function GateContent() {
               </Button>
             </div>
 
-            <p className="text-center pt-2 text-xs text-gray-500">
+            <p className="text-center pt-1 text-xs text-gray-500">
               {isPt ? 'Seus dados estão seguros e não serão compartilhados.' : 'Your data is safe and will not be shared.'}
             </p>
           </form>
         </div>
 
         {/* Back to Home */}
-        <div className="text-center mt-6">
+        <div className="text-center mt-3">
           <a
             href="/"
             className="text-xs font-semibold text-gray-600 hover:text-emerald-700 underline"
