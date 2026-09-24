@@ -222,27 +222,21 @@ export default function ExperienciasPage() {
             </h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
               <div className="p-4 bg-white/10 rounded-lg">
-                <div className="text-2xl mb-2">👤</div>
                 <div className="text-sm font-semibold">{isPt ? 'Distribuidor' : 'Distributor'}</div>
               </div>
               <div className="p-4 bg-white/10 rounded-lg">
-                <div className="text-2xl mb-2">📈</div>
                 <div className="text-sm font-semibold">{isPt ? 'Manager' : 'Manager'}</div>
               </div>
               <div className="p-4 bg-white/10 rounded-lg">
-                <div className="text-2xl mb-2">🚀</div>
                 <div className="text-sm font-semibold">{isPt ? 'Senior Manager' : 'Senior Manager'}</div>
               </div>
               <div className="p-4 bg-white/10 rounded-lg">
-                <div className="text-2xl mb-2">⭐</div>
                 <div className="text-sm font-semibold">{isPt ? 'Executive Manager' : 'Executive Manager'}</div>
               </div>
               <div className="p-4 bg-white/10 rounded-lg">
-                <div className="text-2xl mb-2">👑</div>
                 <div className="text-sm font-semibold">{isPt ? 'Director' : 'Director'}</div>
               </div>
               <div className="p-4 bg-white/10 rounded-lg">
-                <div className="text-2xl mb-2">🏆</div>
                 <div className="text-sm font-semibold">{isPt ? 'Liderança' : 'Leadership'}</div>
               </div>
             </div>
