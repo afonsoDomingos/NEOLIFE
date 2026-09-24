@@ -1,11 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getDb } from '@/lib/db/mongodb';
+import { MongoClient, Db } from 'mongodb';
 import { healthSolutionPacks } from '@/data/health-solutions';
+
+// Database connection
+let db: Db;
+
+async function getDatabase(): Promise<Db> {
+  if (!db) {
+    const client = new MongoClient(process.env.MONGODB_URI || '');
+    await client.connect();
+    db = client.db('neolife');
+  }
+  return db;
+}
 
 export async function POST(request: NextRequest) {
   try {
-    const db = await getDb();
-    const collection = db.collection('healthProducts');
+    const database = await getDatabase();
+    const collection = database.collection('healthProducts');
 
     let migrated = 0;
     let skipped = 0;
@@ -41,8 +53,8 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    const db = await getDb();
-    const collection = db.collection('healthProducts');
+    const database = await getDatabase();
+    const collection = database.collection('healthProducts');
     
     const count = await collection.countDocuments();
     const staticCount = healthSolutionPacks.length;

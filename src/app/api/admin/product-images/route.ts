@@ -1,9 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ObjectId } from 'mongodb';
-import { getDb } from '@/lib/db/mongodb';
+import { MongoClient, Db, ObjectId } from 'mongodb';
+
+// Database connection
+let db: Db;
+
+async function getDatabase(): Promise<Db> {
+  if (!db) {
+    const client = new MongoClient(process.env.MONGODB_URI || '');
+    await client.connect();
+    db = client.db('neolife');
+  }
+  return db;
+}
 
 interface ProductImage {
-  _id?: string;
   productId: string;
   productType: 'pack' | 'supplement' | 'shake';
   imageUrl: string;
@@ -20,8 +30,8 @@ export async function GET(request: NextRequest) {
     const productId = searchParams.get('productId');
     const productType = searchParams.get('productType');
 
-    const db = await getDb();
-    const collection = db.collection('productImages');
+    const database = await getDatabase();
+    const collection = database.collection('productImages');
 
     let query: any = {};
     if (productId) query.productId = productId;
@@ -48,8 +58,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const db = await getDb();
-    const collection = db.collection('productImages');
+    const database = await getDatabase();
+    const collection = database.collection('productImages');
 
     const newImage: ProductImage = {
       productId,
@@ -83,11 +93,11 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: '_id is required' }, { status: 400 });
     }
 
-    const db = await getDb();
-    const collection = db.collection('productImages');
+    const database = await getDatabase();
+    const collection = database.collection('productImages');
 
     const result = await collection.updateOne(
-      { _id: new ObjectId(_id) },
+      { _id: typeof _id === 'string' ? new ObjectId(_id) : _id },
       { $set: { ...updateData, updatedAt: new Date() } }
     );
 
@@ -111,8 +121,8 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: '_id is required' }, { status: 400 });
     }
 
-    const db = await getDb();
-    const collection = db.collection('productImages');
+    const database = await getDatabase();
+    const collection = database.collection('productImages');
 
     const result = await collection.deleteOne({ _id: new ObjectId(_id) });
 

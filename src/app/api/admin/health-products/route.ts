@@ -1,9 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ObjectId } from 'mongodb';
-import { getDb } from '@/lib/db/mongodb';
+import { MongoClient, Db, ObjectId } from 'mongodb';
+
+// Database connection
+let db: Db;
+
+async function getDatabase(): Promise<Db> {
+  if (!db) {
+    const client = new MongoClient(process.env.MONGODB_URI || '');
+    await client.connect();
+    db = client.db('neolife');
+  }
+  return db;
+}
 
 interface HealthProductPack {
-  _id?: string;
   id: string;
   slug: string;
   category: 'cell' | 'weight' | 'gender' | 'energy' | 'digest' | 'joints' | 'immunity' | 'kids' | 'other';
@@ -33,8 +43,8 @@ export async function GET(request: NextRequest) {
     const id = searchParams.get('id');
     const category = searchParams.get('category');
 
-    const db = await getDb();
-    const collection = db.collection('healthProducts');
+    const database = await getDatabase();
+    const collection = database.collection('healthProducts');
 
     let query: any = {};
     if (id) query.id = id;
@@ -81,8 +91,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const db = await getDb();
-    const collection = db.collection('healthProducts');
+    const database = await getDatabase();
+    const collection = database.collection('healthProducts');
 
     // Check if product with same id already exists
     const existing = await collection.findOne({ id });
@@ -138,11 +148,11 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: '_id is required' }, { status: 400 });
     }
 
-    const db = await getDb();
-    const collection = db.collection('healthProducts');
+    const database = await getDatabase();
+    const collection = database.collection('healthProducts');
 
     const result = await collection.updateOne(
-      { _id: new ObjectId(_id) },
+      { _id: typeof _id === 'string' ? new ObjectId(_id) : _id },
       { $set: { ...updateData, updatedAt: new Date() } }
     );
 
@@ -166,8 +176,8 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: '_id is required' }, { status: 400 });
     }
 
-    const db = await getDb();
-    const collection = db.collection('healthProducts');
+    const database = await getDatabase();
+    const collection = database.collection('healthProducts');
 
     const result = await collection.deleteOne({ _id: new ObjectId(_id) });
 
