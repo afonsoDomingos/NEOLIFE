@@ -26,6 +26,7 @@ function GateContent() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
+  const [isDetectingLocation, setIsDetectingLocation] = useState(true);
   const totalSteps = 3;
 
   const country: Country = getCountryById(selectedCountryId) || getCountryById('mz-pt') || {
@@ -36,6 +37,57 @@ function GateContent() {
     dialCode: '+258',
     available: true,
   };
+
+  // Auto-detect user location and select country
+  useEffect(() => {
+    const detectUserCountry = async () => {
+      try {
+        // Try to get country from timezone
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        
+        // Map timezones to countries
+        const timezoneToCountry: Record<string, string> = {
+          'Africa/Maputo': 'mz-pt',
+          'Africa/Johannesburg': 'za',
+          'America/New_York': 'us-en',
+          'America/Los_Angeles': 'us-en',
+          'America/Chicago': 'us-en',
+          'America/Toronto': 'ca-en',
+          'America/Vancouver': 'ca-en',
+          'Europe/London': 'gb',
+          'Europe/Paris': 'fr',
+          'Europe/Berlin': 'de',
+          'Europe/Madrid': 'es',
+          'Europe/Rome': 'it',
+          'Asia/Tokyo': 'jp',
+          'Asia/Singapore': 'sg',
+          'Asia/Manila': 'ph',
+          'Australia/Sydney': 'au',
+          'Pacific/Auckland': 'nz',
+        };
+
+        const detectedCountryId = timezoneToCountry[timezone];
+        
+        if (detectedCountryId) {
+          const detectedCountry = getCountryById(detectedCountryId);
+          if (detectedCountry && detectedCountry.available) {
+            setSelectedCountryId(detectedCountryId);
+            // Also update phone dial code
+            if (detectedCountry.dialCode) {
+              setFormData(prev => ({ ...prev, phone: `${detectedCountry.dialCode} ` }));
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error detecting location:', error);
+        // Fallback to default country
+      } finally {
+        setIsDetectingLocation(false);
+      }
+    };
+
+    detectUserCountry();
+  }, []);
 
   const pillarTitles = {
     saude: isPt ? 'Soluções de Saúde' : 'Health Solutions',
@@ -292,14 +344,30 @@ function GateContent() {
                         setFormData((prev) => ({ ...prev, phone: `${newC.dialCode} ` }));
                       }
                     }}
-                    className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                    disabled={isDetectingLocation}
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 bg-white text-gray-900 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {countries.filter((c) => c.available).map((c) => (
-                      <option key={c.id} value={c.id}>
-                        {c.flag} {c.name} ({c.dialCode})
+                    {isDetectingLocation ? (
+                      <option value="">
+                        {isPt ? 'Detectando localização...' : 'Detecting location...'}
                       </option>
-                    ))}
+                    ) : (
+                      countries.filter((c) => c.available).map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.flag} {c.name} ({c.dialCode})
+                        </option>
+                      ))
+                    )}
                   </select>
+                  {isDetectingLocation && (
+                    <p className="mt-1 text-xs text-emerald-600 flex items-center gap-1">
+                      <svg className="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                      </svg>
+                      {isPt ? 'Detectando seu país automaticamente...' : 'Automatically detecting your country...'}
+                    </p>
+                  )}
                 </div>
 
                 <Input
