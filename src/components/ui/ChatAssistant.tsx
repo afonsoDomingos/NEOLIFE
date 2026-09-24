@@ -163,18 +163,18 @@ export function ChatAssistant() {
     <>
       {/* Floating Launcher Button */}
       {!isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center space-x-3">
-          <div className="hidden sm:flex items-center bg-white/95 backdrop-blur shadow-lg border border-emerald-100 py-2 px-3.5 rounded-full text-xs font-medium text-gray-700 animate-fade-in">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 mr-2 animate-pulse"></span>
+        <div className="fixed bottom-16 right-6 z-50 flex items-center space-x-3">
+          <div className="hidden sm:flex items-center bg-white/95 backdrop-blur shadow-lg border border-emerald-100 py-1.5 px-3 rounded-full text-[10px] font-medium text-gray-700 animate-fade-in">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
             Alguma dúvida? Fale connosco
           </div>
           <button
             onClick={() => setIsOpen(true)}
             aria-label="Abrir Assistente Consultivo de IA"
-            className="relative bg-gradient-to-tr from-emerald-700 to-emerald-500 text-white w-14 h-14 rounded-full shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-emerald-300"
+            className="relative bg-gradient-to-tr from-emerald-700 to-emerald-500 text-white w-12 h-12 rounded-full shadow-xl hover:shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 flex items-center justify-center focus:outline-none focus:ring-4 focus:ring-emerald-300"
           >
             <svg
-              className="w-7 h-7"
+              className="w-6 h-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -187,7 +187,7 @@ export function ChatAssistant() {
               />
             </svg>
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-amber-500 text-white text-[11px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
+              <span className="absolute -top-1 -right-1 bg-amber-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border-2 border-white">
                 {unreadCount}
               </span>
             )}
