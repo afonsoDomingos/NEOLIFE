@@ -244,7 +244,7 @@ export default function AdminDashboard() {
                 ) : (
                   <LeadsByCountryChart 
                     data={countryEntries.map(([country, count]) => ({
-                      country: getCountryById(country)?.namePt || country,
+                      country: getCountryById(country)?.name || country,
                       count
                     }))} 
                   />
