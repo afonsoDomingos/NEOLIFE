@@ -203,10 +203,6 @@ function GateContent() {
         
         {/* Header */}
         <div className="text-center mb-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100/90 border border-emerald-300 text-emerald-900 text-xs font-bold mb-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
-            {isPt ? 'Acesso Rápido' : 'Quick Access'}
-          </div>
           <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2 tracking-tight">
             {isPt ? 'Antes de Continuar' : 'Before You Continue'}
           </h1>
