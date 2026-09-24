@@ -161,7 +161,7 @@ export default function Home() {
       <section className="py-20 bg-gradient-to-b from-white via-emerald-50/30 to-emerald-100/40 border-t border-emerald-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-6">
-            {t.cta.readyTitle}
+            <TypewriterText text={t.cta.readyTitle} speed={40} />
           </h2>
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
             {t.cta.readyText}
