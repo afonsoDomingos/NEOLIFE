@@ -26,91 +26,108 @@ export async function GET(request: NextRequest) {
     const activities: any[] = [];
 
     // Get recent leads
-    const leadsCollection = database.collection('leads');
-    const recentLeads = await leadsCollection
-      .find({ createdAt: { $gte: timeAgo } })
-      .sort({ createdAt: -1 })
-      .limit(limit)
-      .toArray();
+    try {
+      const leadsCollection = database.collection('leads');
+      const recentLeads = await leadsCollection
+        .find({ createdAt: { $gte: timeAgo } })
+        .sort({ createdAt: -1 })
+        .limit(limit)
+        .toArray();
 
-    recentLeads.forEach((lead: any) => {
-      activities.push({
-        type: 'lead',
-        title: 'Novo Lead Registrado',
-        description: `${lead.name} de ${lead.country}`,
-        timestamp: lead.createdAt,
-        details: {
-          id: lead._id?.toString(),
-          theme: lead.theme,
-          source: lead.source,
-        },
+      recentLeads.forEach((lead: any) => {
+        activities.push({
+          type: 'lead',
+          title: 'Novo Lead Registrado',
+          description: `${lead.name} de ${lead.country}`,
+          timestamp: lead.createdAt,
+          details: {
+            id: lead._id?.toString(),
+            theme: lead.theme,
+            source: lead.source,
+          },
+        });
       });
-    });
+    } catch (error) {
+      console.error('Error fetching leads:', error);
+    }
 
     // Get recent product images added
-    const productImagesCollection = database.collection('productImages');
-    const recentImages = await productImagesCollection
-      .find({ createdAt: { $gte: timeAgo } })
-      .sort({ createdAt: -1 })
-      .limit(limit)
-      .toArray();
+    try {
+      const productImagesCollection = database.collection('productImages');
+      const recentImages = await productImagesCollection
+        .find({ createdAt: { $gte: timeAgo } })
+        .sort({ createdAt: -1 })
+        .limit(limit)
+        .toArray();
 
-    recentImages.forEach((img: any) => {
-      activities.push({
-        type: 'product_image',
-        title: 'Nova Imagem de Produto',
-        description: `Imagem adicionada para ${img.productType}`,
-        timestamp: img.createdAt,
-        details: {
-          productId: img.productId,
-          productType: img.productType,
-        },
+      recentImages.forEach((img: any) => {
+        activities.push({
+          type: 'product_image',
+          title: 'Nova Imagem de Produto',
+          description: `Imagem adicionada para ${img.productType}`,
+          timestamp: img.createdAt,
+          details: {
+            productId: img.productId,
+            productType: img.productType,
+          },
+        });
       });
-    });
+    } catch (error) {
+      console.error('Error fetching product images:', error);
+    }
 
     // Get recent health products created/updated
-    const healthProductsCollection = database.collection('healthProducts');
-    const recentProducts = await healthProductsCollection
-      .find({ createdAt: { $gte: timeAgo } })
-      .sort({ createdAt: -1 })
-      .limit(limit)
-      .toArray();
+    try {
+      const healthProductsCollection = database.collection('healthProducts');
+      const recentProducts = await healthProductsCollection
+        .find({ createdAt: { $gte: timeAgo } })
+        .sort({ createdAt: -1 })
+        .limit(limit)
+        .toArray();
 
-    recentProducts.forEach((product: any) => {
-      activities.push({
-        type: 'health_product',
-        title: 'Novo Produto de Saúde',
-        description: product.titlePt,
-        timestamp: product.createdAt,
-        details: {
-          id: product.id,
-          category: product.category,
-        },
+      recentProducts.forEach((product: any) => {
+        activities.push({
+          type: 'health_product',
+          title: 'Novo Produto de Saúde',
+          description: product.titlePt,
+          timestamp: product.createdAt,
+          details: {
+            id: product.id,
+            category: product.category,
+          },
+        });
       });
-    });
+    } catch (error) {
+      console.error('Error fetching health products:', error);
+    }
 
     // Get recent updated products (excluding newly created)
-    const updatedProducts = await healthProductsCollection
-      .find({ 
-        updatedAt: { $gte: timeAgo },
-        createdAt: { $lt: timeAgo }
-      })
-      .sort({ updatedAt: -1 })
-      .limit(limit)
-      .toArray();
+    try {
+      const healthProductsCollection = database.collection('healthProducts');
+      const updatedProducts = await healthProductsCollection
+        .find({ 
+          updatedAt: { $gte: timeAgo },
+          createdAt: { $lt: timeAgo }
+        })
+        .sort({ updatedAt: -1 })
+        .limit(limit)
+        .toArray();
 
-    updatedProducts.forEach((product: any) => {
-      activities.push({
-        type: 'health_product_updated',
-        title: 'Produto Atualizado',
-        description: product.titlePt,
-        timestamp: product.updatedAt,
-        details: {
-          id: product.id,
-          category: product.category,
-        },
+      updatedProducts.forEach((product: any) => {
+        activities.push({
+          type: 'health_product_updated',
+          title: 'Produto Atualizado',
+          description: product.titlePt,
+          timestamp: product.updatedAt,
+          details: {
+            id: product.id,
+            category: product.category,
+          },
+        });
       });
-    });
+    } catch (error) {
+      console.error('Error fetching updated products:', error);
+    }
 
     // Sort all activities by timestamp
     activities.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
