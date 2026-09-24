@@ -48,10 +48,19 @@ export const HealthSection: React.FC = () => {
   useEffect(() => {
     const loadDynamicProducts = async () => {
       try {
-        const response = await fetch('/api/health-product-images');
+        const response = await fetch('/api/admin/product-images');
         if (response.ok) {
           const data = await response.json();
-          setDynamicProducts(data);
+          // Transform array into object keyed by productId
+          const productsMap: Record<string, any> = {};
+          if (Array.isArray(data)) {
+            data.forEach((img: any) => {
+              if (!productsMap[img.productId] || img.featured) {
+                productsMap[img.productId] = img;
+              }
+            });
+          }
+          setDynamicProducts(productsMap);
         }
       } catch (error) {
         console.error('Error loading dynamic products:', error);
@@ -67,21 +76,22 @@ export const HealthSection: React.FC = () => {
     
     return {
       ...pack,
-      image: dynamicData.image || pack.image,
-      titlePt: dynamicData.titlePt || pack.titlePt,
-      titleEn: dynamicData.titleEn || pack.titleEn,
-      badgePt: dynamicData.badgePt || pack.badgePt,
-      badgeEn: dynamicData.badgeEn || pack.badgeEn,
-      tagPt: dynamicData.tagPt || pack.tagPt,
-      tagEn: dynamicData.tagEn || pack.tagEn,
-      descPt: dynamicData.descPt || pack.descPt,
-      descEn: dynamicData.descEn || pack.descEn,
-      productsPt: dynamicData.productsPt || pack.productsPt,
-      productsEn: dynamicData.productsEn || pack.productsEn,
-      benefitsPt: dynamicData.benefitsPt || pack.benefitsPt,
-      benefitsEn: dynamicData.benefitsEn || pack.benefitsEn,
-      notePt: dynamicData.notePt || pack.notePt,
-      noteEn: dynamicData.noteEn || pack.noteEn,
+      image: dynamicData.imageUrl || pack.image,
+      // Keep original titles, just update image
+      titlePt: pack.titlePt,
+      titleEn: pack.titleEn,
+      badgePt: pack.badgePt,
+      badgeEn: pack.badgeEn,
+      tagPt: pack.tagPt,
+      tagEn: pack.tagEn,
+      descPt: pack.descPt,
+      descEn: pack.descEn,
+      productsPt: pack.productsPt,
+      productsEn: pack.productsEn,
+      benefitsPt: pack.benefitsPt,
+      benefitsEn: pack.benefitsEn,
+      notePt: pack.notePt,
+      noteEn: pack.noteEn,
       featured: dynamicData.featured !== undefined ? dynamicData.featured : pack.featured,
     };
   };
@@ -402,21 +412,32 @@ export const HealthSection: React.FC = () => {
                     }}
                     className="w-full p-5 text-left flex items-center justify-between group"
                   >
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
-                          {isPt ? mergedPack.badgePt : mergedPack.badgeEn}
-                        </span>
-                        <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
-                          {isPt ? mergedPack.tagPt : mergedPack.tagEn}
-                        </span>
+                    <div className="flex items-center gap-4 flex-1">
+                      {mergedPack.image && (
+                        <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 border border-gray-200">
+                          <img
+                            src={mergedPack.image}
+                            alt={isPt ? mergedPack.titlePt : mergedPack.titleEn}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      )}
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+                            {isPt ? mergedPack.badgePt : mergedPack.badgeEn}
+                          </span>
+                          <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
+                            {isPt ? mergedPack.tagPt : mergedPack.tagEn}
+                          </span>
+                        </div>
+                        <h4 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-emerald-700 transition-colors">
+                          {isPt ? mergedPack.titlePt : mergedPack.titleEn}
+                        </h4>
                       </div>
-                      <h4 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-emerald-700 transition-colors">
-                        {isPt ? mergedPack.titlePt : mergedPack.titleEn}
-                      </h4>
                     </div>
                     <svg
-                      className={`w-5 h-5 text-emerald-600 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                      className={`w-5 h-5 text-emerald-600 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''} shrink-0`}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -431,15 +452,6 @@ export const HealthSection: React.FC = () => {
                       isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
                     }`}
                   >
-                    {mergedPack.image && (
-                      <div className="mb-4">
-                        <img
-                          src={mergedPack.image}
-                          alt={isPt ? mergedPack.titlePt : mergedPack.titleEn}
-                          className="w-full h-40 object-cover rounded-lg border border-gray-200"
-                        />
-                      </div>
-                    )}
                     <p className="text-xs text-gray-600 leading-relaxed mb-4">
                       {isPt ? mergedPack.descPt : mergedPack.descEn}
                     </p>
