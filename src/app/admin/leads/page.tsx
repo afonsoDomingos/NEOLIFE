@@ -9,6 +9,8 @@ import { LeadStatus } from '@/types';
 import { getCountryById } from '@/data/countries';
 import { AdminAIAssistant } from '@/components/admin/AdminAIAssistant';
 import { AdminHeader } from '@/components/admin/AdminHeader';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 interface MongoLead {
   _id: string;
@@ -271,6 +273,85 @@ export default function AdminLeadsPage() {
     URL.revokeObjectURL(url);
   };
 
+  const exportToPDF = () => {
+    if (filteredLeads.length === 0) {
+      alert('Nenhum lead para exportar.');
+      return;
+    }
+
+    const doc = new jsPDF();
+    
+    // Title
+    doc.setFontSize(18);
+    doc.setTextColor(16, 185, 129); // Emerald color
+    doc.text('Relatório de Leads - NeoLife', 14, 20);
+    
+    // Subtitle with date
+    doc.setFontSize(10);
+    doc.setTextColor(100, 100, 100);
+    doc.text(`Gerado em: ${new Date().toLocaleDateString('pt-PT')} ${new Date().toLocaleTimeString('pt-PT')}`, 14, 28);
+    doc.text(`Total de Leads: ${filteredLeads.length}`, 14, 34);
+
+    // Table data
+    const tableData = filteredLeads.map((l, index) => [
+      index + 1,
+      l.name || '',
+      l.phone || '',
+      l.email || '',
+      getCountryById(l.country)?.name || l.country || '',
+      getStatusLabel(l.status),
+      new Date(l.createdAt).toLocaleDateString('pt-PT'),
+    ]);
+
+    // Table headers
+    const headers = [['#', 'Nome', 'Telefone', 'Email', 'País', 'Estado', 'Data']];
+    
+    // Add table
+    autoTable(doc, {
+      head: headers,
+      body: tableData,
+      startY: 40,
+      styles: {
+        fontSize: 8,
+        cellPadding: 3,
+      },
+      headStyles: {
+        fillColor: [16, 185, 129],
+        textColor: 255,
+        fontStyle: 'bold',
+      },
+      alternateRowStyles: {
+        fillColor: [245, 245, 245],
+      },
+      columnStyles: {
+        0: { cellWidth: 10 }, // #
+        1: { cellWidth: 40 }, // Nome
+        2: { cellWidth: 25 }, // Telefone
+        3: { cellWidth: 35 }, // Email
+        4: { cellWidth: 25 }, // País
+        5: { cellWidth: 25 }, // Estado
+        6: { cellWidth: 20 }, // Data
+      },
+    });
+
+    // Footer
+    const pageCount = doc.internal.pages.length - 1;
+    doc.setFontSize(8);
+    doc.setTextColor(150, 150, 150);
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.text(
+        `Página ${i} de ${pageCount}`,
+        doc.internal.pageSize.getWidth() / 2,
+        doc.internal.pageSize.getHeight() - 10,
+        { align: 'center' }
+      );
+    }
+
+    // Save
+    doc.save(`leads_neolife_${new Date().toISOString().split('T')[0]}.pdf`);
+  };
+
   const getStatusColor = (status: LeadStatus): string => {
     const colors = {
       novo: 'bg-blue-100 text-blue-800',
@@ -310,18 +391,32 @@ export default function AdminLeadsPage() {
             <span className="text-xs sm:text-sm text-gray-600 font-medium">
               {filteredLeads.length} de {leads.length} leads
             </span>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={exportToCSV}
-              className="flex items-center gap-1.5 border-emerald-600 text-emerald-800 hover:bg-emerald-50 font-semibold text-xs"
-              title="Descarregar lista de leads em formato CSV (Excel)"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-              </svg>
-              Exportar CSV
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={exportToCSV}
+                className="flex items-center gap-1.5 border-emerald-600 text-emerald-800 hover:bg-emerald-50 font-semibold text-xs"
+                title="Descarregar lista de leads em formato CSV (Excel)"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                CSV
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={exportToPDF}
+                className="flex items-center gap-1.5 border-red-600 text-red-800 hover:bg-red-50 font-semibold text-xs"
+                title="Descarregar lista de leads em formato PDF"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                </svg>
+                PDF
+              </Button>
+            </div>
           </div>
         </div>
       </div>
