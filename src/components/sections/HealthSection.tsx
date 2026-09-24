@@ -41,6 +41,7 @@ export const HealthSection: React.FC = () => {
 
   const [dynamicPacks, setDynamicPacks] = useState<Record<string, any>>({});
   const [fullscreenImage, setFullscreenImage] = useState<string | null>(null);
+  const [productImages, setProductImages] = useState<Record<string, any[]>>({});
 
   // Use dynamic packs if available, otherwise fall back to static
   const allPacks = Object.keys(dynamicPacks).length > 0 
@@ -61,14 +62,23 @@ export const HealthSection: React.FC = () => {
         if (imagesResponse.ok) {
           const data = await imagesResponse.json();
           const productsMap: Record<string, any> = {};
+          const imagesMap: Record<string, any[]> = {};
           if (Array.isArray(data)) {
             data.forEach((img: any) => {
+              // Store all images per product
+              if (!imagesMap[img.productId]) {
+                imagesMap[img.productId] = [];
+              }
+              imagesMap[img.productId].push(img);
+
+              // Keep featured as main for backward compatibility
               if (!productsMap[img.productId] || img.featured) {
                 productsMap[img.productId] = img;
               }
             });
           }
           setDynamicProducts(productsMap);
+          setProductImages(imagesMap);
         }
 
         // Load dynamic packs from MongoDB
@@ -433,15 +443,22 @@ export const HealthSection: React.FC = () => {
                   >
                     <div className="flex items-center gap-4 flex-1">
                       {mergedPack.image && (
-                        <div 
-                          className="w-16 h-16 rounded-lg overflow-hidden shrink-0 border border-gray-200 cursor-pointer hover:border-emerald-400 transition-colors"
-                          onClick={() => setFullscreenImage(mergedPack.image)}
-                        >
-                          <img
-                            src={mergedPack.image}
-                            alt={isPt ? mergedPack.titlePt : mergedPack.titleEn}
-                            className="w-full h-full object-cover"
-                          />
+                        <div className="relative">
+                          <div
+                            className="w-16 h-16 rounded-lg overflow-hidden shrink-0 border border-gray-200 cursor-pointer hover:border-emerald-400 transition-colors"
+                            onClick={() => setFullscreenImage(mergedPack.image)}
+                          >
+                            <img
+                              src={mergedPack.image}
+                              alt={isPt ? mergedPack.titlePt : mergedPack.titleEn}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                          {productImages[pack.id] && productImages[pack.id].length > 1 && (
+                            <div className="absolute -top-1 -right-1 bg-emerald-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                              {productImages[pack.id].length}
+                            </div>
+                          )}
                         </div>
                       )}
                       <div className="flex-1">
@@ -507,6 +524,35 @@ export const HealthSection: React.FC = () => {
                         ))}
                       </ul>
                     </div>
+
+                    {/* Multiple Images Gallery */}
+                    {productImages[pack.id] && productImages[pack.id].length > 1 && (
+                      <div className="mb-4">
+                        <p className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider mb-2">
+                          {isPt ? 'Galeria de Imagens:' : 'Image Gallery:'}
+                        </p>
+                        <div className="grid grid-cols-3 gap-2">
+                          {productImages[pack.id].map((img: any, idx: number) => (
+                            <div
+                              key={idx}
+                              className="relative aspect-square rounded-lg overflow-hidden border border-gray-200 cursor-pointer hover:border-emerald-400 transition-colors"
+                              onClick={() => setFullscreenImage(img.imageUrl)}
+                            >
+                              <img
+                                src={img.imageUrl}
+                                alt={img.altText || `${isPt ? mergedPack.titlePt : mergedPack.titleEn} ${idx + 1}`}
+                                className="w-full h-full object-cover"
+                              />
+                              {img.featured && (
+                                <div className="absolute top-1 left-1 bg-emerald-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded">
+                                  {isPt ? 'Principal' : 'Main'}
+                                </div>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                     {/* Purchase Button */}
                     <div className="pt-3 border-t border-gray-100">

@@ -19,6 +19,7 @@ interface ProductImage {
   featured?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  sortOrder?: number;
 }
 
 function ProductImagesContent() {
@@ -338,12 +339,12 @@ function ProductImagesContent() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    URL da Imagem
+                    Imagem do Produto
                   </label>
-                  <Input
-                    value={formData.imageUrl}
-                    onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                    placeholder="https://example.com/image.jpg"
+                  <ImageUpload
+                    onUpload={(url, publicId) => setFormData({ ...formData, imageUrl: url })}
+                    currentImage={formData.imageUrl}
+                    folder="neolife-products"
                   />
                 </div>
 

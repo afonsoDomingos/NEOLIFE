@@ -1,94 +1,43 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { v2 as cloudinary } from 'cloudinary';
+
+cloudinary.config({
+  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File;
-    const folder = (formData.get('folder') as string) || 'neolife';
 
     if (!file) {
-      return NextResponse.json({ error: 'Nenhum ficheiro fornecido.' }, { status: 400 });
+      return NextResponse.json({ error: 'No file provided' }, { status: 400 });
     }
 
-    // Validate file type
-    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/gif'];
-    if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json(
-        { error: `Tipo não suportado: ${file.type}. Use JPG, PNG ou WebP.` },
-        { status: 400 }
-      );
-    }
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
 
-    // Validate file size (5MB max)
-    if (file.size > 5 * 1024 * 1024) {
-      return NextResponse.json({ error: 'Ficheiro demasiado grande. Máximo 5MB.' }, { status: 400 });
-    }
-
-    // Support both naming conventions (Vercel uses CLOUDINARY_CLOUD_NAME, local uses NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME)
-    const cloudName = process.env.CLOUDINARY_CLOUD_NAME || process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-    const apiKey = process.env.CLOUDINARY_API_KEY;
-    const apiSecret = process.env.CLOUDINARY_API_SECRET;
-
-    if (!cloudName || !apiKey || !apiSecret) {
-      console.error('[upload] Missing Cloudinary env:', { cloudName, hasKey: !!apiKey, hasSecret: !!apiSecret });
-      return NextResponse.json(
-        { error: `Cloudinary não configurado. cloud_name=${cloudName}, api_key=${!!apiKey}, api_secret=${!!apiSecret}` },
-        { status: 500 }
-      );
-    }
-
-    // Upload via Cloudinary REST API (unsigned upload alternative)
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = Buffer.from(arrayBuffer);
-    const base64 = buffer.toString('base64');
-    const dataUri = `data:${file.type};base64,${base64}`;
-
-    // Use Cloudinary's upload API directly via fetch (avoids module initialization issues)
-    const timestamp = Math.round(Date.now() / 1000);
-    const paramsToSign = `folder=${folder}&timestamp=${timestamp}`;
-
-    // Create signature using crypto
-    const crypto = await import('crypto');
-    const signature = crypto
-      .createHash('sha256')
-      .update(paramsToSign + apiSecret)
-      .digest('hex');
-
-    const uploadFormData = new FormData();
-    uploadFormData.append('file', dataUri);
-    uploadFormData.append('folder', folder);
-    uploadFormData.append('timestamp', String(timestamp));
-    uploadFormData.append('api_key', apiKey);
-    uploadFormData.append('signature', signature);
-
-    const uploadRes = await fetch(
-      `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
-      { method: 'POST', body: uploadFormData }
-    );
-
-    const uploadData = await uploadRes.json();
-
-    if (!uploadRes.ok) {
-      console.error('[upload] Cloudinary error:', uploadData);
-      return NextResponse.json(
-        { error: uploadData.error?.message || 'Erro ao fazer upload no Cloudinary.' },
-        { status: 500 }
-      );
-    }
+    // Upload to Cloudinary
+    const result = await new Promise<any>((resolve, reject) => {
+      cloudinary.uploader
+        .upload_stream(
+          { resource_type: 'auto', folder: 'neolife-products' },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        )
+        .end(buffer);
+    });
 
     return NextResponse.json({
-      public_id: uploadData.public_id,
-      secure_url: uploadData.secure_url,
-      url: uploadData.url,
-      width: uploadData.width,
-      height: uploadData.height,
-      format: uploadData.format,
+      url: result.secure_url,
+      publicId: result.public_id,
     });
-  } catch (error: any) {
-    console.error('[upload] Unexpected error:', error);
-    return NextResponse.json(
-      { error: error?.message || 'Erro inesperado ao fazer upload.' },
-      { status: 500 }
-    );
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    return NextResponse.json({ error: 'Failed to upload image' }, { status: 500 });
   }
 }

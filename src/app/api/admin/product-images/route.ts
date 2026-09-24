@@ -22,6 +22,7 @@ interface ProductImage {
   featured?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
+  sortOrder?: number;
 }
 
 export async function GET(request: NextRequest) {
