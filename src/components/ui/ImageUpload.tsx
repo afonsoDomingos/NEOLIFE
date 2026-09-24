@@ -69,7 +69,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
       }
 
       const data = await response.json();
-      onUpload(data.secure_url, data.public_id);
+      onUpload(data.url, data.publicId);
       setError(null);
     } catch (err: any) {
       console.error('Upload error:', err);
