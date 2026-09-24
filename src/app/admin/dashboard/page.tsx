@@ -215,17 +215,17 @@ export default function AdminDashboard() {
               </Card>
             </Link>
 
-            <Link href="/admin/product-images">
+            <Link href="/admin/health-products-manage">
               <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
                 <CardContent className="p-5 flex items-start gap-3">
-                  <div className="p-2.5 bg-purple-50 text-purple-700 rounded-lg group-hover:scale-105 transition-transform flex items-center justify-center">
+                  <div className="p-2.5 bg-green-50 text-green-700 rounded-lg group-hover:scale-105 transition-transform flex items-center justify-center">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l4.586-4.586a2 2 0 012.828 0L16 4m-2 0L6.586 9.414a2 2 0 012.828 0L16 14m-2 0L6.586 9.414a2 2 0 012.828 0L4 20m0 0V6a2 2 0 012-2h2a2 2 0 012 2v2" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Imagens de Produtos</h3>
-                    <p className="text-xs text-gray-500 mt-0.5">Configurar fotos dos produtos</p>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Gerir Produtos</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">Criar, editar e apagar produtos</p>
                   </div>
                 </CardContent>
               </Card>

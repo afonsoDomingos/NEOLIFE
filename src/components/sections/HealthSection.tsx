@@ -39,19 +39,26 @@ export const HealthSection: React.FC = () => {
     { id: 'kids', labelPt: 'Crianças & Jovens', labelEn: 'Kids & Youth' },
   ];
 
+  const [dynamicPacks, setDynamicPacks] = useState<Record<string, any>>({});
+
+  // Use dynamic packs if available, otherwise fall back to static
+  const allPacks = Object.keys(dynamicPacks).length > 0 
+    ? Object.values(dynamicPacks) as any[]
+    : healthSolutionPacks;
+
   const filteredPacks =
     selectedCategory === 'all'
-      ? healthSolutionPacks
-      : healthSolutionPacks.filter((p) => p.category === selectedCategory);
+      ? allPacks
+      : allPacks.filter((p) => p.category === selectedCategory);
 
   // Load dynamic product data from database
   useEffect(() => {
-    const loadDynamicProducts = async () => {
+    const loadDynamicData = async () => {
       try {
-        const response = await fetch('/api/admin/product-images');
-        if (response.ok) {
-          const data = await response.json();
-          // Transform array into object keyed by productId
+        // Load product images
+        const imagesResponse = await fetch('/api/admin/product-images');
+        if (imagesResponse.ok) {
+          const data = await imagesResponse.json();
           const productsMap: Record<string, any> = {};
           if (Array.isArray(data)) {
             data.forEach((img: any) => {
@@ -62,38 +69,49 @@ export const HealthSection: React.FC = () => {
           }
           setDynamicProducts(productsMap);
         }
+
+        // Load dynamic packs from MongoDB
+        const packsResponse = await fetch('/api/admin/health-products');
+        if (packsResponse.ok) {
+          const data = await packsResponse.json();
+          const packsMap: Record<string, any> = {};
+          if (Array.isArray(data)) {
+            data.forEach((pack: any) => {
+              packsMap[pack.id] = pack;
+            });
+          }
+          setDynamicPacks(packsMap);
+        }
       } catch (error) {
-        console.error('Error loading dynamic products:', error);
+        console.error('Error loading dynamic data:', error);
       }
     };
-    loadDynamicProducts();
+    loadDynamicData();
   }, []);
 
   // Helper function to merge dynamic data with static data
   const getMergedPack = (pack: any) => {
-    const dynamicData = dynamicProducts[pack.id];
-    if (!dynamicData) return pack;
+    const dynamicImageData = dynamicProducts[pack.id];
+    const dynamicPackData = dynamicPacks[pack.id];
     
-    return {
-      ...pack,
-      image: dynamicData.imageUrl || pack.image,
-      // Keep original titles, just update image
-      titlePt: pack.titlePt,
-      titleEn: pack.titleEn,
-      badgePt: pack.badgePt,
-      badgeEn: pack.badgeEn,
-      tagPt: pack.tagPt,
-      tagEn: pack.tagEn,
-      descPt: pack.descPt,
-      descEn: pack.descEn,
-      productsPt: pack.productsPt,
-      productsEn: pack.productsEn,
-      benefitsPt: pack.benefitsPt,
-      benefitsEn: pack.benefitsEn,
-      notePt: pack.notePt,
-      noteEn: pack.noteEn,
-      featured: dynamicData.featured !== undefined ? dynamicData.featured : pack.featured,
-    };
+    // If there's dynamic pack data, use it entirely
+    if (dynamicPackData) {
+      return {
+        ...dynamicPackData,
+        // Override with image from product-images if available
+        image: dynamicImageData?.imageUrl || dynamicPackData.image,
+      };
+    }
+    
+    // Otherwise use static data with image override
+    if (dynamicImageData) {
+      return {
+        ...pack,
+        image: dynamicImageData.imageUrl || pack.image,
+      };
+    }
+    
+    return pack;
   };
 
   const getMergedSupplement = (supp: any, index: number) => {
