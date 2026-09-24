@@ -48,13 +48,27 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  let productId: string | undefined;
+  let productType: 'pack' | 'supplement' | 'shake' | undefined;
+  let imageUrl: string | undefined;
+
   try {
     const body = await request.json();
-    const { productId, productType, imageUrl, altText, country, featured } = body;
+    productId = body.productId;
+    productType = body.productType;
+    imageUrl = body.imageUrl;
+    const { altText, country, featured } = body;
 
     if (!productId || !productType || !imageUrl) {
       return NextResponse.json(
         { error: 'productId, productType, and imageUrl are required' },
+        { status: 400 }
+      );
+    }
+
+    if (!['pack', 'supplement', 'shake'].includes(productType)) {
+      return NextResponse.json(
+        { error: 'productType must be pack, supplement, or shake' },
         { status: 400 }
       );
     }
