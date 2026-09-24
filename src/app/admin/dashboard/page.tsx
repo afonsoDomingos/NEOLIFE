@@ -9,6 +9,10 @@ import { getCountryById } from '@/data/countries';
 import { getThemeBySlug } from '@/data/themes';
 import { AdminAIAssistant } from '@/components/admin/AdminAIAssistant';
 import { AdminHeader } from '@/components/admin/AdminHeader';
+import { DailyLeadsChart } from '@/components/admin/charts/DailyLeadsChart';
+import { LeadsByCountryChart } from '@/components/admin/charts/LeadsByCountryChart';
+import { LeadStatusChart } from '@/components/admin/charts/LeadStatusChart';
+import { LeadsByPillarChart } from '@/components/admin/charts/LeadsByPillarChart';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<any>(null);
@@ -201,6 +205,88 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent className="pt-0">
               <p className="text-xs text-gray-500">Cards de interesse publicados</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Charts Section */}
+        <div>
+          <h2 className="text-lg font-semibold text-black mb-4">
+            <WordByWordText 
+              text="Dashboard Visual"
+              speed={150}
+            />
+          </h2>
+          
+          {/* Daily Leads Chart - Full Width */}
+          <Card className="mb-6">
+            <CardHeader>
+              <p className="text-sm font-medium text-gray-600">Leads Diários (Últimos 30 dias)</p>
+            </CardHeader>
+            <CardContent>
+              {loading ? (
+                <div className="h-[300px] bg-gray-200 animate-pulse rounded-lg" />
+              ) : (
+                <DailyLeadsChart data={dailyTrend} />
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Country and Status Charts - Side by Side */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <Card>
+              <CardHeader>
+                <p className="text-sm font-medium text-gray-600">Leads por País</p>
+              </CardHeader>
+              <CardContent>
+                {loading ? (
+                  <div className="h-[300px] bg-gray-200 animate-pulse rounded-lg" />
+                ) : (
+                  <LeadsByCountryChart 
+                    data={countryEntries.map(([country, count]) => ({
+                      country: getCountryById(country)?.namePt || country,
+                      count
+                    }))} 
+                  />
+                )}
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <p className="text-sm font-medium text-gray-600">Status dos Leads</p>
+              </CardHeader>
+              <CardContent>
+                {loading ? (
+                  <div className="h-[300px] bg-gray-200 animate-pulse rounded-lg" />
+                ) : (
+                  <LeadStatusChart 
+                    data={statusEntries.map(({ key, count }) => ({
+                      status: key,
+                      count
+                    }))} 
+                  />
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Pillar Chart - Full Width */}
+          <Card>
+            <CardHeader>
+              <p className="text-sm font-medium text-gray-600">Interesse por Pilar</p>
+            </CardHeader>
+            <CardContent>
+              {loading ? (
+                <div className="h-[300px] bg-gray-200 animate-pulse rounded-lg" />
+              ) : (
+                <LeadsByPillarChart 
+                  data={themeEntries.map(([theme, count]) => ({
+                    pillar: theme,
+                    count
+                  }))} 
+                />
+              )}
             </CardContent>
           </Card>
         </div>
