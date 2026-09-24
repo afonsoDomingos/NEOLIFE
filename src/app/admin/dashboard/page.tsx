@@ -15,10 +15,13 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [recentLeads, setRecentLeads] = useState<any[]>([]);
   const [loadingLeads, setLoadingLeads] = useState(true);
+  const [activities, setActivities] = useState<any[]>([]);
+  const [loadingActivities, setLoadingActivities] = useState(true);
 
   useEffect(() => {
     loadStats();
     loadRecentLeads();
+    loadActivities();
   }, []);
 
   const loadStats = async () => {
@@ -49,6 +52,20 @@ export default function AdminDashboard() {
     }
   };
 
+  const loadActivities = async () => {
+    try {
+      const response = await fetch('/api/admin/activities?limit=5&hours=24');
+      if (response.ok) {
+        const data = await response.json();
+        setActivities(data.activities || []);
+      }
+    } catch (error) {
+      console.error('Error loading activities:', error);
+    } finally {
+      setLoadingActivities(false);
+    }
+  };
+
 
 
   const totalLeads = stats?.total || 0;
@@ -73,8 +90,10 @@ export default function AdminDashboard() {
         onRefresh={() => {
           setLoading(true);
           setLoadingLeads(true);
+          setLoadingActivities(true);
           loadStats();
           loadRecentLeads();
+          loadActivities();
         }}
       />
 
@@ -138,6 +157,89 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent className="pt-0">
               <p className="text-xs text-gray-500">Cards de interesse publicados</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Activities Feed */}
+        <div>
+          <h2 className="text-lg font-semibold text-black mb-4">
+            <WordByWordText 
+              text="Atividades Recentes"
+              speed={150}
+            />
+          </h2>
+          <Card>
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-medium text-gray-600">
+                  Últimas 24 horas
+                </p>
+                {activities.length > 0 && (
+                  <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-full">
+                    {activities.length} nova{activities.length !== 1 ? 's' : ''}
+                  </span>
+                )}
+              </div>
+            </CardHeader>
+            <CardContent>
+              {loadingActivities ? (
+                <div className="space-y-3">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <div className="w-8 h-8 bg-gray-200 animate-pulse rounded-full" />
+                      <div className="flex-1">
+                        <div className="h-4 bg-gray-200 animate-pulse rounded w-3/4 mb-2" />
+                        <div className="h-3 bg-gray-200 animate-pulse rounded w-1/2" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : activities.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-gray-500 text-sm">
+                    Nenhuma atividade recente nas últimas 24 horas
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {activities.map((activity, index) => (
+                    <div key={index} className="flex items-start gap-3 pb-3 border-b border-gray-100 last:border-0 last:pb-0">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
+                        activity.type === 'lead' ? 'bg-emerald-100 text-emerald-700' :
+                        activity.type === 'product_image' ? 'bg-purple-100 text-purple-700' :
+                        activity.type === 'health_product' ? 'bg-blue-100 text-blue-700' :
+                        'bg-orange-100 text-orange-700'
+                      }`}>
+                        {activity.type === 'lead' ? (
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                          </svg>
+                        ) : activity.type === 'product_image' ? (
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l4.586-4.586a2 2 0 012.828 0L16 4m-2 0L6.586 9.414a2 2 0 012.828 0L16 14m-2 0L6.586 9.414a2 2 0 012.828 0L4 20m0 0V6a2 2 0 012-2h2a2 2 0 012 2v2" />
+                          </svg>
+                        ) : (
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                          </svg>
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-gray-900">
+                          {activity.title}
+                        </p>
+                        <p className="text-xs text-gray-600 mt-0.5">
+                          {activity.description}
+                        </p>
+                        <p className="text-xs text-gray-400 mt-1">
+                          {new Date(activity.timestamp).toLocaleString('pt-PT')}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
         </div>
