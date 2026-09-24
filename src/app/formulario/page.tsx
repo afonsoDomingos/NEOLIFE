@@ -38,7 +38,6 @@ function FormularioContent() {
     name: '',
     phone: '',
     email: '',
-    whatsapp: '',
     source: '',
     notes: initialNotes,
   });
@@ -109,7 +108,7 @@ function FormularioContent() {
     }
 
     if (!formData.phone.trim()) {
-      newErrors.phone = isPt ? 'Telefone é obrigatório' : 'Phone is required';
+      newErrors.phone = isPt ? 'WhatsApp é obrigatório' : 'WhatsApp is required';
     } else if (!isPhoneFromAllowedCountry(formData.phone)) {
       newErrors.phone = isPt
         ? `O número deve começar com o indicativo do seu país (ex: ${country.dialCode}).`
@@ -179,7 +178,7 @@ function FormularioContent() {
           name: formData.name,
           phone: formData.phone,
           email: formData.email,
-          whatsapp: formData.whatsapp || undefined,
+          whatsapp: formData.phone || undefined,
           theme: theme?.slug || 'consulta-personalizada',
           source: formData.source || 'website-selecao',
           campaign: campaign || undefined,
@@ -459,10 +458,10 @@ function FormularioContent() {
               required
             />
 
-            {/* Phone */}
+            {/* Phone/WhatsApp */}
             <div>
               <Input
-                label={`${isPt ? 'Telefone / WhatsApp' : 'Phone / WhatsApp'} (${country.dialCode})`}
+                label={`${isPt ? '📱 WhatsApp' : '📱 WhatsApp'} (${country.dialCode})`}
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
@@ -472,7 +471,7 @@ function FormularioContent() {
               />
               {!errors.phone && (
                 <p className="mt-1 text-xs text-gray-500">
-                  {isPt ? 'Indicativo oficial:' : 'Dial code:'} <span className="font-mono font-bold text-emerald-800">{country.dialCode}</span>
+                  {isPt ? 'Número WhatsApp com indicativo:' : 'WhatsApp number with dial code:'} <span className="font-mono font-bold text-emerald-800">{country.dialCode}</span>
                 </p>
               )}
             </div>
@@ -489,7 +488,7 @@ function FormularioContent() {
             />
 
             <Select
-              label={isPt ? 'Como conheceu a Neolife? (Opcional)' : 'How did you hear about Neolife? (Optional)'}
+              label={isPt ? 'Como conheceu a NeoLife? (Opcional)' : 'How did you hear about NeoLife? (Optional)'}
               name="source"
               value={formData.source}
               onChange={handleInputChange}
@@ -497,7 +496,6 @@ function FormularioContent() {
               <option value="">{isPt ? 'Selecione uma opção' : 'Select an option'}</option>
               <option value="facebook">Facebook</option>
               <option value="instagram">Instagram</option>
-              <option value="whatsapp">WhatsApp</option>
               <option value="amigo">{isPt ? 'Amigo / Indicação' : 'Friend / Referral'}</option>
               <option value="google">Google</option>
               <option value="outro">{isPt ? 'Outro canal' : 'Other'}</option>
