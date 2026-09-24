@@ -25,6 +25,8 @@ function GateContent() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+  const totalSteps = 3;
 
   const country: Country = getCountryById(selectedCountryId) || getCountryById('mz-pt') || {
     id: 'mz-pt',
@@ -74,29 +76,48 @@ function GateContent() {
     return emailRegex.test(email);
   };
 
-  const validateForm = (): boolean => {
+  const validateStep = (step: number): boolean => {
     const newErrors: Record<string, string> = {};
 
-    if (!formData.name.trim()) {
-      newErrors.name = isPt ? 'Nome é obrigatório' : 'Name is required';
+    if (step === 1) {
+      if (!formData.name.trim()) {
+        newErrors.name = isPt ? 'Nome é obrigatório' : 'Name is required';
+      }
     }
 
-    if (!formData.phone.trim()) {
-      newErrors.phone = isPt ? 'Telefone é obrigatório' : 'Phone is required';
-    } else if (!isPhoneFromAllowedCountry(formData.phone)) {
-      newErrors.phone = isPt
-        ? `O número deve começar com o indicativo do seu país (ex: ${country.dialCode}).`
-        : `Phone number must start with country dial code (e.g. ${country.dialCode}).`;
-    }
+    if (step === 2) {
+      if (!formData.phone.trim()) {
+        newErrors.phone = isPt ? 'Telefone é obrigatório' : 'Phone is required';
+      } else if (!isPhoneFromAllowedCountry(formData.phone)) {
+        newErrors.phone = isPt
+          ? `O número deve começar com o indicativo do seu país (ex: ${country.dialCode}).`
+          : `Phone number must start with country dial code (e.g. ${country.dialCode}).`;
+      }
 
-    if (!formData.email.trim()) {
-      newErrors.email = isPt ? 'E-mail é obrigatório' : 'Email is required';
-    } else if (!isValidEmail(formData.email)) {
-      newErrors.email = isPt ? 'E-mail inválido' : 'Invalid email';
+      if (!formData.email.trim()) {
+        newErrors.email = isPt ? 'E-mail é obrigatório' : 'Email is required';
+      } else if (!isValidEmail(formData.email)) {
+        newErrors.email = isPt ? 'E-mail inválido' : 'Invalid email';
+      }
     }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
+  };
+
+  const validateForm = (): boolean => {
+    return validateStep(1) && validateStep(2);
+  };
+
+  const handleNextStep = () => {
+    if (validateStep(currentStep)) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const handlePreviousStep = () => {
+    setCurrentStep(currentStep - 1);
+    setErrors({});
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -220,69 +241,148 @@ function GateContent() {
 
         {/* Form */}
         <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-200 shadow-lg">
-          <form onSubmit={handleSubmit} className="space-y-5">
+          
+          {/* Progress Indicator */}
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-2">
+              {[1, 2, 3].map((step) => (
+                <div key={step} className="flex items-center">
+                  <div className={`flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold transition-all ${
+                    step === currentStep
+                      ? 'bg-emerald-600 text-white scale-110'
+                      : step < currentStep
+                      ? 'bg-emerald-500 text-white'
+                      : 'bg-gray-200 text-gray-500'
+                  }`}>
+                    {step < currentStep ? '✓' : step}
+                  </div>
+                  {step < 3 && (
+                    <div className={`w-12 h-1 mx-2 rounded transition-all ${
+                      step < currentStep ? 'bg-emerald-500' : 'bg-gray-200'
+                    }`} />
+                  )}
+                </div>
+              ))}
+            </div>
+            <div className="text-center">
+              <p className="text-xs text-gray-500 font-medium">
+                {isPt ? `Passo ${currentStep} de ${totalSteps}` : `Step ${currentStep} of ${totalSteps}`}
+              </p>
+            </div>
+          </div>
+
+          <form onSubmit={(e) => {
+            e.preventDefault();
+            if (currentStep < totalSteps) {
+              handleNextStep();
+            } else {
+              handleSubmit(e);
+            }
+          }} className="space-y-5">
             
-            {/* Country Selector */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1.5">
-                {isPt ? 'País de Residência' : 'Country of Residence'}
-              </label>
-              <select
-                value={selectedCountryId}
-                onChange={(e) => {
-                  setSelectedCountryId(e.target.value);
-                  const newC = getCountryById(e.target.value);
-                  if (newC && newC.dialCode && !formData.phone.startsWith(newC.dialCode)) {
-                    setFormData((prev) => ({ ...prev, phone: `${newC.dialCode} ` }));
-                  }
-                }}
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
-              >
-                {countries.filter((c) => c.available).map((c) => (
-                  <option key={c.id} value={c.id}>
-                    {c.flag} {c.name} ({c.dialCode})
-                  </option>
-                ))}
-              </select>
-            </div>
+            {/* Step 1: Country & Name */}
+            {currentStep === 1 && (
+              <div className="space-y-5 animate-fade-in">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                    {isPt ? 'País de Residência' : 'Country of Residence'}
+                  </label>
+                  <select
+                    value={selectedCountryId}
+                    onChange={(e) => {
+                      setSelectedCountryId(e.target.value);
+                      const newC = getCountryById(e.target.value);
+                      if (newC && newC.dialCode && !formData.phone.startsWith(newC.dialCode)) {
+                        setFormData((prev) => ({ ...prev, phone: `${newC.dialCode} ` }));
+                      }
+                    }}
+                    className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-900 text-sm focus:ring-2 focus:ring-emerald-500 focus:outline-none"
+                  >
+                    {countries.filter((c) => c.available).map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.flag} {c.name} ({c.dialCode})
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-            <Input
-              label={isPt ? 'Nome Completo' : 'Full Name'}
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              placeholder={isPt ? 'Digite o seu nome completo' : 'Enter your full name'}
-              error={errors.name}
-              required
-            />
+                <Input
+                  label={isPt ? 'Nome Completo' : 'Full Name'}
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  placeholder={isPt ? 'Digite o seu nome completo' : 'Enter your full name'}
+                  error={errors.name}
+                  required
+                />
+              </div>
+            )}
 
-            <div>
-              <Input
-                label={`${isPt ? 'Telefone / WhatsApp' : 'Phone / WhatsApp'} (${country.dialCode})`}
-                name="phone"
-                value={formData.phone}
-                onChange={handleInputChange}
-                placeholder={`${country.dialCode} 84 000 0000`}
-                error={errors.phone}
-                required
-              />
-              {!errors.phone && (
-                <p className="mt-1 text-xs text-gray-500">
-                  {isPt ? 'Indicativo oficial:' : 'Dial code:'} <span className="font-mono font-bold text-emerald-800">{country.dialCode}</span>
+            {/* Step 2: Phone & Email */}
+            {currentStep === 2 && (
+              <div className="space-y-5 animate-fade-in">
+                <div>
+                  <Input
+                    label={`${isPt ? 'Telefone / WhatsApp' : 'Phone / WhatsApp'} (${country.dialCode})`}
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    placeholder={`${country.dialCode} 84 000 0000`}
+                    error={errors.phone}
+                    required
+                  />
+                  {!errors.phone && (
+                    <p className="mt-1 text-xs text-gray-500">
+                      {isPt ? 'Indicativo oficial:' : 'Dial code:'} <span className="font-mono font-bold text-emerald-800">{country.dialCode}</span>
+                    </p>
+                  )}
+                </div>
+
+                <Input
+                  label="E-mail"
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  placeholder={isPt ? 'exemplo@email.com' : 'example@email.com'}
+                  error={errors.email}
+                  required
+                />
+              </div>
+            )}
+
+            {/* Step 3: Confirmation */}
+            {currentStep === 3 && (
+              <div className="space-y-5 animate-fade-in">
+                <div className="bg-emerald-50 rounded-2xl p-4 border border-emerald-200">
+                  <h3 className="text-sm font-bold text-emerald-900 mb-3">
+                    {isPt ? 'Confirme seus dados:' : 'Confirm your details:'}
+                  </h3>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">{isPt ? 'Nome:' : 'Name:'}</span>
+                      <span className="font-semibold text-gray-900">{formData.name}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">{isPt ? 'País:' : 'Country:'}</span>
+                      <span className="font-semibold text-gray-900">{country.flag} {country.name}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">{isPt ? 'Telefone:' : 'Phone:'}</span>
+                      <span className="font-semibold text-gray-900">{formData.phone}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">E-mail:</span>
+                      <span className="font-semibold text-gray-900">{formData.email}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-xs text-gray-500 text-center">
+                  {isPt ? 'Ao continuar, você concorda em receber informações da NeoLife.' : 'By continuing, you agree to receive information from NeoLife.'}
                 </p>
-              )}
-            </div>
-
-            <Input
-              label="E-mail"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              placeholder={isPt ? 'exemplo@email.com' : 'example@email.com'}
-              error={errors.email}
-              required
-            />
+              </div>
+            )}
 
             {errors.submit && (
               <div className="p-4 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700">
@@ -290,16 +390,33 @@ function GateContent() {
               </div>
             )}
 
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              fullWidth
-              className="bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold py-3.5 rounded-xl shadow-md text-sm"
-            >
-              {isSubmitting
-                ? (isPt ? 'A Processar...' : 'Processing...')
-                : (isPt ? 'Continuar para o Conteúdo ➔' : 'Continue to Content ➔')}
-            </Button>
+            {/* Navigation Buttons */}
+            <div className="flex gap-3 pt-2">
+              {currentStep > 1 && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handlePreviousStep}
+                  className="flex-1 border-gray-300 text-gray-700 hover:bg-gray-50 font-semibold py-3.5 rounded-xl text-sm"
+                >
+                  {isPt ? '← Voltar' : '← Back'}
+                </Button>
+              )}
+
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                className={`flex-1 bg-emerald-700 hover:bg-emerald-800 text-white font-extrabold py-3.5 rounded-xl shadow-md text-sm ${
+                  currentStep === 1 ? 'ml-auto' : ''
+                }`}
+              >
+                {isSubmitting
+                  ? (isPt ? 'A Processar...' : 'Processing...')
+                  : currentStep === totalSteps
+                  ? (isPt ? 'Concluir ➔' : 'Complete ➔')
+                  : (isPt ? 'Próximo →' : 'Next →')}
+              </Button>
+            </div>
 
             <p className="text-center pt-2 text-xs text-gray-500">
               {isPt ? 'Seus dados estão seguros e não serão compartilhados.' : 'Your data is safe and will not be shared.'}
