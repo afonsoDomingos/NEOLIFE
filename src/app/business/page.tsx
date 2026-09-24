@@ -1,17 +1,23 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BusinessSection } from '@/components/sections/BusinessSection';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { useSelection } from '@/lib/context/SelectionContext';
 import { Button } from '@/components/ui/Button';
+import { requireGate } from '@/lib/utils/gateUtils';
 
 export default function BusinessPage() {
   const { language } = useLanguage();
   const isPt = language === 'pt';
   const { totalItemsCount, businessGoals } = useSelection();
+
+  // Gate verification
+  useEffect(() => {
+    requireGate('business', '/business');
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">

@@ -1,17 +1,23 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { ExperiencesSection } from '@/components/sections/ExperiencesSection';
 import { VideoSection } from '@/components/ui/VideoSection';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { useSelection } from '@/lib/context/SelectionContext';
 import { Button } from '@/components/ui/Button';
+import { requireGate } from '@/lib/utils/gateUtils';
 
 export default function ExperienciasPage() {
   const { language } = useLanguage();
   const isPt = language === 'pt';
   const { totalItemsCount } = useSelection();
+
+  // Gate verification
+  useEffect(() => {
+    requireGate('experiencias', '/experiencias');
+  }, []);
 
   return (
     <div className="min-h-screen bg-white">
