@@ -4,6 +4,7 @@ import React, { useEffect, useState, Suspense } from 'react';
 import { Card, CardContent, CardHeader } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input, Textarea } from '@/components/ui/Input';
+import { ImageUpload } from '@/components/ui/ImageUpload';
 import Link from 'next/link';
 import { extractYouTubeId, getEmbedUrl } from '@/lib/utils/video';
 import { AdminHeader } from '@/components/admin/AdminHeader';
@@ -36,6 +37,7 @@ function VideosContent() {
     description: '',
     videoUrl: '',
     thumbnailUrl: '',
+    thumbnailPublicId: '',
     category: 'Apresentação',
     customCategory: '',
     featured: false,
@@ -110,6 +112,7 @@ function VideosContent() {
           description: '',
           videoUrl: '',
           thumbnailUrl: '',
+          thumbnailPublicId: '',
           category: 'Apresentação',
           customCategory: '',
           featured: false,
@@ -140,6 +143,7 @@ function VideosContent() {
       description: video.description || '',
       videoUrl: video.videoUrl,
       thumbnailUrl: video.thumbnailUrl || '',
+      thumbnailPublicId: (video as any).thumbnailPublicId || '',
       category: video.category || 'Apresentação',
       customCategory: '',
       featured: !!video.featured,
@@ -166,6 +170,14 @@ function VideosContent() {
       console.error('Error deleting video:', error);
       setMessage({ type: 'error', text: 'Erro ao conectar ao servidor.' });
     }
+  };
+
+  const handleThumbnailUpload = (imageUrl: string, publicId: string) => {
+    setFormData(prev => ({
+      ...prev,
+      thumbnailUrl: imageUrl,
+      thumbnailPublicId: publicId
+    }));
   };
 
   const detectedYouTubeId = extractYouTubeId(formData.videoUrl);
@@ -211,6 +223,7 @@ function VideosContent() {
                 description: '',
                 videoUrl: '',
                 thumbnailUrl: '',
+                thumbnailPublicId: '',
                 category: 'Apresentação',
                 customCategory: '',
                 featured: false,
@@ -349,13 +362,42 @@ function VideosContent() {
                   rows={3}
                 />
 
-                <Input
-                  label="Imagem de Capa Personalizada (Opcional - link de imagem)"
-                  name="thumbnailUrl"
-                  value={formData.thumbnailUrl}
-                  onChange={handleInputChange}
-                  placeholder="Deixe em branco para usar automaticamente a capa do YouTube"
-                />
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Imagem de Capa
+                  </label>
+                  <div className="space-y-3">
+                    {/* Upload Option */}
+                    <ImageUpload
+                      onUpload={handleThumbnailUpload}
+                      currentImage={formData.thumbnailUrl}
+                      folder="neolife/videos"
+                      className="mb-3"
+                    />
+
+                    {/* Or use URL link */}
+                    <div className="relative">
+                      <div className="absolute inset-0 flex items-center">
+                        <div className="w-full border-t border-gray-300"></div>
+                      </div>
+                      <div className="relative flex justify-center text-sm">
+                        <span className="px-2 bg-white text-gray-500">ou usar link de imagem</span>
+                      </div>
+                    </div>
+
+                    <Input
+                      label="URL da Imagem (Opcional)"
+                      name="thumbnailUrl"
+                      value={formData.thumbnailUrl}
+                      onChange={handleInputChange}
+                      placeholder="https://example.com/image.jpg"
+                    />
+
+                    <p className="text-xs text-gray-500">
+                      Deixe em branco para usar automaticamente a capa do YouTube
+                    </p>
+                  </div>
+                </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
                   <div>
