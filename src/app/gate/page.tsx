@@ -388,7 +388,7 @@ function GateContent() {
               <div className="space-y-3 animate-fade-in">
                 <div>
                   <Input
-                    label={`${isPt ? 'Telefone / WhatsApp' : 'Phone / WhatsApp'} (${country.dialCode})`}
+                    label={`${isPt ? 'WhatsApp' : 'WhatsApp'} (${country.dialCode})`}
                     name="phone"
                     value={formData.phone}
                     onChange={handleInputChange}

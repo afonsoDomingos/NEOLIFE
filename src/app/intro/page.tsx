@@ -4,6 +4,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/Button';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { requireGate } from '@/lib/utils/gateUtils';
 
 function IntroContent() {
   const searchParams = useSearchParams();
@@ -14,6 +15,11 @@ function IntroContent() {
   const isPt = language === 'pt';
 
   const [videoWatched, setVideoWatched] = useState(false);
+
+  // Gate verification - redirect to gate if not completed
+  useEffect(() => {
+    requireGate(pillar, redirectTo);
+  }, [pillar, redirectTo]);
 
   // Video URLs by pillar and language
   const videoUrls = {

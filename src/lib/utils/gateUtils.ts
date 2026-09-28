@@ -141,3 +141,21 @@ export function getGateRemainingDays(): number {
 
   return Math.max(0, days);
 }
+
+/**
+ * Force gate to be completed (for testing purposes)
+ */
+export function forceGateComplete(): void {
+  if (typeof window === 'undefined') return;
+
+  try {
+    localStorage.setItem(GATE_STORAGE_KEY, 'true');
+    localStorage.setItem(GATE_TIMESTAMP_KEY, Date.now().toString());
+    localStorage.setItem(GATE_EMAIL_KEY, 'test@example.com');
+    localStorage.setItem(GATE_NAME_KEY, 'Test User');
+    localStorage.setItem(GATE_PHONE_KEY, '+258 84 000 0000');
+    localStorage.setItem(GATE_COUNTRY_KEY, 'mz-pt');
+  } catch (error) {
+    console.error('Error forcing gate completion:', error);
+  }
+}
