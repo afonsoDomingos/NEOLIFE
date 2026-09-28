@@ -48,6 +48,9 @@ export const VideoSection: React.FC = () => {
 
   const categories = ['Todos', ...Array.from(new Set(videos.map(v => v.category).filter(Boolean)))];
 
+  // Standard categories for consistent styling
+  const standardCategories = ['Business', 'Apresentação', 'Negócio', 'Produtos', 'Testemunhos', 'Tutoriais'];
+
   const filteredVideos = selectedCategory === 'Todos'
     ? videos
     : videos.filter(v => v.category === selectedCategory);
@@ -136,19 +139,23 @@ export const VideoSection: React.FC = () => {
         {/* Category Filter Tabs */}
         {categories.length > 2 && (
           <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all ${
-                  selectedCategory === cat
-                    ? 'bg-emerald-700 text-white shadow-md'
-                    : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+            {categories.map((cat) => {
+              const isCustom = !standardCategories.includes(cat) && cat !== 'Todos';
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all flex items-center gap-1.5 ${
+                    selectedCategory === cat
+                      ? 'bg-emerald-700 text-white shadow-md'
+                      : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
+                  } ${isCustom ? 'ring-2 ring-purple-200' : ''}`}
+                >
+                  {isCustom && <span className="text-purple-400">✨</span>}
+                  {cat}
+                </button>
+              );
+            })}
           </div>
         )}
 

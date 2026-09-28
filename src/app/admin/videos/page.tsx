@@ -37,6 +37,7 @@ function VideosContent() {
     videoUrl: '',
     thumbnailUrl: '',
     category: 'Apresentação',
+    customCategory: '',
     featured: false,
     active: true,
     order: 0,
@@ -82,10 +83,17 @@ function VideosContent() {
 
       const method = videoId ? 'PUT' : 'POST';
 
+      // Use custom category if selected, otherwise use the dropdown value
+      const finalCategory = formData.category === 'custom' ? formData.customCategory : formData.category;
+
       const payload = {
         ...formData,
+        category: finalCategory,
         ...(videoId ? { _id: videoId } : {})
       };
+
+      // Remove customCategory from payload (it's only for the form)
+      delete (payload as any).customCategory;
 
       const response = await fetch(url, {
         method,
@@ -103,6 +111,7 @@ function VideosContent() {
           videoUrl: '',
           thumbnailUrl: '',
           category: 'Apresentação',
+          customCategory: '',
           featured: false,
           active: true,
           order: 0,
@@ -132,6 +141,7 @@ function VideosContent() {
       videoUrl: video.videoUrl,
       thumbnailUrl: video.thumbnailUrl || '',
       category: video.category || 'Apresentação',
+      customCategory: '',
       featured: !!video.featured,
       active: video.active !== undefined ? video.active : true,
       order: video.order || 0,
@@ -161,6 +171,25 @@ function VideosContent() {
   const detectedYouTubeId = extractYouTubeId(formData.videoUrl);
   const embedPreviewUrl = getEmbedUrl(formData.videoUrl);
 
+  // Get all unique categories from videos
+  const allCategories = ['all', ...Array.from(new Set(videos.map(v => v.category).filter(Boolean)))];
+  const standardCategories = ['Business', 'Apresentação', 'Negócio', 'Produtos', 'Testemunhos', 'Tutoriais'];
+  const customCategories = allCategories.filter(cat => cat !== 'all' && !standardCategories.includes(cat));
+
+  // Category labels for display
+  const getCategoryLabel = (category: string) => {
+    const labels: Record<string, string> = {
+      'all': 'Todos',
+      'Business': 'Business (Principal)',
+      'Apresentação': 'Apresentação',
+      'Negócio': 'Negócio',
+      'Produtos': 'Produtos',
+      'Testemunhos': 'Testemunhos',
+      'Tutoriais': 'Tutoriais',
+    };
+    return labels[category] || category;
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <AdminHeader
@@ -183,6 +212,7 @@ function VideosContent() {
                 videoUrl: '',
                 thumbnailUrl: '',
                 category: 'Apresentação',
+                customCategory: '',
                 featured: false,
                 active: true,
                 order: videos.length + 1,
@@ -241,7 +271,21 @@ function VideosContent() {
                       <option value="Produtos">Produtos & Nutrição</option>
                       <option value="Testemunhos">Testemunhos & Histórias</option>
                       <option value="Tutoriais">Como Começar / Tutoriais</option>
+                      <option value="custom">✨ Criar Nova Categoria</option>
                     </select>
+
+                    {formData.category === 'custom' && (
+                      <div className="mt-2">
+                        <Input
+                          label="Nome da Nova Categoria"
+                          name="customCategory"
+                          value={formData.customCategory}
+                          onChange={handleInputChange}
+                          placeholder="ex: Treinamentos, Eventos, etc."
+                          required
+                        />
+                      </div>
+                    )}
 
                     {formData.category === 'Business' && (
                       <div className="mt-2.5 p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-950 leading-relaxed space-y-1">
@@ -379,29 +423,23 @@ function VideosContent() {
         {/* Category Filter Pills */}
         <div className="flex flex-wrap items-center gap-2">
           <span className="text-xs font-semibold text-gray-500 mr-1">Filtrar:</span>
-          {[
-            { id: 'all', label: 'Todos' },
-            { id: 'Business', label: 'Business (Principal)' },
-            { id: 'Apresentação', label: 'Apresentação' },
-            { id: 'Negócio', label: 'Negócio' },
-            { id: 'Produtos', label: 'Produtos' },
-            { id: 'Testemunhos', label: 'Testemunhos' },
-            { id: 'Tutoriais', label: 'Tutoriais' },
-          ].map((tab) => {
-            const count = tab.id === 'all' ? videos.length : videos.filter((v) => v.category === tab.id).length;
-            const isSelected = filterCategory === tab.id;
+          {allCategories.map((category) => {
+            const count = category === 'all' ? videos.length : videos.filter((v) => v.category === category).length;
+            const isSelected = filterCategory === category;
+            const isCustom = !standardCategories.includes(category) && category !== 'all';
             return (
               <button
-                key={tab.id}
+                key={category}
                 type="button"
-                onClick={() => setFilterCategory(tab.id)}
+                onClick={() => setFilterCategory(category)}
                 className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-colors flex items-center gap-1.5 ${
                   isSelected
                     ? 'bg-emerald-700 text-white shadow-xs'
                     : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
-                }`}
+                } ${isCustom ? 'ring-2 ring-purple-200' : ''}`}
               >
-                <span>{tab.label}</span>
+                {isCustom && <span className="text-purple-600">✨</span>}
+                <span>{getCategoryLabel(category)}</span>
                 <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
                   isSelected ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-600'
                 }`}>
