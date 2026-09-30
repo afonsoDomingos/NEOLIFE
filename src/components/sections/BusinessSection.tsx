@@ -163,44 +163,35 @@ export const BusinessSection: React.FC = () => {
   ];
 
   return (
-    <section id="negocio" className="py-20 md:py-28 bg-gradient-to-b from-gray-50 via-white to-gray-50 border-t border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="negocio" className="py-10 md:py-14 bg-gradient-to-b from-gray-50 via-white to-gray-50 border-t border-gray-100">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-700/10 border border-emerald-600/30 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-4 shadow-sm">
-            <span className="w-2 h-2 rounded-full bg-emerald-600" />
+        <div className="text-center max-w-2xl mx-auto mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-700/10 border border-emerald-600/30 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-3 shadow-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
             {t.business.badge}
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-2 tracking-tight">
             {t.business.title}
           </h2>
-          <p className="text-lg md:text-xl text-gray-600 leading-relaxed mb-6">
+          <p className="text-sm text-gray-600 leading-relaxed mb-4">
             {t.business.subtitle}
           </p>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-gray-200 text-xs text-gray-600 shadow-sm font-medium">
-            <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span>{t.business.flowNotice}</span>
-          </div>
         </div>
 
         {/* Interactive Goals Selector */}
-        <div className="max-w-4xl mx-auto mb-14 bg-white rounded-3xl p-6 sm:p-8 border border-emerald-200 shadow-sm">
-          <div className="text-center max-w-xl mx-auto mb-6">
+        <div className="max-w-3xl mx-auto mb-8 bg-white rounded-2xl p-4 sm:p-5 border border-emerald-200 shadow-sm">
+          <div className="text-center max-w-xl mx-auto mb-4">
             <span className="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
               {isPt ? 'Personalize o seu Percurso' : 'Customize Your Journey'}
             </span>
-            <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mt-2">
+            <h3 className="text-base sm:text-lg font-bold text-gray-900 mt-2">
               {isPt ? 'O que mais procura alcançar com a NeoLife?' : 'What do you most want to achieve with NeoLife?'}
             </h3>
-            <p className="text-xs text-gray-500 mt-1">
-              {isPt ? 'Selecione uma ou mais opções. Ficarão guardadas no seu pedido para personalizarmos a sua conversa.' : 'Select one or more goals to save them into your consultation request.'}
-            </p>
           </div>
 
-          <div className="flex flex-wrap gap-2.5 justify-center">
+          <div className="flex flex-wrap gap-2 justify-center">
             {availableGoals.map((goal) => {
               const label = isPt ? goal.labelPt : goal.labelEn;
               const isSelected = isBusinessGoalSelected(label);
@@ -209,14 +200,14 @@ export const BusinessSection: React.FC = () => {
                   key={goal.id}
                   type="button"
                   onClick={() => toggleBusinessGoal(label)}
-                  className={`px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 ${
+                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
                     isSelected
-                      ? 'bg-emerald-700 text-white shadow-md ring-2 ring-emerald-500 scale-102'
+                      ? 'bg-emerald-700 text-white shadow-md ring-2 ring-emerald-500'
                       : 'bg-gray-50 text-gray-700 hover:bg-emerald-50 hover:text-emerald-800 border border-gray-200'
                   }`}
                 >
                   <span>{label}</span>
-                  <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[10px] ${
+                  <span className={`w-3.5 h-3.5 rounded-full flex items-center justify-center text-[9px] ${
                     isSelected ? 'bg-white text-emerald-800 font-black' : 'border border-gray-300 text-transparent'
                   }`}>
                     •
@@ -228,59 +219,63 @@ export const BusinessSection: React.FC = () => {
         </div>
 
         {/* Sequential Script Blocks */}
-        <div className="space-y-12 max-w-5xl mx-auto">
+        <div className="space-y-3 max-w-3xl mx-auto">
           {blocks.map((block, index) => (
             <div
               key={block.id}
               id={`business-block-${block.number}`}
-              className="relative bg-white rounded-3xl p-6 sm:p-10 border border-gray-200/80 shadow-sm hover:shadow-xl transition-all duration-300 group"
+              className="relative bg-white rounded-2xl px-5 py-4 border border-gray-200/80 shadow-sm hover:shadow-md transition-all duration-200 group"
             >
-              <div>
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="text-3xl sm:text-4xl font-black text-emerald-600/80 font-mono">
-                    {block.number}
-                  </span>
-                  <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-                    {block.badge}
-                  </span>
-                </div>
+              <div className="flex items-start gap-4">
+                {/* Number */}
+                <span className="text-2xl font-black text-emerald-600/70 font-mono leading-none pt-0.5 shrink-0">
+                  {block.number}
+                </span>
 
-                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 group-hover:text-emerald-700 transition-colors">
-                  {block.theme}
-                </h3>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      {block.badge}
+                    </span>
+                  </div>
 
-                <p className="text-gray-600 text-base leading-relaxed mb-6">
-                  {block.text}
-                </p>
+                  <h3 className="text-base font-bold text-gray-900 mb-1 group-hover:text-emerald-700 transition-colors">
+                    {block.theme}
+                  </h3>
 
-                {/* Continue Button */}
-                <div className="pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4">
-                  {block.link ? (
-                    <Link href={block.link}>
-                      <Button size="md" className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-6 shadow-sm">
-                        {block.cta}
-                      </Button>
-                    </Link>
-                  ) : (
-                    <a href={block.nextAnchor}>
-                      <Button variant="outline" size="sm" className="border-emerald-300 text-emerald-800 hover:bg-emerald-50 font-semibold">
-                        {block.cta}
-                      </Button>
-                    </a>
-                  )}
+                  <p className="text-gray-500 text-sm leading-relaxed mb-3">
+                    {block.text}
+                  </p>
 
-                  {getVideoUrl(index + 1) && (
-                    <button
-                      type="button"
-                      onClick={() => setActiveModal({ title: block.videoTitle, videoUrl: getVideoUrl(index + 1) })}
-                      className="inline-flex items-center gap-2 text-xs font-bold text-emerald-700 hover:text-emerald-800 hover:underline py-2"
-                    >
-                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z" />
-                      </svg>
-                      <span>{block.videoTitle}</span>
-                    </button>
-                  )}
+                  {/* Buttons */}
+                  <div className="flex flex-wrap items-center gap-3">
+                    {block.link ? (
+                      <Link href={block.link}>
+                        <Button size="sm" className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-5 shadow-sm">
+                          {block.cta}
+                        </Button>
+                      </Link>
+                    ) : (
+                      <a href={block.nextAnchor}>
+                        <Button variant="outline" size="sm" className="border-emerald-300 text-emerald-800 hover:bg-emerald-50 font-semibold text-xs">
+                          {block.cta}
+                        </Button>
+                      </a>
+                    )}
+
+                    {getVideoUrl(index + 1) && (
+                      <button
+                        type="button"
+                        onClick={() => setActiveModal({ title: block.videoTitle, videoUrl: getVideoUrl(index + 1) })}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:text-emerald-900 hover:underline"
+                      >
+                        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z" />
+                        </svg>
+                        <span>{block.videoTitle}</span>
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -288,20 +283,20 @@ export const BusinessSection: React.FC = () => {
         </div>
 
         {/* Closing Mentorship Banner */}
-        <div className="mt-16 max-w-4xl mx-auto bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 text-white rounded-3xl p-8 sm:p-10 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="mt-8 max-w-3xl mx-auto bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 text-white rounded-2xl p-6 sm:p-7 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
             <p className="text-xs uppercase font-extrabold tracking-widest text-emerald-200 mb-1">
               Mentoria Garantida
             </p>
-            <h4 className="text-2xl font-bold text-white mb-2">
+            <h4 className="text-lg font-bold text-white mb-1">
               Dúvidas sobre o modelo de negócio?
             </h4>
-            <p className="text-emerald-100 text-sm max-w-lg">
-              Ofélia e José Machado respondem pessoalmente sem qualquer pressão ou compromisso.
+            <p className="text-emerald-100 text-sm">
+              Ofélia e José Machado respondem pessoalmente sem qualquer pressão.
             </p>
           </div>
           <Link href="/formulario?tema=oportunidade-negocio&pais=mz-pt" className="shrink-0">
-            <Button size="lg" className="bg-white text-emerald-900 hover:bg-emerald-50 font-bold px-8 shadow-md">
+            <Button size="sm" className="bg-white text-emerald-900 hover:bg-emerald-50 font-bold px-6 shadow-md">
               Marcar Conversa Gratuita
             </Button>
           </Link>
