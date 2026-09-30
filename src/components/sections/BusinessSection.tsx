@@ -84,7 +84,8 @@ const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose, title, videoUr
 export const BusinessSection: React.FC = () => {
   const { t, language } = useLanguage();
   const isPt = language === 'pt';
-  const { toggleBusinessGoal, isBusinessGoalSelected, businessGoals } = useSelection();
+  const { toggleBusinessGoal, isBusinessGoalSelected } = useSelection();
+  const [activeIndex, setActiveIndex] = useState<number | null>(0);
   const [activeModal, setActiveModal] = useState<{ title: string; videoUrl?: string } | null>(null);
   const [businessVideos, setBusinessVideos] = useState<BusinessVideo[]>([]);
 
@@ -102,10 +103,9 @@ export const BusinessSection: React.FC = () => {
       .then((data: BusinessVideo[]) => {
         if (Array.isArray(data)) setBusinessVideos(data);
       })
-      .catch(() => {/* silent — placeholder is shown */});
+      .catch(() => {/* silent */});
   }, []);
 
-  // Returns the video URL for a given block order (1-based), or undefined for placeholder
   const getVideoUrl = (order: number): string | undefined =>
     businessVideos.find((v) => v.active && v.order === order)?.videoUrl;
 
@@ -119,6 +119,7 @@ export const BusinessSection: React.FC = () => {
       cta: t.business.blocks.intro.cta,
       nextAnchor: '#business-block-02',
       badge: 'Fundamentos',
+      icon: '🌱',
     },
     {
       id: 'model',
@@ -129,6 +130,7 @@ export const BusinessSection: React.FC = () => {
       cta: t.business.blocks.model.cta,
       nextAnchor: '#business-block-03',
       badge: 'Funcionamento',
+      icon: '⚙️',
     },
     {
       id: 'mentorship',
@@ -139,6 +141,7 @@ export const BusinessSection: React.FC = () => {
       cta: t.business.blocks.mentorship.cta,
       nextAnchor: '#business-block-04',
       badge: 'Acompanhamento',
+      icon: '🤝',
     },
     {
       id: 'earnings',
@@ -149,6 +152,7 @@ export const BusinessSection: React.FC = () => {
       cta: t.business.blocks.earnings.cta,
       nextAnchor: '#business-block-05',
       badge: 'Escala & Ganhos',
+      icon: '📈',
     },
     {
       id: 'start',
@@ -159,15 +163,16 @@ export const BusinessSection: React.FC = () => {
       cta: t.business.blocks.start.cta,
       link: '/formulario?tema=oportunidade-negocio&pais=mz-pt',
       badge: 'Ação Imediata',
+      icon: '🚀',
     },
   ];
 
   return (
     <section id="negocio" className="py-10 md:py-14 bg-gradient-to-b from-gray-50 via-white to-gray-50 border-t border-gray-100">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-8">
+        <div className="text-center max-w-2xl mx-auto mb-6">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-700/10 border border-emerald-600/30 text-emerald-800 text-xs font-bold uppercase tracking-wider mb-3 shadow-sm">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
             {t.business.badge}
@@ -175,22 +180,16 @@ export const BusinessSection: React.FC = () => {
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-2 tracking-tight">
             {t.business.title}
           </h2>
-          <p className="text-sm text-gray-600 leading-relaxed mb-4">
+          <p className="text-sm text-gray-600 leading-relaxed">
             {t.business.subtitle}
           </p>
         </div>
 
-        {/* Interactive Goals Selector */}
-        <div className="max-w-3xl mx-auto mb-8 bg-white rounded-2xl p-4 sm:p-5 border border-emerald-200 shadow-sm">
-          <div className="text-center max-w-xl mx-auto mb-4">
-            <span className="text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-              {isPt ? 'Personalize o seu Percurso' : 'Customize Your Journey'}
-            </span>
-            <h3 className="text-base sm:text-lg font-bold text-gray-900 mt-2">
-              {isPt ? 'O que mais procura alcançar com a NeoLife?' : 'What do you most want to achieve with NeoLife?'}
-            </h3>
-          </div>
-
+        {/* Goals Selector */}
+        <div className="mb-6 bg-white rounded-2xl p-4 border border-emerald-200 shadow-sm">
+          <p className="text-[11px] font-extrabold uppercase tracking-wider text-emerald-800 mb-3 text-center">
+            {isPt ? 'O que mais procura alcançar com a NeoLife?' : 'What do you most want to achieve with NeoLife?'}
+          </p>
           <div className="flex flex-wrap gap-2 justify-center">
             {availableGoals.map((goal) => {
               const label = isPt ? goal.labelPt : goal.labelEn;
@@ -207,91 +206,124 @@ export const BusinessSection: React.FC = () => {
                   }`}
                 >
                   <span>{label}</span>
-                  <span className={`w-3.5 h-3.5 rounded-full flex items-center justify-center text-[9px] ${
-                    isSelected ? 'bg-white text-emerald-800 font-black' : 'border border-gray-300 text-transparent'
-                  }`}>
-                    •
-                  </span>
                 </button>
               );
             })}
           </div>
         </div>
 
-        {/* Sequential Script Blocks */}
-        <div className="space-y-3 max-w-3xl mx-auto">
-          {blocks.map((block, index) => (
-            <div
-              key={block.id}
-              id={`business-block-${block.number}`}
-              className="relative bg-white rounded-2xl px-5 py-4 border border-gray-200/80 shadow-sm hover:shadow-md transition-all duration-200 group"
-            >
-              <div className="flex items-start gap-4">
-                {/* Number */}
-                <span className="text-2xl font-black text-emerald-600/70 font-mono leading-none pt-0.5 shrink-0">
-                  {block.number}
-                </span>
+        {/* Accordion */}
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden divide-y divide-gray-100">
+          {blocks.map((block, index) => {
+            const isOpen = activeIndex === index;
+            const videoUrl = getVideoUrl(index + 1);
 
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-                      {block.badge}
-                    </span>
+            return (
+              <div key={block.id}>
+                {/* Tab Header (always visible) */}
+                <button
+                  type="button"
+                  onClick={() => setActiveIndex(isOpen ? null : index)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-all duration-200 ${
+                    isOpen
+                      ? 'bg-emerald-50 border-l-4 border-emerald-600'
+                      : 'hover:bg-gray-50 border-l-4 border-transparent'
+                  }`}
+                >
+                  {/* Icon + Number */}
+                  <div className={`flex items-center justify-center w-8 h-8 rounded-xl shrink-0 text-base font-black transition-colors ${
+                    isOpen ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-500'
+                  }`}>
+                    {block.icon}
                   </div>
 
-                  <h3 className="text-base font-bold text-gray-900 mb-1 group-hover:text-emerald-700 transition-colors">
-                    {block.theme}
-                  </h3>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2">
+                      <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
+                        isOpen ? 'bg-emerald-100 text-emerald-800 border-emerald-300' : 'bg-gray-100 text-gray-500 border-gray-200'
+                      }`}>
+                        {block.badge}
+                      </span>
+                    </div>
+                    <p className={`text-sm font-bold mt-0.5 transition-colors ${
+                      isOpen ? 'text-emerald-800' : 'text-gray-800'
+                    }`}>
+                      {block.theme}
+                    </p>
+                  </div>
 
-                  <p className="text-gray-500 text-sm leading-relaxed mb-3">
-                    {block.text}
-                  </p>
+                  {/* Chevron */}
+                  <svg
+                    className={`w-4 h-4 shrink-0 text-gray-400 transition-transform duration-300 ${isOpen ? 'rotate-180 text-emerald-600' : ''}`}
+                    fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
 
-                  {/* Buttons */}
-                  <div className="flex flex-wrap items-center gap-3">
-                    {block.link ? (
-                      <Link href={block.link}>
-                        <Button size="sm" className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-5 shadow-sm">
+                {/* Expandable Content */}
+                <div
+                  className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}
+                >
+                  <div className="px-5 pb-4 pt-2 bg-emerald-50/50">
+                    <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                      {block.text}
+                    </p>
+
+                    <div className="flex flex-wrap items-center gap-3">
+                      {block.link ? (
+                        <Link href={block.link}>
+                          <Button size="sm" className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-5 shadow-sm">
+                            {block.cta}
+                          </Button>
+                        </Link>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setActiveIndex(index + 1 < blocks.length ? index + 1 : null);
+                          }}
+                          className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs font-semibold border border-emerald-300 text-emerald-800 hover:bg-emerald-100 transition-colors"
+                        >
                           {block.cta}
-                        </Button>
-                      </Link>
-                    ) : (
-                      <a href={block.nextAnchor}>
-                        <Button variant="outline" size="sm" className="border-emerald-300 text-emerald-800 hover:bg-emerald-50 font-semibold text-xs">
-                          {block.cta}
-                        </Button>
-                      </a>
-                    )}
+                          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                          </svg>
+                        </button>
+                      )}
 
-                    {getVideoUrl(index + 1) && (
-                      <button
-                        type="button"
-                        onClick={() => setActiveModal({ title: block.videoTitle, videoUrl: getVideoUrl(index + 1) })}
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:text-emerald-900 hover:underline"
-                      >
-                        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                        <span>{block.videoTitle}</span>
-                      </button>
-                    )}
+                      {videoUrl && (
+                        <button
+                          type="button"
+                          onClick={() => setActiveModal({ title: block.videoTitle, videoUrl })}
+                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 hover:text-emerald-900 hover:underline"
+                        >
+                          <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                          <span>{block.videoTitle}</span>
+                        </button>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Closing Mentorship Banner */}
-        <div className="mt-8 max-w-3xl mx-auto bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 text-white rounded-2xl p-6 sm:p-7 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="mt-6 bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 text-white rounded-2xl p-5 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
           <div>
-            <p className="text-xs uppercase font-extrabold tracking-widest text-emerald-200 mb-1">
+            <p className="text-xs uppercase font-extrabold tracking-widest text-emerald-200 mb-0.5">
               Mentoria Garantida
             </p>
-            <h4 className="text-lg font-bold text-white mb-1">
+            <h4 className="text-base font-bold text-white mb-0.5">
               Dúvidas sobre o modelo de negócio?
             </h4>
-            <p className="text-emerald-100 text-sm">
+            <p className="text-emerald-100 text-xs">
               Ofélia e José Machado respondem pessoalmente sem qualquer pressão.
             </p>
           </div>
