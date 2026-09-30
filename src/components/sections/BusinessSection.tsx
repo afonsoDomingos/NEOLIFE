@@ -235,45 +235,41 @@ export const BusinessSection: React.FC = () => {
               id={`business-block-${block.number}`}
               className="relative bg-white rounded-3xl p-6 sm:p-10 border border-gray-200/80 shadow-sm hover:shadow-xl transition-all duration-300 group"
             >
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                
-                {/* Text Side (7 cols) */}
-                <div className="lg:col-span-7 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="text-3xl sm:text-4xl font-black text-emerald-600/80 font-mono">
-                        {block.number}
-                      </span>
-                      <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
-                        {block.badge}
-                      </span>
-                    </div>
+              <div>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-3xl sm:text-4xl font-black text-emerald-600/80 font-mono">
+                    {block.number}
+                  </span>
+                  <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                    {block.badge}
+                  </span>
+                </div>
 
-                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 group-hover:text-emerald-700 transition-colors">
-                      {block.theme}
-                    </h3>
+                <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-3 group-hover:text-emerald-700 transition-colors">
+                  {block.theme}
+                </h3>
 
-                    <p className="text-gray-600 text-base leading-relaxed mb-6">
-                      {block.text}
-                    </p>
-                  </div>
+                <p className="text-gray-600 text-base leading-relaxed mb-6">
+                  {block.text}
+                </p>
 
-                  {/* Continue Button */}
-                  <div className="pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4">
-                    {block.link ? (
-                      <Link href={block.link}>
-                        <Button size="md" className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-6 shadow-sm">
-                          {block.cta}
-                        </Button>
-                      </Link>
-                    ) : (
-                      <a href={block.nextAnchor}>
-                        <Button variant="outline" size="sm" className="border-emerald-300 text-emerald-800 hover:bg-emerald-50 font-semibold">
-                          {block.cta}
-                        </Button>
-                      </a>
-                    )}
+                {/* Continue Button */}
+                <div className="pt-4 border-t border-gray-100 flex flex-wrap items-center gap-4">
+                  {block.link ? (
+                    <Link href={block.link}>
+                      <Button size="md" className="bg-emerald-700 hover:bg-emerald-800 text-white font-bold px-6 shadow-sm">
+                        {block.cta}
+                      </Button>
+                    </Link>
+                  ) : (
+                    <a href={block.nextAnchor}>
+                      <Button variant="outline" size="sm" className="border-emerald-300 text-emerald-800 hover:bg-emerald-50 font-semibold">
+                        {block.cta}
+                      </Button>
+                    </a>
+                  )}
 
+                  {getVideoUrl(index + 1) && (
                     <button
                       type="button"
                       onClick={() => setActiveModal({ title: block.videoTitle, videoUrl: getVideoUrl(index + 1) })}
@@ -284,49 +280,8 @@ export const BusinessSection: React.FC = () => {
                       </svg>
                       <span>{block.videoTitle}</span>
                     </button>
-                  </div>
+                  )}
                 </div>
-
-                {/* Video Window (5 cols) */}
-                <div className="lg:col-span-5">
-                  <div
-                    onClick={() => setActiveModal({ title: block.videoTitle, videoUrl: getVideoUrl(index + 1) })}
-                    className="relative aspect-video rounded-2xl bg-gradient-to-tr from-gray-950 via-gray-900 to-emerald-950 border-2 border-gray-800 shadow-md overflow-hidden cursor-pointer group/video flex flex-col justify-between p-4"
-                  >
-                    {/* Top video pill */}
-                    <div className="flex items-center justify-between z-10">
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-black/60 text-emerald-300 border border-emerald-500/30">
-                        Vídeo Curto • Módulo {block.number}
-                      </span>
-                      <span className="text-[10px] text-gray-400 font-mono">
-                        HD 1080p
-                      </span>
-                    </div>
-
-                    {/* Center Play Button */}
-                    <div className="self-center flex flex-col items-center gap-2 z-10 group-hover/video:scale-105 transition-transform duration-300">
-                      <div className="w-14 h-14 rounded-full bg-emerald-500/90 text-white flex items-center justify-center shadow-lg shadow-emerald-900/50 group-hover/video:bg-emerald-400">
-                        <svg className="w-7 h-7 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z" />
-                        </svg>
-                      </div>
-                      <span className="text-white text-xs font-semibold drop-shadow">
-                        Clique para assistir
-                      </span>
-                    </div>
-
-                    {/* Bottom info */}
-                    <div className="z-10 bg-black/50 backdrop-blur-xs rounded-xl p-2 border border-white/5">
-                      <p className="text-white text-xs font-medium truncate">
-                        {block.videoTitle}
-                      </p>
-                    </div>
-
-                    {/* Background subtle mesh glow */}
-                    <div className="absolute inset-0 bg-radial from-emerald-600/10 to-transparent opacity-60 group-hover/video:opacity-100 transition-opacity" />
-                  </div>
-                </div>
-
               </div>
             </div>
           ))}
