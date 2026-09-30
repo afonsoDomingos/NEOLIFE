@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { BusinessSection } from '@/components/sections/BusinessSection';
+import { VideoSection } from '@/components/ui/VideoSection';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { useSelection } from '@/lib/context/SelectionContext';
 import { Button } from '@/components/ui/Button';
@@ -68,6 +69,9 @@ export default function BusinessPage() {
       <div id="modulos-negocio">
         <BusinessSection />
       </div>
+
+      {/* ── VÍDEOS & MASTERCLASSES DO MODELO DE NEGÓCIO ── */}
+      <VideoSection pageTarget="business" />
 
       {/* ── MENTORIA PROFILE CARD ── */}
       <section className="py-20 bg-gray-50 border-t border-gray-200">

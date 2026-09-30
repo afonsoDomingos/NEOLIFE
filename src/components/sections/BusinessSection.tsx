@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { useSelection } from '@/lib/context/SelectionContext';
 import { Button } from '@/components/ui/Button';
+import { getEmbedUrl } from '@/lib/utils/video';
 
 interface BusinessVideo {
   order: number;
@@ -22,6 +23,8 @@ interface VideoModalProps {
 
 const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose, title, videoUrl }) => {
   if (!isOpen) return null;
+
+  const embedUrl = videoUrl ? getEmbedUrl(videoUrl) : '';
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-fade-in">
@@ -42,9 +45,9 @@ const VideoModal: React.FC<VideoModalProps> = ({ isOpen, onClose, title, videoUr
         </div>
 
         <div className="aspect-video w-full bg-black flex items-center justify-center relative">
-          {videoUrl ? (
+          {embedUrl ? (
             <iframe
-              src={videoUrl}
+              src={`${embedUrl}?autoplay=1&rel=0`}
               title={title}
               className="w-full h-full border-0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

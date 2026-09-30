@@ -35,6 +35,16 @@ const defaultVideos = [
     active: true,
     order: 3,
   },
+  {
+    title: 'Viagens & Convenções Internacionais - Experiências NeoLife',
+    description: 'Conheça o estilo de vida, as viagens internacionais e as celebrações nos maiores palcos globais da NeoLife.',
+    videoUrl: 'https://www.youtube.com/watch?v=7cpeXtIQUgo',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&h=450&fit=crop',
+    category: 'Experiências',
+    featured: false,
+    active: true,
+    order: 4,
+  },
 ];
 
 const seedDefaultVideosIfEmpty = async () => {

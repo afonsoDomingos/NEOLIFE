@@ -244,8 +244,8 @@ export default function ExperienciasPage() {
         </div>
       </section>
 
-      {/* ── VÍDEOS DA COMUNIDADE ── */}
-      <VideoSection />
+      {/* ── VÍDEOS DA COMUNIDADE & EXPERIÊNCIAS ── */}
+      <VideoSection pageTarget="experiencias" />
     </div>
   );
 }

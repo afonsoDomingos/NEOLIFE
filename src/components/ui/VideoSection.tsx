@@ -18,7 +18,19 @@ interface VideoData {
   order: number;
 }
 
-export const VideoSection: React.FC = () => {
+interface VideoSectionProps {
+  pageTarget?: 'experiencias' | 'business' | 'all';
+  title?: string;
+  subtitle?: string;
+  badge?: string;
+}
+
+export const VideoSection: React.FC<VideoSectionProps> = ({
+  pageTarget = 'all',
+  title,
+  subtitle,
+  badge,
+}) => {
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<string>('Todos');
@@ -26,11 +38,12 @@ export const VideoSection: React.FC = () => {
 
   useEffect(() => {
     fetchVideos();
-  }, []);
+  }, [pageTarget]);
 
   const fetchVideos = async () => {
     try {
-      const res = await fetch('/api/videos');
+      const endpoint = pageTarget !== 'all' ? `/api/videos?page=${pageTarget}` : '/api/videos';
+      const res = await fetch(endpoint);
       if (res.ok) {
         const data = await res.json();
         setVideos(Array.isArray(data) ? data : []);
@@ -42,14 +55,31 @@ export const VideoSection: React.FC = () => {
     }
   };
 
+  const isExperiencias = pageTarget === 'experiencias';
+
   if (!loading && videos.length === 0) {
+    if (isExperiencias) {
+      return (
+        <section id="videos" className="py-16 bg-gradient-to-b from-gray-50 to-white border-t border-gray-100">
+          <div className="max-w-4xl mx-auto px-4 text-center">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-semibold mb-3">
+              Galeria de Vídeos
+            </div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">Momentos & Viagens NeoLife</h3>
+            <p className="text-gray-500 text-sm max-w-lg mx-auto mb-6">
+              Os vídeos das convenções internacionais e viagens de reconhecimento estão a ser organizados. Fique atento às novidades!
+            </p>
+          </div>
+        </section>
+      );
+    }
     return null; // Hide section if no videos exist
   }
 
   const categories = ['Todos', ...Array.from(new Set(videos.map(v => v.category).filter(Boolean)))];
 
   // Standard categories for consistent styling
-  const standardCategories = ['Business', 'Apresentação', 'Negócio', 'Produtos', 'Testemunhos', 'Tutoriais'];
+  const standardCategories = ['Business', 'Apresentação', 'Negócio', 'Produtos', 'Testemunhos', 'Tutoriais', 'Experiências', 'Viagens', 'Reconhecimento'];
 
   const filteredVideos = selectedCategory === 'Todos'
     ? videos
@@ -57,23 +87,47 @@ export const VideoSection: React.FC = () => {
 
   const featuredVideo = videos.find(v => v.featured) || videos[0];
 
+  const defaultBadge = isExperiencias
+    ? 'Viagens, Convenções & Reconhecimento'
+    : pageTarget === 'business'
+    ? 'Formação & Apresentações em Vídeo'
+    : 'Multimédia & Conteúdos Oficiais';
+
+  const defaultTitle = isExperiencias
+    ? 'Momentos & Experiências em Vídeo'
+    : pageTarget === 'business'
+    ? 'Aprofunde o Modelo de Negócio'
+    : 'Vídeos & Apresentações';
+
+  const defaultSubtitle = isExperiencias
+    ? 'Veja as viagens internacionais, palcos de celebração e o estilo de vida que espera por si na NeoLife.'
+    : pageTarget === 'business'
+    ? 'Aulas e apresentações práticas com José & Ofélia Machado para impulsionar a sua jornada independente.'
+    : 'Explore a oportunidade NeoLife, conheça a nossa ciência nutricional e inspire-se com histórias reais de transformação.';
+
+  const displayBadge = badge || defaultBadge;
+  const displayTitle = title || defaultTitle;
+  const displaySubtitle = subtitle || defaultSubtitle;
+
   return (
     <section id="videos" className="py-20 bg-gradient-to-b from-gray-50 via-white to-gray-50 border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-semibold mb-3">
-            Multimédia & Conteúdos Oficiais
+          <div className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold mb-3 ${
+            isExperiencias ? 'bg-teal-100 text-teal-800' : 'bg-emerald-100 text-emerald-800'
+          }`}>
+            {displayBadge}
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 tracking-tight">
             <TypewriterText 
-              text="Vídeos & Apresentações"
+              text={displayTitle}
               speed={120}
             />
           </h2>
           <p className="text-base sm:text-lg text-gray-600">
             <SlideUpText 
-              text="Explore a oportunidade NeoLife, conheça a nossa ciência nutricional e inspire-se com histórias reais de transformação."
+              text={displaySubtitle}
               delay={300}
             />
           </p>

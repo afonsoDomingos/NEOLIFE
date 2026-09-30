@@ -7,9 +7,31 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const category = searchParams.get('category');
+    const categories = searchParams.get('categories');
+    const page = searchParams.get('page');
+
+    await connectDB();
+
+    // Destination page filter
+    if (page === 'experiencias') {
+      const expCategories = ['Experiências', 'Experiencias', 'Viagens', 'Reconhecimento', 'Testemunhos'];
+      const videos = await Video.find({ active: true, category: { $in: expCategories } }).sort({ order: 1, createdAt: -1 });
+      return NextResponse.json(Array.isArray(videos) ? videos : []);
+    }
+
+    if (page === 'business') {
+      const busCategories = ['Business', 'Negócio', 'Negocio', 'Tutoriais', 'Apresentação'];
+      const videos = await Video.find({ active: true, category: { $in: busCategories } }).sort({ order: 1, createdAt: -1 });
+      return NextResponse.json(Array.isArray(videos) ? videos : []);
+    }
+
+    if (categories) {
+      const list = categories.split(',').map((c) => c.trim()).filter(Boolean);
+      const videos = await Video.find({ active: true, category: { $in: list } }).sort({ order: 1 });
+      return NextResponse.json(Array.isArray(videos) ? videos : []);
+    }
 
     if (category) {
-      await connectDB();
       const videos = await Video.find({ active: true, category }).sort({ order: 1 });
       return NextResponse.json(Array.isArray(videos) ? videos : []);
     }

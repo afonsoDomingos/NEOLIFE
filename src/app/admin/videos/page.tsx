@@ -31,6 +31,7 @@ function VideosContent() {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [previewModalUrl, setPreviewModalUrl] = useState<string | null>(null);
   const [filterCategory, setFilterCategory] = useState<string>('all');
+  const [destinationFilter, setDestinationFilter] = useState<'all' | 'business' | 'experiencias' | 'saude'>('all');
 
   const [formData, setFormData] = useState({
     title: '',
@@ -183,21 +184,74 @@ function VideosContent() {
   const detectedYouTubeId = extractYouTubeId(formData.videoUrl);
   const embedPreviewUrl = getEmbedUrl(formData.videoUrl);
 
+  // Standard categories for consistent styling
+  const standardCategories = [
+    'Business',
+    'Negócio',
+    'Tutoriais',
+    'Experiências',
+    'Viagens',
+    'Reconhecimento',
+    'Testemunhos',
+    'Produtos',
+    'Apresentação',
+  ];
+
+  const getDestination = (category: string) => {
+    if (['Business', 'Negócio', 'Negocio', 'Tutoriais'].includes(category)) {
+      return {
+        id: 'business',
+        name: 'Página Business',
+        badge: '🏢 Página Business (/business)',
+        color: 'bg-emerald-50 text-emerald-800 border-emerald-300',
+        page: '/business',
+      };
+    }
+    if (['Experiências', 'Experiencias', 'Viagens', 'Reconhecimento', 'Testemunhos'].includes(category)) {
+      return {
+        id: 'experiencias',
+        name: 'Página Experiências',
+        badge: '✈️ Página Experiências (/experiencias)',
+        color: 'bg-teal-50 text-teal-800 border-teal-300',
+        page: '/experiencias',
+      };
+    }
+    if (category === 'Produtos') {
+      return {
+        id: 'saude',
+        name: 'Produtos & Saúde',
+        badge: '🌿 Produtos & Nutrição (/saude)',
+        color: 'bg-green-50 text-green-800 border-green-300',
+        page: '/saude',
+      };
+    }
+    return {
+      id: 'outros',
+      name: 'Geral',
+      badge: '🌐 Geral / Institucional',
+      color: 'bg-gray-100 text-gray-800 border-gray-200',
+      page: '/',
+    };
+  };
+
   // Get all unique categories from videos
   const allCategories = ['all', ...Array.from(new Set(videos.map(v => v.category).filter(Boolean)))];
-  const standardCategories = ['Business', 'Apresentação', 'Negócio', 'Produtos', 'Testemunhos', 'Tutoriais'];
   const customCategories = allCategories.filter(cat => cat !== 'all' && !standardCategories.includes(cat));
 
   // Category labels for display
   const getCategoryLabel = (category: string) => {
     const labels: Record<string, string> = {
       'all': 'Todos',
-      'Business': 'Business (Principal)',
-      'Apresentação': 'Apresentação',
-      'Negócio': 'Negócio',
-      'Produtos': 'Produtos',
-      'Testemunhos': 'Testemunhos',
+      'Business': 'Business (5 Blocos)',
+      'Negócio': 'Negócio (Aulas)',
       'Tutoriais': 'Tutoriais',
+      'Experiências': 'Experiências',
+      'Experiencias': 'Experiências',
+      'Viagens': 'Viagens',
+      'Reconhecimento': 'Reconhecimento',
+      'Testemunhos': 'Testemunhos',
+      'Produtos': 'Produtos',
+      'Apresentação': 'Apresentação',
     };
     return labels[category] || category;
   };
@@ -270,7 +324,7 @@ function VideosContent() {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
-                      Categoria
+                      Destino & Categoria
                     </label>
                     <select
                       name="category"
@@ -278,13 +332,22 @@ function VideosContent() {
                       onChange={handleInputChange}
                       className="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-sm"
                     >
-                      <option value="Business">Business — Blocos da Página Principal</option>
-                      <option value="Apresentação">Apresentação Geral</option>
-                      <option value="Negócio">Oportunidade de Negócio</option>
-                      <option value="Produtos">Produtos & Nutrição</option>
-                      <option value="Testemunhos">Testemunhos & Histórias</option>
-                      <option value="Tutoriais">Como Começar / Tutoriais</option>
-                      <option value="custom">✨ Criar Nova Categoria</option>
+                      <optgroup label="🏢 Página Business (/business)">
+                        <option value="Business">Business — 5 Blocos Sequenciais (Ordem 1 a 5)</option>
+                        <option value="Negócio">Business — Apresentação da Oportunidade</option>
+                        <option value="Tutoriais">Business — Tutoriais & Registo Passo a Passo</option>
+                      </optgroup>
+                      <optgroup label="✈️ Página Experiências (/experiencias)">
+                        <option value="Experiências">Experiências — Geral / Estilo de Vida</option>
+                        <option value="Viagens">Experiências — Viagens & Destinos Internacionais</option>
+                        <option value="Reconhecimento">Experiências — Reconhecimento & Celebrações</option>
+                        <option value="Testemunhos">Experiências — Testemunhos e Histórias Reais</option>
+                      </optgroup>
+                      <optgroup label="🌿 Saúde & Outros">
+                        <option value="Produtos">Produtos & Nutrição (Pilar Saúde)</option>
+                        <option value="Apresentação">Apresentação Geral NeoLife</option>
+                        <option value="custom">✨ Criar Nova Categoria</option>
+                      </optgroup>
                     </select>
 
                     {formData.category === 'custom' && (
@@ -301,12 +364,12 @@ function VideosContent() {
                     )}
 
                     {formData.category === 'Business' && (
-                      <div className="mt-2.5 p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-xs text-emerald-950 leading-relaxed space-y-1">
+                      <div className="mt-2.5 p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-950 leading-relaxed space-y-1.5">
                         <p className="font-bold flex items-center gap-1.5 text-emerald-800">
-                          Ordem para os Blocos de Business na Página Principal:
+                          <span>🏢</span> Destino: 5 Blocos Interativos na Página Business (/business)
                         </p>
                         <p className="text-gray-700">
-                          Defina a <strong>Ordem</strong> abaixo de 1 a 5 para preencher o respetivo bloco:
+                          Defina o campo <strong>Ordem</strong> abaixo de 1 a 5 para preencher o respetivo bloco:
                         </p>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 pt-1 font-mono text-[11px] text-emerald-900">
                           <div>• <strong>Ordem 1:</strong> Bloco 01 — Fundamentos</div>
@@ -315,6 +378,39 @@ function VideosContent() {
                           <div>• <strong>Ordem 4:</strong> Bloco 04 — Escala & Ganhos</div>
                           <div>• <strong>Ordem 5:</strong> Bloco 05 — Ação Imediata</div>
                         </div>
+                      </div>
+                    )}
+
+                    {['Negócio', 'Tutoriais'].includes(formData.category) && (
+                      <div className="mt-2.5 p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-900 leading-relaxed">
+                        <p className="font-bold flex items-center gap-1.5 text-emerald-800">
+                          <span>🏢</span> Destino: Galeria da Página Business (/business)
+                        </p>
+                        <p className="text-gray-700 mt-1">
+                          Este vídeo será exibido na galeria de <strong>Aulas & Apresentações de Negócio</strong> em <code className="bg-emerald-100 px-1 py-0.5 rounded text-emerald-900">/business</code>.
+                        </p>
+                      </div>
+                    )}
+
+                    {['Experiências', 'Experiencias', 'Viagens', 'Reconhecimento', 'Testemunhos'].includes(formData.category) && (
+                      <div className="mt-2.5 p-3 bg-teal-50 border border-teal-200 rounded-xl text-xs text-teal-950 leading-relaxed">
+                        <p className="font-bold flex items-center gap-1.5 text-teal-800">
+                          <span>✈️</span> Destino: Galeria da Página Experiências (/experiencias)
+                        </p>
+                        <p className="text-gray-700 mt-1">
+                          Este vídeo será exibido na galeria de <strong>Viagens, Convenções e Celebrações</strong> em <code className="bg-teal-100 px-1 py-0.5 rounded text-teal-900">/experiencias</code>.
+                        </p>
+                      </div>
+                    )}
+
+                    {formData.category === 'Produtos' && (
+                      <div className="mt-2.5 p-3 bg-green-50 border border-green-200 rounded-xl text-xs text-green-950 leading-relaxed">
+                        <p className="font-bold flex items-center gap-1.5 text-green-800">
+                          <span>🌿</span> Destino: Pilar de Saúde & Nutrição (/saude)
+                        </p>
+                        <p className="text-gray-700 mt-1">
+                          Este vídeo aborda a eficácia e ciência nutricional da NeoLife.
+                        </p>
                       </div>
                     )}
                   </div>
@@ -462,9 +558,61 @@ function VideosContent() {
           </Card>
         )}
 
+        {/* Destination Page Filter Tabs */}
+        <div className="flex flex-wrap items-center gap-2 pb-2 border-b border-gray-200">
+          <span className="text-xs font-bold text-gray-700 mr-2">Filtrar por Destino:</span>
+          <button
+            type="button"
+            onClick={() => { setDestinationFilter('all'); setFilterCategory('all'); }}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              destinationFilter === 'all'
+                ? 'bg-gray-900 text-white shadow-sm'
+                : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50'
+            }`}
+          >
+            Todos ({videos.length})
+          </button>
+          <button
+            type="button"
+            onClick={() => { setDestinationFilter('business'); setFilterCategory('all'); }}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              destinationFilter === 'business'
+                ? 'bg-emerald-700 text-white shadow-sm'
+                : 'bg-white text-emerald-800 border border-emerald-200 hover:bg-emerald-50'
+            }`}
+          >
+            <span>🏢</span>
+            <span>Página Business ({videos.filter(v => ['Business', 'Negócio', 'Negocio', 'Tutoriais'].includes(v.category)).length})</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => { setDestinationFilter('experiencias'); setFilterCategory('all'); }}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              destinationFilter === 'experiencias'
+                ? 'bg-teal-700 text-white shadow-sm'
+                : 'bg-white text-teal-800 border border-teal-200 hover:bg-teal-50'
+            }`}
+          >
+            <span>✈️</span>
+            <span>Página Experiências ({videos.filter(v => ['Experiências', 'Experiencias', 'Viagens', 'Reconhecimento', 'Testemunhos'].includes(v.category)).length})</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => { setDestinationFilter('saude'); setFilterCategory('all'); }}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+              destinationFilter === 'saude'
+                ? 'bg-green-700 text-white shadow-sm'
+                : 'bg-white text-green-800 border border-green-200 hover:bg-green-50'
+            }`}
+          >
+            <span>🌿</span>
+            <span>Saúde & Outros ({videos.filter(v => !['Business', 'Negócio', 'Negocio', 'Tutoriais', 'Experiências', 'Experiencias', 'Viagens', 'Reconhecimento', 'Testemunhos'].includes(v.category)).length})</span>
+          </button>
+        </div>
+
         {/* Category Filter Pills */}
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs font-semibold text-gray-500 mr-1">Filtrar:</span>
+          <span className="text-xs font-semibold text-gray-500 mr-1">Categoria:</span>
           {allCategories.map((category) => {
             const count = category === 'all' ? videos.length : videos.filter((v) => v.category === category).length;
             const isSelected = filterCategory === category;
@@ -499,22 +647,48 @@ function VideosContent() {
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600 mx-auto mb-3"></div>
               <p className="text-sm">A carregar vídeos da base de dados...</p>
             </div>
-          ) : videos.filter((v) => filterCategory === 'all' || v.category === filterCategory).length === 0 ? (
+          ) : videos
+              .filter((v) => {
+                const categoryMatch = filterCategory === 'all' || v.category === filterCategory;
+                let destinationMatch = true;
+                if (destinationFilter === 'business') {
+                  destinationMatch = ['Business', 'Negócio', 'Negocio', 'Tutoriais'].includes(v.category);
+                } else if (destinationFilter === 'experiencias') {
+                  destinationMatch = ['Experiências', 'Experiencias', 'Viagens', 'Reconhecimento', 'Testemunhos'].includes(v.category);
+                } else if (destinationFilter === 'saude') {
+                  destinationMatch = !['Business', 'Negócio', 'Negocio', 'Tutoriais', 'Experiências', 'Experiencias', 'Viagens', 'Reconhecimento', 'Testemunhos'].includes(v.category);
+                }
+                return categoryMatch && destinationMatch;
+              }).length === 0 ? (
             <div className="col-span-full py-16 text-center text-gray-400 bg-white rounded-xl border border-dashed border-gray-300">
-              <p className="font-semibold text-gray-700">Nenhum vídeo nesta categoria</p>
+              <p className="font-semibold text-gray-700">Nenhum vídeo com os filtros selecionados</p>
               <p className="text-sm text-gray-500 mt-1">
-                {filterCategory === 'Business'
-                  ? 'Clique em "+ Novo Vídeo" e escolha a categoria "Business" com ordem de 1 a 5 para preencher os blocos da página principal.'
+                {destinationFilter === 'experiencias'
+                  ? 'Clique em "+ Novo Vídeo" e selecione "Experiências", "Viagens" ou "Reconhecimento" para alimentar a página /experiencias.'
+                  : destinationFilter === 'business'
+                  ? 'Clique em "+ Novo Vídeo" e selecione "Business" (ordem 1 a 5 para os blocos) ou "Negócio" para a página /business.'
                   : 'Clique em "+ Novo Vídeo" para adicionar um vídeo ao site.'}
               </p>
             </div>
           ) : (
             videos
-              .filter((v) => filterCategory === 'all' || v.category === filterCategory)
+              .filter((v) => {
+                const categoryMatch = filterCategory === 'all' || v.category === filterCategory;
+                let destinationMatch = true;
+                if (destinationFilter === 'business') {
+                  destinationMatch = ['Business', 'Negócio', 'Negocio', 'Tutoriais'].includes(v.category);
+                } else if (destinationFilter === 'experiencias') {
+                  destinationMatch = ['Experiências', 'Experiencias', 'Viagens', 'Reconhecimento', 'Testemunhos'].includes(v.category);
+                } else if (destinationFilter === 'saude') {
+                  destinationMatch = !['Business', 'Negócio', 'Negocio', 'Tutoriais', 'Experiências', 'Experiencias', 'Viagens', 'Reconhecimento', 'Testemunhos'].includes(v.category);
+                }
+                return categoryMatch && destinationMatch;
+              })
               .map((v) => {
               const videoId = v._id || v.id || v.videoUrl;
               const thumb = v.thumbnailUrl || (extractYouTubeId(v.videoUrl) ? `https://img.youtube.com/vi/${extractYouTubeId(v.videoUrl)}/hqdefault.jpg` : '');
               const embedUrl = getEmbedUrl(v.videoUrl);
+              const dest = getDestination(v.category);
 
               return (
                 <Card key={videoId} className="shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between overflow-hidden">
@@ -557,6 +731,11 @@ function VideosContent() {
                     </div>
 
                     <CardContent className="p-4">
+                      <div className="mb-2">
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${dest.color}`}>
+                          {dest.badge}
+                        </span>
+                      </div>
                       <h3 className="font-bold text-gray-900 text-base line-clamp-2 mb-1">{v.title}</h3>
                       <p className="text-xs text-gray-500 line-clamp-2 mb-3">{v.description || 'Sem descrição.'}</p>
                       <a
