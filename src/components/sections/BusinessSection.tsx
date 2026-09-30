@@ -323,7 +323,7 @@ export const BusinessSection: React.FC = () => {
             </p>
           </div>
           <Link href="/formulario?tema=oportunidade-negocio&pais=mz-pt" className="shrink-0">
-            <Button size="sm" className="bg-white text-emerald-900 hover:bg-emerald-50 font-bold px-6 shadow-md">
+            <Button size="sm" className="bg-white !text-emerald-900 hover:bg-emerald-50 font-bold px-6 shadow-md">
               Marcar Conversa Gratuita
             </Button>
           </Link>
