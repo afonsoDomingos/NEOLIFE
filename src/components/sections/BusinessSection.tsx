@@ -119,7 +119,6 @@ export const BusinessSection: React.FC = () => {
       cta: t.business.blocks.intro.cta,
       nextAnchor: '#business-block-02',
       badge: 'Fundamentos',
-      icon: '🌱',
     },
     {
       id: 'model',
@@ -130,7 +129,6 @@ export const BusinessSection: React.FC = () => {
       cta: t.business.blocks.model.cta,
       nextAnchor: '#business-block-03',
       badge: 'Funcionamento',
-      icon: '⚙️',
     },
     {
       id: 'mentorship',
@@ -141,7 +139,6 @@ export const BusinessSection: React.FC = () => {
       cta: t.business.blocks.mentorship.cta,
       nextAnchor: '#business-block-04',
       badge: 'Acompanhamento',
-      icon: '🤝',
     },
     {
       id: 'earnings',
@@ -152,7 +149,6 @@ export const BusinessSection: React.FC = () => {
       cta: t.business.blocks.earnings.cta,
       nextAnchor: '#business-block-05',
       badge: 'Escala & Ganhos',
-      icon: '📈',
     },
     {
       id: 'start',
@@ -163,7 +159,6 @@ export const BusinessSection: React.FC = () => {
       cta: t.business.blocks.start.cta,
       link: '/formulario?tema=oportunidade-negocio&pais=mz-pt',
       badge: 'Ação Imediata',
-      icon: '🚀',
     },
   ];
 
@@ -230,11 +225,11 @@ export const BusinessSection: React.FC = () => {
                       : 'hover:bg-gray-50 border-l-4 border-transparent'
                   }`}
                 >
-                  {/* Icon + Number */}
-                  <div className={`flex items-center justify-center w-8 h-8 rounded-xl shrink-0 text-base font-black transition-colors ${
+                  {/* Number */}
+                  <div className={`flex items-center justify-center w-7 h-7 rounded-lg shrink-0 text-xs font-black font-mono transition-colors ${
                     isOpen ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-500'
                   }`}>
-                    {block.icon}
+                    {block.number}
                   </div>
 
                   <div className="flex-1 min-w-0">
