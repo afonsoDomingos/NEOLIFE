@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { sciencePillars } from '@/data/health-solutions';
 
@@ -9,7 +10,7 @@ export const NeoLifeScienceSection: React.FC = () => {
   const isPt = language === 'pt';
 
   return (
-    <section className="py-16 md:py-20 bg-gradient-to-b from-emerald-950 via-emerald-900 to-emerald-950 text-white relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-emerald-950 via-emerald-900 to-emerald-950 text-white relative overflow-hidden">
       {/* Decorative ambient blurred spots */}
       <div className="absolute top-0 right-1/4 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-1/4 w-80 h-80 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -42,24 +43,26 @@ export const NeoLifeScienceSection: React.FC = () => {
           </p>
         </div>
 
-        {/* 5 Quality Pillars */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-6 mb-12">
+        {/* 4 Quality Pillars (Official Badges) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12 max-w-6xl mx-auto">
           {sciencePillars.map((pillar) => (
             <div
               key={pillar.id}
-              className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:border-emerald-400/50 hover:bg-white/10 transition-all duration-300 flex flex-col justify-between group"
+              className="bg-white rounded-3xl p-4 sm:p-5 shadow-xl hover:shadow-2xl border-2 border-emerald-400/30 hover:border-emerald-400 hover:-translate-y-1.5 transition-all duration-300 flex flex-col items-center justify-center group overflow-hidden"
             >
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-emerald-800/50 border border-emerald-500/30 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                  {pillar.icon}
-                </div>
-                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-emerald-300 transition-colors">
-                  {isPt ? pillar.titlePt : pillar.titleEn}
-                </h3>
-                <p className="text-xs text-gray-300 leading-relaxed">
-                  {isPt ? pillar.descPt : pillar.descEn}
-                </p>
+              <div className="relative w-full aspect-square max-w-[280px] overflow-hidden rounded-2xl flex items-center justify-center">
+                <Image
+                  src={pillar.image}
+                  alt={isPt ? `${pillar.titlePt} - ${pillar.descPt}` : `${pillar.titleEn} - ${pillar.descEn}`}
+                  width={600}
+                  height={600}
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                  priority
+                />
               </div>
+              <span className="sr-only">
+                {isPt ? `${pillar.titlePt}: ${pillar.descPt}` : `${pillar.titleEn}: ${pillar.descEn}`}
+              </span>
             </div>
           ))}
         </div>
