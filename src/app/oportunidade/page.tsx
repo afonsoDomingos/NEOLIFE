@@ -38,23 +38,33 @@ export default function OportunidadePage() {
     <div className="min-h-screen bg-white">
 
       {/* ── Hero ── */}
-      <section className="relative bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-700 py-24 md:py-32 overflow-hidden">
-        {/* decorative circles */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-600/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl" />
+      <section className="relative bg-emerald-950 py-24 md:py-32 overflow-hidden border-b border-emerald-900/50">
+        {/* Background Image with Dark Gradient Overlay */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/images/banners/banner-business.jpg')" }}
+        >
+          {/* Multi-layered dark gradient to ensure text contrast and elegance */}
+          <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/92 via-emerald-900/80 to-emerald-950/95" />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
 
-        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-700/60 border border-emerald-500/40 text-emerald-200 text-xs font-semibold mb-6">
+        {/* decorative circles */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-600/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/20 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl pointer-events-none" />
+
+        <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-900/80 backdrop-blur-md border border-emerald-400/40 text-emerald-200 text-xs font-semibold mb-6 shadow-lg">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             Oportunidade de Negócio - NeoLife África
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-md">
             Construa uma Vida com{' '}
             <span className="text-emerald-300">Mais Liberdade</span>
           </h1>
 
-          <p className="text-lg md:text-xl text-emerald-100 mb-10 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-emerald-100 mb-10 max-w-3xl mx-auto leading-relaxed drop-shadow">
             A NeoLife oferece-lhe a possibilidade de criar uma fonte de rendimento partilhando
             produtos de excelência em nutrição e bem-estar - com a mentoria direta de José Sarmento Machado e Ofélia Alfredo Machado,
             formação contínua e uma equipa que acompanha cada passo da sua jornada.
@@ -62,7 +72,7 @@ export default function OportunidadePage() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/formulario?tema=oportunidade-negocio&pais=mz-pt">
-              <Button size="lg" className="bg-white text-emerald-800 hover:bg-emerald-50 font-bold px-8">
+              <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-bold px-8 shadow-xl">
                 Quero Saber Mais
               </Button>
             </Link>

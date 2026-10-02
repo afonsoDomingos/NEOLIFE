@@ -22,17 +22,27 @@ export default function SaudePage() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── HEADER DA ÁREA: SAÚDE ── */}
-      <section className="relative bg-gradient-to-b from-emerald-950 via-emerald-900 to-emerald-950 text-white py-16 md:py-24 overflow-hidden">
-        {/* Glow decoration */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative bg-emerald-950 text-white py-20 md:py-28 overflow-hidden border-b border-emerald-800/40">
+        {/* Background Image with Dark Gradient Overlay */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/images/banners/banner-saude.jpg')" }}
+        >
+          {/* Multi-layered dark gradient to ensure text contrast and elegance */}
+          <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/92 via-emerald-950/80 to-emerald-950/95" />
+          <div className="absolute inset-0 bg-black/35" />
+        </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-800/80 border border-emerald-500/40 text-emerald-300 text-xs font-bold uppercase tracking-widest mb-6">
+        {/* Ambient Glow decoration */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-900/80 backdrop-blur-md border border-emerald-400/40 text-emerald-300 text-xs font-bold uppercase tracking-widest mb-6 shadow-lg">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             {isPt ? 'Pilar 01 • Saúde & Vitalidade Celular' : 'Pillar 01 • Health & Cellular Vitality'}
           </div>
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight max-w-4xl mx-auto">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight max-w-4xl mx-auto drop-shadow-md">
             {isPt ? (
               <>Nutrição Superior & Soluções Naturais para a <span className="text-emerald-400">Sua Família</span></>
             ) : (
@@ -40,7 +50,7 @@ export default function SaudePage() {
             )}
           </h1>
 
-          <p className="text-lg md:text-xl text-emerald-100/90 max-w-3xl mx-auto leading-relaxed mb-8">
+          <p className="text-lg md:text-xl text-emerald-100/90 max-w-3xl mx-auto leading-relaxed mb-8 drop-shadow">
             {isPt
               ? 'Explore suplementos com base científica, produtos de higiene pessoal, soluções de limpeza ecológica e bio-otimizadores agrícolas. Selecione o que procura e adicione ao seu pedido de aconselhamento personalizado.'
               : 'Discover science-backed supplements, personal care, eco-friendly home cleaning, and agricultural solutions. Select what you need and add it to your custom consultation order.'}
@@ -48,14 +58,14 @@ export default function SaudePage() {
 
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a href="#solucoes-saude">
-              <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-extrabold px-8 shadow-lg">
+              <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-extrabold px-8 shadow-xl">
                 {isPt ? 'Ver Produtos & Pacotes ↓' : 'Explore Products & Packs ↓'}
               </Button>
             </a>
 
             {totalItemsCount > 0 && (
               <Link href="/formulario?origem=saude-topo">
-                <Button size="lg" variant="outline" className="border-emerald-400 text-emerald-300 hover:bg-emerald-800 font-bold px-8">
+                <Button size="lg" variant="outline" className="border-emerald-400 text-emerald-300 hover:bg-emerald-800/80 backdrop-blur-sm font-bold px-8 shadow-lg">
                   {isPt ? `Finalizar Seleção (${totalItemsCount}) ➔` : `Finish Selection (${totalItemsCount}) ➔`}
                 </Button>
               </Link>

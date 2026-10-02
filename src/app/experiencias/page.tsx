@@ -22,17 +22,27 @@ export default function ExperienciasPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── HEADER DA ÁREA: EXPERIÊNCIAS ── */}
-      <section className="relative bg-gradient-to-b from-teal-950 via-gray-900 to-teal-950 text-white py-16 md:py-24 overflow-hidden border-b border-teal-900/50">
-        {/* Glow decoration */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-teal-500/15 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative bg-teal-950 text-white py-20 md:py-28 overflow-hidden border-b border-teal-900/50">
+        {/* Background Image with Dark Gradient Overlay */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/images/banners/banner-experiencias.jpg')" }}
+        >
+          {/* Multi-layered dark gradient to ensure text contrast and elegance */}
+          <div className="absolute inset-0 bg-gradient-to-b from-teal-950/92 via-teal-950/80 to-teal-950/95" />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-800/60 border border-teal-400/40 text-teal-300 text-xs font-bold uppercase tracking-widest mb-6">
+        {/* Glow decoration */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-teal-500/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-900/80 backdrop-blur-md border border-teal-400/40 text-teal-300 text-xs font-bold uppercase tracking-widest mb-6 shadow-lg">
             <span className="w-2 h-2 rounded-full bg-teal-400 animate-pulse" />
             {isPt ? 'Pilar 03 • Viagens & Reconhecimento' : 'Pillar 03 • Travel & Recognition'}
           </div>
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight max-w-4xl mx-auto">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight max-w-4xl mx-auto drop-shadow-md">
             {isPt ? (
               <>Viva Experiências Exclusivas & <span className="text-teal-400">Reconhecimento Global</span></>
             ) : (
@@ -40,7 +50,7 @@ export default function ExperienciasPage() {
             )}
           </h1>
 
-          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8">
+          <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-8 drop-shadow">
             {isPt
               ? 'A NeoLife vai muito além de produtos e rendimento: é sobre viajar pelo mundo, crescer como líder e celebrar cada conquista numa comunidade internacional de apoio.'
               : 'NeoLife is much more than wellness and income: it is about traveling the world, developing leadership, and celebrating every milestone in a global community.'}
@@ -48,13 +58,13 @@ export default function ExperienciasPage() {
 
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a href="#galeria-experiencias">
-              <Button size="lg" className="bg-teal-500 hover:bg-teal-400 text-teal-950 font-extrabold px-8 shadow-lg">
+              <Button size="lg" className="bg-teal-500 hover:bg-teal-400 text-teal-950 font-extrabold px-8 shadow-xl">
                 {isPt ? 'Explorar Experiências ↓' : 'Explore Experiences ↓'}
               </Button>
             </a>
 
             <Link href="/formulario?origem=experiencias-topo">
-              <Button size="lg" variant="outline" className="border-teal-400 text-white hover:bg-white/10 font-bold px-8">
+              <Button size="lg" variant="outline" className="border-teal-400 text-white hover:bg-teal-800/80 backdrop-blur-sm font-bold px-8 shadow-lg">
                 {totalItemsCount > 0
                   ? (isPt ? `Finalizar Seleção (${totalItemsCount}) ➔` : `Finish Selection (${totalItemsCount}) ➔`)
                   : (isPt ? 'Falar Connosco ➔' : 'Talk with Us ➔')}

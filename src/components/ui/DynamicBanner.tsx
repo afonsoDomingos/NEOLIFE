@@ -19,24 +19,45 @@ const defaultBanners: Banner[] = [
   {
     _id: 'default-banner-01',
     title: 'Construa o Seu Próprio Negócio com a NeoLife em África',
-    description: 'Descubra como transformar a sua saúde, bem-estar e criar novas oportunidades financeiras, trabalhando a partir de qualquer lugar.',
-    image: '/banner01.jpg',
-    link: '/#temas',
-    buttonText: 'Quero Saber Mais',
+    description: 'Descubra como transformar a sua saúde, bem-estar e criar novas oportunidades financeiras sustentáveis ao lado de uma mentoria comprovada.',
+    image: '/images/banners/banner-business.jpg',
+    link: '/business',
+    buttonText: 'Conhecer o Business',
     active: true,
     order: 1,
   },
   {
     _id: 'default-banner-02',
-    title: 'Saúde, Vitalidade e Liberdade Financeira',
-    description: 'Junte-se à família NeoLife e descubra o poder da nutrição celular de alta qualidade científica, ao lado da mentoria de José e Ofélia Machado.',
-    image: '/banneroficial.png',
-    link: '/oportunidade',
-    buttonText: 'Conhecer a Oportunidade',
+    title: 'Nutrição Superior & Vitalidade Celular para Toda a Família',
+    description: 'Baseada na Natureza e Apoiada pela Ciência. Descubra suplementos de qualidade máxima formulados para otimizar o seu bem-estar diário.',
+    image: '/images/banners/banner-saude.jpg',
+    link: '/saude',
+    buttonText: 'Explorar Soluções de Saúde',
     active: true,
     order: 2,
-  }
+  },
+  {
+    _id: 'default-banner-03',
+    title: 'Viva Experiências Exclusivas & Reconhecimento Global',
+    description: 'Expanda os seus horizontes, celebre grandes conquistas e faça parte de viagens internacionais inesquecíveis.',
+    image: '/images/banners/banner-experiencias.jpg',
+    link: '/experiencias',
+    buttonText: 'Descobrir Experiências',
+    active: true,
+    order: 3,
+  },
+  {
+    _id: 'default-banner-04',
+    title: 'Liderança e Desenvolvimento: Juntos por um Futuro Melhor',
+    description: 'Mais de 60 anos de história e inovação global. Conte com o apoio e a mentoria direta de José Sarmento Machado e Ofélia Alfredo Machado.',
+    image: '/banneroficial.png',
+    link: '/business',
+    buttonText: 'Falar com os Mentores',
+    active: true,
+    order: 4,
+  },
 ];
+
 
 export const DynamicBanner: React.FC = () => {
   const [banners, setBanners] = useState<Banner[]>(defaultBanners);

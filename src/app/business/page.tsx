@@ -23,17 +23,27 @@ export default function BusinessPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── HEADER DA ÁREA: BUSINESS ── */}
-      <section className="relative bg-gradient-to-b from-gray-950 via-emerald-950 to-gray-950 text-white py-16 md:py-24 overflow-hidden border-b border-emerald-900/50">
-        {/* Glow decoration */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
+      <section className="relative bg-gray-950 text-white py-20 md:py-28 overflow-hidden border-b border-emerald-900/50">
+        {/* Background Image with Dark Gradient Overlay */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/images/banners/banner-business.jpg')" }}
+        >
+          {/* Multi-layered dark gradient to ensure text contrast and elegance */}
+          <div className="absolute inset-0 bg-gradient-to-b from-gray-950/92 via-emerald-950/80 to-gray-950/95" />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-800/60 border border-emerald-400/40 text-emerald-300 text-xs font-bold uppercase tracking-widest mb-6">
+        {/* Glow decoration */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-900/80 backdrop-blur-md border border-emerald-400/40 text-emerald-300 text-xs font-bold uppercase tracking-widest mb-6 shadow-lg">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             {isPt ? 'Pilar 02 • Oportunidade & Empreendedorismo' : 'Pillar 02 • Opportunity & Entrepreneurship'}
           </div>
 
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight max-w-4xl mx-auto">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight max-w-4xl mx-auto drop-shadow-md">
             {isPt ? (
               <>Construa um Negócio Próprio com <span className="text-emerald-400">Liberdade & Apoio Real</span></>
             ) : (
@@ -41,7 +51,7 @@ export default function BusinessPage() {
             )}
           </h1>
 
-          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed mb-8">
+          <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-8 drop-shadow">
             {isPt
               ? 'Conheça o modelo passo a passo, veja os vídeos explicativos de cada módulo e selecione os seus objetivos. Conte com a mentoria direta de José Sarmento Machado e Ofélia Alfredo Machado.'
               : 'Understand the business model step by step, watch the explanatory videos, and select your goals. Benefit from direct mentorship with José & Ofélia Machado.'}
@@ -49,13 +59,13 @@ export default function BusinessPage() {
 
           <div className="flex flex-wrap items-center justify-center gap-4">
             <a href="#modulos-negocio">
-              <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-extrabold px-8 shadow-lg">
+              <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-extrabold px-8 shadow-xl">
                 {isPt ? 'Ver Módulos & Vídeos ↓' : 'Watch Modules & Videos ↓'}
               </Button>
             </a>
 
             <Link href="/formulario?origem=business-topo">
-              <Button size="lg" variant="outline" className="border-emerald-400 text-white hover:bg-white/10 font-bold px-8">
+              <Button size="lg" variant="outline" className="border-emerald-400 text-white hover:bg-emerald-800/80 backdrop-blur-sm font-bold px-8 shadow-lg">
                 {totalItemsCount > 0
                   ? (isPt ? `Finalizar Seleção (${totalItemsCount}) ➔` : `Finish Selection (${totalItemsCount}) ➔`)
                   : (isPt ? 'Falar com os Mentores ➔' : 'Talk with Mentors ➔')}
