@@ -65,7 +65,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
       if (!response.ok) {
         // Read the actual error message from API
         const errData = await response.json().catch(() => ({}));
-        throw new Error(errData.error || `Erro ${response.status} ao fazer upload.`);
+        throw new Error(errData.details || errData.error || `Erro ${response.status} ao fazer upload.`);
       }
 
       const data = await response.json();

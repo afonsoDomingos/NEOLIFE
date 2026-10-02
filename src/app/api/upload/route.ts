@@ -1,49 +1,58 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v2 as cloudinary } from 'cloudinary';
 
-// Configure Cloudinary
-cloudinary.config({
-  cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-  secure: true,
-});
+// Configure Cloudinary with environment variables and fallback credentials
+const getCloudinary = () => {
+  cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME || process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME || 'dnvnftvky',
+    api_key: process.env.CLOUDINARY_API_KEY || '259851568455899',
+    api_secret: process.env.CLOUDINARY_API_SECRET || '3hRsXzUVd3pnwn9IKQWN7UAeJLc',
+    secure: true,
+  });
+  return cloudinary;
+};
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get('file') as File;
-    const folder = formData.get('folder') as string || 'neolife';
+    const folder = (formData.get('folder') as string) || 'neolife';
 
     if (!file) {
-      return NextResponse.json({ error: 'No file provided' }, { status: 400 });
+      return NextResponse.json({ error: 'Nenhum ficheiro fornecido' }, { status: 400 });
     }
 
     // Convert file to buffer
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
+    const cld = getCloudinary();
+
     // Upload to Cloudinary
     const result = await new Promise((resolve, reject) => {
-      cloudinary.uploader.upload_stream(
-        {
-          folder,
-          resource_type: 'image',
-          allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
-          max_file_size: 5000000, // 5MB
-          transformation: [
-            { quality: 'auto', fetch_format: 'auto' },
-            { width: 1200, height: 630, crop: 'fill' }, // OG image size
-          ],
-        },
-        (error, result) => {
-          if (error) {
-            reject(error);
-          } else {
-            resolve(result);
-          }
+      const uploadOptions: Record<string, any> = {
+        folder,
+        resource_type: 'image',
+        allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'gif'],
+        max_file_size: 10000000, // 10MB
+        transformation: [
+          { quality: 'auto', fetch_format: 'auto' },
+        ],
+      };
+
+      // Only use OG crop if explicitly a banner/social share
+      if (folder === 'banners' || folder === 'og-images') {
+        uploadOptions.transformation.push({ width: 1200, height: 630, crop: 'fill' });
+      }
+
+      cld.uploader.upload_stream(uploadOptions, (error, result) => {
+        if (error) {
+          console.error('Cloudinary stream error:', error);
+          reject(error);
+        } else {
+          resolve(result);
         }
-      ).end(buffer);
+      }).end(buffer);
     });
 
     return NextResponse.json({
@@ -52,10 +61,14 @@ export async function POST(request: NextRequest) {
       width: (result as any).width,
       height: (result as any).height,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error uploading image:', error);
+    const errorMessage = error?.message || 'Falha ao processar upload da imagem';
     return NextResponse.json(
-      { error: 'Failed to upload image', details: error instanceof Error ? error.message : 'Unknown error' },
+      {
+        error: errorMessage,
+        details: error?.message || 'Erro desconhecido durante o upload',
+      },
       { status: 500 }
     );
   }

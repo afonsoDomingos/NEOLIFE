@@ -410,8 +410,8 @@ export const HealthSection: React.FC = () => {
             ))}
           </div>
 
-          {/* Packs Grid - Simplified: Only titles, expandable */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          {/* Packs Grid - Modern, Attractive Cards with Large Hero Images */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {filteredPacks.map((pack) => {
               const isExpanded = expandedPacks.has(pack.id);
               const linkData = productLinks[pack.id];
@@ -426,155 +426,159 @@ export const HealthSection: React.FC = () => {
               return (
                 <div
                   key={pack.id}
-                  className="bg-white rounded-2xl border border-gray-200 hover:border-emerald-400 shadow-xs hover:shadow-md transition-all duration-300 overflow-hidden"
+                  className="group bg-white rounded-3xl border border-gray-200 hover:border-emerald-500 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col justify-between"
                 >
-                  {/* Compact Header - Always Visible */}
-                  <button
-                    onClick={() => {
-                      const newExpanded = new Set(expandedPacks);
-                      if (newExpanded.has(pack.id)) {
-                        newExpanded.delete(pack.id);
-                      } else {
-                        newExpanded.add(pack.id);
-                      }
-                      setExpandedPacks(newExpanded);
-                    }}
-                    className="w-full p-5 text-left flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-4 flex-1">
-                      {mergedPack.image && (
-                        <div className="relative">
-                          <div
-                            className="w-16 h-16 rounded-lg overflow-hidden shrink-0 border border-gray-200 cursor-pointer hover:border-emerald-400 transition-colors"
-                            onClick={() => setFullscreenImage(mergedPack.image)}
-                          >
-                            <img
-                              src={mergedPack.image}
-                              alt={isPt ? mergedPack.titlePt : mergedPack.titleEn}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                          {productImages[pack.id] && productImages[pack.id].length > 1 && (
-                            <div className="absolute -top-1 -right-1 bg-emerald-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                              {productImages[pack.id].length}
-                            </div>
-                          )}
+                  {/* Large Prominent Hero Image Container */}
+                  <div className="relative w-full h-64 sm:h-72 bg-gradient-to-b from-gray-50/90 via-white to-emerald-50/20 p-5 flex items-center justify-center overflow-hidden border-b border-gray-100">
+                    {mergedPack.image ? (
+                      <div
+                        className="relative w-full h-full flex items-center justify-center cursor-pointer"
+                        onClick={() => setFullscreenImage(mergedPack.image)}
+                      >
+                        <img
+                          src={mergedPack.image}
+                          alt={isPt ? mergedPack.titlePt : mergedPack.titleEn}
+                          className="max-h-full max-w-full object-contain filter drop-shadow-md group-hover:scale-105 transition-transform duration-300"
+                        />
+                        {/* Hover Zoom Icon */}
+                        <div
+                          className="absolute bottom-1 right-1 w-8 h-8 rounded-full bg-white/90 shadow-md border border-gray-200 flex items-center justify-center text-gray-700 group-hover:text-emerald-700 transition-colors"
+                          title={isPt ? 'Ampliar imagem' : 'Enlarge image'}
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                          </svg>
                         </div>
-                      )}
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
-                            {isPt ? mergedPack.badgePt : mergedPack.badgeEn}
-                          </span>
-                          <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
-                            {isPt ? mergedPack.tagPt : mergedPack.tagEn}
-                          </span>
-                        </div>
-                        <h4 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-emerald-700 transition-colors">
-                          {isPt ? mergedPack.titlePt : mergedPack.titleEn}
-                        </h4>
                       </div>
-                    </div>
-                    <svg
-                      className={`w-5 h-5 text-emerald-600 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''} shrink-0`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center text-gray-400">
+                        <div className="w-16 h-16 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-2">
+                          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                          </svg>
+                        </div>
+                        <span className="text-xs font-semibold text-emerald-800/70 uppercase tracking-wider">NeoLife Solução</span>
+                      </div>
+                    )}
 
-                  {/* Expandable Content */}
-                  <div
-                    className={`px-5 pb-5 transition-all duration-300 ${
-                      isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
-                    }`}
-                  >
-                    <p className="text-xs text-gray-600 leading-relaxed mb-4">
+                    {/* Floating Badges */}
+                    <div className="absolute top-3 left-3 flex flex-wrap gap-1.5 max-w-[75%] pointer-events-none">
+                      <span className="text-[10px] font-extrabold text-emerald-950 bg-emerald-100/95 backdrop-blur-xs px-2.5 py-1 rounded-full border border-emerald-300 shadow-xs uppercase tracking-wider">
+                        {isPt ? mergedPack.badgePt : mergedPack.badgeEn}
+                      </span>
+                    </div>
+
+                    <div className="absolute top-3 right-3 flex items-center gap-1.5">
+                      <span className="text-[10px] font-bold text-gray-700 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-full border border-gray-200 shadow-xs uppercase tracking-wider">
+                        {isPt ? mergedPack.tagPt : mergedPack.tagEn}
+                      </span>
+                      {productImages[pack.id] && productImages[pack.id].length > 1 && (
+                        <span className="bg-emerald-600 text-white text-[10px] font-bold rounded-full px-2 py-0.5 shadow-xs">
+                          +{productImages[pack.id].length}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Card Body */}
+                  <div className="p-6 flex flex-col flex-1">
+                    <h4 className="text-xl font-extrabold text-gray-900 leading-snug group-hover:text-emerald-700 transition-colors mb-2">
+                      {isPt ? mergedPack.titlePt : mergedPack.titleEn}
+                    </h4>
+
+                    <p className="text-sm text-gray-600 leading-relaxed mb-4">
                       {isPt ? mergedPack.descPt : mergedPack.descEn}
                     </p>
 
-                    {/* Included Products List */}
-                    <div className="mb-4 bg-gray-50/80 rounded-xl p-3 border border-gray-100">
-                      <p className="text-[10px] font-bold text-gray-700 uppercase tracking-wider mb-2">
-                        {isPt ? 'O Pack Inclui:' : 'Pack Includes:'}
-                      </p>
-                      <ul className="space-y-1">
+                    {/* What is Included Box */}
+                    <div className="mb-4 bg-emerald-50/50 rounded-2xl p-4 border border-emerald-100">
+                      <div className="flex items-center justify-between mb-2">
+                        <p className="text-[11px] font-extrabold text-emerald-900 uppercase tracking-wider flex items-center gap-1.5">
+                          <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                          {isPt ? 'O Pack Inclui:' : 'Pack Includes:'}
+                        </p>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newExpanded = new Set(expandedPacks);
+                            if (newExpanded.has(pack.id)) {
+                              newExpanded.delete(pack.id);
+                            } else {
+                              newExpanded.add(pack.id);
+                            }
+                            setExpandedPacks(newExpanded);
+                          }}
+                          className="text-[11px] font-bold text-emerald-700 hover:text-emerald-900 transition-colors flex items-center gap-1"
+                        >
+                          <span>{isExpanded ? (isPt ? 'Menos detalhes ▲' : 'Less details ▲') : (isPt ? 'Ver benefícios ▼' : 'View benefits ▼')}</span>
+                        </button>
+                      </div>
+                      <ul className="space-y-1.5">
                         {(isPt ? mergedPack.productsPt : mergedPack.productsEn).map((prod: string, i: number) => (
-                          <li key={i} className="flex items-start gap-2 text-xs text-gray-800">
-                            <span className="text-emerald-600 font-bold shrink-0">•</span>
+                          <li key={i} className="flex items-start gap-2 text-xs text-gray-800 font-medium">
+                            <span className="text-emerald-600 font-bold shrink-0">✓</span>
                             <span>{prod}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
 
-                    {/* Key Benefits */}
-                    <div className="mb-4">
-                      <p className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider mb-2">
-                        {isPt ? 'Benefícios Principais:' : 'Key Benefits:'}
-                      </p>
-                      <ul className="space-y-1">
-                        {(isPt ? mergedPack.benefitsPt : mergedPack.benefitsEn).slice(0, 3).map((ben: string, i: number) => (
-                          <li key={i} className="text-xs text-gray-600 flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-                            <span>{ben}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Multiple Images Gallery */}
-                    {productImages[pack.id] && productImages[pack.id].length > 1 && (
-                      <div className="mb-4">
-                        <p className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider mb-2">
-                          {isPt ? 'Galeria de Imagens:' : 'Image Gallery:'}
-                        </p>
-                        <div className="grid grid-cols-3 gap-2">
-                          {productImages[pack.id].map((img: any, idx: number) => (
-                            <div
-                              key={idx}
-                              className="relative aspect-square rounded-lg overflow-hidden border border-gray-200 cursor-pointer hover:border-emerald-400 transition-colors"
-                              onClick={() => setFullscreenImage(img.imageUrl)}
-                            >
-                              <img
-                                src={img.imageUrl}
-                                alt={img.altText || `${isPt ? mergedPack.titlePt : mergedPack.titleEn} ${idx + 1}`}
-                                className="w-full h-full object-cover"
-                              />
-                              {img.featured && (
-                                <div className="absolute top-1 left-1 bg-emerald-500 text-white text-[8px] font-bold px-1.5 py-0.5 rounded">
-                                  {isPt ? 'Principal' : 'Main'}
-                                </div>
-                              )}
-                            </div>
-                          ))}
+                    {/* Expandable Details (Benefits & Additional Photos) */}
+                    {isExpanded && (
+                      <div className="space-y-4 mb-4 pt-1 border-t border-gray-100">
+                        {/* Key Benefits */}
+                        <div>
+                          <p className="text-[11px] font-extrabold text-emerald-800 uppercase tracking-wider mb-2">
+                            {isPt ? 'Benefícios Principais:' : 'Key Benefits:'}
+                          </p>
+                          <ul className="space-y-1.5">
+                            {(isPt ? mergedPack.benefitsPt : mergedPack.benefitsEn).map((ben: string, i: number) => (
+                              <li key={i} className="text-xs text-gray-700 flex items-start gap-2">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0 mt-1.5" />
+                                <span>{ben}</span>
+                              </li>
+                            ))}
+                          </ul>
                         </div>
+
+                        {/* Extra Gallery Photos */}
+                        {productImages[pack.id] && productImages[pack.id].length > 1 && (
+                          <div>
+                            <p className="text-[11px] font-extrabold text-gray-700 uppercase tracking-wider mb-2">
+                              {isPt ? 'Galeria de Fotos:' : 'Photo Gallery:'}
+                            </p>
+                            <div className="grid grid-cols-3 gap-2">
+                              {productImages[pack.id].map((img: any, idx: number) => (
+                                <div
+                                  key={idx}
+                                  className="relative aspect-square rounded-xl overflow-hidden border-2 border-gray-100 hover:border-emerald-500 cursor-pointer shadow-xs transition-all"
+                                  onClick={() => setFullscreenImage(img.imageUrl)}
+                                >
+                                  <img
+                                    src={img.imageUrl}
+                                    alt={img.altText || `${isPt ? mergedPack.titlePt : mergedPack.titleEn} ${idx + 1}`}
+                                    className="w-full h-full object-cover"
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
                     )}
 
-                    {/* Purchase Button */}
-                    <div className="pt-3 border-t border-gray-100">
+                    {/* CTA Purchase / Order Button */}
+                    <div className="mt-auto pt-4 border-t border-gray-100">
                       {isLoading ? (
                         <button
                           disabled
-                          className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-gray-100 text-gray-400 border border-gray-200 flex items-center justify-center gap-2"
+                          className="w-full py-3.5 px-4 rounded-2xl text-xs font-bold bg-gray-100 text-gray-400 border border-gray-200 flex items-center justify-center gap-2"
                         >
                           <span>{isPt ? 'Carregando...' : 'Loading...'}</span>
                         </button>
-                      ) : !linkData || !linkData.available ? (
-                        <button
-                          disabled
-                          className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-gray-100 text-gray-500 border border-gray-200 flex items-center justify-center gap-2 cursor-not-allowed"
-                        >
-                          <span>
-                            {linkData?.customMessage || (isPt ? 'Produto Indisponível' : 'Product Unavailable')}
-                          </span>
-                        </button>
-                      ) : (
+                      ) : linkData?.available && linkData.purchaseUrl ? (
                         <a
-                          href={linkData.purchaseUrl!}
+                          href={linkData.purchaseUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="block w-full"
@@ -582,10 +586,30 @@ export const HealthSection: React.FC = () => {
                         >
                           <button
                             type="button"
-                            className="w-full py-2.5 px-4 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-300 transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+                            className="w-full py-3.5 px-5 rounded-2xl text-sm font-black bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-500 shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 group/btn"
                           >
-                            <span>{isPt ? 'Comprar' : 'Buy'}</span>
-                            <span>➔</span>
+                            <span>{isPt ? 'Comprar Agora' : 'Buy Now'}</span>
+                            <span className="group-hover/btn:translate-x-1 transition-transform">➔</span>
+                          </button>
+                        </a>
+                      ) : (
+                        <a
+                          href={`https://wa.me/258823056900?text=${encodeURIComponent(
+                            isPt
+                              ? `Olá José e Ofélia, tenho interesse no ${mergedPack.titlePt} e gostaria de saber o valor e como encomendar.`
+                              : `Hello, I am interested in ${mergedPack.titleEn} and would like to know the price and ordering details.`
+                          )}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block w-full"
+                          onClick={() => trackProductClick(pack.id, 'pack', mergedPack.titlePt)}
+                        >
+                          <button
+                            type="button"
+                            className="w-full py-3.5 px-5 rounded-2xl text-sm font-extrabold bg-emerald-600 hover:bg-emerald-700 text-white shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 group/btn"
+                          >
+                            <span>{isPt ? 'Consultar / Encomendar' : 'Inquire / Order'}</span>
+                            <span className="group-hover/btn:translate-x-1 transition-transform">➔</span>
                           </button>
                         </a>
                       )}
