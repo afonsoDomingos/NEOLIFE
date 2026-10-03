@@ -12,37 +12,27 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-const LANGUAGE_STORAGE_KEY = 'neolife_preferred_language';
-
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [language, setLanguageState] = useState<Language>('en');
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
+    // Always start with English as default
+    // Don't read from localStorage or auto-detect browser language
     try {
-      const savedLang = localStorage.getItem(LANGUAGE_STORAGE_KEY) as Language | null;
-      if (savedLang && (savedLang === 'pt' || savedLang === 'en')) {
-        setLanguageState(savedLang);
-      } else {
-        // Auto-detect browser language if English
-        const browserLang = navigator.language?.toLowerCase() || '';
-        if (browserLang.startsWith('en')) {
-          setLanguageState('en');
-        }
-      }
+      document.documentElement.lang = 'en';
     } catch {
-      // localStorage not accessible
+      // ignore errors
     }
   }, []);
 
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     try {
-      localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
       document.documentElement.lang = lang;
     } catch {
-      // ignore storage errors
+      // ignore errors
     }
   };
 
