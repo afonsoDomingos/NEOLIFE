@@ -27,6 +27,8 @@ function GateContent() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [isDetectingLocation, setIsDetectingLocation] = useState(true);
+  const [copiedWA, setCopiedWA] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
   const totalSteps = 3;
 
   const country: Country = getCountryById(selectedCountryId) || getCountryById('mz-pt') || {
@@ -126,6 +128,32 @@ function GateContent() {
   const isValidEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  };
+
+  const copyToClipboard = async (text: string, type: 'wa' | 'email') => {
+    try {
+      if (typeof navigator !== 'undefined' && navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+      if (type === 'wa') {
+        setCopiedWA(true);
+        setTimeout(() => setCopiedWA(false), 2200);
+      } else {
+        setCopiedEmail(true);
+        setTimeout(() => setCopiedEmail(false), 2200);
+      }
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
   };
 
   const validateStep = (step: number): boolean => {
@@ -494,6 +522,141 @@ function GateContent() {
             <p className="text-center pt-1 text-xs text-gray-500">
               {isPt ? 'Seus dados estão seguros e não serão compartilhados.' : 'Your data is safe and will not be shared.'}
             </p>
+
+            {/* Manual Direct Contact Options with WhatsApp & Email */}
+            {(currentStep === 3 || errors.submit) && (
+              <div className="mt-3 pt-3 border-t border-gray-100">
+                <div className="bg-emerald-50/70 rounded-xl p-3 border border-emerald-200/80">
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                    <p className="text-xs font-bold text-emerald-950">
+                      {isPt ? 'Contacto direto com Ofélio & José Machado:' : 'Direct contact with Ofélio & José Machado:'}
+                    </p>
+                  </div>
+                  <p className="text-[11px] text-gray-600 mb-2.5 leading-snug">
+                    {isPt
+                      ? 'Pode copiar o WhatsApp ou o e-mail abaixo para enviar os seus dados diretamente de forma manual:'
+                      : 'You can copy the WhatsApp number or email below to send your details directly and manually:'}
+                  </p>
+
+                  <div className="space-y-2">
+                    {/* WhatsApp */}
+                    <div className="bg-white rounded-lg p-2.5 border border-emerald-100 flex items-center justify-between gap-2 shadow-xs">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <span className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                          <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2z"/>
+                          </svg>
+                        </span>
+                        <div className="min-w-0">
+                          <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider block leading-none mb-0.5">WhatsApp</span>
+                          <span className="text-xs font-bold text-gray-900 select-all block truncate">+258 82 305 6900</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => copyToClipboard('+258 82 305 6900', 'wa')}
+                          className={`px-2.5 py-1 rounded-md text-xs font-bold transition-all flex items-center gap-1 ${
+                            copiedWA
+                              ? 'bg-emerald-600 text-white'
+                              : 'bg-emerald-100/70 hover:bg-emerald-200/80 text-emerald-900 border border-emerald-200'
+                          }`}
+                          title={isPt ? 'Copiar número de WhatsApp' : 'Copy WhatsApp number'}
+                        >
+                          {copiedWA ? (
+                            <>
+                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                              </svg>
+                              <span>{isPt ? 'Copiado!' : 'Copied!'}</span>
+                            </>
+                          ) : (
+                            <>
+                              <svg className="w-3.5 h-3.5 text-emerald-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+                              </svg>
+                              <span>{isPt ? 'Copiar' : 'Copy'}</span>
+                            </>
+                          )}
+                        </button>
+                        <a
+                          href={`https://wa.me/258823056900?text=${encodeURIComponent(
+                            isPt
+                              ? `Olá Ofélio e José Machado, os meus dados são:\nNome: ${formData.name || '---'}\nTelefone: ${formData.phone || '---'}\nEmail: ${formData.email || '---'}\nInteresse: ${pillarTitles[pillar as keyof typeof pillarTitles] || 'NeoLife'}`
+                              : `Hello Ofélio and José Machado, here are my details:\nName: ${formData.name || '---'}\nPhone: ${formData.phone || '---'}\nEmail: ${formData.email || '---'}\nInterest: ${pillarTitles[pillar as keyof typeof pillarTitles] || 'NeoLife'}`
+                          )}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="px-2.5 py-1 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors"
+                          title={isPt ? 'Abrir no WhatsApp' : 'Open in WhatsApp'}
+                        >
+                          {isPt ? 'Abrir ➔' : 'Open ➔'}
+                        </a>
+                      </div>
+                    </div>
+
+                    {/* Email */}
+                    <div className="bg-white rounded-lg p-2.5 border border-emerald-100 flex items-center justify-between gap-2 shadow-xs">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <span className="w-7 h-7 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
+                          <svg className="w-4 h-4 fill-none stroke-current" viewBox="0 0 24 24" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                          </svg>
+                        </span>
+                        <div className="min-w-0">
+                          <span className="text-[10px] font-bold text-blue-800 uppercase tracking-wider block leading-none mb-0.5">E-mail</span>
+                          <span className="text-xs font-bold text-gray-900 select-all block truncate">contato@neolife.com</span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <button
+                          type="button"
+                          onClick={() => copyToClipboard('contato@neolife.com', 'email')}
+                          className={`px-2.5 py-1 rounded-md text-xs font-bold transition-all flex items-center gap-1 ${
+                            copiedEmail
+                              ? 'bg-blue-600 text-white'
+                              : 'bg-blue-50 hover:bg-blue-100 text-blue-900 border border-blue-200'
+                          }`}
+                          title={isPt ? 'Copiar e-mail' : 'Copy email'}
+                        >
+                          {copiedEmail ? (
+                            <>
+                              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                              </svg>
+                              <span>{isPt ? 'Copiado!' : 'Copied!'}</span>
+                            </>
+                          ) : (
+                            <>
+                              <svg className="w-3.5 h-3.5 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.666 3.888A2.25 2.25 0 0013.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 01-.75.75H9a.75.75 0 01-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 01-2.25 2.25H6.75A2.25 2.25 0 014.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 011.927-.184" />
+                              </svg>
+                              <span>{isPt ? 'Copiar' : 'Copy'}</span>
+                            </>
+                          )}
+                        </button>
+                        <a
+                          href={`mailto:contato@neolife.com?subject=${encodeURIComponent(
+                            isPt ? `Contacto NeoLife - ${formData.name || 'Interesse'}` : `NeoLife Contact - ${formData.name || 'Interest'}`
+                          )}&body=${encodeURIComponent(
+                            isPt
+                              ? `Olá Ofélio e José Machado,\n\nNome: ${formData.name || '---'}\nTelefone: ${formData.phone || '---'}\nEmail: ${formData.email || '---'}\nPaís: ${country.name}\nInteresse: ${pillarTitles[pillar as keyof typeof pillarTitles] || 'NeoLife'}`
+                              : `Hello Ofélio and José Machado,\n\nName: ${formData.name || '---'}\nPhone: ${formData.phone || '---'}\nEmail: ${formData.email || '---'}\nCountry: ${country.name}\nInterest: ${pillarTitles[pillar as keyof typeof pillarTitles] || 'NeoLife'}`
+                          )}`}
+                          className="px-2.5 py-1 rounded-md bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold transition-colors"
+                          title={isPt ? 'Enviar e-mail' : 'Send email'}
+                        >
+                          {isPt ? 'Enviar ➔' : 'Email ➔'}
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </form>
         </div>
 
