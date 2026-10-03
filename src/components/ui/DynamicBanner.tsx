@@ -3,14 +3,21 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Button } from './Button';
 import Link from 'next/link';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 interface Banner {
   _id: string;
   title: string;
+  titlePt?: string;
+  titleEn?: string;
   description: string;
+  descriptionPt?: string;
+  descriptionEn?: string;
   image: string;
   link?: string;
   buttonText?: string;
+  buttonTextPt?: string;
+  buttonTextEn?: string;
   active: boolean;
   order: number;
 }
@@ -18,41 +25,53 @@ interface Banner {
 const defaultBanners: Banner[] = [
   {
     _id: 'default-banner-01',
-    title: 'Build Your Own Business with NeoLife in Africa',
-    description: 'Discover how to transform your health, wellness, and create sustainable financial opportunities alongside proven mentorship.',
+    titleEn: 'Build Your Own Business with NeoLife in Africa',
+    titlePt: 'Construa o Seu Próprio Negócio com a NeoLife em África',
+    descriptionEn: 'Discover how to transform your health, wellness, and create sustainable financial opportunities alongside proven mentorship.',
+    descriptionPt: 'Descubra como transformar a sua saúde, bem-estar e criar novas oportunidades financeiras sustentáveis ao lado de uma mentoria comprovada.',
     image: '/images/banners/banner-business.jpg',
     link: '/business',
-    buttonText: 'Explore Business',
+    buttonTextEn: 'Explore Business',
+    buttonTextPt: 'Conhecer o Business',
     active: true,
     order: 1,
   },
   {
     _id: 'default-banner-02',
-    title: 'Superior Nutrition & Cellular Vitality for Your Whole Family',
-    description: 'Based in Nature and Backed by Science. Discover premium quality supplements formulated to optimize your daily well-being.',
+    titleEn: 'Superior Nutrition & Cellular Vitality for Your Whole Family',
+    titlePt: 'Nutrição Superior & Vitalidade Celular para Toda a Família',
+    descriptionEn: 'Based in Nature and Backed by Science. Discover premium quality supplements formulated to optimize your daily well-being.',
+    descriptionPt: 'Baseada na Natureza e Apoiada pela Ciência. Descubra suplementos de qualidade máxima formulados para otimizar o seu bem-estar diário.',
     image: '/images/banners/banner-saude.jpg',
     link: '/saude',
-    buttonText: 'Explore Health Solutions',
+    buttonTextEn: 'Explore Health Solutions',
+    buttonTextPt: 'Explorar Soluções de Saúde',
     active: true,
     order: 2,
   },
   {
     _id: 'default-banner-03',
-    title: 'Live Exclusive Experiences & Global Recognition',
-    description: 'Expand your horizons, celebrate great achievements, and be part of unforgettable international trips.',
+    titleEn: 'Live Exclusive Experiences & Global Recognition',
+    titlePt: 'Viva Experiências Exclusivas & Reconhecimento Global',
+    descriptionEn: 'Expand your horizons, celebrate great achievements, and be part of unforgettable international trips.',
+    descriptionPt: 'Expanda os seus horizontes, celebre grandes conquistas e faça parte de viagens internacionais inesquecíveis.',
     image: '/images/banners/banner-experiencias.jpg',
     link: '/experiencias',
-    buttonText: 'Discover Experiences',
+    buttonTextEn: 'Discover Experiences',
+    buttonTextPt: 'Descobrir Experiências',
     active: true,
     order: 3,
   },
   {
     _id: 'default-banner-04',
-    title: 'Leadership and Development: Together for a Better Future',
-    description: 'Over 60 years of history and global innovation. Count on the support and direct mentorship of José Sarmento Machado and Ofélia Alfredo Machado.',
+    titleEn: 'Leadership and Development: Together for a Better Future',
+    titlePt: 'Liderança e Desenvolvimento: Juntos por um Futuro Melhor',
+    descriptionEn: 'Over 60 years of history and global innovation. Count on the support and direct mentorship of José Sarmento Machado and Ofélia Alfredo Machado.',
+    descriptionPt: 'Mais de 60 anos de história e inovação global. Conte com o apoio e a mentoria direta de José Sarmento Machado e Ofélia Alfredo Machado.',
     image: '/banneroficial.png',
     link: '/business',
-    buttonText: 'Talk to Mentors',
+    buttonTextEn: 'Talk to Mentors',
+    buttonTextPt: 'Falar com os Mentores',
     active: true,
     order: 4,
   },
@@ -60,10 +79,20 @@ const defaultBanners: Banner[] = [
 
 
 export const DynamicBanner: React.FC = () => {
+  const { language } = useLanguage();
+  const isPt = language === 'pt';
   const [banners, setBanners] = useState<Banner[]>(defaultBanners);
   const [currentBanner, setCurrentBanner] = useState(0);
   const [animKey, setAnimKey] = useState(0);
   const prevBanner = useRef(0);
+
+  // Helper to get localized banner text
+  const getLocalizedBanner = (banner: Banner) => ({
+    ...banner,
+    title: isPt ? (banner.titlePt || banner.title) : (banner.titleEn || banner.title),
+    description: isPt ? (banner.descriptionPt || banner.description) : (banner.descriptionEn || banner.description),
+    buttonText: isPt ? (banner.buttonTextPt || banner.buttonText) : (banner.buttonTextEn || banner.buttonText),
+  });
 
   useEffect(() => {
     loadBanners();
@@ -102,7 +131,7 @@ export const DynamicBanner: React.FC = () => {
     setAnimKey((k) => k + 1);
   };
 
-  const banner = banners[currentBanner] || defaultBanners[0];
+  const banner = getLocalizedBanner(banners[currentBanner] || defaultBanners[0]);
 
   return (
     <>
@@ -221,7 +250,7 @@ export const DynamicBanner: React.FC = () => {
             <div className="banner-tag inline-flex flex-col items-center gap-1 px-3.5 py-1.5 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-400/40 text-emerald-300 text-xs font-semibold uppercase tracking-wider mb-5 shadow-sm">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                NeoLife Africa • Featured
+                {isPt ? 'NeoLife África • Destaque' : 'NeoLife Africa • Featured'}
               </div>
               <span className="text-[9px] text-emerald-400/80 font-medium tracking-wide uppercase">
                 Ofélia & José Machado

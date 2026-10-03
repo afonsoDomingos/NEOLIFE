@@ -8,18 +8,50 @@ if (!MONGODB_URI) {
 }
 
 const bannerTranslations = {
-  'Construa o Seu Próprio Negócio com a NeoLife em África': 'Build Your Own Business with NeoLife in Africa',
-  'Descubra como transformar a sua saúde, bem-estar e criar novas oportunidades financeiras sustentáveis ao lado de uma mentoria comprovada.': 'Discover how to transform your health, wellness, and create sustainable financial opportunities alongside proven mentorship.',
-  'Conhecer o Business': 'Explore Business',
-  'Nutrição Superior & Vitalidade Celular para Toda a Família': 'Superior Nutrition & Cellular Vitality for Your Whole Family',
-  'Baseada na Natureza e Apoiada pela Ciência. Descubra suplementos de qualidade máxima formulados para otimizar o seu bem-estar diário.': 'Based in Nature and Backed by Science. Discover premium quality supplements formulated to optimize your daily well-being.',
-  'Explorar Soluções de Saúde': 'Explore Health Solutions',
-  'Viva Experiências Exclusivas & Reconhecimento Global': 'Live Exclusive Experiences & Global Recognition',
-  'Expanda os seus horizontes, celebre grandes conquistas e faça parte de viagens internacionais inesquecíveis.': 'Expand your horizons, celebrate great achievements, and be part of unforgettable international trips.',
-  'Descobrir Experiências': 'Discover Experiences',
-  'Liderança e Desenvolvimento: Juntos por um Futuro Melhor': 'Leadership and Development: Together for a Better Future',
-  'Mais de 60 anos de história e inovação global. Conte com o apoio e a mentoria direta de José Sarmento Machado e Ofélia Alfredo Machado.': 'Over 60 years of history and global innovation. Count on the support and direct mentorship of José Sarmento Machado and Ofélia Alfredo Machado.',
-  'Falar com os Mentores': 'Talk to Mentors',
+  'Construa o Seu Próprio Negócio com a NeoLife em África': {
+    titleEn: 'Build Your Own Business with NeoLife in Africa',
+    descriptionEn: 'Discover how to transform your health, wellness, and create sustainable financial opportunities alongside proven mentorship.',
+    buttonTextEn: 'Explore Business',
+  },
+  'Descubra como transformar a sua saúde, bem-estar e criar novas oportunidades financeiras sustentáveis ao lado de uma mentoria comprovada.': {
+    descriptionEn: 'Discover how to transform your health, wellness, and create sustainable financial opportunities alongside proven mentorship.',
+  },
+  'Conhecer o Business': {
+    buttonTextEn: 'Explore Business',
+  },
+  'Nutrição Superior & Vitalidade Celular para Toda a Família': {
+    titleEn: 'Superior Nutrition & Cellular Vitality for Your Whole Family',
+    descriptionEn: 'Based in Nature and Backed by Science. Discover premium quality supplements formulated to optimize your daily well-being.',
+    buttonTextEn: 'Explore Health Solutions',
+  },
+  'Baseada na Natureza e Apoiada pela Ciência. Descubra suplementos de qualidade máxima formulados para otimizar o seu bem-estar diário.': {
+    descriptionEn: 'Based in Nature and Backed by Science. Discover premium quality supplements formulated to optimize your daily well-being.',
+  },
+  'Explorar Soluções de Saúde': {
+    buttonTextEn: 'Explore Health Solutions',
+  },
+  'Viva Experiências Exclusivas & Reconhecimento Global': {
+    titleEn: 'Live Exclusive Experiences & Global Recognition',
+    descriptionEn: 'Expand your horizons, celebrate great achievements, and be part of unforgettable international trips.',
+    buttonTextEn: 'Discover Experiences',
+  },
+  'Expanda os seus horizontes, celebre grandes conquistas e faça parte de viagens internacionais inesquecíveis.': {
+    descriptionEn: 'Expand your horizons, celebrate great achievements, and be part of unforgettable international trips.',
+  },
+  'Descobrir Experiências': {
+    buttonTextEn: 'Discover Experiences',
+  },
+  'Liderança e Desenvolvimento: Juntos por um Futuro Melhor': {
+    titleEn: 'Leadership and Development: Together for a Better Future',
+    descriptionEn: 'Over 60 years of history and global innovation. Count on the support and direct mentorship of José Sarmento Machado and Ofélia Alfredo Machado.',
+    buttonTextEn: 'Talk to Mentors',
+  },
+  'Mais de 60 anos de história e inovação global. Conte com o apoio e a mentoria direta de José Sarmento Machado e Ofélia Alfredo Machado.': {
+    descriptionEn: 'Over 60 years of history and global innovation. Count on the support and direct mentorship of José Sarmento Machado and Ofélia Alfredo Machado.',
+  },
+  'Falar com os Mentores': {
+    buttonTextEn: 'Talk to Mentors',
+  },
 };
 
 async function updateBannersToEnglish() {
@@ -42,22 +74,38 @@ async function updateBannersToEnglish() {
       let needsUpdate = false;
       const updateData: any = {};
 
-      // Check and translate title
+      // Add English translations while keeping Portuguese
       if (bannerTranslations[banner.title]) {
-        updateData.title = bannerTranslations[banner.title];
-        needsUpdate = true;
+        if (!banner.titleEn) {
+          updateData.titleEn = bannerTranslations[banner.title].titleEn;
+          needsUpdate = true;
+        }
+        if (!banner.titlePt) {
+          updateData.titlePt = banner.title;
+          needsUpdate = true;
+        }
       }
 
-      // Check and translate description
       if (bannerTranslations[banner.description]) {
-        updateData.description = bannerTranslations[banner.description];
-        needsUpdate = true;
+        if (!banner.descriptionEn && bannerTranslations[banner.description].descriptionEn) {
+          updateData.descriptionEn = bannerTranslations[banner.description].descriptionEn;
+          needsUpdate = true;
+        }
+        if (!banner.descriptionPt) {
+          updateData.descriptionPt = banner.description;
+          needsUpdate = true;
+        }
       }
 
-      // Check and translate buttonText
       if (bannerTranslations[banner.buttonText]) {
-        updateData.buttonText = bannerTranslations[banner.buttonText];
-        needsUpdate = true;
+        if (!banner.buttonTextEn && bannerTranslations[banner.buttonText].buttonTextEn) {
+          updateData.buttonTextEn = bannerTranslations[banner.buttonText].buttonTextEn;
+          needsUpdate = true;
+        }
+        if (!banner.buttonTextPt) {
+          updateData.buttonTextPt = banner.buttonText;
+          needsUpdate = true;
+        }
       }
 
       if (needsUpdate) {
@@ -68,7 +116,7 @@ async function updateBannersToEnglish() {
         console.log(`✓ Atualizado: ${banner.title.substring(0, 50)}...`);
         updatedCount++;
       } else {
-        console.log(`= Já em inglês: ${banner.title.substring(0, 50)}...`);
+        console.log(`= Já tem traduções: ${banner.title.substring(0, 50)}...`);
       }
     }
 
