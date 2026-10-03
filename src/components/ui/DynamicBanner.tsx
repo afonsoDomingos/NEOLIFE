@@ -7,10 +7,10 @@ import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 interface Banner {
   _id: string;
-  title: string;
+  title?: string;
   titlePt?: string;
   titleEn?: string;
-  description: string;
+  description?: string;
   descriptionPt?: string;
   descriptionEn?: string;
   image: string;
