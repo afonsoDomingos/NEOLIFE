@@ -25,7 +25,7 @@ const productLinks = [
   {
     productId: 'programa-detox',
     productType: 'pack',
-    purchaseUrl: '', // Não foi fornecido - ficará sem link
+    purchaseUrl: '', // Link do YouTube (vídeo informativo) - https://www.youtube.com/watch?v=kDT6xztKCTk
     available: false,
   },
   {
