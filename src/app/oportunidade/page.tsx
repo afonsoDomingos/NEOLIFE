@@ -3,8 +3,9 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
-const faqs = [
+const faqsPt = [
   {
     q: 'O que é exactamente a oportunidade de negócio NeoLife?',
     a: 'A NeoLife é uma empresa líder mundial em nutrição celular e suplementação de alta qualidade. A oportunidade de negócio consiste em partilhar os produtos com outras pessoas, criar a sua própria rede de clientes e parceiros, e construir uma fonte de rendimento suplementar - ou mesmo principal - com flexibilidade total de horário e localização.',
@@ -31,8 +32,38 @@ const faqs = [
   },
 ];
 
+const faqsEn = [
+  {
+    q: 'What exactly is the NeoLife business opportunity?',
+    a: 'NeoLife is a world leader in cellular nutrition and high-quality supplementation. The business opportunity consists of sharing products with others, building your own network of customers and partners, and creating a supplemental - or even primary - income source with complete flexibility in schedule and location.',
+  },
+  {
+    q: 'Do I have to sell to make money?',
+    a: 'Not necessarily in the traditional sense. The basis of the business is recommending products that work for you and that you use daily. When your acquaintances want to try them, they do so through you. It\'s more sharing than conventional selling.',
+  },
+  {
+    q: 'Do I need initial investment?',
+    a: 'The initial investment is very low. The essential is to start using the products and knowing them well to be able to share them with conviction. Our team gives you all the support and training needed to start.',
+  },
+  {
+    q: 'Can I do this from any country?',
+    a: 'NeoLife is operational in Mozambique, South Africa, Angola and Zimbabwe. Expansion to other African countries is in progress. If you reside in one of these countries, you can start today.',
+  },
+  {
+    q: 'How much time do I need to dedicate?',
+    a: 'You can start part-time, in your free time. Many of our partners started working only 5 to 10 hours per week. As results grow, each one decides how to balance the business with their personal and professional life.',
+  },
+  {
+    q: 'Will I have support and training?',
+    a: 'Yes, absolutely. José Sarmento Machado and Ofélia Alfredo Machado make a point of personally accompanying each partner who decides to join the team. This includes training on cellular products, communication support and regular mentoring meetings.',
+  },
+];
+
 export default function OportunidadePage() {
+  const { language } = useLanguage();
+  const isPt = language === 'pt';
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const faqs = isPt ? faqsPt : faqsEn;
 
   return (
     <div className="min-h-screen bg-white">
@@ -56,29 +87,34 @@ export default function OportunidadePage() {
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-900/80 backdrop-blur-md border border-emerald-400/40 text-emerald-200 text-xs font-semibold mb-6 shadow-lg">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            Oportunidade de Negócio - NeoLife África
+            {isPt ? 'Oportunidade de Negócio - NeoLife África' : 'Business Opportunity - NeoLife Africa'}
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight drop-shadow-md">
-            Construa uma Vida com{' '}
-            <span className="text-emerald-300">Mais Liberdade</span>
+            {isPt ? (
+              <>Construa uma Vida com <span className="text-emerald-300">Mais Liberdade</span></>
+            ) : (
+              <>Build a Life with <span className="text-emerald-300">More Freedom</span></>
+            )}
           </h1>
 
           <p className="text-lg md:text-xl text-emerald-100 mb-10 max-w-3xl mx-auto leading-relaxed drop-shadow">
-            A NeoLife oferece-lhe a possibilidade de criar uma fonte de rendimento partilhando
-            produtos de excelência em nutrição e bem-estar - com a mentoria direta de José Sarmento Machado e Ofélia Alfredo Machado,
-            formação contínua e uma equipa que acompanha cada passo da sua jornada.
+            {isPt ? (
+              <>A NeoLife oferece-lhe a possibilidade de criar uma fonte de rendimento partilhando produtos de excelência em nutrição e bem-estar - com a mentoria direta de José Sarmento Machado e Ofélia Alfredo Machado, formação contínua e uma equipa que acompanha cada passo da sua jornada.</>
+            ) : (
+              <>NeoLife offers you the possibility to create an income source by sharing excellence products in nutrition and wellness - with direct mentorship from José Sarmento Machado and Ofélia Alfredo Machado, continuous training and a team that accompanies every step of your journey.</>
+            )}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/formulario?tema=oportunidade-negocio&pais=mz-pt">
               <Button size="lg" className="bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-bold px-8 shadow-xl">
-                Quero Saber Mais
+                {isPt ? 'Quero Saber Mais' : 'Learn More'}
               </Button>
             </Link>
             <a href="#como-funciona">
               <Button size="lg" variant="outline" className="border-emerald-400 text-emerald-200 hover:bg-emerald-700/40 px-8">
-                Como Funciona
+                {isPt ? 'Como Funciona' : 'How It Works'}
               </Button>
             </a>
           </div>
@@ -90,10 +126,10 @@ export default function OportunidadePage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Porquê a NeoLife?
+              {isPt ? 'Porquê a NeoLife?' : 'Why NeoLife?'}
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-              Três razões concretas que fazem desta uma oportunidade diferente das demais.
+              {isPt ? 'Três razões concretas que fazem desta uma oportunidade diferente das demais.' : 'Three concrete reasons that make this opportunity different from the others.'}
             </p>
           </div>
 

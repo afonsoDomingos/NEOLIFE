@@ -80,7 +80,7 @@ export default function Home() {
                     </svg>
                   </div>
                   <span className="text-xs font-bold uppercase tracking-wider px-3 py-1 rounded-full bg-white/90 backdrop-blur-sm text-emerald-800 border border-emerald-200 shadow-sm">
-                    Nutrição &amp; Vitalidade
+                    {isPt ? 'Nutrição &amp; Vitalidade' : 'Nutrition &amp; Vitality'}
                   </span>
                 </div>
               </div>
@@ -98,7 +98,7 @@ export default function Home() {
                 <div className="pt-4 border-t border-gray-100">
                   <Link href="/saude" className="block w-full">
                     <button className="w-full py-3.5 px-4 rounded-2xl font-bold text-sm bg-emerald-700 hover:bg-emerald-800 text-white shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2">
-                      <span>Explorar Soluções de Saúde</span>
+                      <span>{isPt ? 'Explorar Soluções de Saúde' : 'Explore Health Solutions'}</span>
                       <span>➔</span>
                     </button>
                   </Link>
