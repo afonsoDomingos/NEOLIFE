@@ -21,6 +21,17 @@ export async function GET(request: NextRequest) {
   try {
     const banners = await getActiveBanners();
     if (Array.isArray(banners) && banners.length > 0) {
+      // Check if banners have bilingual fields
+      const hasBilingualFields = banners.some(
+        (b: any) => b.titleEn || b.titlePt || b.descriptionEn || b.descriptionPt
+      );
+
+      // If banners don't have bilingual fields, use fallback
+      if (!hasBilingualFields) {
+        console.log('Banners in MongoDB lack bilingual fields, using fallback');
+        return NextResponse.json(fallbackBanner);
+      }
+
       return NextResponse.json(banners);
     }
     return NextResponse.json(fallbackBanner);
