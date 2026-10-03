@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 interface Message {
   id: string;
@@ -12,26 +13,38 @@ interface Message {
   time: string;
 }
 
-const QUICK_PROMPTS = [
+const QUICK_PROMPTS_PT = [
   'O que é a nutrição celular?',
   'Como funciona a oportunidade de negócio?',
   'Como posso encomendar produtos?',
   'Quais os países com apoio direto?',
 ];
 
+const QUICK_PROMPTS_EN = [
+  'What is cellular nutrition?',
+  'How does the business opportunity work?',
+  'How can I order products?',
+  'Which countries have direct support?',
+];
+
 export function ChatAssistant() {
   const pathname = usePathname();
+  const { language } = useLanguage();
+  const isPt = language === 'pt';
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [unreadCount, setUnreadCount] = useState(1);
+  const quickPrompts = isPt ? QUICK_PROMPTS_PT : QUICK_PROMPTS_EN;
+  
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
       role: 'assistant',
-      content:
-        'Olá! Seja muito bem-vindo à nossa plataforma.\n\nSou o assistente virtual da equipa de mentoria liderada por **José Sarmento Machado** e **Ofélia Alfredo Machado**. Estamos aqui para esclarecer dúvidas sobre a nossa abordagem à **nutrição celular**, **qualidade científica** ou sobre a **oportunidade de empreender connosco** em família.\n\nComo posso ajudar hoje?',
-      time: 'Agora',
+      content: isPt 
+        ? 'Olá! Seja muito bem-vindo à nossa plataforma.\n\nSou o assistente virtual da equipa de mentoria liderada por **José Sarmento Machado** e **Ofélia Alfredo Machado**. Estamos aqui para esclarecer dúvidas sobre a nossa abordagem à **nutrição celular**, **qualidade científica** ou sobre a **oportunidade de empreender connosco** em família.\n\nComo posso ajudar hoje?'
+        : 'Hello! Welcome to our platform.\n\nI am the virtual assistant of the mentorship team led by **José Sarmento Machado** and **Ofélia Alfredo Machado**. We are here to clarify doubts about our approach to **cellular nutrition**, **scientific quality** or about the **opportunity to build a business** with us as a family.\n\nHow can I help today?',
+      time: isPt ? 'Agora' : 'Now',
     },
   ]);
 
@@ -166,7 +179,7 @@ export function ChatAssistant() {
         <div className="fixed bottom-16 right-6 z-50 flex items-center space-x-3">
           <div className="hidden sm:flex items-center bg-white/95 backdrop-blur shadow-lg border border-emerald-100 py-1.5 px-3 rounded-full text-[10px] font-medium text-gray-700 animate-fade-in">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
-            Alguma dúvida? Fale connosco
+            {isPt ? 'Alguma dúvida? Fale connosco' : 'Any questions? Talk to us'}
           </div>
           <button
             onClick={() => setIsOpen(true)}
@@ -225,13 +238,14 @@ export function ChatAssistant() {
                     {
                       id: 'welcome-reset',
                       role: 'assistant',
-                      content:
-                        'Conversa reiniciada. Em que posso ser útil neste momento?',
-                      time: 'Agora',
+                      content: isPt
+                        ? 'Conversa reiniciada. Em que posso ser útil neste momento?'
+                        : 'Conversation reset. How can I be helpful at this moment?',
+                      time: isPt ? 'Agora' : 'Now',
                     },
                   ]);
                 }}
-                title="Limpar conversa"
+                title={isPt ? 'Limpar conversa' : 'Clear conversation'}
                 className="p-1.5 text-emerald-100 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -240,7 +254,7 @@ export function ChatAssistant() {
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                aria-label="Fechar chat"
+                aria-label={isPt ? 'Fechar chat' : 'Close chat'}
                 className="p-1.5 text-emerald-100 hover:text-white hover:bg-white/10 rounded-lg transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -289,10 +303,10 @@ export function ChatAssistant() {
           {messages.length <= 2 && (
             <div className="p-3 bg-white border-t border-gray-100">
               <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider mb-2">
-                Perguntas Frequentes
+                {isPt ? 'Perguntas Frequentes' : 'Frequently Asked Questions'}
               </p>
               <div className="flex flex-wrap gap-1.5">
-                {QUICK_PROMPTS.map((prompt, idx) => (
+                {quickPrompts.map((prompt, idx) => (
                   <button
                     key={idx}
                     onClick={() => handleSend(prompt)}
@@ -319,13 +333,13 @@ export function ChatAssistant() {
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Escreva a sua dúvida aqui..."
+                placeholder={isPt ? 'Escreva a sua dúvida aqui...' : 'Type your question here...'}
                 className="flex-1 bg-gray-50 border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all"
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
-                aria-label="Enviar mensagem"
+                aria-label={isPt ? 'Enviar mensagem' : 'Send message'}
                 className="bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 text-white p-2.5 rounded-xl transition-all shadow-sm active:scale-95"
               >
                 <svg className="w-4 h-4 transform rotate-90" fill="currentColor" viewBox="0 0 20 20">
@@ -335,7 +349,7 @@ export function ChatAssistant() {
             </form>
             <div className="mt-2 text-center">
               <span className="text-[10px] text-gray-400">
-                Atendimento consultivo educacional - Não substitui conselho médico
+                {isPt ? 'Atendimento consultivo educacional - Não substitui conselho médico' : 'Educational advisory service - Does not replace medical advice'}
               </span>
             </div>
           </div>
