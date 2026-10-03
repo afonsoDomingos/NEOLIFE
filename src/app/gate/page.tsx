@@ -175,6 +175,12 @@ function GateContent() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // ── TEMP_RESEND_BLOCK_START ──────────────────────────────────────────────
+    // Temporary: show "Resend not connected" and abort. Remove these 3 lines to restore normal submission.
+    setErrors({ submit: 'Resend not connected' });
+    return;
+    // ── TEMP_RESEND_BLOCK_END ────────────────────────────────────────────────
+
     if (!validateForm()) return;
 
     setIsSubmitting(true);
