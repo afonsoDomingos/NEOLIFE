@@ -159,9 +159,46 @@ export const HealthSection: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         setProductLinks(prev => ({ ...prev, [productId]: data }));
+      } else {
+        // Fallback to hardcoded links if API fails
+        const fallbackLinks: Record<string, { available: boolean; purchaseUrl: string }> = {
+          'pack-pequeno-almoco': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/product/41062' },
+          'pack-perda-peso': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/weightmanagement' },
+          'omega-3-salmon': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/hearthealth' },
+          'pensa-rapido': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/sharpermind' },
+          'feito-para-o-homem': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/menshealth' },
+          'feito-para-mulheres': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/womenshealth' },
+          'nutricao-pre-natal': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/product/2671' },
+          'aumente-sua-energia': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/energyfitness' },
+          'melhore-flexibilidade': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/bonejoint' },
+          'apoio-digestao': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/digestivehealth' },
+          'imunidade-phytodefence': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/immunedefense' },
+          'nutricao-infantil': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/childrenshealth' },
+        };
+        if (fallbackLinks[productId]) {
+          setProductLinks(prev => ({ ...prev, [productId]: fallbackLinks[productId] }));
+        }
       }
     } catch (error) {
       console.error('Error loading product link:', error);
+      // Fallback to hardcoded links on error
+      const fallbackLinks: Record<string, { available: boolean; purchaseUrl: string }> = {
+        'pack-pequeno-almoco': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/product/41062' },
+        'pack-perda-peso': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/weightmanagement' },
+        'omega-3-salmon': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/hearthealth' },
+        'pensa-rapido': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/sharpermind' },
+        'feito-para-o-homem': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/menshealth' },
+        'feito-para-mulheres': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/womenshealth' },
+        'nutricao-pre-natal': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/product/2671' },
+        'aumente-sua-energia': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/energyfitness' },
+        'melhore-flexibilidade': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/bonejoint' },
+        'apoio-digestao': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/digestivehealth' },
+        'imunidade-phytodefence': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/immunedefense' },
+        'nutricao-infantil': { available: true, purchaseUrl: 'https://shopneolife.com/ofeliajosemachado/shop/childrenshealth' },
+      };
+      if (fallbackLinks[productId]) {
+        setProductLinks(prev => ({ ...prev, [productId]: fallbackLinks[productId] }));
+      }
     } finally {
       setLoadingLinks(prev => {
         const newSet = new Set(prev);

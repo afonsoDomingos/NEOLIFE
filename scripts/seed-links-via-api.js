@@ -1,7 +1,3 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient, Db } from 'mongodb';
-import { isAdmin } from '@/lib/utils/auth';
-
 const productLinks = [
   {
     productId: 'pack-pequeno-almoco',
@@ -18,9 +14,8 @@ const productLinks = [
   {
     productId: 'programa-detox',
     productType: 'pack',
-    purchaseUrl: '', // Link do YouTube (vídeo informativo) - https://www.youtube.com/watch?v=kDT6xztKCTk
+    purchaseUrl: '',
     available: false,
-    customMessage: 'Watch informative video: https://www.youtube.com/watch?v=kDT6xztKCTk',
   },
   {
     productId: 'omega-3-salmon',
@@ -84,68 +79,34 @@ const productLinks = [
   },
 ];
 
-let db: Db;
+async function seedLinksViaAPI() {
+  const API_URL = 'http://localhost:3001/api/admin/setup-product-links';
 
-async function getDatabase(): Promise<Db> {
-  if (!db) {
-    const client = new MongoClient(process.env.MONGODB_URI || '');
-    await client.connect();
-    db = client.db('neolife');
-  }
-  return db;
-}
+  console.log('Sending product links to API...');
 
-export async function POST(request: NextRequest) {
   try {
-    // Temporarily disable auth check for seeding
-    // if (!isAdmin()) {
-    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    // }
-
-    const database = await getDatabase();
-    const collection = database.collection('productlinks');
-
-    const results = [];
-
-    for (const link of productLinks) {
-      const result = await collection.updateOne(
-        { productId: link.productId },
-        { $set: link },
-        { upsert: true }
-      );
-
-      const urlDisplay = link.purchaseUrl || 'sem link';
-      if (result.upsertedCount > 0) {
-        results.push({
-          productId: link.productId,
-          status: 'created',
-          url: urlDisplay,
-        });
-      } else if (result.modifiedCount > 0) {
-        results.push({
-          productId: link.productId,
-          status: 'updated',
-          url: urlDisplay,
-        });
-      } else {
-        results.push({
-          productId: link.productId,
-          status: 'exists',
-          url: urlDisplay,
-        });
-      }
-    }
-
-    return NextResponse.json({
-      success: true,
-      message: 'Product links processed successfully',
-      results,
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(productLinks),
     });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log('✅ Success! Product links added:');
+      data.results.forEach((result) => {
+        console.log(`  ${result.status}: ${result.productId} -> ${result.url}`);
+      });
+    } else {
+      const error = await response.text();
+      console.error('❌ Error from API:', response.status, error);
+    }
   } catch (error) {
-    console.error('Error setting up product links:', error);
-    return NextResponse.json(
-      { error: 'Failed to setup product links', details: String(error) },
-      { status: 500 }
-    );
+    console.error('❌ Error:', error.message);
+    console.log('\n💡 Make sure the dev server is running on http://localhost:3001');
   }
 }
+
+seedLinksViaAPI();
