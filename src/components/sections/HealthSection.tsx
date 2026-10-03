@@ -389,6 +389,10 @@ export const HealthSection: React.FC = () => {
             </div>
           </div>
         </div>
+        </div>
+        </div>
+
+        </div>
 
         {/* ── 2.3 CATÁLOGO DE PACOTES DE SAÚDE SEGMENTADOS ── */}
         <div id="catalogo-pacotes" className="mb-20">
