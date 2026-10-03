@@ -222,124 +222,136 @@ export const HealthSection: React.FC = () => {
         </div>
 
         {/* ── 2.1 NUTRIÇÃO PARA A CÉLULA: 4 SUPLEMENTOS ESSENCIAIS ── */}
-        <div className="bg-gradient-to-br from-emerald-50/80 via-white to-emerald-50/40 rounded-3xl p-6 sm:p-10 border border-emerald-100 mb-16 shadow-xs">
-          <div className="max-w-3xl mx-auto text-center mb-10">
-            <span className="text-xs font-bold uppercase tracking-widest text-emerald-700 bg-emerald-100/80 px-3 py-1 rounded-full border border-emerald-200">
-              {isPt ? 'Fundamento Biológico' : 'Biological Foundation'}
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mt-3 mb-3">
-              {isPt ? 'Nutrição para a Célula: 4 Suplementos Essenciais' : 'Cellular Nutrition: 4 Foundational Supplements'}
-            </h3>
-            <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-              {isPt
-                ? 'O nosso corpo é formado por mais de 73 triliões de células. A alimentação moderna muitas vezes não fornece o que elas necessitam diariamente. Cuidar das células hoje é construir uma vida mais saudável amanhã.'
-                : 'Our body is made of over 73 trillion cells. Modern diets often lack what they require daily. Nourishing your cells today builds a healthier tomorrow.'}
-            </p>
+        <div className="relative rounded-3xl p-6 sm:p-10 md:p-12 mb-16 overflow-hidden shadow-2xl border border-emerald-500/30">
+          {/* Background Image with Multilayer Gradient Overlay */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/images/sections/fundo-nutricao-celular.jpg')" }}
+          >
+            {/* Dark gradient preserving the living cells while keeping high contrast */}
+            <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/92 via-emerald-950/85 to-emerald-950/95" />
+            <div className="absolute inset-0 bg-black/35" />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            {cellular4Supplements.map((supp, index) => {
-              const isExpanded = expandedSupplements.has(index);
-              const mergedSupp = getMergedSupplement(supp, index);
-              return (
-                <div
-                  key={index}
-                  className="bg-white rounded-2xl border border-emerald-100/80 shadow-xs hover:shadow-md hover:border-emerald-300 transition-all duration-300 overflow-hidden"
-                >
-                  {/* Compact Header - Always Visible */}
-                  <button
-                    onClick={() => {
-                      const newExpanded = new Set(expandedSupplements);
-                      if (newExpanded.has(index)) {
-                        newExpanded.delete(index);
-                      } else {
-                        newExpanded.add(index);
-                      }
-                      setExpandedSupplements(newExpanded);
-                    }}
-                    className="w-full p-4 text-left flex items-center justify-between group"
-                  >
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
-                          0{index + 1}
-                        </span>
-                        <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
-                          {mergedSupp.tag}
-                        </span>
-                      </div>
-                      <h4 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-emerald-700 transition-colors">
-                        {mergedSupp.name}
-                      </h4>
-                    </div>
-                    <svg
-                      className={`w-5 h-5 text-emerald-600 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
+          <div className="relative z-10">
+            <div className="max-w-3xl mx-auto text-center mb-10">
+              <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-emerald-300 bg-emerald-900/80 backdrop-blur-md px-3.5 py-1 rounded-full border border-emerald-400/40 shadow-sm">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                {isPt ? 'Fundamento Biológico' : 'Biological Foundation'}
+              </span>
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mt-4 mb-3 tracking-tight drop-shadow-md">
+                {isPt ? 'Nutrição para a Célula: 4 Suplementos Essenciais' : 'Cellular Nutrition: 4 Foundational Supplements'}
+              </h3>
+              <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed max-w-2xl mx-auto drop-shadow">
+                {isPt
+                  ? 'O nosso corpo é formado por mais de 73 triliões de células. A alimentação moderna muitas vezes não fornece o que elas necessitam diariamente. Cuidar das células hoje é construir uma vida mais saudável amanhã.'
+                  : 'Our body is made of over 73 trillion cells. Modern diets often lack what they require daily. Nourishing your cells today builds a healthier tomorrow.'}
+              </p>
+            </div>
 
-                  {/* Expandable Content */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+              {cellular4Supplements.map((supp, index) => {
+                const isExpanded = expandedSupplements.has(index);
+                const mergedSupp = getMergedSupplement(supp, index);
+                return (
                   <div
-                    className={`px-4 pb-4 transition-all duration-300 ${
-                      isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
-                    }`}
+                    key={index}
+                    className="bg-white/95 backdrop-blur-md rounded-2xl border border-white/60 shadow-lg hover:shadow-2xl hover:border-emerald-400 hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                   >
-                    {mergedSupp.image && (
-                      <div className="mb-3">
-                        <img
-                          src={mergedSupp.image}
-                          alt={mergedSupp.name}
-                          className="w-full h-32 object-cover rounded-lg border border-emerald-100"
-                        />
+                    {/* Compact Header - Always Visible */}
+                    <button
+                      onClick={() => {
+                        const newExpanded = new Set(expandedSupplements);
+                        if (newExpanded.has(index)) {
+                          newExpanded.delete(index);
+                        } else {
+                          newExpanded.add(index);
+                        }
+                        setExpandedSupplements(newExpanded);
+                      }}
+                      className="w-full p-4 text-left flex items-center justify-between group"
+                    >
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-xs font-black text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+                            0{index + 1}
+                          </span>
+                          <span className="text-[9px] font-bold text-gray-500 uppercase tracking-wider">
+                            {mergedSupp.tag}
+                          </span>
+                        </div>
+                        <h4 className="text-sm font-bold text-gray-900 leading-snug group-hover:text-emerald-700 transition-colors">
+                          {mergedSupp.name}
+                        </h4>
                       </div>
-                    )}
-                    <p className="text-xs font-semibold text-emerald-700 mb-2">
-                      {isPt ? mergedSupp.subtitlePt : mergedSupp.subtitleEn}
-                    </p>
-                    <p className="text-xs text-gray-600 leading-relaxed">
-                      {isPt ? mergedSupp.descPt : mergedSupp.descEn}
-                    </p>
+                      <svg
+                        className={`w-5 h-5 text-emerald-600 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </button>
+
+                    {/* Expandable Content */}
+                    <div
+                      className={`px-4 pb-4 transition-all duration-300 ${
+                        isExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+                      }`}
+                    >
+                      {mergedSupp.image && (
+                        <div className="mb-3">
+                          <img
+                            src={mergedSupp.image}
+                            alt={mergedSupp.name}
+                            className="w-full h-32 object-cover rounded-lg border border-emerald-100"
+                          />
+                        </div>
+                      )}
+                      <p className="text-xs font-semibold text-emerald-700 mb-2">
+                        {isPt ? mergedSupp.subtitlePt : mergedSupp.subtitleEn}
+                      </p>
+                      <p className="text-xs text-gray-600 leading-relaxed">
+                        {isPt ? mergedSupp.descPt : mergedSupp.descEn}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
 
-          {/* ── 2.2 PROTEÍNA DIÁRIA — NEOLIFESHAKE ── */}
-          <div className="bg-white rounded-2xl border border-emerald-200/80 shadow-xs overflow-hidden">
-            {/* Compact Header - Always Visible */}
-            <button
-              onClick={() => setExpandedShake(!expandedShake)}
-              className="w-full p-5 sm:p-6 text-left flex items-center justify-between group"
-            >
-              <div className="flex items-center gap-4">
-                <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-800 bg-emerald-100/70 px-3 py-1 rounded-full">
-                  <span>{isPt ? 'Nutrição Diária Deliciosa' : 'Daily Wholesome Protein'}</span>
-                </div>
-                <h4 className="text-lg sm:text-xl font-bold text-gray-900 group-hover:text-emerald-700 transition-colors">
-                  NeolifeShake • Proteína, Fibras & Vitaminas
-                </h4>
-              </div>
-              <svg
-                className={`w-6 h-6 text-emerald-600 transition-transform duration-300 ${expandedShake ? 'rotate-180' : ''}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            {/* ── 2.2 PROTEÍNA DIÁRIA — NEOLIFESHAKE ── */}
+            <div className="bg-white/95 backdrop-blur-md rounded-2xl border border-white/60 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+              {/* Compact Header - Always Visible */}
+              <button
+                onClick={() => setExpandedShake(!expandedShake)}
+                className="w-full p-5 sm:p-6 text-left flex items-center justify-between group"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
+                <div className="flex items-center gap-4">
+                  <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-800 bg-emerald-100/70 px-3 py-1 rounded-full">
+                    <span>{isPt ? 'Nutrição Diária Deliciosa' : 'Daily Wholesome Protein'}</span>
+                  </div>
+                  <h4 className="text-lg sm:text-xl font-bold text-gray-900 group-hover:text-emerald-700 transition-colors">
+                    NeolifeShake • Proteína, Fibras & Vitaminas
+                  </h4>
+                </div>
+                <svg
+                  className={`w-6 h-6 text-emerald-600 transition-transform duration-300 ${expandedShake ? 'rotate-180' : ''}`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
 
-            {/* Expandable Content */}
-            <div
-              className={`px-5 sm:p-6 pb-6 transition-all duration-300 ${
-                expandedShake ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
-              }`}
-            >
+              {/* Expandable Content */}
+              <div
+                className={`px-5 sm:p-6 pb-6 transition-all duration-300 ${
+                  expandedShake ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+                }`}
+              >
               <div className="flex flex-col lg:flex-row items-start justify-between gap-6">
                 <div className="max-w-2xl">
                   <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">

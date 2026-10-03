@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
@@ -346,23 +346,35 @@ export const BusinessSection: React.FC = () => {
         </div>
 
         {/* Closing Mentorship Banner */}
-        <div className="mt-6 bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 text-white rounded-2xl p-5 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>
-            <p className="text-xs uppercase font-extrabold tracking-widest text-emerald-200 mb-0.5">
-              Mentoria Garantida
-            </p>
-            <h4 className="text-base font-bold text-white mb-0.5">
-              DÃºvidas sobre o modelo de negÃ³cio?
-            </h4>
-            <p className="text-emerald-100 text-xs">
-              OfÃ©lia e JosÃ© Machado respondem pessoalmente sem qualquer pressÃ£o.
-            </p>
+        <div className="relative mt-6 rounded-2xl overflow-hidden shadow-2xl border border-emerald-500/30">
+          {/* Background Image with Overlay */}
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/images/sections/fundo-business-mentoria.jpg')" }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-emerald-950/92 via-emerald-900/85 to-emerald-950/90" />
+            <div className="absolute inset-0 bg-black/30" />
           </div>
-          <Link href="/formulario?tema=oportunidade-negocio&pais=mz-pt" className="shrink-0">
-            <Button size="sm" className="bg-white !text-emerald-900 hover:bg-emerald-50 font-bold px-6 shadow-md">
-              Marcar Conversa Gratuita
-            </Button>
-          </Link>
+
+          <div className="relative z-10 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-5">
+            <div>
+              <p className="text-xs uppercase font-extrabold tracking-widest text-emerald-300 mb-1 flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse inline-block" />
+                Mentoria Garantida
+              </p>
+              <h4 className="text-lg font-bold text-white mb-1 drop-shadow-md">
+                Dúvidas sobre o modelo de negócio?
+              </h4>
+              <p className="text-emerald-100/90 text-sm drop-shadow">
+                Ofélia e José Machado respondem pessoalmente sem qualquer pressão.
+              </p>
+            </div>
+            <Link href="/formulario?tema=oportunidade-negocio&pais=mz-pt" className="shrink-0">
+              <Button size="sm" className="bg-white !text-emerald-900 hover:bg-emerald-50 font-bold px-6 shadow-lg whitespace-nowrap">
+                Marcar Conversa Gratuita
+              </Button>
+            </Link>
+          </div>
         </div>
 
       </div>
