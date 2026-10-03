@@ -16,8 +16,14 @@ const bannerTranslations = {
   'Descubra como transformar a sua saúde, bem-estar e criar novas oportunidades financeiras sustentáveis ao lado de uma mentoria comprovada.': {
     descriptionEn: 'Discover how to transform your health, wellness, and create sustainable financial opportunities alongside proven mentorship.',
   },
+  'Descubra como transformar a sua saúde, bem-estar e conquistar a sua independência financeira trabalhando a partir de qualquer lugar.': {
+    descriptionEn: 'Discover how to transform your health, wellness, and achieve financial independence working from anywhere.',
+  },
   'Conhecer o Business': {
     buttonTextEn: 'Explore Business',
+  },
+  'Conhecer a Oportunidade': {
+    buttonTextEn: 'Discover the Opportunity',
   },
   'Nutrição Superior & Vitalidade Celular para Toda a Família': {
     titleEn: 'Superior Nutrition & Cellular Vitality for Your Whole Family',
@@ -51,6 +57,12 @@ const bannerTranslations = {
   },
   'Falar com os Mentores': {
     buttonTextEn: 'Talk to Mentors',
+  },
+  'Saúde, Vitalidade e Liberdade Financeira': {
+    titleEn: 'Health, Vitality, and Financial Freedom',
+  },
+  'Junte-se à família NeoLife e descubra o poder da nutrição celular de alta qualidade científica, ao lado da mentoria de José e Ofélia Machado.': {
+    descriptionEn: 'Join the NeoLife family and discover the power of high-quality scientific cellular nutrition, alongside the mentorship of José and Ofélia Machado.',
   },
 };
 

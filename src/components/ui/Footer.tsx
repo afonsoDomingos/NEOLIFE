@@ -21,7 +21,7 @@ export const Footer: React.FC = () => {
             />
             <div>
               <span className="text-lg font-bold text-white tracking-tight">
-                Neo<span className="text-emerald-400">life</span> África & Global
+                Neo<span className="text-emerald-400">life</span> {t.footer.region || 'Africa & Global'}
               </span>
               <p className="text-gray-400 text-xs mt-0.5">
                 {t.footer.slogan}

@@ -195,6 +195,7 @@ export interface TranslationDictionary {
   };
   footer: {
     slogan: string;
+    region: string;
     quickLinks: string;
     rights: string;
   };
@@ -396,6 +397,7 @@ export const translations: Record<Language, TranslationDictionary> = {
     },
     footer: {
       slogan: 'Saúde, Vitalidade e Liberdade Financeira no Mercado Africano e Global',
+      region: 'África & Global',
       quickLinks: 'Links Rápidos',
       rights: 'Todos os direitos reservados. Website independente de partilha e promoção.',
     },
@@ -595,6 +597,7 @@ export const translations: Record<Language, TranslationDictionary> = {
     },
     footer: {
       slogan: 'Health, Vitality, and Financial Freedom Across Africa and Globally',
+      region: 'Africa & Global',
       quickLinks: 'Quick Links',
       rights: 'All rights reserved. Independent distributor & sharing platform.',
     },
