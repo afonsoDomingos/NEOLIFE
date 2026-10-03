@@ -29,14 +29,14 @@ export const HealthSection: React.FC = () => {
 
   const categories = [
     { id: 'all', labelPt: 'Todos os Pacotes', labelEn: 'All Packs' },
-    { id: 'weight', labelPt: 'Pequeno Almoço & Peso', labelEn: 'Breakfast & Weight' },
-    { id: 'cell', labelPt: 'Nutrição Celular & Ómega-3', labelEn: 'Cellular & Omega-3' },
+    { id: 'weight', labelPt: 'Pequeno Almo├ºo & Peso', labelEn: 'Breakfast & Weight' },
+    { id: 'cell', labelPt: 'Nutri├º├úo Celular & ├ômega-3', labelEn: 'Cellular & Omega-3' },
     { id: 'gender', labelPt: 'Homem, Mulher & Maternidade', labelEn: 'Men, Women & Mother' },
     { id: 'energy', labelPt: 'Energia & Foco Mental', labelEn: 'Energy & Mental Focus' },
-    { id: 'joints', labelPt: 'Articulações & Mobilidade', labelEn: 'Joints & Mobility' },
-    { id: 'digest', labelPt: 'Digestão & Programa Detox', labelEn: 'Digestion & Detox' },
+    { id: 'joints', labelPt: 'Articula├º├Áes & Mobilidade', labelEn: 'Joints & Mobility' },
+    { id: 'digest', labelPt: 'Digest├úo & Programa Detox', labelEn: 'Digestion & Detox' },
     { id: 'immunity', labelPt: 'Imunidade PhytoDefence', labelEn: 'Immunity PhytoDefence' },
-    { id: 'kids', labelPt: 'Crianças & Jovens', labelEn: 'Kids & Youth' },
+    { id: 'kids', labelPt: 'Crian├ºas & Jovens', labelEn: 'Kids & Youth' },
   ];
 
   const [dynamicPacks, setDynamicPacks] = useState<Record<string, any>>({});
@@ -150,8 +150,8 @@ export const HealthSection: React.FC = () => {
   };
 
   const loadProductLink = async (productId: string) => {
-    if (productLinks[productId]) return; // Já carregado
-    if (typeof window === 'undefined') return; // Não carregar durante build estático
+    if (productLinks[productId]) return; // J├í carregado
+    if (typeof window === 'undefined') return; // N├úo carregar durante build est├ítico
 
     setLoadingLinks(prev => new Set(prev).add(productId));
     try {
@@ -209,19 +209,19 @@ export const HealthSection: React.FC = () => {
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-100/90 border border-emerald-300 text-emerald-900 text-xs font-bold uppercase tracking-wider mb-4 shadow-xs">
             <span className="w-2 h-2 rounded-full bg-emerald-600 animate-pulse" />
-            {isPt ? 'Pilar 01 • Soluções de Saúde Neolife' : 'Pillar 01 • Neolife Health Solutions'}
+            {isPt ? 'Pilar 01 ÔÇó Solu├º├Áes de Sa├║de Neolife' : 'Pillar 01 ÔÇó Neolife Health Solutions'}
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
-            {isPt ? 'Nutrição Celular & Soluções Completas' : 'Cellular Nutrition & Complete Solutions'}
+            {isPt ? 'Nutri├º├úo Celular & Solu├º├Áes Completas' : 'Cellular Nutrition & Complete Solutions'}
           </h2>
           <p className="text-lg md:text-xl text-gray-600 leading-relaxed">
             {isPt
-              ? 'Organização simples para que cada pessoa consiga identificar rapidamente aquilo que procura para o seu bem-estar, família e lar.'
+              ? 'Organiza├º├úo simples para que cada pessoa consiga identificar rapidamente aquilo que procura para o seu bem-estar, fam├¡lia e lar.'
               : 'A simple, intuitive layout so everyone can immediately find the right solution for their body, family, and lifestyle.'}
           </p>
         </div>
 
-        {/* ── 2.1 NUTRIÇÃO PARA A CÉLULA: 4 SUPLEMENTOS ESSENCIAIS ── */}
+        {/* ÔöÇÔöÇ 2.1 NUTRI├ç├âO PARA A C├ëLULA: 4 SUPLEMENTOS ESSENCIAIS ÔöÇÔöÇ */}
         <div className="relative rounded-3xl p-6 sm:p-10 md:p-12 mb-16 overflow-hidden shadow-2xl border border-emerald-500/30">
           {/* Background Image with Multilayer Gradient Overlay */}
           <div
@@ -237,14 +237,14 @@ export const HealthSection: React.FC = () => {
             <div className="max-w-3xl mx-auto text-center mb-10">
               <span className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-emerald-300 bg-emerald-900/80 backdrop-blur-md px-3.5 py-1 rounded-full border border-emerald-400/40 shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                {isPt ? 'Fundamento Biológico' : 'Biological Foundation'}
+                {isPt ? 'Fundamento Biol├│gico' : 'Biological Foundation'}
               </span>
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mt-4 mb-3 tracking-tight drop-shadow-md">
-                {isPt ? 'Nutrição para a Célula: 4 Suplementos Essenciais' : 'Cellular Nutrition: 4 Foundational Supplements'}
+                {isPt ? 'Nutri├º├úo para a C├®lula: 4 Suplementos Essenciais' : 'Cellular Nutrition: 4 Foundational Supplements'}
               </h3>
               <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed max-w-2xl mx-auto drop-shadow">
                 {isPt
-                  ? 'O nosso corpo é formado por mais de 73 triliões de células. A alimentação moderna muitas vezes não fornece o que elas necessitam diariamente. Cuidar das células hoje é construir uma vida mais saudável amanhã.'
+                  ? 'O nosso corpo ├® formado por mais de 73 trili├Áes de c├®lulas. A alimenta├º├úo moderna muitas vezes n├úo fornece o que elas necessitam diariamente. Cuidar das c├®lulas hoje ├® construir uma vida mais saud├ível amanh├ú.'
                   : 'Our body is made of over 73 trillion cells. Modern diets often lack what they require daily. Nourishing your cells today builds a healthier tomorrow.'}
               </p>
             </div>
@@ -321,7 +321,7 @@ export const HealthSection: React.FC = () => {
               })}
             </div>
 
-            {/* ── 2.2 PROTEÍNA DIÁRIA — NEOLIFESHAKE ── */}
+            {/* ÔöÇÔöÇ 2.2 PROTE├ìNA DI├üRIA ÔÇö NEOLIFESHAKE ÔöÇÔöÇ */}
             <div className="bg-white/95 backdrop-blur-md rounded-2xl border border-white/60 shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
               {/* Compact Header - Always Visible */}
               <button
@@ -330,10 +330,10 @@ export const HealthSection: React.FC = () => {
               >
                 <div className="flex items-center gap-4">
                   <div className="inline-flex items-center gap-2 text-xs font-bold text-emerald-800 bg-emerald-100/70 px-3 py-1 rounded-full">
-                    <span>{isPt ? 'Nutrição Diária Deliciosa' : 'Daily Wholesome Protein'}</span>
+                    <span>{isPt ? 'Nutri├º├úo Di├íria Deliciosa' : 'Daily Wholesome Protein'}</span>
                   </div>
                   <h4 className="text-lg sm:text-xl font-bold text-gray-900 group-hover:text-emerald-700 transition-colors">
-                    NeolifeShake • Proteína, Fibras & Vitaminas
+                    NeolifeShake ÔÇó Prote├¡na, Fibras & Vitaminas
                   </h4>
                 </div>
                 <svg
@@ -356,13 +356,13 @@ export const HealthSection: React.FC = () => {
                 <div className="max-w-2xl">
                   <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4">
                     {isPt
-                      ? 'A proteína é essencial para a manutenção dos músculos, tecidos, enzimas e hormonas. O NeolifeShake combina proteínas vegetais puras (soja e ervilha), fibras digestivas, 22 aminoácidos e 25 vitaminas e minerais com tecnologia de controlo glicémico.'
+                      ? 'A prote├¡na ├® essencial para a manuten├º├úo dos m├║sculos, tecidos, enzimas e hormonas. O NeolifeShake combina prote├¡nas vegetais puras (soja e ervilha), fibras digestivas, 22 amino├ícidos e 25 vitaminas e minerais com tecnologia de controlo glic├®mico.'
                       : 'Protein is vital for muscle tissue, enzymatic balance, and cellular repair. NeolifeShake delivers wholesome plant protein (soy & pea), dietary fibers, 22 amino acids, and 25 vitamins & minerals.'}
                   </p>
                   <div className="flex flex-wrap gap-2 text-xs font-semibold text-emerald-800">
-                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">Saciedade Saudável</span>
+                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">Saciedade Saud├ível</span>
                     <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">Massa Muscular</span>
-                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">Controlo Glicémico</span>
+                    <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">Controlo Glic├®mico</span>
                     <span className="bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200">Deliciosos Sabores</span>
                   </div>
                 </div>
@@ -376,12 +376,12 @@ export const HealthSection: React.FC = () => {
                     }}
                   >
                     <Button size="sm" className="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold whitespace-nowrap">
-                      {isPt ? 'Ver Packs com NeolifeShake ↓' : 'See Packs with NeolifeShake ↓'}
+                      {isPt ? 'Ver Packs com NeolifeShake Ôåô' : 'See Packs with NeolifeShake Ôåô'}
                     </Button>
                   </a>
                   <Link href="/formulario?tema=produtos&pais=mz-pt" className="w-full">
                     <Button variant="outline" size="sm" className="w-full border-emerald-300 text-emerald-800 hover:bg-emerald-50 font-semibold whitespace-nowrap">
-                      {isPt ? 'Pedir Informações' : 'Request Info'}
+                      {isPt ? 'Pedir Informa├º├Áes' : 'Request Info'}
                     </Button>
                   </Link>
                 </div>
@@ -389,22 +389,21 @@ export const HealthSection: React.FC = () => {
             </div>
           </div>
         </div>
+          </div>
         </div>
         </div>
 
-        </div>
-
-        {/* ── 2.3 CATÁLOGO DE PACOTES DE SAÚDE SEGMENTADOS ── */}
+        {/* ÔöÇÔöÇ 2.3 CAT├üLOGO DE PACOTES DE SA├ÜDE SEGMENTADOS ÔöÇÔöÇ */}
         <div id="catalogo-pacotes" className="mb-20">
           <div className="text-center max-w-3xl mx-auto mb-8">
             <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">
               {isPt
-                ? 'Pacotes de Saúde para Diferentes Necessidades & Orçamentos'
+                ? 'Pacotes de Sa├║de para Diferentes Necessidades & Or├ºamentos'
                 : 'Health Packs for Different Needs & Budgets'}
             </h3>
             <p className="text-sm sm:text-base text-gray-600">
               {isPt
-                ? 'Cada pessoa tem objetivos e rotinas diferentes. Escolha de acordo com o que precisa, o que pretende alcançar e quanto deseja investir.'
+                ? 'Cada pessoa tem objetivos e rotinas diferentes. Escolha de acordo com o que precisa, o que pretende alcan├ºar e quanto deseja investir.'
                 : 'Every individual has unique wellness goals and routines. Explore and choose according to your exact priorities.'}
             </p>
           </div>
@@ -434,7 +433,7 @@ export const HealthSection: React.FC = () => {
               const isLoading = loadingLinks.has(pack.id);
               const mergedPack = getMergedPack(pack);
 
-              // Carregar link se ainda não foi carregado
+              // Carregar link se ainda n├úo foi carregado
               if (!linkData && !isLoading) {
                 loadProductLink(pack.id);
               }
@@ -473,7 +472,7 @@ export const HealthSection: React.FC = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                           </svg>
                         </div>
-                        <span className="text-xs font-semibold text-emerald-800/70 uppercase tracking-wider">NeoLife Solução</span>
+                        <span className="text-xs font-semibold text-emerald-800/70 uppercase tracking-wider">NeoLife Solu├º├úo</span>
                       </div>
                     )}
 
@@ -526,13 +525,13 @@ export const HealthSection: React.FC = () => {
                           }}
                           className="text-[11px] font-bold text-emerald-700 hover:text-emerald-900 transition-colors flex items-center gap-1"
                         >
-                          <span>{isExpanded ? (isPt ? 'Menos detalhes ▲' : 'Less details ▲') : (isPt ? 'Ver benefícios ▼' : 'View benefits ▼')}</span>
+                          <span>{isExpanded ? (isPt ? 'Menos detalhes Ôû▓' : 'Less details Ôû▓') : (isPt ? 'Ver benef├¡cios Ôû╝' : 'View benefits Ôû╝')}</span>
                         </button>
                       </div>
                       <ul className="space-y-1.5">
                         {(isPt ? mergedPack.productsPt : mergedPack.productsEn).map((prod: string, i: number) => (
                           <li key={i} className="flex items-start gap-2 text-xs text-gray-800 font-medium">
-                            <span className="text-emerald-600 font-bold shrink-0">✓</span>
+                            <span className="text-emerald-600 font-bold shrink-0">Ô£ô</span>
                             <span>{prod}</span>
                           </li>
                         ))}
@@ -545,7 +544,7 @@ export const HealthSection: React.FC = () => {
                         {/* Key Benefits */}
                         <div>
                           <p className="text-[11px] font-extrabold text-emerald-800 uppercase tracking-wider mb-2">
-                            {isPt ? 'Benefícios Principais:' : 'Key Benefits:'}
+                            {isPt ? 'Benef├¡cios Principais:' : 'Key Benefits:'}
                           </p>
                           <ul className="space-y-1.5">
                             {(isPt ? mergedPack.benefitsPt : mergedPack.benefitsEn).map((ben: string, i: number) => (
@@ -605,14 +604,14 @@ export const HealthSection: React.FC = () => {
                             className="w-full py-3.5 px-5 rounded-2xl text-sm font-black bg-emerald-600 hover:bg-emerald-700 text-white border border-emerald-500 shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 group/btn"
                           >
                             <span>{isPt ? 'Comprar Agora' : 'Buy Now'}</span>
-                            <span className="group-hover/btn:translate-x-1 transition-transform">➔</span>
+                            <span className="group-hover/btn:translate-x-1 transition-transform">Ô×ö</span>
                           </button>
                         </a>
                       ) : (
                         <a
                           href={`https://wa.me/258823056900?text=${encodeURIComponent(
                             isPt
-                              ? `Olá José e Ofélia, tenho interesse no ${mergedPack.titlePt} e gostaria de saber o valor e como encomendar.`
+                              ? `Ol├í Jos├® e Of├®lia, tenho interesse no ${mergedPack.titlePt} e gostaria de saber o valor e como encomendar.`
                               : `Hello, I am interested in ${mergedPack.titleEn} and would like to know the price and ordering details.`
                           )}`}
                           target="_blank"
@@ -625,7 +624,7 @@ export const HealthSection: React.FC = () => {
                             className="w-full py-3.5 px-5 rounded-2xl text-sm font-extrabold bg-emerald-600 hover:bg-emerald-700 text-white shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 group/btn"
                           >
                             <span>{isPt ? 'Consultar / Encomendar' : 'Inquire / Order'}</span>
-                            <span className="group-hover/btn:translate-x-1 transition-transform">➔</span>
+                            <span className="group-hover/btn:translate-x-1 transition-transform">Ô×ö</span>
                           </button>
                         </a>
                       )}
@@ -637,19 +636,19 @@ export const HealthSection: React.FC = () => {
           </div>
         </div>
 
-        {/* ── 2.4 OUTRAS SOLUÇÕES (Caixa Aberta Interativa) ── */}
+        {/* ÔöÇÔöÇ 2.4 OUTRAS SOLU├ç├òES (Caixa Aberta Interativa) ÔöÇÔöÇ */}
         <div className="relative bg-gradient-to-br from-emerald-900 via-emerald-850 to-emerald-950 text-white rounded-3xl p-8 sm:p-12 border-2 border-emerald-400 shadow-xl max-w-4xl mx-auto">
           <div className="max-w-2xl mx-auto text-center">
             <span className="inline-block text-xs font-extrabold px-3 py-1 rounded-full bg-emerald-500 text-emerald-950 uppercase tracking-wider mb-4">
               {isPt ? 'Atendimento Personalizado' : 'Custom Consultation'}
             </span>
             <h4 className="text-2xl sm:text-3xl font-extrabold text-white mb-3">
-              {isPt ? 'Procura Outras Soluções de Saúde?' : 'Looking for Other Health Solutions?'}
+              {isPt ? 'Procura Outras Solu├º├Áes de Sa├║de?' : 'Looking for Other Health Solutions?'}
             </h4>
             <p className="text-emerald-100 text-sm sm:text-base leading-relaxed mb-6 italic">
               {isPt
-                ? '“Diz-nos o que procuras ou qual é a tua necessidade, e entraremos em contacto contigo para perceber melhor como podemos ajudar.”'
-                : '“Tell us what you are looking for or what your specific need is, and we will get in touch to find the best option for you.”'}
+                ? 'ÔÇ£Diz-nos o que procuras ou qual ├® a tua necessidade, e entraremos em contacto contigo para perceber melhor como podemos ajudar.ÔÇØ'
+                : 'ÔÇ£Tell us what you are looking for or what your specific need is, and we will get in touch to find the best option for you.ÔÇØ'}
             </p>
 
             <form onSubmit={handleSaveCustomNeed} className="space-y-4">
@@ -659,7 +658,7 @@ export const HealthSection: React.FC = () => {
                 onChange={(e) => setCustomHealthNeed(e.target.value)}
                 placeholder={
                   isPt
-                    ? 'Escreva aqui a sua necessidade, dúvida de saúde ou produto que procura (fica salvo automaticamente)...'
+                    ? 'Escreva aqui a sua necessidade, d├║vida de sa├║de ou produto que procura (fica salvo automaticamente)...'
                     : 'Write your specific wellness need, health question, or product inquiry here (saved automatically)...'
                 }
                 className="w-full text-sm p-4 rounded-2xl bg-white/10 border border-emerald-400/40 text-white placeholder-emerald-200/60 focus:outline-none focus:ring-2 focus:ring-emerald-400 resize-none transition-all shadow-inner"
@@ -681,7 +680,7 @@ export const HealthSection: React.FC = () => {
                   href="/formulario?origem=outras-solucoes"
                   className="w-full sm:w-auto py-3 px-6 rounded-xl text-sm font-semibold bg-white/15 hover:bg-white/25 text-white border border-white/20 transition-all text-center"
                 >
-                  {isPt ? 'Concluir no Formulário ➔' : 'Complete in Form ➔'}
+                  {isPt ? 'Concluir no Formul├írio Ô×ö' : 'Complete in Form Ô×ö'}
                 </Link>
 
                 <a
@@ -728,3 +727,4 @@ export const HealthSection: React.FC = () => {
     </section>
   );
 };
+
