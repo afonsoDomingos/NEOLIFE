@@ -14,6 +14,32 @@ const fallbackBanner = [
     buttonTextPt: 'Quero Saber Mais',
     active: true,
     order: 1,
+  },
+  {
+    _id: 'default-banner-02',
+    titleEn: 'Health, Vitality, and Financial Freedom',
+    titlePt: 'Saúde, Vitalidade e Liberdade Financeira',
+    descriptionEn: 'Join the NeoLife family and discover the power of high-quality scientific cellular nutrition, alongside the mentorship of José and Ofélia Machado.',
+    descriptionPt: 'Junte-se à família NeoLife e descubra o poder da nutrição celular de alta qualidade científica, ao lado da mentoria de José e Ofélia Machado.',
+    image: '/banneroficial.png',
+    link: '/oportunidade',
+    buttonTextEn: 'Discover the Opportunity',
+    buttonTextPt: 'Conhecer a Oportunidade',
+    active: true,
+    order: 2,
+  },
+  {
+    _id: 'default-banner-03',
+    titleEn: 'Superior Nutrition & Cellular Vitality for Your Whole Family',
+    titlePt: 'Nutrição Superior & Vitalidade Celular para Toda a Família',
+    descriptionEn: 'Based in Nature and Backed by Science. Discover premium quality supplements formulated to optimize your daily well-being.',
+    descriptionPt: 'Baseada na Natureza e Apoiada pela Ciência. Descubra suplementos de qualidade máxima formulados para otimizar o seu bem-estar diário.',
+    image: '/banner01.jpg',
+    link: '/saude',
+    buttonTextEn: 'Explore Health Solutions',
+    buttonTextPt: 'Explorar Soluções de Saúde',
+    active: true,
+    order: 3,
   }
 ];
 
