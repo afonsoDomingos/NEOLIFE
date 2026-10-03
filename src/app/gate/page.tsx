@@ -607,14 +607,14 @@ function GateContent() {
                         </span>
                         <div className="min-w-0">
                           <span className="text-[10px] font-bold text-blue-800 uppercase tracking-wider block leading-none mb-0.5">E-mail</span>
-                          <span className="text-xs font-bold text-gray-900 select-all block truncate">contato@neolife.com</span>
+                          <span className="text-xs font-bold text-gray-900 select-all block truncate">jmachado@intra.co.mz</span>
                         </div>
                       </div>
 
                       <div className="flex items-center gap-1.5 shrink-0">
                         <button
                           type="button"
-                          onClick={() => copyToClipboard('contato@neolife.com', 'email')}
+                          onClick={() => copyToClipboard('jmachado@intra.co.mz', 'email')}
                           className={`px-2.5 py-1 rounded-md text-xs font-bold transition-all flex items-center gap-1 ${
                             copiedEmail
                               ? 'bg-blue-600 text-white'
@@ -639,7 +639,7 @@ function GateContent() {
                           )}
                         </button>
                         <a
-                          href={`mailto:contato@neolife.com?subject=${encodeURIComponent(
+                          href={`mailto:jmachado@intra.co.mz?subject=${encodeURIComponent(
                             isPt ? `Contacto NeoLife - ${formData.name || 'Interesse'}` : `NeoLife Contact - ${formData.name || 'Interest'}`
                           )}&body=${encodeURIComponent(
                             isPt
