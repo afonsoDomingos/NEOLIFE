@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface IPillarCard extends Document {
-  pillarId: 'saude' | 'business' | 'experiencias';
+  pillarId: string;
   image: string;
   altText?: string;
   updatedAt: Date;

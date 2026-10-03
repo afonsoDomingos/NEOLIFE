@@ -28,12 +28,12 @@ export async function getAllPillarCards(): Promise<IPillarCard[]> {
     }
   }
 
-  return PillarCard.find().sort({ pillarId: 1 });
+  return (await PillarCard.find().sort({ pillarId: 1 })) as IPillarCard[];
 }
 
 export async function getPillarCard(pillarId: string): Promise<IPillarCard | null> {
   await connectDB();
-  return PillarCard.findOne({ pillarId });
+  return (await PillarCard.findOne({ pillarId })) as IPillarCard | null;
 }
 
 export async function updatePillarCard(
@@ -41,9 +41,10 @@ export async function updatePillarCard(
   data: { image?: string; altText?: string }
 ): Promise<IPillarCard | null> {
   await connectDB();
-  return PillarCard.findOneAndUpdate(
+  const card = await PillarCard.findOneAndUpdate(
     { pillarId },
     { $set: data },
     { new: true, upsert: true }
   );
+  return card as IPillarCard | null;
 }
