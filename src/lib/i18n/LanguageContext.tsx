@@ -15,7 +15,7 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 const LANGUAGE_STORAGE_KEY = 'neolife_preferred_language';
 
 export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [language, setLanguageState] = useState<Language>('pt');
+  const [language, setLanguageState] = useState<Language>('en');
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     setLanguage(language === 'pt' ? 'en' : 'pt');
   };
 
-  const currentTranslations = translations[language] || translations.pt;
+  const currentTranslations = translations[language] || translations.en;
 
   return (
     <LanguageContext.Provider
@@ -71,10 +71,10 @@ export const useLanguage = (): LanguageContextType => {
   if (!context) {
     // Fallback safe defaults if used outside provider
     return {
-      language: 'pt',
+      language: 'en',
       setLanguage: () => {},
       toggleLanguage: () => {},
-      t: translations.pt,
+      t: translations.en,
     };
   }
   return context;
