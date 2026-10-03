@@ -4,11 +4,11 @@ import { getActiveBanners } from '@/lib/db/banners-mongodb';
 const fallbackBanner = [
   {
     _id: 'default-banner-01',
-    title: 'Construa o Seu Próprio Negócio com a NeoLife em África',
-    description: 'Descubra como transformar a sua saúde, bem-estar e conquistar a sua independência financeira trabalhando a partir de qualquer lugar.',
+    title: 'Build Your Own Business with NeoLife in Africa',
+    description: 'Discover how to transform your health, wellness, and achieve financial independence working from anywhere.',
     image: '/banner01.jpg',
     link: '/#temas',
-    buttonText: 'Quero Saber Mais',
+    buttonText: 'Learn More',
     active: true,
     order: 1,
   }

@@ -18,41 +18,41 @@ interface Banner {
 const defaultBanners: Banner[] = [
   {
     _id: 'default-banner-01',
-    title: 'Construa o Seu Próprio Negócio com a NeoLife em África',
-    description: 'Descubra como transformar a sua saúde, bem-estar e criar novas oportunidades financeiras sustentáveis ao lado de uma mentoria comprovada.',
+    title: 'Build Your Own Business with NeoLife in Africa',
+    description: 'Discover how to transform your health, wellness, and create sustainable financial opportunities alongside proven mentorship.',
     image: '/images/banners/banner-business.jpg',
     link: '/business',
-    buttonText: 'Conhecer o Business',
+    buttonText: 'Explore Business',
     active: true,
     order: 1,
   },
   {
     _id: 'default-banner-02',
-    title: 'Nutrição Superior & Vitalidade Celular para Toda a Família',
-    description: 'Baseada na Natureza e Apoiada pela Ciência. Descubra suplementos de qualidade máxima formulados para otimizar o seu bem-estar diário.',
+    title: 'Superior Nutrition & Cellular Vitality for Your Whole Family',
+    description: 'Based in Nature and Backed by Science. Discover premium quality supplements formulated to optimize your daily well-being.',
     image: '/images/banners/banner-saude.jpg',
     link: '/saude',
-    buttonText: 'Explorar Soluções de Saúde',
+    buttonText: 'Explore Health Solutions',
     active: true,
     order: 2,
   },
   {
     _id: 'default-banner-03',
-    title: 'Viva Experiências Exclusivas & Reconhecimento Global',
-    description: 'Expanda os seus horizontes, celebre grandes conquistas e faça parte de viagens internacionais inesquecíveis.',
+    title: 'Live Exclusive Experiences & Global Recognition',
+    description: 'Expand your horizons, celebrate great achievements, and be part of unforgettable international trips.',
     image: '/images/banners/banner-experiencias.jpg',
     link: '/experiencias',
-    buttonText: 'Descobrir Experiências',
+    buttonText: 'Discover Experiences',
     active: true,
     order: 3,
   },
   {
     _id: 'default-banner-04',
-    title: 'Liderança e Desenvolvimento: Juntos por um Futuro Melhor',
-    description: 'Mais de 60 anos de história e inovação global. Conte com o apoio e a mentoria direta de José Sarmento Machado e Ofélia Alfredo Machado.',
+    title: 'Leadership and Development: Together for a Better Future',
+    description: 'Over 60 years of history and global innovation. Count on the support and direct mentorship of José Sarmento Machado and Ofélia Alfredo Machado.',
     image: '/banneroficial.png',
     link: '/business',
-    buttonText: 'Falar com os Mentores',
+    buttonText: 'Talk to Mentors',
     active: true,
     order: 4,
   },
@@ -221,7 +221,7 @@ export const DynamicBanner: React.FC = () => {
             <div className="banner-tag inline-flex flex-col items-center gap-1 px-3.5 py-1.5 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-400/40 text-emerald-300 text-xs font-semibold uppercase tracking-wider mb-5 shadow-sm">
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                Neolife África • Destaque
+                NeoLife Africa • Featured
               </div>
               <span className="text-[9px] text-emerald-400/80 font-medium tracking-wide uppercase">
                 Ofélia & José Machado
