@@ -109,6 +109,13 @@ function GateContent() {
       : 'Discover exclusive travel, global recognition, and international community experiences.',
   };
 
+  const pillarBackgrounds: Record<string, string> = {
+    saude: '/images/sections/fundo-nutricao-celular.jpg',
+    business: '/images/sections/fundo-business-mentoria.jpg',
+    experiencias: '/images/sections/pilar-experiencias.jpg',
+  };
+  const bgImage = pillarBackgrounds[pillar] || '/images/sections/fundo-nutricao-celular.jpg';
+
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -263,8 +270,17 @@ function GateContent() {
 
   if (submitSuccess) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center p-4">
-        <div className="text-center max-w-md mx-auto">
+      <div className="relative min-h-[calc(100vh-80px)] py-12 flex items-center justify-center p-4 overflow-hidden">
+        {/* Background Image with Gradient Overlay */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ backgroundImage: `url('${bgImage}')` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/92 via-emerald-950/85 to-emerald-950/95" />
+          <div className="absolute inset-0 bg-black/35 backdrop-blur-[2px]" />
+        </div>
+
+        <div className="relative z-10 text-center max-w-md mx-auto bg-white/95 backdrop-blur-md rounded-3xl p-8 border border-white/60 shadow-2xl">
           <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
@@ -284,45 +300,58 @@ function GateContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
+    <div className="relative min-h-[calc(100vh-80px)] py-10 sm:py-16 flex items-center justify-center p-4 overflow-hidden">
+      {/* Background Image with Multilayer Gradient Overlay */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-700"
+        style={{ backgroundImage: `url('${bgImage}')` }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-emerald-950/92 via-emerald-950/85 to-emerald-950/95" />
+        <div className="absolute inset-0 bg-black/35 backdrop-blur-[2px]" />
+      </div>
+
+      <div className="relative z-10 w-full max-w-md">
         
         {/* Header */}
         <div className="text-center mb-4">
-          <h1 className="text-xl sm:text-2xl font-extrabold text-gray-900 mb-2 tracking-tight">
+          <span className="inline-flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-widest text-emerald-300 bg-emerald-900/80 backdrop-blur-md px-3 py-1 rounded-full border border-emerald-400/30 shadow-sm mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            NeoLife
+          </span>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white mb-2 tracking-tight drop-shadow-md">
             {isPt ? 'Antes de Continuar' : 'Before You Continue'}
           </h1>
-          <p className="text-gray-600 text-xs max-w-xs mx-auto mb-3">
+          <p className="text-emerald-100/90 text-xs max-w-xs mx-auto mb-3 drop-shadow">
             {isPt
               ? 'Para proporcionar um atendimento personalizado, precisamos de alguns dados básicos.'
               : 'To provide personalized service, we need some basic information.'}
           </p>
 
           {/* Pillar Preview Card */}
-          <div className="bg-white rounded-xl p-3 border border-emerald-200 shadow-sm mb-4">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700">
+          <div className="bg-white/95 backdrop-blur-md rounded-2xl p-3.5 border border-white/60 shadow-xl mb-4 text-left">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-800 shrink-0">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 00 11-18 0 9 0 0118 0z" />
                 </svg>
               </div>
-              <div className="text-left">
-                <p className="text-xs font-bold text-emerald-800 uppercase tracking-wider">
+              <div className="text-left min-w-0">
+                <p className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider">
                   {isPt ? 'Você está acessando:' : 'You are accessing:'}
                 </p>
-                <p className="text-xs font-bold text-gray-900">
+                <p className="text-xs sm:text-sm font-bold text-gray-900 truncate">
                   {pillarTitles[pillar as keyof typeof pillarTitles]}
                 </p>
               </div>
             </div>
-            <p className="text-xs text-gray-600 mt-2 text-left">
+            <p className="text-xs text-gray-600 mt-2 leading-relaxed">
               {pillarDescriptions[pillar as keyof typeof pillarDescriptions]}
             </p>
           </div>
         </div>
 
         {/* Form */}
-        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-gray-200 shadow-lg">
+        <div className="bg-white/98 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-white/70 shadow-2xl">
           
           {/* Progress Indicator */}
           <div className="mb-4">
@@ -664,7 +693,7 @@ function GateContent() {
         <div className="text-center mt-3">
           <a
             href="/"
-            className="text-xs font-semibold text-gray-600 hover:text-emerald-700 underline"
+            className="text-xs font-semibold text-emerald-200 hover:text-white transition-colors underline drop-shadow"
           >
             {isPt ? '← Voltar para a página inicial' : '← Back to home page'}
           </a>
