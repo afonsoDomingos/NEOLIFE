@@ -235,23 +235,37 @@ export function AICopilot() {
             e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
           }}
         >
-          {/* AI Icon */}
-          <div
+          {/* Wehosthere Mascot Icon */}
+          <a
+            href="https://www.wehosthere.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             style={{
               width: '20px',
               height: '20px',
-              background: '#3b82f6',
               borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
+              textDecoration: 'none',
+              cursor: 'pointer',
             }}
+            onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = '#eff6ff'}
+            onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = '#f8fafc'}
           >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2}>
-              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" />
-              <path d="M12 6v6l4 2" />
-            </svg>
-          </div>
+            <img
+              src="/logo-wehosthere.png"
+              alt="Wehosthere"
+              style={{
+                width: '14px',
+                height: '14px',
+                objectFit: 'contain',
+              }}
+            />
+          </a>
 
           {/* Text */}
           <div>
