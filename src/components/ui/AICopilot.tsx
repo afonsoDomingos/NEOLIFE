@@ -207,11 +207,6 @@ export function AICopilot() {
     const text = (textToSend || input).trim();
     if (!text || isLoading) return;
 
-    // Show identity form on first message if not yet identified
-    if (!isIdentified && messages.length === 0) {
-      setShowIdentifyForm(true);
-    }
-
     const userMessage: Message = {
       id: Date.now().toString(),
       role: 'user',
@@ -256,6 +251,11 @@ export function AICopilot() {
       };
 
       setMessages([...newMessages, assistantMessage]);
+
+      // Show identity form after first response if not yet identified
+      if (!isIdentified && messages.length === 0) {
+        setShowIdentifyForm(true);
+      }
     } catch (error) {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
