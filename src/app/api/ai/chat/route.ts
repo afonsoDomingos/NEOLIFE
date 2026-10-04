@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const messages: ChatMessage[] = body.messages || [];
+    const language = body.language || 'pt';
 
     if (!Array.isArray(messages) || messages.length === 0) {
       return NextResponse.json(
@@ -27,7 +28,7 @@ export async function POST(req: NextRequest) {
 
     // If no API key is set, use the intelligent knowledge base fallback
     if (!apiKey) {
-      const fallbackReply = getSmartFallbackResponse(latestUserMessage);
+      const fallbackReply = getSmartFallbackResponse(latestUserMessage, language);
       return NextResponse.json({
         content: fallbackReply,
         source: 'knowledge-base',
@@ -63,7 +64,7 @@ export async function POST(req: NextRequest) {
 
     if (!response.ok) {
       console.warn('Gemini API returned error status:', response.status);
-      const fallbackReply = getSmartFallbackResponse(latestUserMessage);
+      const fallbackReply = getSmartFallbackResponse(latestUserMessage, language);
       return NextResponse.json({
         content: fallbackReply,
         source: 'knowledge-base',
@@ -75,7 +76,7 @@ export async function POST(req: NextRequest) {
       data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
     if (!candidateText) {
-      const fallbackReply = getSmartFallbackResponse(latestUserMessage);
+      const fallbackReply = getSmartFallbackResponse(latestUserMessage, language);
       return NextResponse.json({
         content: fallbackReply,
         source: 'knowledge-base',

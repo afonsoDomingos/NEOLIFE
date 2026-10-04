@@ -147,9 +147,9 @@ export const FALLBACK_FAQS: FallbackFAQ[] = [
   },
 ];
 
-export function getSmartFallbackResponse(userMessage: string): string {
+export function getSmartFallbackResponse(userMessage: string, language: string = 'pt'): string {
   const normalized = userMessage.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  
+
   for (const faq of FALLBACK_FAQS) {
     const match = faq.keywords.some(kw => {
       const normKw = kw.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -158,6 +158,10 @@ export function getSmartFallbackResponse(userMessage: string): string {
     if (match) {
       return faq.answer;
     }
+  }
+
+  if (language === 'en') {
+    return 'Hello! Thank you for your message. As a consultative assistant for the NeoLife mentorship team, I am here to clarify doubts about cellular nutrition, preventive health, or our independent business model. Would you like to know more about how to improve your vitality through our products, or would you like to learn about our mentorship to start a business with NeoLife? You can also fill out our [Form](/formulario) for direct contact.';
   }
 
   return 'Olá! Agradeço a sua mensagem. Como assistente consultivo da equipa de mentoria NeoLife, estou aqui para esclarecer dúvidas sobre nutrição celular, saúde preventiva ou o nosso modelo de negócio independente. Gostaria de saber mais sobre como melhorar a sua vitalidade através dos produtos, ou deseja conhecer a nossa mentoria para empreender com a NeoLife? Pode também preencher o nosso [Formulário](/formulario) para um contacto direto.';

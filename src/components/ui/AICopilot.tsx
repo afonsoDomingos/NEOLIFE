@@ -26,7 +26,8 @@ const QUICK_PROMPTS_EN = [
 
 export function AICopilot() {
   const { language } = useLanguage();
-  const isPt = language === 'pt';
+  const [copilotLanguage, setCopilotLanguage] = useState<'pt' | 'en'>(language === 'pt' ? 'pt' : 'en');
+  const isPt = copilotLanguage === 'pt';
   const [isOpen, setIsOpen] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [input, setInput] = useState('');
@@ -46,6 +47,20 @@ export function AICopilot() {
       time: isPt ? 'Agora' : 'Now',
     },
   ]);
+
+  // Update welcome message when language changes
+  useEffect(() => {
+    setMessages([
+      {
+        id: 'welcome',
+        role: 'assistant',
+        content: isPt
+          ? 'Olá! Somos Ofélia e José Machado, os seus consultores NeoLife. Conhecemos todos os nossos produtos de saúde, packs e oportunidades de negócio. Como podemos ajudar?'
+          : 'Hello! We are Ofélia and José Machado, your NeoLife consultants. We know all our health products, packs, and business opportunities. How can we help?',
+        time: isPt ? 'Agora' : 'Now',
+      },
+    ]);
+  }, [copilotLanguage]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -124,6 +139,7 @@ export function AICopilot() {
             role: m.role,
             content: m.content,
           })),
+          language: copilotLanguage,
         }),
       });
 
@@ -398,6 +414,28 @@ export function AICopilot() {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          {/* Language Selector */}
+          <button
+            onClick={() => setCopilotLanguage(isPt ? 'en' : 'pt')}
+            style={{
+              background: 'rgba(255,255,255,0.12)',
+              border: 'none',
+              color: 'white',
+              padding: '6px 10px',
+              borderRadius: '20px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '4px',
+              fontSize: '11px',
+              fontWeight: 600,
+              transition: 'background 0.2s',
+            }}
+            onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.2)'}
+            onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.12)'}
+          >
+            {isPt ? '🇵🇹 PT' : '🇬🇧 EN'}
+          </button>
           {/* Minimize button */}
           <button
             onClick={() => setIsMinimized(!isMinimized)}
