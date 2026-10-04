@@ -214,7 +214,7 @@ export default function Home() {
             </a>
             <Link href="/formulario?tema=conheca-neolife&pais=mz-pt">
               <Button size="lg" variant="outline" className="border-emerald-400 text-emerald-800 hover:bg-emerald-50 font-bold px-8">
-                Preencher Formulário
+                {t.cta.fillForm}
               </Button>
             </Link>
           </div>

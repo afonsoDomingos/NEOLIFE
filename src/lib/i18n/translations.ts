@@ -191,6 +191,7 @@ export interface TranslationDictionary {
     readyTitle: string;
     readyText: string;
     startNow: string;
+    fillForm: string;
     directContact: string;
   };
   footer: {
@@ -393,6 +394,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       readyTitle: 'Pronto para Transformar a Sua Saúde ou Iniciar o Seu Negócio?',
       readyText: 'Escolha a área que mais lhe interessa hoje. Estamos à sua disposição para esclarecer qualquer dúvida com honestidade e dedicação.',
       startNow: 'Conversar com José & Ofélia',
+      fillForm: 'Preencher Formulário',
       directContact: 'WhatsApp Oficial: +258 82 305 6900',
     },
     footer: {
@@ -593,6 +595,7 @@ export const translations: Record<Language, TranslationDictionary> = {
       readyTitle: 'Ready to Elevate Your Health or Build Your Business?',
       readyText: 'Select your area of interest today. We are at your service to answer every question with honesty and dedication.',
       startNow: 'Talk to José & Ofélia',
+      fillForm: 'Fill Form',
       directContact: 'Official WhatsApp: +258 82 305 6900',
     },
     footer: {
