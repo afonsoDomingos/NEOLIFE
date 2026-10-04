@@ -37,36 +37,49 @@ export function AICopilot() {
   const [isSubmittingLead, setIsSubmittingLead] = useState(false);
   const quickPrompts = isPt ? QUICK_PROMPTS_PT : QUICK_PROMPTS_EN;
 
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 'welcome',
-      role: 'assistant',
-      content: isPt
-        ? 'Olá! Somos Ofélia e José Machado, os seus consultores NeoLife. Conhecemos todos os nossos produtos de saúde, packs e oportunidades de negócio. Como podemos ajudar?'
-        : 'Hello! We are Ofélia and José Machado, your NeoLife consultants. We know all our health products, packs, and business opportunities. How can we help?',
-      time: isPt ? 'Agora' : 'Now',
-    },
-  ]);
-
-  // Update welcome message when language changes
-  useEffect(() => {
-    setMessages([
-      {
-        id: 'welcome',
-        role: 'assistant',
-        content: isPt
-          ? 'Olá! Somos Ofélia e José Machado, os seus consultores NeoLife. Conhecemos todos os nossos produtos de saúde, packs e oportunidades de negócio. Como podemos ajudar?'
-          : 'Hello! We are Ofélia and José Machado, your NeoLife consultants. We know all our health products, packs, and business opportunities. How can we help?',
-        time: isPt ? 'Agora' : 'Now',
-      },
-    ]);
-  }, [copilotLanguage]);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [showQuickPrompts, setShowQuickPrompts] = useState(false);
+  const [isListening, setIsListening] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // Handle voice input using Web Speech API
+  const startListening = () => {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      alert(isPt ? 'Seu navegador não suporta reconhecimento de voz.' : 'Your browser does not support voice recognition.');
+      return;
+    }
+
+    const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.lang = isPt ? 'pt-PT' : 'en-US';
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+      setIsListening(true);
+    };
+
+    recognition.onresult = (event: any) => {
+      const transcript = event.results[0][0].transcript;
+      setInput(transcript);
+      setIsListening(false);
+    };
+
+    recognition.onerror = () => {
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+
+    recognition.start();
   };
 
   // Remove markdown formatting and format lists for clean text display
@@ -628,7 +641,7 @@ export function AICopilot() {
           </div>
 
           {/* Services/Quick prompts (like the image) */}
-          {messages.length <= 2 && (
+          {showQuickPrompts && (
             <div style={{ padding: '14px 18px', background: 'white', borderTop: '1px solid #e5e7eb' }}>
               <div style={{ fontSize: '11px', fontWeight: 600, color: '#64748b', marginBottom: '10px', letterSpacing: '0.5px' }}>
                 {isPt ? 'POSSO AJUDAR COM:' : 'I CAN HELP WITH:'}
@@ -683,6 +696,29 @@ export function AICopilot() {
               }}
               style={{ display: 'flex', gap: '8px' }}
             >
+              <button
+                type="button"
+                onClick={() => setShowQuickPrompts(!showQuickPrompts)}
+                style={{
+                  background: showQuickPrompts ? '#3b82f6' : '#f1f5f9',
+                  border: 'none',
+                  color: showQuickPrompts ? 'white' : '#64748b',
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '18px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.2s',
+                }}
+                title={isPt ? 'Mostrar opções rápidas' : 'Show quick options'}
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 6v6l4 2" />
+                </svg>
+              </button>
               <input
                 ref={inputRef}
                 type="text"
@@ -708,6 +744,39 @@ export function AICopilot() {
                   (e.currentTarget as HTMLElement).style.background = '#f8fafc';
                 }}
               />
+              <button
+                type="button"
+                onClick={startListening}
+                disabled={isListening}
+                style={{
+                  background: isListening ? '#ef4444' : '#f1f5f9',
+                  border: 'none',
+                  color: isListening ? 'white' : '#64748b',
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '18px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.2s',
+                }}
+                title={isPt ? 'Usar voz' : 'Use voice'}
+              >
+                {isListening ? (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                    <line x1="8" y1="12" x2="16" y2="12" />
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                    <path d="M12 1a3 3 0 0 0-3 3v10a3 3 0 0 0 6 0 3 3 0 0 0 3-3V4a3 3 0 0 0-3-3" />
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                    <line x1="12" y1="19" x2="12" y2="23" />
+                    <line x1="8" y1="23" x2="16" y2="23" />
+                  </svg>
+                )}
+              </button>
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
