@@ -43,6 +43,29 @@ export function AICopilot() {
   const [isIdentified, setIsIdentified] = useState(false);
   const [userData, setUserData] = useState({ name: '', email: '' });
   const [isSubmittingIdentity, setIsSubmittingIdentity] = useState(false);
+
+  // Load saved user data from localStorage on mount
+  useEffect(() => {
+    const savedData = localStorage.getItem('ai-copilot-user-data');
+    if (savedData) {
+      try {
+        const parsed = JSON.parse(savedData);
+        setUserData(parsed);
+        if (parsed.name || parsed.email) {
+          setIsIdentified(true);
+        }
+      } catch (error) {
+        console.error('Error loading saved user data:', error);
+      }
+    }
+  }, []);
+
+  // Save user data to localStorage when changed
+  useEffect(() => {
+    if (userData.name || userData.email) {
+      localStorage.setItem('ai-copilot-user-data', JSON.stringify(userData));
+    }
+  }, [userData]);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [currentVideo, setCurrentVideo] = useState<{ title: string; videoUrl: string; thumbnailUrl?: string } | null>(null);
   const [suggestedVideos, setSuggestedVideos] = useState<{ title: string; videoUrl: string; thumbnailUrl?: string }[]>([]);
@@ -1010,7 +1033,7 @@ export function AICopilot() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <input
                   type="text"
-                  placeholder={isPt ? 'Seu nome' : 'Your name'}
+                  placeholder={userData.name ? (isPt ? 'Nome já salvo' : 'Name already saved') : (isPt ? 'Seu nome' : 'Your name')}
                   value={userData.name}
                   onChange={(e) => setUserData({ ...userData, name: e.target.value })}
                   style={{
@@ -1019,12 +1042,12 @@ export function AICopilot() {
                     border: '1px solid #bbf7d0',
                     fontSize: '12px',
                     outline: 'none',
-                    background: 'white',
+                    background: userData.name ? '#f0fdf4' : 'white',
                   }}
                 />
                 <input
                   type="email"
-                  placeholder={isPt ? 'Seu email (opcional)' : 'Your email (optional)'}
+                  placeholder={userData.email ? (isPt ? 'Email já salvo' : 'Email already saved') : (isPt ? 'Seu email (opcional)' : 'Your email (optional)')}
                   value={userData.email}
                   onChange={(e) => setUserData({ ...userData, email: e.target.value })}
                   style={{
@@ -1033,7 +1056,7 @@ export function AICopilot() {
                     border: '1px solid #bbf7d0',
                     fontSize: '12px',
                     outline: 'none',
-                    background: 'white',
+                    background: userData.email ? '#f0fdf4' : 'white',
                   }}
                 />
                 <div style={{ display: 'flex', gap: '8px' }}>
