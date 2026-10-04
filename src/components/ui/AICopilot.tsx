@@ -31,6 +31,9 @@ export function AICopilot() {
   const [isMinimized, setIsMinimized] = useState(false);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showLeadForm, setShowLeadForm] = useState(false);
+  const [leadData, setLeadData] = useState({ name: '', email: '', phone: '', country: '', interest: '' });
+  const [isSubmittingLead, setIsSubmittingLead] = useState(false);
   const quickPrompts = isPt ? QUICK_PROMPTS_PT : QUICK_PROMPTS_EN;
 
   const [messages, setMessages] = useState<Message[]>([
@@ -110,6 +113,24 @@ export function AICopilot() {
       };
 
       setMessages([...newMessages, assistantMessage]);
+
+      // Check if user is interested and offer lead capture
+      const interestKeywords = ['quero', 'interessado', 'interessada', 'gostaria', 'comprar', 'encomendar', 'começar', 'iniciar', 'negócio', 'oportunidade'];
+      const hasInterest = interestKeywords.some(kw => text.toLowerCase().includes(kw));
+      if (hasInterest && messages.length < 5) {
+        setTimeout(() => {
+          const leadPrompt: Message = {
+            id: (Date.now() + 2).toString(),
+            role: 'assistant',
+            content: isPt
+              ? 'Para continuarmos, gostaríamos de capturar os seus dados para lhe enviar informações personalizadas. Poderia partilhar o seu nome e contacto?'
+              : 'To continue, we would like to capture your details to send you personalized information. Could you share your name and contact?',
+            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          };
+          setMessages(prev => [...prev, leadPrompt]);
+          setShowLeadForm(true);
+        }, 1000);
+      }
     } catch (error) {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -122,6 +143,58 @@ export function AICopilot() {
       setMessages([...newMessages, errorMessage]);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleLeadSubmit = async () => {
+    if (!leadData.name || !leadData.phone) {
+      alert(isPt ? 'Por favor, preencha pelo menos o nome e telefone.' : 'Please fill in at least name and phone.');
+      return;
+    }
+
+    setIsSubmittingLead(true);
+
+    try {
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: leadData.name,
+          email: leadData.email,
+          phone: leadData.phone,
+          country: leadData.country,
+          theme: leadData.interest || 'ai-copilot',
+          source: 'ai-copilot',
+        }),
+      });
+
+      if (res.ok) {
+        const successMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: 'assistant',
+          content: isPt
+            ? 'Obrigado! Os seus dados foram registados com sucesso. Nós, Ofélia e José, entraremos em contacto em breve.'
+            : 'Thank you! Your details have been registered successfully. We, Ofélia and José, will contact you soon.',
+          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        };
+        setMessages(prev => [...prev, successMessage]);
+        setShowLeadForm(false);
+        setLeadData({ name: '', email: '', phone: '', country: '', interest: '' });
+      } else {
+        throw new Error('Failed to submit lead');
+      }
+    } catch (error) {
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: isPt
+          ? 'Desculpe, ocorreu um erro ao registar os seus dados. Tente novamente mais tarde.'
+          : 'Sorry, there was an error registering your details. Please try again later.',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsSubmittingLead(false);
     }
   };
 
@@ -548,6 +621,104 @@ export function AICopilot() {
               </button>
             </form>
           </div>
+
+          {/* Lead Capture Form */}
+          {showLeadForm && (
+            <div style={{ padding: '14px 18px', background: '#f0f9ff', borderTop: '1px solid #bfdbfe' }}>
+              <div style={{ fontSize: '12px', fontWeight: 600, color: '#1e40af', marginBottom: '10px' }}>
+                {isPt ? 'Informações de Contacto' : 'Contact Information'}
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <input
+                  type="text"
+                  placeholder={isPt ? 'Nome *' : 'Name *'}
+                  value={leadData.name}
+                  onChange={(e) => setLeadData({ ...leadData, name: e.target.value })}
+                  style={{
+                    padding: '8px 12px',
+                    borderRadius: '12px',
+                    border: '1px solid #e2e8f0',
+                    fontSize: '12px',
+                    outline: 'none',
+                  }}
+                />
+                <input
+                  type="tel"
+                  placeholder={isPt ? 'Telefone *' : 'Phone *'}
+                  value={leadData.phone}
+                  onChange={(e) => setLeadData({ ...leadData, phone: e.target.value })}
+                  style={{
+                    padding: '8px 12px',
+                    borderRadius: '12px',
+                    border: '1px solid #e2e8f0',
+                    fontSize: '12px',
+                    outline: 'none',
+                  }}
+                />
+                <input
+                  type="email"
+                  placeholder={isPt ? 'Email' : 'Email'}
+                  value={leadData.email}
+                  onChange={(e) => setLeadData({ ...leadData, email: e.target.value })}
+                  style={{
+                    padding: '8px 12px',
+                    borderRadius: '12px',
+                    border: '1px solid #e2e8f0',
+                    fontSize: '12px',
+                    outline: 'none',
+                  }}
+                />
+                <input
+                  type="text"
+                  placeholder={isPt ? 'País' : 'Country'}
+                  value={leadData.country}
+                  onChange={(e) => setLeadData({ ...leadData, country: e.target.value })}
+                  style={{
+                    padding: '8px 12px',
+                    borderRadius: '12px',
+                    border: '1px solid #e2e8f0',
+                    fontSize: '12px',
+                    outline: 'none',
+                  }}
+                />
+                <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
+                  <button
+                    onClick={handleLeadSubmit}
+                    disabled={isSubmittingLead}
+                    style={{
+                      flex: 1,
+                      padding: '8px 16px',
+                      borderRadius: '12px',
+                      border: 'none',
+                      background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                      color: 'white',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      cursor: isSubmittingLead ? 'not-allowed' : 'pointer',
+                      opacity: isSubmittingLead ? 0.7 : 1,
+                    }}
+                  >
+                    {isSubmittingLead ? (isPt ? 'A enviar...' : 'Sending...') : (isPt ? 'Enviar' : 'Send')}
+                  </button>
+                  <button
+                    onClick={() => setShowLeadForm(false)}
+                    style={{
+                      padding: '8px 16px',
+                      borderRadius: '12px',
+                      border: '1px solid #e2e8f0',
+                      background: 'white',
+                      color: '#64748b',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {isPt ? 'Cancelar' : 'Cancel'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Powered by Wehosthere footer */}
           <div
