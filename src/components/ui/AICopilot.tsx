@@ -11,17 +11,17 @@ interface Message {
 }
 
 const QUICK_PROMPTS_PT = [
+  'Como ganhar renda extra?',
   'Que produtos estão disponíveis?',
-  'Qual o melhor pack para energia?',
-  'Como funciona a mentoria?',
-  'Como posso encomendar?',
+  'Como funciona o plano de compensação?',
+  'Quanto custa para começar?',
 ];
 
 const QUICK_PROMPTS_EN = [
+  'How to earn extra income?',
   'What products are available?',
-  'Which pack is best for energy?',
-  'How does the mentorship work?',
-  'How can I order?',
+  'How does the compensation plan work?',
+  'How much to start?',
 ];
 
 export function AICopilot() {

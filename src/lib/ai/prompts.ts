@@ -11,6 +11,10 @@ Conhecimentos Chave:
 - Mentores da Plataforma: José Sarmento Machado e Ofélia Alfredo Machado, casal dedicado à consultoria de bem-estar e mentoria de novos parceiros empreendedores.
 - Nutrição Celular: A saúde começa nas células. Se a membrana celular for rígida (por falta de lípidos e esteróis essenciais presentes nos grãos integrais, como no Tre-en-en), os nutrientes não entram e as toxinas não saem.
 - Oportunidade NeoLife: Empresa global com mais de 60 anos, presente em mais de 50 países em todo o mundo. Empreendedorismo de baixo risco com mentoria direta de José e Ofélia Machado, formação contínua e produtos de consumo diário.
+- Como Ganhar Renda Extra: Inicie com um kit de início acessível, recomende produtos de consumo diário a familiares e amigos, construa uma equipa de parceiros, e beneficie de planos de compensação que pagam comissões em múltiplos níveis. Comece em tempo parcial, sem necessidade de stock prévio, com suporte da mentoria para cada passo.
+- Plano de Compensação: Sistema transparente com comissões por vendas diretas (15-25%), bónus de equipa (quando os parceiros vendem), bónus de liderança (ao promover líderes), viagens internacionais e ajudas de custo para líderes activos. Os produtos são de consumo recorrente, criando rendimento passivo com o tempo.
+- Formas de Ganhar: 1) Comissões de vendas pessoais, 2) Bónus de equipa, 3) Bónus de liderança, 4) Viagens e reconhecimentos, 5) Ajudas de custo para líderes activos.
+- Investimento Inicial: Kit de início acessível que inclui produtos para uso pessoal e partilha. Sem stock obrigatório. Pode começar com investimento mínimo e reinvestir os lucros gradualmente.
 - Presença Global NeoLife: África (Moçambique, África do Sul, Angola, Zimbabwe, Botswana, Lesoto, Namíbia, Eswatini, Quénia, Tanzânia, Uganda, Nigéria, Gana, Benin, Camarões, Costa do Marfim, Togo), Américas (EUA, Canadá, América Latina), Ásia & Pacífico (Filipinas, Singapura, Japão, Austrália, Nova Zelândia), Europa (Reino Unido, Itália, Alemanha, França, Espanha, Polónia, Suécia, Noruega, Finlândia, Dinamarca, Islândia, Irlanda, Estónia, Letónia, Lituânia, Croácia, Eslovénia, Bósnia-Herzegovina, Hungria, Roménia, Áustria, Suíça, Países Baixos, Chipre, Malta).
 - Mercados com apoio ativo e mentoria direta da equipa: Moçambique (+258 82 305 6900), África do Sul, Angola e Zimbabwe.
 
@@ -60,6 +64,34 @@ export const FALLBACK_FAQS: FallbackFAQ[] = [
   {
     keywords: ['negocio', 'negócio', 'oportunidade', 'renda', 'ganhar dinheiro', 'revender', 'distribuidor', 'mentoria'],
     answer: 'A Oportunidade NeoLife permite-lhe construir um negócio independente de bem-estar com o apoio direto da mentoria de José Sarmento Machado e Ofélia Alfredo Machado. Terá acesso a formação passo a passo, plataforma digital própria, produtos patenteados de alta procura e um plano de compensação transparente. Pode iniciar em regime de tempo parcial. Saiba mais na nossa página de Oportunidade ou preencha o formulário para falarmos diretamente.'
+  },
+  {
+    keywords: ['como ganhar dinheiro', 'renda extra', 'ganhar renda', 'rendimento', 'lucro', 'comissao', 'comissão'],
+    answer: 'Para ganhar renda extra com a NeoLife, comece com um kit de início acessível que inclui produtos para uso pessoal e partilha. Ganhe comissões de 15 a 25% em vendas diretas. Construa uma equipa de parceiros e receba bónus de equipa quando eles venderem. Ao promover líderes, ganha bónus de liderança, ajudas de custo e viagens internacionais. Os produtos são de consumo recorrente, criando rendimento passivo com o tempo. Pode começar em tempo parcial sem stock obrigatório.'
+  },
+  {
+    keywords: ['plano de compensacao', 'plano de compensação', 'comissoes', 'comissões', 'bonus', 'bónus', 'quanto ganho'],
+    answer: 'O plano de compensação NeoLife é transparente e pagas em múltiplos níveis. Ganha 15 a 25% em vendas pessoais. Quando constrói uma equipa, recebe bónus de equipa pelas vendas dos seus parceiros. Ao promover líderes, ganha bónus de liderança adicionais. Líderes activos recebem ajudas de custo e viagens internacionais gratuitas. Os produtos são de consumo mensal, criando rendimento recorrente que cresce com o tempo.'
+  },
+  {
+    keywords: ['investimento', 'quanto custa', 'custo inicial', 'kit inicio', 'kit de início', 'dinheiro para começar'],
+    answer: 'O investimento inicial é acessível através de um kit de início que inclui produtos para uso pessoal e partilha. Não é obrigatório manter stock. Pode começar com um investimento mínimo e reinvestir os lucros gradualmente. A mentoria de José e Ofélia Machado ensina a começar com pouco e crescer de forma sustentável. Preencha o formulário para receber informações detalhadas sobre os kits disponíveis.'
+  },
+  {
+    keywords: ['tempo parcial', 'tempo integral', 'horario', 'horário', 'trabalhar', 'dedicar tempo'],
+    answer: 'Pode começar o negócio NeoLife em tempo parcial, dedicando apenas algumas horas por semana. Muitos empreendedores começam enquanto trabalham noutro emprego. A mentoria de José e Ofélia Machado ensina estratégias para ser eficiente e maximizar resultados com pouco tempo. Conforme o negócio cresce, pode fazer a transição para tempo integral se desejar. A flexibilidade é uma das grandes vantagens deste modelo.'
+  },
+  {
+    keywords: ['vender', 'como vender', 'estrategia', 'estratégia', 'clientes', 'encontrar clientes'],
+    answer: 'Para vender produtos NeoLife, comece usando os produtos pessoalmente e partilhando a sua experiência com familiares e amigos. Os produtos de consumo diário como o Pack de Pequeno Almoço e Tre-en-en são fáceis de recomendar. Use os materiais de formação da mentoria para aprender a abordar pessoas de forma natural. Organize pequenas apresentações, compartilhe testemunhos e use as redes sociais. A mentoria guia cada passo.'
+  },
+  {
+    keywords: ['equipa', 'construir equipa', 'recrutar', 'parceiros', 'liderar'],
+    answer: 'Para construir uma equipa bem-sucedida, comece identificando pessoas interessadas em saúde ou em renda extra. Apresente a oportunidade de forma honesta, sem pressão. Ofereça formação e apoio constante através da mentoria de José e Ofélia Machado. O sucesso da sua equipa é o seu sucesso. Quando os seus parceiros vendem, você ganha bónus de equipa. Foque em ajudar os outros a terem sucesso e o seu rendimento crescerá naturalmente.'
+  },
+  {
+    keywords: ['primeiros passos', 'começar', 'como iniciar', 'primeiro passo', 'iniciar negocio'],
+    answer: 'Os primeiros passos para começar são: 1) Preencha o formulário no site para contacto com a mentoria, 2) Escolha o kit de início adequado ao seu orçamento, 3) Comece a usar os produtos pessoalmente, 4) Partilhe a sua experiência com pessoas próximas, 5) Participe das formações oferecidas por José e Ofélia Machado, 6) Defina objectivos realistas e trabalhe consistentemente. A mentoria está disponível em cada etapa para garantir o seu sucesso.'
   },
   {
     keywords: ['pais', 'países', 'paises', 'mocambique', 'moçambique', 'angola', 'africa do sul', 'zimbabwe', 'portugal', 'onde opera', 'global', 'mundo', 'continente', 'europa', 'america', 'asia'],
