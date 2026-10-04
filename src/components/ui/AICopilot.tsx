@@ -269,20 +269,32 @@ export function AICopilot() {
 
   // Render text with clickable links
   const renderWithLinks = (text: string) => {
-    // Convert markdown links to clickable HTML links
+    // First, convert markdown links to clickable HTML links
     const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+    let processed = text.replace(linkRegex, (match, linkText, url) => {
+      return `__LINK_START__${url}__LINK_MID__${linkText}__LINK_END__`;
+    });
+
+    // Then, convert standalone URLs to clickable links
+    const urlRegex = /(https?:\/\/[^\s\n]+)/g;
+    processed = processed.replace(urlRegex, (match, url) => {
+      return `__LINK_START__${url}__LINK_MID__${url}__LINK_END__`;
+    });
+
+    // Now split and render
     const parts = [];
     let lastIndex = 0;
+    const linkStartRegex = /__LINK_START__(.+?)__LINK_MID__(.+?)__LINK_END__/g;
     let match;
 
-    while ((match = linkRegex.exec(text)) !== null) {
+    while ((match = linkStartRegex.exec(processed)) !== null) {
       // Add text before the link
-      parts.push(text.slice(lastIndex, match.index));
+      parts.push(processed.slice(lastIndex, match.index));
       // Add the link
       parts.push(
         <a
           key={match.index}
-          href={match[2]}
+          href={match[1]}
           target="_blank"
           rel="noopener noreferrer"
           style={{
@@ -291,16 +303,16 @@ export function AICopilot() {
             fontWeight: 500,
           }}
         >
-          {match[1]}
+          {match[2]}
         </a>
       );
-      lastIndex = match.index + match[0].length;
+      lastIndex = linkStartRegex.lastIndex;
     }
 
     // Add remaining text
-    parts.push(text.slice(lastIndex));
+    parts.push(processed.slice(lastIndex));
 
-    return parts;
+    return <>{parts}</>;
   };
 
   useEffect(() => {
