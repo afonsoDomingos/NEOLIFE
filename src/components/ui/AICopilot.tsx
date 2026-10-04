@@ -295,7 +295,7 @@ export function AICopilot() {
             width: '100%',
             height: '100%',
             borderRadius: '50px',
-            border: '2px solid #3b82f6',
+            border: '2px solid #10b981',
             animation: 'pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
             opacity: 0.5,
           }}
@@ -329,7 +329,7 @@ export function AICopilot() {
             alignItems: 'center',
             gap: '8px',
             boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-            color: '#1e40af',
+            color: '#10b981',
             fontSize: '11px',
             fontWeight: 600,
             transition: 'all 0.3s',
@@ -448,7 +448,7 @@ export function AICopilot() {
       {/* Header */}
       <div
         style={{
-          background: 'linear-gradient(135deg, #1e40af, #3b82f6)',
+          background: 'linear-gradient(135deg, #059669, #10b981)',
           borderRadius: '20px 20px 0 0',
           padding: '14px 18px',
           display: 'flex',
@@ -607,9 +607,9 @@ export function AICopilot() {
                     fontSize: '13px',
                     lineHeight: 1.6,
                     wordBreak: 'break-word',
-                    background: m.role === 'user' ? 'linear-gradient(135deg, #3b82f6, #2563eb)' : 'white',
+                    background: m.role === 'user' ? 'linear-gradient(135deg, #10b981, #059669)' : 'white',
                     color: m.role === 'user' ? 'white' : '#1e293b',
-                    boxShadow: m.role === 'user' ? '0 2px 8px rgba(59, 130, 246, 0.25)' : '0 1px 3px rgba(0,0,0,0.08)',
+                    boxShadow: m.role === 'user' ? '0 2px 8px rgba(16, 185, 129, 0.25)' : '0 1px 3px rgba(0,0,0,0.08)',
                     whiteSpace: 'pre-wrap',
                   }}
                 >
@@ -632,7 +632,7 @@ export function AICopilot() {
                       style={{
                         width: '6px',
                         height: '6px',
-                        background: '#3b82f6',
+                        background: '#10b981',
                         borderRadius: '50%',
                         animation: 'bounce 1.4s infinite ease-in-out',
                       }}
@@ -641,7 +641,7 @@ export function AICopilot() {
                       style={{
                         width: '6px',
                         height: '6px',
-                        background: '#3b82f6',
+                        background: '#10b981',
                         borderRadius: '50%',
                         animation: 'bounce 1.4s infinite ease-in-out 0.2s',
                       }}
@@ -650,7 +650,7 @@ export function AICopilot() {
                       style={{
                         width: '6px',
                         height: '6px',
-                        background: '#3b82f6',
+                        background: '#10b981',
                         borderRadius: '50%',
                         animation: 'bounce 1.4s infinite ease-in-out 0.4s',
                       }}
@@ -695,8 +695,8 @@ export function AICopilot() {
                     }}
                     onMouseEnter={(e) => {
                       (e.currentTarget as HTMLElement).style.background = '#eff6ff';
-                      (e.currentTarget as HTMLElement).style.borderColor = '#3b82f6';
-                      (e.currentTarget as HTMLElement).style.color = '#1e40af';
+                      (e.currentTarget as HTMLElement).style.borderColor = '#10b981';
+                      (e.currentTarget as HTMLElement).style.color = '#059669';
                     }}
                     onMouseLeave={(e) => {
                       (e.currentTarget as HTMLElement).style.background = '#f8fafc';
@@ -728,7 +728,7 @@ export function AICopilot() {
                 type="button"
                 onClick={() => setShowQuickPrompts(!showQuickPrompts)}
                 style={{
-                  background: showQuickPrompts ? '#3b82f6' : '#f1f5f9',
+                  background: showQuickPrompts ? '#10b981' : '#f1f5f9',
                   border: 'none',
                   color: showQuickPrompts ? 'white' : '#64748b',
                   width: '36px',
@@ -764,7 +764,7 @@ export function AICopilot() {
                   background: '#f8fafc',
                 }}
                 onFocus={(e) => {
-                  (e.currentTarget as HTMLElement).style.borderColor = '#3b82f6';
+                  (e.currentTarget as HTMLElement).style.borderColor = '#10b981';
                   (e.currentTarget as HTMLElement).style.background = 'white';
                 }}
                 onBlur={(e) => {
@@ -812,7 +812,7 @@ export function AICopilot() {
                   padding: '10px 16px',
                   borderRadius: '18px',
                   border: 'none',
-                  background: input.trim() ? 'linear-gradient(135deg, #3b82f6, #2563eb)' : '#cbd5e1',
+                  background: input.trim() ? 'linear-gradient(135deg, #10b981, #059669)' : '#cbd5e1',
                   color: 'white',
                   fontSize: '13px',
                   fontWeight: 600,
@@ -828,8 +828,8 @@ export function AICopilot() {
 
           {/* Lead Capture Form */}
           {showLeadForm && (
-            <div style={{ padding: '14px 18px', background: '#f0f9ff', borderTop: '1px solid #bfdbfe' }}>
-              <div style={{ fontSize: '12px', fontWeight: 600, color: '#1e40af', marginBottom: '10px' }}>
+            <div style={{ padding: '14px 18px', background: '#f0fdf4', borderTop: '1px solid #bbf7d0' }}>
+              <div style={{ fontSize: '12px', fontWeight: 600, color: '#059669', marginBottom: '10px' }}>
                 {isPt ? 'Informações de Contacto' : 'Contact Information'}
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -894,7 +894,7 @@ export function AICopilot() {
                       padding: '8px 16px',
                       borderRadius: '12px',
                       border: 'none',
-                      background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
+                      background: 'linear-gradient(135deg, #10b981, #059669)',
                       color: 'white',
                       fontSize: '12px',
                       fontWeight: 600,
@@ -956,7 +956,7 @@ export function AICopilot() {
                 fontWeight: 500,
                 transition: 'color 0.2s',
               }}
-              onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.color = '#3b82f6'}
+              onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.color = '#10b981'}
               onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.color = '#64748b'}
             >
               Powered by Wehosthere
