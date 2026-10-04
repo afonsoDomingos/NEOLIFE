@@ -147,7 +147,7 @@ export function AICopilot() {
     if (!url) return '';
 
     // Check if it's already an embed URL
-    if (url.includes('youtube.com/embed/') || url.includes('youtu.be/')) {
+    if (url.includes('youtube.com/embed/')) {
       return url;
     }
 
@@ -166,12 +166,18 @@ export function AICopilot() {
       videoId = shortMatch[1];
     }
 
-    // If we found a video ID, return embed URL
-    if (videoId) {
+    // Format: youtube.com/embed/VIDEO_ID (already embedded but in different format)
+    const embedMatch = url.match(/youtube\.com\/embed\/([^?&]+)/);
+    if (embedMatch) {
+      videoId = embedMatch[1];
+    }
+
+    // If we found a valid video ID (11 characters for YouTube), return embed URL
+    if (videoId && videoId.length >= 11) {
       return `https://www.youtube.com/embed/${videoId}`;
     }
 
-    // If not a YouTube URL, return as is
+    // If not a valid YouTube URL, return as is (might be other video platform)
     return url;
   };
 
@@ -1307,19 +1313,61 @@ export function AICopilot() {
                     background: '#000',
                   }}
                 >
-                  <iframe
-                    src={getEmbedUrl(currentVideo.videoUrl)}
-                    style={{
-                      position: 'absolute',
-                      top: 0,
-                      left: 0,
-                      width: '100%',
-                      height: '100%',
-                      border: 'none',
-                    }}
-                    allowFullScreen
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  />
+                  {getEmbedUrl(currentVideo.videoUrl).includes('youtube.com/embed/') ? (
+                    <iframe
+                      src={getEmbedUrl(currentVideo.videoUrl)}
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        border: 'none',
+                      }}
+                      allowFullScreen
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        background: '#000',
+                        color: 'white',
+                        padding: '20px',
+                        textAlign: 'center',
+                      }}
+                    >
+                      <div style={{ fontSize: '40px', marginBottom: '16px' }}>🎬</div>
+                      <div style={{ fontSize: '14px', marginBottom: '12px' }}>
+                        {isPt ? 'Vídeo não disponível no player embutido' : 'Video not available in embedded player'}
+                      </div>
+                      <a
+                        href={currentVideo.videoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          padding: '10px 20px',
+                          borderRadius: '12px',
+                          background: 'linear-gradient(135deg, #10b981, #059669)',
+                          color: 'white',
+                          fontSize: '13px',
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                          textDecoration: 'none',
+                        }}
+                      >
+                        {isPt ? 'Abrir em nova aba' : 'Open in new tab'}
+                      </a>
+                    </div>
+                  )}
                 </div>
 
                 {/* Footer */}
