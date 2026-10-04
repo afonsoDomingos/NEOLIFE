@@ -355,8 +355,8 @@ export function AICopilot() {
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()}
             style={{
-              width: '20px',
-              height: '20px',
+              width: '24px',
+              height: '24px',
               borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
@@ -370,12 +370,13 @@ export function AICopilot() {
             onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = '#f8fafc'}
           >
             <img
-              src="/logo-wehosthere.png"
-              alt="Wehosthere"
+              src="/mascot-wehosthere.png"
+              alt="Wehosthere Mascot"
               style={{
-                width: '14px',
-                height: '14px',
+                width: '20px',
+                height: '20px',
                 objectFit: 'contain',
+                borderRadius: '50%',
               }}
             />
           </a>
@@ -459,7 +460,11 @@ export function AICopilot() {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div
+          <a
+            href="https://www.wehosthere.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
             style={{
               width: '32px',
               height: '32px',
@@ -469,15 +474,25 @@ export function AICopilot() {
               alignItems: 'center',
               justifyContent: 'center',
               backdropFilter: 'blur(10px)',
+              textDecoration: 'none',
+              cursor: 'pointer',
             }}
+            onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.25)'}
+            onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.15)'}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-              <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" />
-              <path d="M12 6v6l4 2" />
-            </svg>
-          </div>
+            <img
+              src="/mascot-wehosthere.png"
+              alt="Wehosthere Mascot"
+              style={{
+                width: '26px',
+                height: '26px',
+                objectFit: 'contain',
+                borderRadius: '50%',
+              }}
+            />
+          </a>
           <div>
-            <div style={{ fontSize: '15px', fontWeight: 700, letterSpacing: '-0.3px', color: '#10b981' }}>
+            <div style={{ fontSize: '15px', fontWeight: 700, letterSpacing: '-0.3px', color: 'white' }}>
               NeoLife {typingText}
               <span style={{ opacity: typingIndex < fullTitle.length ? 1 : 0, animation: typingIndex < fullTitle.length ? 'blink 1s infinite' : 'none' }}>|</span>
             </div>
