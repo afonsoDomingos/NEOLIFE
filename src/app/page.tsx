@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { DynamicBanner } from '@/components/ui/DynamicBanner';
 import { TypewriterText } from '@/components/ui/TypewriterText';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
+import EventCard from '@/components/EventCard';
 
 interface PillarCardData {
   pillarId: string;
@@ -223,6 +224,8 @@ export default function Home() {
           </p>
         </div>
       </section>
+
+      <EventCard />
     </div>
   );
 }

@@ -447,6 +447,22 @@ export default function AdminDashboard() {
               </Card>
             </Link>
 
+            <Link href="/admin/events">
+              <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
+                <CardContent className="p-5 flex items-start gap-3">
+                  <div className="p-2.5 bg-indigo-50 text-indigo-700 rounded-lg group-hover:scale-105 transition-transform flex items-center justify-center">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Gerir Eventos</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">Criar e editar eventos online</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+
             <Link href="/admin/pillar-cards">
               <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
                 <CardContent className="p-5 flex items-start gap-3">
