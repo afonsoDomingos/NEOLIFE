@@ -40,9 +40,31 @@ export function AICopilot() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [showQuickPrompts, setShowQuickPrompts] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [typingText, setTypingText] = useState('');
+  const [typingIndex, setTypingIndex] = useState(0);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Typing effect for title
+  const fullTitle = 'AI Copilot';
+  useEffect(() => {
+    if (typingIndex < fullTitle.length) {
+      const timeout = setTimeout(() => {
+        setTypingText(fullTitle.slice(0, typingIndex + 1));
+        setTypingIndex(typingIndex + 1);
+      }, 100);
+      return () => clearTimeout(timeout);
+    }
+  }, [typingIndex]);
+
+  // Reset typing when copilot opens
+  useEffect(() => {
+    if (isOpen) {
+      setTypingText('');
+      setTypingIndex(0);
+    }
+  }, [isOpen]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -293,6 +315,10 @@ export function AICopilot() {
               opacity: 0;
             }
           }
+          @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+          }
         `}</style>
         <div
           style={{
@@ -356,8 +382,9 @@ export function AICopilot() {
 
           {/* Text */}
           <div>
-            <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '-0.2px' }}>
-              AI Copilot
+            <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '-0.2px', color: '#10b981' }}>
+              {typingText}
+              <span style={{ opacity: typingIndex < fullTitle.length ? 1 : 0, animation: typingIndex < fullTitle.length ? 'blink 1s infinite' : 'none' }}>|</span>
             </div>
           </div>
 
@@ -450,8 +477,9 @@ export function AICopilot() {
             </svg>
           </div>
           <div>
-            <div style={{ fontSize: '15px', fontWeight: 700, letterSpacing: '-0.3px' }}>
-              NeoLife AI Copilot
+            <div style={{ fontSize: '15px', fontWeight: 700, letterSpacing: '-0.3px', color: '#10b981' }}>
+              NeoLife {typingText}
+              <span style={{ opacity: typingIndex < fullTitle.length ? 1 : 0, animation: typingIndex < fullTitle.length ? 'blink 1s infinite' : 'none' }}>|</span>
             </div>
             <div style={{ fontSize: '10px', opacity: 0.85, fontWeight: 400 }}>
               Ofélia & José Machado
