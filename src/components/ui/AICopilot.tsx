@@ -69,6 +69,17 @@ export function AICopilot() {
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [currentVideo, setCurrentVideo] = useState<{ title: string; videoUrl: string; thumbnailUrl?: string } | null>(null);
   const [suggestedVideos, setSuggestedVideos] = useState<{ title: string; videoUrl: string; thumbnailUrl?: string }[]>([]);
+  const [showVideos, setShowVideos] = useState(true);
+
+  // Auto-hide videos after 5 seconds
+  useEffect(() => {
+    if (suggestedVideos.length > 0 && showVideos) {
+      const timer = setTimeout(() => {
+        setShowVideos(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [suggestedVideos, showVideos]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -791,74 +802,118 @@ export function AICopilot() {
             {/* Suggested Videos */}
             {suggestedVideos.length > 0 && (
               <div style={{ padding: '14px 18px', background: '#f0fdf4', borderTop: '1px solid #bbf7d0' }}>
-                <div style={{ fontSize: '11px', fontWeight: 600, color: '#059669', marginBottom: '10px', letterSpacing: '0.5px' }}>
-                  {isPt ? 'VÍDEOS RECOMENDADOS:' : 'RECOMMENDED VIDEOS:'}
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  {suggestedVideos.map((video, idx) => (
-                    <div
-                      key={idx}
-                      onClick={() => {
-                        setCurrentVideo(video);
-                        setShowVideoModal(true);
-                      }}
-                      style={{
-                        display: 'flex',
-                        gap: '10px',
-                        padding: '8px',
-                        borderRadius: '12px',
-                        background: 'white',
-                        border: '1px solid #bbf7d0',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s',
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.borderColor = '#10b981';
-                        (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(16, 185, 129, 0.15)';
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.borderColor = '#bbf7d0';
-                        (e.currentTarget as HTMLElement).style.boxShadow = 'none';
-                      }}
-                    >
-                      {video.thumbnailUrl ? (
-                        <img
-                          src={video.thumbnailUrl}
-                          alt={video.title}
-                          style={{
-                            width: '60px',
-                            height: '40px',
-                            objectFit: 'cover',
-                            borderRadius: '8px',
-                          }}
-                        />
-                      ) : (
+                {showVideos ? (
+                  <>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                      <div style={{ fontSize: '11px', fontWeight: 600, color: '#059669', letterSpacing: '0.5px' }}>
+                        {isPt ? 'VÍDEOS RECOMENDADOS:' : 'RECOMMENDED VIDEOS:'}
+                      </div>
+                      <button
+                        onClick={() => setShowVideos(false)}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          color: '#64748b',
+                          fontSize: '18px',
+                          cursor: 'pointer',
+                          padding: '0 5px',
+                        }}
+                        title={isPt ? 'Fechar' : 'Close'}
+                      >
+                        ×
+                      </button>
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      {suggestedVideos.map((video, idx) => (
                         <div
+                          key={idx}
+                          onClick={() => {
+                            setCurrentVideo(video);
+                            setShowVideoModal(true);
+                          }}
                           style={{
-                            width: '60px',
-                            height: '40px',
-                            borderRadius: '8px',
-                            background: '#e2e8f0',
                             display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '20px',
+                            gap: '10px',
+                            padding: '8px',
+                            borderRadius: '12px',
+                            background: 'white',
+                            border: '1px solid #bbf7d0',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                          }}
+                          onMouseEnter={(e) => {
+                            (e.currentTarget as HTMLElement).style.borderColor = '#10b981';
+                            (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(16, 185, 129, 0.15)';
+                          }}
+                          onMouseLeave={(e) => {
+                            (e.currentTarget as HTMLElement).style.borderColor = '#bbf7d0';
+                            (e.currentTarget as HTMLElement).style.boxShadow = 'none';
                           }}
                         >
-                          ▶
+                          {video.thumbnailUrl ? (
+                            <img
+                              src={video.thumbnailUrl}
+                              alt={video.title}
+                              style={{
+                                width: '60px',
+                                height: '40px',
+                                objectFit: 'cover',
+                                borderRadius: '8px',
+                              }}
+                            />
+                          ) : (
+                            <div
+                              style={{
+                                width: '60px',
+                                height: '40px',
+                                borderRadius: '8px',
+                                background: '#e2e8f0',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                fontSize: '20px',
+                              }}
+                            >
+                              ▶
+                            </div>
+                          )}
+                          <div style={{ flex: 1 }}>
+                            <div style={{ fontSize: '12px', fontWeight: 600, color: '#1e293b', marginBottom: '2px' }}>
+                              {video.title}
+                            </div>
+                            <div style={{ fontSize: '10px', color: '#64748b' }}>
+                              {isPt ? 'Clique para assistir' : 'Click to watch'}
+                            </div>
+                          </div>
                         </div>
-                      )}
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: '12px', fontWeight: 600, color: '#1e293b', marginBottom: '2px' }}>
-                          {video.title}
-                        </div>
-                        <div style={{ fontSize: '10px', color: '#64748b' }}>
-                          {isPt ? 'Clique para assistir' : 'Click to watch'}
-                        </div>
-                      </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => setShowVideos(true)}
+                    style={{
+                      width: '100%',
+                      padding: '10px',
+                      borderRadius: '12px',
+                      border: '1px dashed #10b981',
+                      background: 'white',
+                      color: '#10b981',
+                      fontSize: '12px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '8px',
+                    }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                      <polygon points="5 3 19 12 5 21 5 3 19 12 5 21" />
+                    </svg>
+                    {isPt ? 'Ver vídeos recomendados' : 'View recommended videos'}
+                  </button>
+                )}
               </div>
             )}
           </div>
