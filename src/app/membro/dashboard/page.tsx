@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 interface Member {
   id: string;
@@ -100,41 +101,53 @@ function QuickLink({ icon, label, description, href, color }: {
   );
 }
 
-const statusConfig: Record<string, { label: string; step: number; color: string; desc: string }> = {
+const statusConfig: Record<string, { label: string; labelEn: string; step: number; color: string; desc: string; descEn: string }> = {
   novo: {
     label: 'Candidatura Recebida',
+    labelEn: 'Application Received',
     step: 1,
     color: '#3b82f6',
     desc: 'O teu pedido de contacto está registado e a ser avaliado pela liderança.',
+    descEn: 'Your contact request is registered and being evaluated by leadership.',
   },
   contactado: {
     label: 'Em Primeiro Contacto',
+    labelEn: 'First Contact',
     step: 2,
     color: '#eab308',
     desc: 'A nossa equipa já iniciou a apresentação dos primeiros passos.',
+    descEn: 'Our team has already started presenting the first steps.',
   },
   acompanhamento: {
     label: 'Em Acompanhamento Ativo',
+    labelEn: 'Active Follow-up',
     step: 3,
     color: '#a855f7',
     desc: 'Esclarecimento de dúvidas e alinhamento do teu plano de arranque.',
+    descEn: 'Clarifying doubts and aligning your startup plan.',
   },
   interessado: {
     label: 'Perfil Validado',
+    labelEn: 'Profile Validated',
     step: 4,
     color: '#06b6d4',
     desc: 'Estás pronto para avançar para a fase de parceiro oficial.',
+    descEn: 'You are ready to advance to the official partner phase.',
   },
   convertido: {
     label: 'Parceiro Oficial Ativo',
+    labelEn: 'Active Official Partner',
     step: 5,
     color: '#10b981',
     desc: 'Parabéns! Fazes parte da família de distribuidores e líderes NeoLife.',
+    descEn: 'Congratulations! You are part of the NeoLife distributor and leader family.',
   },
 };
 
 export default function MembroDashboard() {
   const router = useRouter();
+  const { language } = useLanguage();
+  const isPt = language === 'pt';
   const [member, setMember] = useState<Member | null>(null);
   const [loading, setLoading] = useState(true);
   const [copied, setCopied] = useState(false);
@@ -235,7 +248,7 @@ export default function MembroDashboard() {
             animation: 'spin 0.8s linear infinite',
           }} />
           <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
-          <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>A carregar área de membro...</p>
+          <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>{isPt ? 'A carregar área de membro...' : 'Loading member area...'}</p>
         </div>
       </div>
     );
@@ -244,8 +257,8 @@ export default function MembroDashboard() {
   if (!member) return null;
 
   const navLinks = [
-    { label: 'Dashboard', href: '/membro/dashboard', active: true },
-    { label: 'Perfil', href: '/membro/perfil', active: false },
+    { label: isPt ? 'Dashboard' : 'Dashboard', href: '/membro/dashboard', active: true },
+    { label: isPt ? 'Perfil' : 'Profile', href: '/membro/perfil', active: false },
   ];
 
   const visibleAnnouncements = announcements.filter(a => !dismissedAnnouncements.includes(a._id));
@@ -258,10 +271,12 @@ export default function MembroDashboard() {
   const currentStatusInfo = leadStatus?.status && statusConfig[leadStatus.status]
     ? statusConfig[leadStatus.status]
     : {
-        label: 'Membro Registado',
+        label: isPt ? 'Membro Registado' : 'Registered Member',
+        labelEn: isPt ? 'Membro Registado' : 'Registered Member',
         step: 1,
         color: '#10b981',
-        desc: 'A tua conta de membro está ativa e com acesso aos materiais.',
+        desc: isPt ? 'A tua conta de membro está ativa e com acesso aos materiais.' : 'Your member account is active with access to materials.',
+        descEn: isPt ? 'A tua conta de membro está ativa e com acesso aos materiais.' : 'Your member account is active with access to materials.',
       };
 
   return (
@@ -343,7 +358,7 @@ export default function MembroDashboard() {
               onMouseEnter={e => { e.currentTarget.style.color = '#f9fafb'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; }}
               onMouseLeave={e => { e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}
             >
-              Sair
+              {isPt ? 'Sair' : 'Logout'}
             </button>
           </div>
         </div>
@@ -366,7 +381,7 @@ export default function MembroDashboard() {
                 success: 'linear-gradient(135deg, rgba(6, 78, 59, 0.25), rgba(15, 23, 42, 0.4))',
                 warning: 'linear-gradient(135deg, rgba(120, 53, 15, 0.25), rgba(15, 23, 42, 0.4))',
               };
-              const icons = { info: 'Info', success: 'Sucesso', warning: 'Alerta' };
+              const icons = { info: isPt ? 'Info' : 'Info', success: isPt ? 'Sucesso' : 'Success', warning: isPt ? 'Alerta' : 'Alert' };
               const accentColor = ann.type === 'warning' ? '#f59e0b' : ann.type === 'success' ? '#10b981' : '#3b82f6';
 
               return (
@@ -396,7 +411,7 @@ export default function MembroDashboard() {
                           fontSize: '11px', padding: '2px 8px', borderRadius: '100px',
                           background: `${accentColor}20`, color: accentColor, fontWeight: 600,
                         }}>
-                          Comunicado Oficial
+                          {isPt ? 'Comunicado Oficial' : 'Official Announcement'}
                         </span>
                       </div>
                       <p style={{ color: '#d1d5db', fontSize: '13px', margin: 0, lineHeight: 1.5, whiteSpace: 'pre-line' }}>
@@ -406,7 +421,7 @@ export default function MembroDashboard() {
                   </div>
                   <button
                     onClick={() => dismissAnnouncement(ann._id)}
-                    title="Fechar anúncio"
+                    title={isPt ? 'Fechar anúncio' : 'Close announcement'}
                     style={{
                       background: 'rgba(255,255,255,0.06)',
                       border: 'none',
@@ -436,10 +451,10 @@ export default function MembroDashboard() {
             color: '#f9fafb', fontSize: '28px', fontWeight: 700, margin: '0 0 6px',
             letterSpacing: '-0.5px',
           }}>
-            Olá, {getFirstName(member.name)}
+            {isPt ? 'Olá' : 'Hello'}, {getFirstName(member.name)}
           </h1>
           <p style={{ color: '#6b7280', fontSize: '15px', margin: 0 }}>
-            Membro desde {getMemberSince(member.createdAt)} • Bem-vindo à tua área exclusiva NeoLife
+            {isPt ? 'Membro desde' : 'Member since'} {getMemberSince(member.createdAt)} • {isPt ? 'Bem-vindo à tua área exclusiva NeoLife' : 'Welcome to your exclusive NeoLife area'}
           </p>
         </div>
 
@@ -465,10 +480,10 @@ export default function MembroDashboard() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <div>
                   <h3 style={{ color: '#f3f4f6', fontSize: '16px', fontWeight: 700, margin: '0 0 2px' }}>
-                    O Teu Percurso com a NeoLife
+                    {isPt ? 'O Teu Percurso com a NeoLife' : 'Your Journey with NeoLife'}
                   </h3>
                   <p style={{ color: '#9ca3af', fontSize: '12px', margin: 0 }}>
-                    Estado acompanhado em direto pela liderança da equipa
+                    {isPt ? 'Estado acompanhado em direto pela liderança da equipa' : 'Status tracked live by team leadership'}
                   </p>
                 </div>
               </div>
@@ -478,7 +493,7 @@ export default function MembroDashboard() {
                 background: `${currentStatusInfo.color}20`, color: currentStatusInfo.color,
                 border: `1px solid ${currentStatusInfo.color}40`,
               }}>
-                Etapa: {currentStatusInfo.label}
+                {isPt ? 'Etapa' : 'Step'}: {isPt ? currentStatusInfo.label : currentStatusInfo.labelEn}
               </span>
             </div>
 
@@ -491,11 +506,11 @@ export default function MembroDashboard() {
                 marginBottom: '8px',
               }}>
                 {[
-                  { step: 1, name: 'Análise' },
-                  { step: 2, name: 'Contacto' },
-                  { step: 3, name: 'Acompanhamento' },
-                  { step: 4, name: 'Validado' },
-                  { step: 5, name: 'Parceiro Ativo' },
+                  { step: 1, name: isPt ? 'Análise' : 'Analysis' },
+                  { step: 2, name: isPt ? 'Contacto' : 'Contact' },
+                  { step: 3, name: isPt ? 'Acompanhamento' : 'Follow-up' },
+                  { step: 4, name: isPt ? 'Validado' : 'Validated' },
+                  { step: 5, name: isPt ? 'Parceiro Ativo' : 'Active Partner' },
                 ].map(s => {
                   const isDone = s.step <= currentStatusInfo.step;
                   const isCurrent = s.step === currentStatusInfo.step;
@@ -535,7 +550,7 @@ export default function MembroDashboard() {
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
                   <span style={{ color: '#10b981', fontSize: '12px', fontWeight: 600 }}>
-                    Nota da Liderança para Ti:
+                    {isPt ? 'Nota da Liderança para Ti:' : 'Leadership Note for You:'}
                   </span>
                 </div>
                 <p style={{ color: '#e5e7eb', fontSize: '13px', margin: 0, lineHeight: 1.5, fontStyle: 'italic' }}>
@@ -543,6 +558,19 @@ export default function MembroDashboard() {
                 </p>
               </div>
             )}
+
+            {/* Status description */}
+            <div style={{
+              marginTop: '16px',
+              padding: '12px 14px',
+              background: 'rgba(255,255,255,0.02)',
+              borderRadius: '10px',
+              border: '1px solid rgba(255,255,255,0.05)',
+            }}>
+              <p style={{ color: '#9ca3af', fontSize: '13px', margin: 0, lineHeight: 1.5 }}>
+                {isPt ? currentStatusInfo.desc : currentStatusInfo.descEn}
+              </p>
+            </div>
           </div>
         )}
 
@@ -553,30 +581,30 @@ export default function MembroDashboard() {
         }}>
           <StatCard
             icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>}
-            label="Estado da Conta"
-            value="Ativo"
-            sub="Membro verificado"
+            label={isPt ? 'Estado da Conta' : 'Account Status'}
+            value={isPt ? 'Ativo' : 'Active'}
+            sub={isPt ? 'Membro verificado' : 'Verified member'}
             color="#10b981"
           />
           <StatCard
             icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>}
-            label="Plano Atual"
+            label={isPt ? 'Plano Atual' : 'Current Plan'}
             value={member.plan || 'Base'}
             sub={member.country}
             color="#3b82f6"
           />
           <StatCard
             icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>}
-            label="Materiais Disponíveis"
+            label={isPt ? 'Materiais Disponíveis' : 'Available Materials'}
             value={resources.length.toString()}
-            sub="Recursos publicados"
+            sub={isPt ? 'Recursos publicados' : 'Published resources'}
             color="#8b5cf6"
           />
           <StatCard
             icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>}
-            label="Último Acesso"
-            value="Hoje"
-            sub={member.lastLoginAt ? new Date(member.lastLoginAt).toLocaleTimeString('pt-PT', { hour: '2-digit', minute: '2-digit' }) : '-'}
+            label={isPt ? 'Último Acesso' : 'Last Access'}
+            value={isPt ? 'Hoje' : 'Today'}
+            sub={member.lastLoginAt ? new Date(member.lastLoginAt).toLocaleTimeString(isPt ? 'pt-PT' : 'en-US', { hour: '2-digit', minute: '2-digit' }) : '-'}
             color="#f59e0b"
           />
         </div>
@@ -589,34 +617,34 @@ export default function MembroDashboard() {
             {/* Quick Links */}
             <div>
               <h2 style={{ color: '#e5e7eb', fontSize: '16px', fontWeight: 600, margin: '0 0 16px' }}>
-                Acesso Rápido
+                {isPt ? 'Acesso Rápido' : 'Quick Access'}
               </h2>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '12px' }}>
                 <QuickLink
                   href="/membro/perfil"
-                  label="O Meu Perfil"
-                  description="Gerir dados pessoais e senha"
+                  label={isPt ? 'O Meu Perfil' : 'My Profile'}
+                  description={isPt ? 'Gerir dados pessoais e senha' : 'Manage personal data and password'}
                   color="#10b981"
                   icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>}
                 />
                 <QuickLink
                   href="#materiais"
-                  label="Biblioteca"
-                  description="Ver materiais e documentos"
+                  label={isPt ? 'Biblioteca' : 'Library'}
+                  description={isPt ? 'Ver materiais e documentos' : 'View materials and documents'}
                   color="#3b82f6"
                   icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>}
                 />
                 <QuickLink
                   href="/#temas"
-                  label="Catálogo Geral"
-                  description="Explorar os temas NeoLife"
+                  label={isPt ? 'Catálogo Geral' : 'General Catalog'}
+                  description={isPt ? 'Explorar os temas NeoLife' : 'Explore NeoLife themes'}
                   color="#8b5cf6"
                   icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>}
                 />
                 <QuickLink
                   href="/#videos"
-                  label="Vídeos Oficiais"
-                  description="Apresentações gravadas"
+                  label={isPt ? 'Vídeos Oficiais' : 'Official Videos'}
+                  description={isPt ? 'Apresentações gravadas' : 'Recorded presentations'}
                   color="#f59e0b"
                   icon={<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>}
                 />
@@ -640,20 +668,20 @@ export default function MembroDashboard() {
               }}>
                 <div>
                   <h3 style={{ color: '#f3f4f6', fontSize: '17px', fontWeight: 700, margin: '0 0 4px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    Recursos & Materiais Exclusivos
+                    {isPt ? 'Recursos & Materiais Exclusivos' : 'Exclusive Resources & Materials'}
                   </h3>
                   <p style={{ color: '#6b7280', fontSize: '13px', margin: 0 }}>
-                    Documentos oficiais, guias técnicos e vídeos carregados pela equipa de gestão
+                    {isPt ? 'Documentos oficiais, guias técnicos e vídeos carregados pela equipa de gestão' : 'Official documents, technical guides and videos uploaded by management team'}
                   </p>
                 </div>
 
                 {/* Filter chips */}
                 <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                   {[
-                    { key: 'all', label: 'Todos' },
+                    { key: 'all', label: isPt ? 'Todos' : 'All' },
                     { key: 'pdf', label: 'PDFs' },
-                    { key: 'video', label: 'Vídeos' },
-                    { key: 'guide', label: 'Guias' },
+                    { key: 'video', label: isPt ? 'Vídeos' : 'Videos' },
+                    { key: 'guide', label: isPt ? 'Guias' : 'Guides' },
                     { key: 'link', label: 'Links' },
                   ].map(tab => (
                     <button
@@ -687,16 +715,16 @@ export default function MembroDashboard() {
                 }}>
 
                   <p style={{ color: '#9ca3af', fontSize: '14px', margin: '8px 0 2px' }}>
-                    Nenhum material publicado nesta categoria no momento.
+                    {isPt ? 'Nenhum material publicado nesta categoria no momento.' : 'No material published in this category at the moment.'}
                   </p>
                   <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>
-                    Novos conteúdos estão a ser preparados pela liderança.
+                    {isPt ? 'Novos conteúdos estão a ser preparados pela liderança.' : 'New content is being prepared by leadership.'}
                   </p>
                 </div>
               ) : (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '12px' }}>
                   {filteredResources.map(item => {
-                    const icons = { pdf: 'PDF', video: 'Video', guide: 'Guia', link: 'Link' };
+                    const icons = { pdf: 'PDF', video: 'Video', guide: isPt ? 'Guia' : 'Guide', link: 'Link' };
                     const badgeColors = {
                       pdf: { bg: 'rgba(244,63,94,0.15)', text: '#fb7185' },
                       video: { bg: 'rgba(99,102,241,0.15)', text: '#818cf8' },
@@ -761,7 +789,7 @@ export default function MembroDashboard() {
                           paddingTop: '10px', borderTop: '1px solid rgba(255,255,255,0.05)',
                           color: '#60a5fa', fontSize: '12px', fontWeight: 600,
                         }}>
-                          <span>Aceder Recurso</span>
+                          <span>{isPt ? 'Aceder Recurso' : 'Access Resource'}</span>
                           <span>↗</span>
                         </div>
                       </a>
@@ -798,9 +826,9 @@ export default function MembroDashboard() {
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 {[
-                  { label: 'País', value: member.country },
-                  { label: 'Telefone', value: member.phone },
-                  { label: 'Plano', value: member.plan || 'Base' },
+                  { label: isPt ? 'País' : 'Country', value: member.country },
+                  { label: isPt ? 'Telefone' : 'Phone', value: member.phone },
+                  { label: isPt ? 'Plano' : 'Plan', value: member.plan || 'Base' },
                 ].map(row => (
                   <div key={row.label} style={{
                     display: 'flex', justifyContent: 'space-between',
@@ -820,7 +848,7 @@ export default function MembroDashboard() {
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.background = 'rgba(16,185,129,0.08)'; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
               >
-                Editar Perfil
+                {isPt ? 'Editar Perfil' : 'Edit Profile'}
               </Link>
             </div>
 
@@ -836,11 +864,11 @@ export default function MembroDashboard() {
                   <line x1="12" y1="2" x2="12" y2="15"/>
                 </svg>
                 <h3 style={{ color: '#e5e7eb', fontSize: '14px', fontWeight: 600, margin: 0 }}>
-                  Convidar Amigos
+                  {isPt ? 'Convidar Amigos' : 'Invite Friends'}
                 </h3>
               </div>
               <p style={{ color: '#6b7280', fontSize: '13px', margin: '0 0 16px', lineHeight: 1.6 }}>
-                Partilha o teu link único e convida pessoas a juntarem-se à NeoLife.
+                {isPt ? 'Partilha o teu link único e convida pessoas a juntarem-se à NeoLife.' : 'Share your unique link and invite people to join NeoLife.'}
               </p>
               <div style={{
                 background: 'rgba(0,0,0,0.2)', borderRadius: '8px', padding: '10px 12px',
@@ -865,7 +893,7 @@ export default function MembroDashboard() {
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                       <polyline points="20 6 9 17 4 12"/>
                     </svg>
-                    Copiado!
+                    {isPt ? 'Copiado!' : 'Copied!'}
                   </>
                 ) : (
                   <>
@@ -873,7 +901,7 @@ export default function MembroDashboard() {
                       <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
                       <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
                     </svg>
-                    Copiar Link
+                    {isPt ? 'Copiar Link' : 'Copy Link'}
                   </>
                 )}
               </button>
