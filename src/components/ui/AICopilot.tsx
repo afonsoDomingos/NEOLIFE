@@ -60,7 +60,7 @@ export function AICopilot() {
       .replace(/__(.*?)__/g, '$1') // Remove underline
       .replace(/~~(.*?)~~/g, '$1') // Remove strikethrough
       .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Remove links, keep text
-      .replace(/\n/g, ' '); // Replace newlines with spaces
+      .replace(/\n/g, ' ') // Replace newlines with spaces
       .trim();
   };
 
