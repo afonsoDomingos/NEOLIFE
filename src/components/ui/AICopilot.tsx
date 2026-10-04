@@ -507,6 +507,45 @@ export function AICopilot() {
               </button>
             </form>
           </div>
+
+          {/* Powered by Wehosthere footer */}
+          <div
+            style={{
+              padding: '12px 20px',
+              background: '#f8fafc',
+              borderTop: '1px solid #e5e7eb',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+            }}
+          >
+            <img
+              src="/logo-wehosthere.png"
+              alt="Wehosthere"
+              style={{
+                height: '18px',
+                width: 'auto',
+                objectFit: 'contain',
+              }}
+            />
+            <a
+              href="https://www.wehosthere.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontSize: '11px',
+                color: '#64748b',
+                textDecoration: 'none',
+                fontWeight: 500,
+                transition: 'color 0.2s',
+              }}
+              onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.color = '#3b82f6'}
+              onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.color = '#64748b'}
+            >
+              Powered by Wehosthere
+            </a>
+          </div>
         </div>
       )}
     </div>
