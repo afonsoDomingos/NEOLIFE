@@ -58,6 +58,15 @@ export function AICopilot() {
     }
   }, [typingIndex]);
 
+  // Repeat typing effect every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTypingText('');
+      setTypingIndex(0);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
+
   // Reset typing when copilot opens
   useEffect(() => {
     if (isOpen) {
