@@ -121,8 +121,8 @@ export function AICopilot() {
       .replace(/\*(.*?)\*/g, '$1') // Remove italic
       .replace(/`(.*?)`/g, '$1') // Remove inline code
       .replace(/__(.*?)__/g, '$1') // Remove underline
-      .replace(/~~(.*?)~~/g, '$1') // Remove strikethrough
-      .replace(/\[(.*?)\]\(.*?\)/g, '$1'); // Remove links, keep text
+      .replace(/~~(.*?)~~/g, '$1'); // Remove strikethrough
+    // Keep links for clickable functionality
 
     // Detect and format numbered lists
     // Pattern: "1. item" or "1) item" or "- item" or "* item"
@@ -150,6 +150,42 @@ export function AICopilot() {
     result = result.replace(/([^\n•\d])\n(?![•\d])/g, '$1 ');
 
     return result.trim();
+  };
+
+  // Render text with clickable links
+  const renderWithLinks = (text: string) => {
+    // Convert markdown links to clickable HTML links
+    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+    const parts = [];
+    let lastIndex = 0;
+    let match;
+
+    while ((match = linkRegex.exec(text)) !== null) {
+      // Add text before the link
+      parts.push(text.slice(lastIndex, match.index));
+      // Add the link
+      parts.push(
+        <a
+          key={match.index}
+          href={match[2]}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: '#10b981',
+            textDecoration: 'underline',
+            fontWeight: 500,
+          }}
+        >
+          {match[1]}
+        </a>
+      );
+      lastIndex = match.index + match[0].length;
+    }
+
+    // Add remaining text
+    parts.push(text.slice(lastIndex));
+
+    return parts;
   };
 
   useEffect(() => {
@@ -630,7 +666,7 @@ export function AICopilot() {
                     whiteSpace: 'pre-wrap',
                   }}
                 >
-                  {m.role === 'assistant' ? cleanMarkdown(m.content) : m.content}
+                  {m.role === 'assistant' ? renderWithLinks(cleanMarkdown(m.content)) : m.content}
                 </div>
               </div>
             ))}

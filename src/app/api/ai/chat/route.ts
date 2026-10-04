@@ -83,14 +83,14 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Remove markdown formatting from AI response but preserve lists
+    // Remove markdown formatting from AI response but preserve lists and links
     let cleanResponse = candidateText
       .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
       .replace(/\*(.*?)\*/g, '$1') // Remove italic
       .replace(/`(.*?)`/g, '$1') // Remove inline code
       .replace(/__(.*?)__/g, '$1') // Remove underline
-      .replace(/~~(.*?)~~/g, '$1') // Remove strikethrough
-      .replace(/\[(.*?)\]\(.*?\)/g, '$1'); // Remove links, keep text
+      .replace(/~~(.*?)~~/g, '$1'); // Remove strikethrough
+    // Keep links for clickable functionality
 
     // Format lists
     const lines = cleanResponse.split('\n');
