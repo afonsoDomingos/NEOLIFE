@@ -250,6 +250,37 @@ export function AICopilot() {
           zIndex: 1000,
         }}
       >
+        {/* Pulse ring effect */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '100%',
+            height: '100%',
+            borderRadius: '50px',
+            border: '2px solid #3b82f6',
+            animation: 'pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            opacity: 0.5,
+          }}
+        />
+        <style>{`
+          @keyframes pulse-ring {
+            0% {
+              transform: translate(-50%, -50%) scale(1);
+              opacity: 0.5;
+            }
+            50% {
+              transform: translate(-50%, -50%) scale(1.3);
+              opacity: 0;
+            }
+            100% {
+              transform: translate(-50%, -50%) scale(1);
+              opacity: 0;
+            }
+          }
+        `}</style>
         <div
           style={{
             background: 'white',
@@ -265,6 +296,8 @@ export function AICopilot() {
             transition: 'all 0.3s',
             border: '1px solid #e2e8f0',
             cursor: 'pointer',
+            position: 'relative',
+            zIndex: 1,
           }}
           onClick={() => setIsOpen(true)}
           onMouseEnter={(e) => {
