@@ -211,44 +211,43 @@ export function AICopilot() {
       >
         <div
           style={{
-            background: 'linear-gradient(135deg, #1e40af, #3b82f6)',
+            background: 'white',
             borderRadius: '50px',
-            padding: '10px 16px',
+            padding: '6px 12px',
             display: 'flex',
             alignItems: 'center',
-            gap: '10px',
-            boxShadow: '0 6px 24px rgba(59, 130, 246, 0.3)',
-            color: 'white',
-            fontSize: '13px',
+            gap: '8px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+            color: '#1e40af',
+            fontSize: '11px',
             fontWeight: 600,
             transition: 'all 0.3s',
-            border: '1px solid rgba(255,255,255,0.1)',
+            border: '1px solid #e2e8f0',
             cursor: 'pointer',
           }}
           onClick={() => setIsOpen(true)}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'translateY(-2px)';
-            e.currentTarget.style.boxShadow = '0 10px 32px rgba(59, 130, 246, 0.4)';
+            e.currentTarget.style.boxShadow = '0 6px 16px rgba(0,0,0,0.2)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = '0 6px 24px rgba(59, 130, 246, 0.3)';
+            e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
           }}
         >
           {/* AI Icon */}
           <div
             style={{
-              width: '24px',
-              height: '24px',
-              background: 'rgba(255,255,255,0.15)',
+              width: '20px',
+              height: '20px',
+              background: '#3b82f6',
               borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              backdropFilter: 'blur(10px)',
             }}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2}>
               <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" />
               <path d="M12 6v6l4 2" />
             </svg>
@@ -256,22 +255,19 @@ export function AICopilot() {
 
           {/* Text */}
           <div>
-            <div style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '-0.2px' }}>
+            <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '-0.2px' }}>
               AI Copilot
-            </div>
-            <div style={{ fontSize: '9px', opacity: 0.85, fontWeight: 400 }}>
-              Ofélia & José
             </div>
           </div>
 
           {/* Green dot */}
           <div
             style={{
-              width: '8px',
-              height: '8px',
+              width: '6px',
+              height: '6px',
               background: '#10b981',
               borderRadius: '50%',
-              boxShadow: '0 0 10px #10b981',
+              boxShadow: '0 0 8px #10b981',
             }}
           />
 
@@ -282,11 +278,11 @@ export function AICopilot() {
               setIsOpen(false);
             }}
             style={{
-              background: 'rgba(255,255,255,0.1)',
+              background: '#f1f5f9',
               border: 'none',
-              color: 'white',
-              width: '20px',
-              height: '20px',
+              color: '#64748b',
+              width: '18px',
+              height: '18px',
               borderRadius: '50%',
               cursor: 'pointer',
               display: 'flex',
@@ -295,10 +291,10 @@ export function AICopilot() {
               transition: 'background 0.2s',
               padding: 0,
             }}
-            onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.2)'}
-            onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.1)'}
+            onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = '#e2e8f0'}
+            onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = '#f1f5f9'}
           >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5}>
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -398,8 +394,8 @@ export function AICopilot() {
               background: 'rgba(255,255,255,0.12)',
               border: 'none',
               color: 'white',
-              width: '28px',
-              height: '28px',
+              width: '24px',
+              height: '24px',
               borderRadius: '50%',
               cursor: 'pointer',
               display: 'flex',
@@ -410,7 +406,7 @@ export function AICopilot() {
             onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.2)'}
             onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.12)'}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
