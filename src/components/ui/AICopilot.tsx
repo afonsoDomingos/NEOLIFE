@@ -142,6 +142,39 @@ export function AICopilot() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  // Convert YouTube URL to embed format
+  const getEmbedUrl = (url: string) => {
+    if (!url) return '';
+
+    // Check if it's already an embed URL
+    if (url.includes('youtube.com/embed/') || url.includes('youtu.be/')) {
+      return url;
+    }
+
+    // Extract video ID from various YouTube URL formats
+    let videoId = '';
+
+    // Format: youtube.com/watch?v=VIDEO_ID
+    const match = url.match(/[?&]v=([^&]+)/);
+    if (match) {
+      videoId = match[1];
+    }
+
+    // Format: youtu.be/VIDEO_ID
+    const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
+    if (shortMatch) {
+      videoId = shortMatch[1];
+    }
+
+    // If we found a video ID, return embed URL
+    if (videoId) {
+      return `https://www.youtube.com/embed/${videoId}`;
+    }
+
+    // If not a YouTube URL, return as is
+    return url;
+  };
+
   // Handle voice input using Web Speech API
   const startListening = () => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
@@ -1276,7 +1309,7 @@ export function AICopilot() {
                   }}
                 >
                   <iframe
-                    src={currentVideo.videoUrl}
+                    src={getEmbedUrl(currentVideo.videoUrl)}
                     style={{
                       position: 'absolute',
                       top: 0,
