@@ -437,10 +437,13 @@ export function AICopilot() {
         position: 'fixed',
         top: '120px',
         right: '20px',
+        bottom: '80px',
         width: '360px',
         maxWidth: 'calc(100vw - 40px)',
         zIndex: 1000,
         fontFamily: 'Inter, -apple-system, sans-serif',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
       {/* Header */}
@@ -587,13 +590,15 @@ export function AICopilot() {
             overflow: 'hidden',
             border: '1px solid rgba(59, 130, 246, 0.15)',
             borderTop: 'none',
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
           }}
         >
           {/* Messages */}
           <div
             style={{
-              height: '380px',
-              maxHeight: '60vh',
+              flex: 1,
               overflowY: 'auto',
               padding: '18px',
               display: 'flex',
