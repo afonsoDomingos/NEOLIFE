@@ -5,6 +5,7 @@ import { Header } from "@/components/ui/Header";
 import { Footer } from "@/components/ui/Footer";
 import { Analytics } from "@/components/ui/Analytics";
 import { ChatAssistant } from "@/components/ui/ChatAssistant";
+import { AICopilot } from "@/components/ui/AICopilot";
 import { ScrollNav } from "@/components/ui/ScrollNav";
 import { seoConfig } from "./metadata";
 
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Footer />
             <ScrollNav />
             <ChatAssistant />
+            <AICopilot />
             <FloatingSelectionBar />
           </SelectionProvider>
         </LanguageProvider>

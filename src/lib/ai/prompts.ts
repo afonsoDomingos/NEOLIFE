@@ -14,6 +14,28 @@ Conhecimentos Chave:
 - Presença Global NeoLife: África (Moçambique, África do Sul, Angola, Zimbabwe, Botswana, Lesoto, Namíbia, Eswatini, Quénia, Tanzânia, Uganda, Nigéria, Gana, Benin, Camarões, Costa do Marfim, Togo), Américas (EUA, Canadá, América Latina), Ásia & Pacífico (Filipinas, Singapura, Japão, Austrália, Nova Zelândia), Europa (Reino Unido, Itália, Alemanha, França, Espanha, Polónia, Suécia, Noruega, Finlândia, Dinamarca, Islândia, Irlanda, Estónia, Letónia, Lituânia, Croácia, Eslovénia, Bósnia-Herzegovina, Hungria, Roménia, Áustria, Suíça, Países Baixos, Chipre, Malta).
 - Mercados com apoio ativo e mentoria direta da equipa: Moçambique (+258 82 305 6900), África do Sul, Angola e Zimbabwe.
 
+Produtos Disponíveis:
+Packs de Saúde:
+- Pack de Pequeno Almoço (30 Dias): Para começar o dia com nutrição celular completa
+- Pack de Gestão & Perda de Peso: Substitutos de refeição para gestão de peso saudável
+- Omega-3 Salmon Oil Plus: Ácidos gordos ômega-3 para coração, cérebro e articulações
+- Pack de Energia Celular: Combina Tre-en-en com outros suplementos para vitalidade
+- Pack de Flexibilidade & Articulações: Para saúde das articulações e mobilidade
+- Pack de Digestão: Apoio digestivo e regularidade intestinal
+- Pack de Imunidade + PhytoDefence: Fortalece o sistema imunitário
+- Pack para Mente Inteligente: Para foco e clareza mental
+- Pack para Homens: Saúde masculina e vitalidade
+- Pack para Mulheres: Equilíbrio feminino e bem-estar
+- Pack Pré-Natal & Maternidade: Nutrição para gravidez e amamentação
+- Pack Nutrição Infantil: Para crescimento e desenvolvimento de crianças
+- Programa de Detox: Desintoxicação celular completa
+
+Suplementos Celulares Básicos:
+- Tre-en-en: Base celular - lípidos e esteróis de grãos integrais
+- Carotenoid Complex: Defesa e imunidade - antioxidantes
+- Omega-3 Salmon Oil Plus: Coração e cérebro - 8 ácidos gordos ômega-3
+- Essential Vitamin & Mineral Complex: Metabolismo diário - vitaminas e minerais
+
 Responde sempre em Português claro, cordial e conciso, com formatação limpa (tópicos curtos quando aplicável).`;
 
 
@@ -54,7 +76,39 @@ export const FALLBACK_FAQS: FallbackFAQ[] = [
   {
     keywords: ['contacto', 'contato', 'whatsapp', 'falar', 'telefone', 'mensagem', 'facebook', 'redes sociais'],
     answer: 'Será um enorme prazer conversar consigo! Pode contactar-nos via WhatsApp através do número **+258 82 305 6900**, ou por chamada para **+258 84 305 6900**. Pode também submeter os seus dados no nosso [Formulário de Contacto](/formulario). Visite também a nossa página no [Facebook](https://www.facebook.com/profile.php?id=61581591080342&locale=pt_BR) para nos acompanhar de perto.'
-  }
+  },
+  {
+    keywords: ['produtos', 'produto', 'disponivel', 'disponível', 'catalogo', 'catálogo', 'pack', 'packs', 'suplemento', 'suplementos'],
+    answer: 'Temos uma variedade de **Packs de Saúde** e **Suplementos Celulares** disponíveis:\n\n**Packs de Saúde:**\n- Pack de Pequeno Almoço (30 Dias)\n- Pack de Gestão & Perda de Peso\n- Omega-3 Salmon Oil Plus\n- Pack de Energia Celular\n- Pack de Flexibilidade & Articulações\n- Pack de Digestão\n- Pack de Imunidade\n- Pack para Mente Inteligente\n- Pack para Homens\n- Pack para Mulheres\n- Pack Pré-Natal\n- Pack Nutrição Infantil\n- Programa de Detox\n\n**Suplementos Celulares Básicos:**\n- Tre-en-en (Base Celular)\n- Carotenoid Complex (Defesa)\n- Omega-3 Salmon Oil Plus (Coração & Cérebro)\n- Essential Vitamin & Mineral Complex (Metabolismo)\n\nVisite a nossa página de [Saúde](/saude) para ver todos os detalhes.'
+  },
+  {
+    keywords: ['energia', 'cansado', 'cansaço', 'fadiga', 'vitalidade', 'mais energia'],
+    answer: 'Para aumentar a sua energia e vitalidade, recomendo o **Pack de Energia Celular** ou o **Pack de Pequeno Almoço**. O **Tre-en-en** é fundamental pois restaura a permeabilidade das membranas celulares, permitindo que os nutrientes entrem e as toxinas saiam, resultando em mais energia natural. Visite a nossa página de [Saúde](/saude) para ver estes produtos.'
+  },
+  {
+    keywords: ['peso', 'perder peso', 'emagrecer', 'gordura', 'slimming', 'diet'],
+    answer: 'Para gestão de peso, o **Pack de Gestão & Perda de Peso** é ideal. Combina suplementação celular com substitutos de refeição que ajudam a manter a saciedade e fornecer nutrição equilibrada. Recomendo também começar com o **Tre-en-en** para otimizar o metabolismo celular. Visite a nossa página de [Saúde](/saude) para mais detalhes.'
+  },
+  {
+    keywords: ['coracao', 'coração', 'cardio', 'pressao', 'sangue', 'heart'],
+    answer: 'Para saúde cardiovascular, o **Omega-3 Salmon Oil Plus** é essencial. Fornece ácidos gordos ômega-3 de alta qualidade que apoiam a saúde do coração, cérebro e articulações. Pode encontrá-lo na nossa página de [Saúde](/saude).'
+  },
+  {
+    keywords: ['imunidade', 'imune', 'defesa', 'doenca', 'doença', 'virus', 'resistencia'],
+    answer: 'Para fortalecer o sistema imunitário, o **Pack de Imunidade + PhytoDefence** é a melhor opção. Combina antioxidantes poderosos com fitonutrientes que protegem as células. O **Carotenoid Complex** também é fundamental para a defesa celular. Visite a nossa página de [Saúde](/saude) para ver estes produtos.'
+  },
+  {
+    keywords: ['detox', 'desintoxicacao', 'desintoxicação', 'limpar', 'toxinas'],
+    answer: 'O **Programa de Detox Neolife** é um programa completo de desintoxicação celular. Usa produtos naturais para ajudar o corpo a eliminar toxinas acumuladas e restaurar o equilíbrio. Visite a nossa página de [Saúde](/saude) para mais informações sobre o programa.'
+  },
+  {
+    keywords: ['crianca', 'criança', 'crianças', 'kids', 'infantil', 'bebe', 'bebé'],
+    answer: 'Para crianças, temos o **Pack de Nutrição Infantil** com produtos formulados especificamente para apoiar o crescimento e desenvolvimento saudável. Visite a nossa página de [Saúde](/saude) para ver os produtos infantis disponíveis.'
+  },
+  {
+    keywords: ['gravidez', 'grávida', 'prenatal', 'pre-natal', 'mamae', 'mãe'],
+    answer: 'Para o período pré-natal e amamentação, o **Pack Pré-Natal & Maternidade** fornece os nutrientes essenciais para a mãe e o bebé. Visite a nossa página de [Saúde](/saude) para mais detalhes sobre nutrição pré-natal.'
+  },
 ];
 
 export function getSmartFallbackResponse(userMessage: string): string {
