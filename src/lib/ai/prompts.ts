@@ -47,67 +47,67 @@ export interface FallbackFAQ {
 export const FALLBACK_FAQS: FallbackFAQ[] = [
   {
     keywords: ['quem sao', 'quem são', 'casal', 'jose', 'josé', 'ofelia', 'ofélia', 'machado', 'mentores', 'consultores'],
-    answer: 'Esta plataforma é dinamizada pelo casal **José Sarmento Machado** e **Ofélia Alfredo Machado**, consultores e mentores independentes de bem-estar NeoLife. A sua missão é partilhar conhecimento sobre saúde preventiva e nutrição celular, além de apoiar novas famílias e empreendedores a construir um negócio sustentável e rentável com presença em Moçambique, África do Sul, Angola e Zimbabwe.'
+    answer: 'Esta plataforma é dinamizada pelo casal José Sarmento Machado e Ofélia Alfredo Machado, consultores e mentores independentes de bem-estar NeoLife. A sua missão é partilhar conhecimento sobre saúde preventiva e nutrição celular, além de apoiar novas famílias e empreendedores a construir um negócio sustentável e rentável com presença em Moçambique, África do Sul, Angola e Zimbabwe.'
   },
   {
     keywords: ['o que é', 'neolife', 'empresa', 'historia', 'história'],
-    answer: 'A **NeoLife** é uma empresa global pioneira em nutrição celular e bem-estar há mais de 60 anos, presente em mais de 50 países. Todos os produtos são desenvolvidos por cientistas de renome mundial através do *Scientific Advisory Board (SAB)*, fundado pelo Dr. Arthur Furst. A nossa missão nesta plataforma é educar, orientar e prestar consultoria personalizada a famílias e novos empreendedores com a mentoria de José e Ofélia Machado.'
+    answer: 'A NeoLife é uma empresa global pioneira em nutrição celular e bem-estar há mais de 60 anos, presente em mais de 50 países. Todos os produtos são desenvolvidos por cientistas de renome mundial através do Scientific Advisory Board (SAB), fundado pelo Dr. Arthur Furst. A nossa missão nesta plataforma é educar, orientar e prestar consultoria personalizada a famílias e novos empreendedores com a mentoria de José e Ofélia Machado.'
   },
   {
     keywords: ['nutricao celular', 'nutrição celular', 'celula', 'célula', 'tre-en-en', 'treenen'],
-    answer: 'A **Nutrição Celular** assenta no princípio de que o corpo só é saudável se as suas 73 biliões de células forem saudáveis. Para isso, a membrana celular precisa de estar permeável para absorver nutrientes e expelir toxinas. O produto emblemático da NeoLife, o **Tre-en-en**, fornece lípidos e esteróis extraídos de grãos integrais essenciais que foram retirados da alimentação moderna, devolvendo energia e vitalidade ao organismo.'
+    answer: 'A Nutrição Celular assenta no princípio de que o corpo só é saudável se as suas 73 biliões de células forem saudáveis. Para isso, a membrana celular precisa de estar permeável para absorver nutrientes e expelir toxinas. O produto emblemático da NeoLife, o Tre-en-en, fornece lípidos e esteróis extraídos de grãos integrais essenciais que foram retirados da alimentação moderna, devolvendo energia e vitalidade ao organismo.'
   },
   {
     keywords: ['negocio', 'negócio', 'oportunidade', 'renda', 'ganhar dinheiro', 'revender', 'distribuidor', 'mentoria'],
-    answer: 'A **Oportunidade NeoLife** permite-lhe construir um negócio independente de bem-estar com o apoio direto da mentoria de **José Sarmento Machado & Ofélia Alfredo Machado**. Terá acesso a formação passo a passo, plataforma digital própria, produtos patenteados de alta procura e um plano de compensação transparente. Pode iniciar em regime de tempo parcial. Saiba mais na nossa página de [Oportunidade](/oportunidade) ou preencha o formulário para falarmos diretamente.'
+    answer: 'A Oportunidade NeoLife permite-lhe construir um negócio independente de bem-estar com o apoio direto da mentoria de José Sarmento Machado e Ofélia Alfredo Machado. Terá acesso a formação passo a passo, plataforma digital própria, produtos patenteados de alta procura e um plano de compensação transparente. Pode iniciar em regime de tempo parcial. Saiba mais na nossa página de Oportunidade ou preencha o formulário para falarmos diretamente.'
   },
   {
     keywords: ['pais', 'países', 'paises', 'mocambique', 'moçambique', 'angola', 'africa do sul', 'zimbabwe', 'portugal', 'onde opera', 'global', 'mundo', 'continente', 'europa', 'america', 'asia'],
-    answer: 'A NeoLife está presente em **mais de 50 países** em todo o mundo:\n\n**África:** Moçambique, África do Sul, Angola, Zimbabwe, Botswana, Lesoto, Namíbia, Eswatini, Quénia, Tanzânia, Uganda, Nigéria, Gana, Benin, Camarões, Costa do Marfim, Togo\n\n**Américas:** EUA, Canadá, América Latina\n\n**Ásia & Pacífico:** Filipinas, Singapura, Japão, Austrália, Nova Zelândia\n\n**Europa:** Reino Unido, Itália, Alemanha, França, Espanha, Polónia, Suécia, Noruega, Finlândia, Dinamarca, e muitos mais.\n\nA nossa equipa de mentoria liderada por **José e Ofélia Machado** tem apoio ativo e estruturado para **Moçambique, África do Sul, Angola e Zimbabwe**. Se reside noutro país, preencha o nosso [Formulário](/formulario) para verificarmos disponibilidade.'
+    answer: 'A NeoLife está presente em mais de 50 países em todo o mundo. África: Moçambique, África do Sul, Angola, Zimbabwe, Botswana, Lesoto, Namíbia, Eswatini, Quénia, Tanzânia, Uganda, Nigéria, Gana, Benin, Camarões, Costa do Marfim, Togo. Américas: EUA, Canadá, América Latina. Ásia & Pacífico: Filipinas, Singapura, Japão, Austrália, Nova Zelândia. Europa: Reino Unido, Itália, Alemanha, França, Espanha, Polónia, Suécia, Noruega, Finlândia, Dinamarca, e muitos mais. A nossa equipa de mentoria liderada por José e Ofélia Machado tem apoio ativo e estruturado para Moçambique, África do Sul, Angola e Zimbabwe. Se reside noutro país, preencha o nosso Formulário para verificarmos disponibilidade.'
   },
   {
     keywords: ['como comprar', 'como encomendar', 'preco', 'preço', 'comprar', 'encomenda', 'valor'],
-    answer: 'Para encomendar com segurança e receber orientação adequada às suas necessidades, pode preencher o nosso [Formulário de Interesse](/formulario). Iremos analisar o que procura e enviar-lhe o catálogo oficial com os preços do seu país e opções de entrega segura.'
+    answer: 'Para encomendar com segurança e receber orientação adequada às suas necessidades, pode preencher o nosso Formulário de Interesse. Iremos analisar o que procura e enviar-lhe o catálogo oficial com os preços do seu país e opções de entrega segura.'
   },
   {
     keywords: ['sab', 'cientifico', 'científico', 'medico', 'médico', 'seguranca', 'segurança', 'qualidade'],
-    answer: 'O **Scientific Advisory Board (SAB)** da NeoLife foi fundado pelo Dr. Arthur Furst (um dos pais da quimioterapia e toxicologia moderna). Ao contrário de muitas marcas que subcontratam a produção, a NeoLife pesquisa, desenvolve e testa os seus próprios produtos com base em ingredientes de origem alimentar humana e ensaios clínicos publicados em revistas científicas internacionais.'
+    answer: 'O Scientific Advisory Board (SAB) da NeoLife foi fundado pelo Dr. Arthur Furst (um dos pais da quimioterapia e toxicologia moderna). Ao contrário de muitas marcas que subcontratam a produção, a NeoLife pesquisa, desenvolve e testa os seus próprios produtos com base em ingredientes de origem alimentar humana e ensaios clínicos publicados em revistas científicas internacionais.'
   },
   {
     keywords: ['contacto', 'contato', 'whatsapp', 'falar', 'telefone', 'mensagem', 'facebook', 'redes sociais'],
-    answer: 'Será um enorme prazer conversar consigo! Pode contactar-nos via WhatsApp através do número **+258 82 305 6900**, ou por chamada para **+258 84 305 6900**. Pode também submeter os seus dados no nosso [Formulário de Contacto](/formulario). Visite também a nossa página no [Facebook](https://www.facebook.com/profile.php?id=61581591080342&locale=pt_BR) para nos acompanhar de perto.'
+    answer: 'Será um enorme prazer conversar consigo! Pode contactar-nos via WhatsApp através do número +258 82 305 6900, ou por chamada para +258 84 305 6900. Pode também submeter os seus dados no nosso Formulário de Contacto. Visite também a nossa página no Facebook para nos acompanhar de perto.'
   },
   {
     keywords: ['produtos', 'produto', 'disponivel', 'disponível', 'catalogo', 'catálogo', 'pack', 'packs', 'suplemento', 'suplementos'],
-    answer: 'Temos uma variedade de **Packs de Saúde** e **Suplementos Celulares** disponíveis:\n\n**Packs de Saúde:**\n- Pack de Pequeno Almoço (30 Dias)\n- Pack de Gestão & Perda de Peso\n- Omega-3 Salmon Oil Plus\n- Pack de Energia Celular\n- Pack de Flexibilidade & Articulações\n- Pack de Digestão\n- Pack de Imunidade\n- Pack para Mente Inteligente\n- Pack para Homens\n- Pack para Mulheres\n- Pack Pré-Natal\n- Pack Nutrição Infantil\n- Programa de Detox\n\n**Suplementos Celulares Básicos:**\n- Tre-en-en (Base Celular)\n- Carotenoid Complex (Defesa)\n- Omega-3 Salmon Oil Plus (Coração & Cérebro)\n- Essential Vitamin & Mineral Complex (Metabolismo)\n\nVisite a nossa página de [Saúde](/saude) para ver todos os detalhes.'
+    answer: 'Temos uma variedade de Packs de Saúde e Suplementos Celulares disponíveis. Packs de Saúde: Pack de Pequeno Almoço (30 Dias), Pack de Gestão e Perda de Peso, Omega-3 Salmon Oil Plus, Pack de Energia Celular, Pack de Flexibilidade e Articulações, Pack de Digestão, Pack de Imunidade, Pack para Mente Inteligente, Pack para Homens, Pack para Mulheres, Pack Pré-Natal, Pack Nutrição Infantil, Programa de Detox. Suplementos Celulares Básicos: Tre-en-en (Base Celular), Carotenoid Complex (Defesa), Omega-3 Salmon Oil Plus (Coração e Cérebro), Essential Vitamin and Mineral Complex (Metabolismo). Visite a nossa página de Saúde para ver todos os detalhes.'
   },
   {
     keywords: ['energia', 'cansado', 'cansaço', 'fadiga', 'vitalidade', 'mais energia'],
-    answer: 'Para aumentar a sua energia e vitalidade, recomendo o **Pack de Energia Celular** ou o **Pack de Pequeno Almoço**. O **Tre-en-en** é fundamental pois restaura a permeabilidade das membranas celulares, permitindo que os nutrientes entrem e as toxinas saiam, resultando em mais energia natural. Visite a nossa página de [Saúde](/saude) para ver estes produtos.'
+    answer: 'Para aumentar a sua energia e vitalidade, recomendo o Pack de Energia Celular ou o Pack de Pequeno Almoço. O Tre-en-en é fundamental pois restaura a permeabilidade das membranas celulares, permitindo que os nutrientes entrem e as toxinas saiam, resultando em mais energia natural. Visite a nossa página de Saúde para ver estes produtos.'
   },
   {
     keywords: ['peso', 'perder peso', 'emagrecer', 'gordura', 'slimming', 'diet'],
-    answer: 'Para gestão de peso, o **Pack de Gestão & Perda de Peso** é ideal. Combina suplementação celular com substitutos de refeição que ajudam a manter a saciedade e fornecer nutrição equilibrada. Recomendo também começar com o **Tre-en-en** para otimizar o metabolismo celular. Visite a nossa página de [Saúde](/saude) para mais detalhes.'
+    answer: 'Para gestão de peso, o Pack de Gestão e Perda de Peso é ideal. Combina suplementação celular com substitutos de refeição que ajudam a manter a saciedade e fornecer nutrição equilibrada. Recomendo também começar com o Tre-en-en para otimizar o metabolismo celular. Visite a nossa página de Saúde para mais detalhes.'
   },
   {
     keywords: ['coracao', 'coração', 'cardio', 'pressao', 'sangue', 'heart'],
-    answer: 'Para saúde cardiovascular, o **Omega-3 Salmon Oil Plus** é essencial. Fornece ácidos gordos ômega-3 de alta qualidade que apoiam a saúde do coração, cérebro e articulações. Pode encontrá-lo na nossa página de [Saúde](/saude).'
+    answer: 'Para saúde cardiovascular, o Omega-3 Salmon Oil Plus é essencial. Fornece ácidos gordos ômega-3 de alta qualidade que apoiam a saúde do coração, cérebro e articulações. Pode encontrá-lo na nossa página de Saúde.'
   },
   {
     keywords: ['imunidade', 'imune', 'defesa', 'doenca', 'doença', 'virus', 'resistencia'],
-    answer: 'Para fortalecer o sistema imunitário, o **Pack de Imunidade + PhytoDefence** é a melhor opção. Combina antioxidantes poderosos com fitonutrientes que protegem as células. O **Carotenoid Complex** também é fundamental para a defesa celular. Visite a nossa página de [Saúde](/saude) para ver estes produtos.'
+    answer: 'Para fortalecer o sistema imunitário, o Pack de Imunidade PhytoDefence é a melhor opção. Combina antioxidantes poderosos com fitonutrientes que protegem as células. O Carotenoid Complex também é fundamental para a defesa celular. Visite a nossa página de Saúde para ver estes produtos.'
   },
   {
     keywords: ['detox', 'desintoxicacao', 'desintoxicação', 'limpar', 'toxinas'],
-    answer: 'O **Programa de Detox Neolife** é um programa completo de desintoxicação celular. Usa produtos naturais para ajudar o corpo a eliminar toxinas acumuladas e restaurar o equilíbrio. Visite a nossa página de [Saúde](/saude) para mais informações sobre o programa.'
+    answer: 'O Programa de Detox Neolife é um programa completo de desintoxicação celular. Usa produtos naturais para ajudar o corpo a eliminar toxinas acumuladas e restaurar o equilíbrio. Visite a nossa página de Saúde para mais informações sobre o programa.'
   },
   {
     keywords: ['crianca', 'criança', 'crianças', 'kids', 'infantil', 'bebe', 'bebé'],
-    answer: 'Para crianças, temos o **Pack de Nutrição Infantil** com produtos formulados especificamente para apoiar o crescimento e desenvolvimento saudável. Visite a nossa página de [Saúde](/saude) para ver os produtos infantis disponíveis.'
+    answer: 'Para crianças, temos o Pack de Nutrição Infantil com produtos formulados especificamente para apoiar o crescimento e desenvolvimento saudável. Visite a nossa página de Saúde para ver os produtos infantis disponíveis.'
   },
   {
     keywords: ['gravidez', 'grávida', 'prenatal', 'pre-natal', 'mamae', 'mãe'],
-    answer: 'Para o período pré-natal e amamentação, o **Pack Pré-Natal & Maternidade** fornece os nutrientes essenciais para a mãe e o bebé. Visite a nossa página de [Saúde](/saude) para mais detalhes sobre nutrição pré-natal.'
+    answer: 'Para o período pré-natal e amamentação, o Pack Pré-Natal e Maternidade fornece os nutrientes essenciais para a mãe e o bebé. Visite a nossa página de Saúde para mais detalhes sobre nutrição pré-natal.'
   },
 ];
 

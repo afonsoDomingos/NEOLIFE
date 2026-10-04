@@ -38,8 +38,8 @@ export function AICopilot() {
       id: 'welcome',
       role: 'assistant',
       content: isPt
-        ? 'Olá! Sou o **AI Copilot** da NeoLife. Conheço todos os nossos produtos de saúde, packs e oportunidades de negócio. Como posso ajudar?'
-        : 'Hello! I am the NeoLife **AI Copilot**. I know all our health products, packs, and business opportunities. How can I help?',
+        ? 'Olá! Sou o AI Copilot da NeoLife. Conheço todos os nossos produtos de saúde, packs e oportunidades de negócio. Como posso ajudar?'
+        : 'Hello! I am the NeoLife AI Copilot. I know all our health products, packs, and business opportunities. How can I help?',
       time: isPt ? 'Agora' : 'Now',
     },
   ]);
@@ -49,6 +49,19 @@ export function AICopilot() {
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  // Remove markdown formatting for clean text display
+  const cleanMarkdown = (text: string): string => {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
+      .replace(/\*(.*?)\*/g, '$1') // Remove italic
+      .replace(/`(.*?)`/g, '$1') // Remove inline code
+      .replace(/__(.*?)__/g, '$1') // Remove underline
+      .replace(/~~(.*?)~~/g, '$1') // Remove strikethrough
+      .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Remove links, keep text
+      .replace(/\n/g, ' '); // Replace newlines with spaces
+      .trim();
   };
 
   useEffect(() => {
@@ -265,9 +278,6 @@ export function AICopilot() {
             <div style={{ fontSize: '15px', fontWeight: 700, letterSpacing: '-0.3px' }}>
               NeoLife AI Copilot
             </div>
-            <div style={{ fontSize: '11px', opacity: 0.9, fontWeight: 400 }}>
-              {isPt ? 'Assistente Inteligente' : 'Intelligent Assistant'}
-            </div>
           </div>
         </div>
 
@@ -374,7 +384,7 @@ export function AICopilot() {
                     boxShadow: m.role === 'user' ? '0 2px 8px rgba(59, 130, 246, 0.25)' : '0 1px 3px rgba(0,0,0,0.08)',
                   }}
                 >
-                  {m.content}
+                  {m.role === 'assistant' ? cleanMarkdown(m.content) : m.content}
                 </div>
               </div>
             ))}

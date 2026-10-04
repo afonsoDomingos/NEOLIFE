@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     if (!apiKey) {
       const fallbackReply = getSmartFallbackResponse(latestUserMessage);
       return NextResponse.json({
-        reply: fallbackReply,
+        content: fallbackReply,
         source: 'knowledge-base',
       });
     }
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
       console.warn('Gemini API returned error status:', response.status);
       const fallbackReply = getSmartFallbackResponse(latestUserMessage);
       return NextResponse.json({
-        reply: fallbackReply,
+        content: fallbackReply,
         source: 'knowledge-base',
       });
     }
@@ -77,21 +77,32 @@ export async function POST(req: NextRequest) {
     if (!candidateText) {
       const fallbackReply = getSmartFallbackResponse(latestUserMessage);
       return NextResponse.json({
-        reply: fallbackReply,
+        content: fallbackReply,
         source: 'knowledge-base',
       });
     }
 
+    // Remove markdown formatting from AI response
+    const cleanResponse = candidateText
+      .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
+      .replace(/\*(.*?)\*/g, '$1') // Remove italic
+      .replace(/`(.*?)`/g, '$1') // Remove inline code
+      .replace(/__(.*?)__/g, '$1') // Remove underline
+      .replace(/~~(.*?)~~/g, '$1') // Remove strikethrough
+      .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Remove links, keep text
+      .replace(/\n/g, ' ') // Replace newlines with spaces
+      .trim();
+
     return NextResponse.json({
-      reply: candidateText.trim(),
+      content: cleanResponse,
       source: 'gemini',
     });
   } catch (error) {
     console.error('Chat API error:', error);
     // Graceful recovery
     return NextResponse.json({
-      reply:
-        'Agradeço o seu contacto. De momento estou a recalibrar os nossos dados. Pode colocar a sua questão de outra forma, ou consultar diretamente a nossa secção de [Oportunidade](/oportunidade) e [Formulário](/formulario) para falar com a nossa equipa de mentores.',
+      content:
+        'Agradeço o seu contacto. De momento estou a recalibrar os nossos dados. Pode colocar a sua questão de outra forma, ou consultar diretamente a nossa secção de Oportunidade e Formulário para falar com a nossa equipa de mentores.',
       source: 'fallback-error',
     });
   }
