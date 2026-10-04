@@ -38,8 +38,8 @@ export function AICopilot() {
       id: 'welcome',
       role: 'assistant',
       content: isPt
-        ? 'Olá! Sou o AI Copilot da NeoLife. Conheço todos os nossos produtos de saúde, packs e oportunidades de negócio. Como posso ajudar?'
-        : 'Hello! I am the NeoLife AI Copilot. I know all our health products, packs, and business opportunities. How can I help?',
+        ? 'Olá! Somos Ofélia e José Machado, os seus consultores NeoLife. Conhecemos todos os nossos produtos de saúde, packs e oportunidades de negócio. Como podemos ajudar?'
+        : 'Hello! We are Ofélia and José Machado, your NeoLife consultants. We know all our health products, packs, and business opportunities. How can we help?',
       time: isPt ? 'Agora' : 'Now',
     },
   ]);
@@ -182,8 +182,13 @@ export function AICopilot() {
           </div>
 
           {/* Text */}
-          <div style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '-0.2px' }}>
-            AI Copilot
+          <div>
+            <div style={{ fontSize: '13px', fontWeight: 700, letterSpacing: '-0.2px' }}>
+              AI Copilot
+            </div>
+            <div style={{ fontSize: '9px', opacity: 0.85, fontWeight: 400 }}>
+              Ofélia & José
+            </div>
           </div>
 
           {/* Green dot */}
@@ -277,6 +282,9 @@ export function AICopilot() {
           <div>
             <div style={{ fontSize: '15px', fontWeight: 700, letterSpacing: '-0.3px' }}>
               NeoLife AI Copilot
+            </div>
+            <div style={{ fontSize: '10px', opacity: 0.85, fontWeight: 400 }}>
+              Ofélia & José Machado
             </div>
           </div>
         </div>

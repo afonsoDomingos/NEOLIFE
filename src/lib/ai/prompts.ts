@@ -1,4 +1,4 @@
-export const AI_SYSTEM_PROMPT = `Tu és o Assistente Virtual Consultivo da plataforma de Bem-Estar e Oportunidade NeoLife, representando a equipa de mentoria liderada pelo casal José Sarmento Machado e Ofélia Alfredo Machado.
+export const AI_SYSTEM_PROMPT = `Tu és o Assistente Virtual Consultivo da plataforma de Bem-Estar e Oportunidade NeoLife, respondendo em nome dos representantes Ofélia e José Machado. Tu és a voz oficial da equipa de mentoria liderada por este casal.
 
 O teu papel é:
 1. EDUCAR: Partilhar conhecimento acessível sobre saúde, vitalidade, nutrição celular e prevenção.
@@ -51,11 +51,11 @@ export interface FallbackFAQ {
 export const FALLBACK_FAQS: FallbackFAQ[] = [
   {
     keywords: ['quem sao', 'quem são', 'casal', 'jose', 'josé', 'ofelia', 'ofélia', 'machado', 'mentores', 'consultores'],
-    answer: 'Esta plataforma é dinamizada pelo casal José Sarmento Machado e Ofélia Alfredo Machado, consultores e mentores independentes de bem-estar NeoLife. A sua missão é partilhar conhecimento sobre saúde preventiva e nutrição celular, além de apoiar novas famílias e empreendedores a construir um negócio sustentável e rentável com presença em Moçambique, África do Sul, Angola e Zimbabwe.'
+    answer: 'Esta plataforma é dinamizada por nós, Ofélia e José Machado, consultores e mentores independentes de bem-estar NeoLife. A nossa missão é partilhar conhecimento sobre saúde preventiva e nutrição celular, além de apoiar novas famílias e empreendedores a construir um negócio sustentável e rentável com presença em Moçambique, África do Sul, Angola e Zimbabwe. Visite o nosso site em neolifemz.vercel.app.'
   },
   {
     keywords: ['o que é', 'neolife', 'empresa', 'historia', 'história'],
-    answer: 'A NeoLife é uma empresa global pioneira em nutrição celular e bem-estar há mais de 60 anos, presente em mais de 50 países. Todos os produtos são desenvolvidos por cientistas de renome mundial através do Scientific Advisory Board (SAB), fundado pelo Dr. Arthur Furst. A nossa missão nesta plataforma é educar, orientar e prestar consultoria personalizada a famílias e novos empreendedores com a mentoria de José e Ofélia Machado.'
+    answer: 'A NeoLife é uma empresa global pioneira em nutrição celular e bem-estar há mais de 60 anos, presente em mais de 50 países. Todos os produtos são desenvolvidos por cientistas de renome mundial através do Scientific Advisory Board (SAB), fundado pelo Dr. Arthur Furst. A nossa missão como Ofélia e José Machado é educar, orientar e prestar consultoria personalizada a famílias e novos empreendedores.'
   },
   {
     keywords: ['nutricao celular', 'nutrição celular', 'celula', 'célula', 'tre-en-en', 'treenen'],
@@ -63,11 +63,11 @@ export const FALLBACK_FAQS: FallbackFAQ[] = [
   },
   {
     keywords: ['negocio', 'negócio', 'oportunidade', 'renda', 'ganhar dinheiro', 'revender', 'distribuidor', 'mentoria'],
-    answer: 'A Oportunidade NeoLife permite-lhe construir um negócio independente de bem-estar com o apoio direto da mentoria de José Sarmento Machado e Ofélia Alfredo Machado. Terá acesso a formação passo a passo, plataforma digital própria, produtos patenteados de alta procura e um plano de compensação transparente. Pode iniciar em regime de tempo parcial. Saiba mais na nossa página de Oportunidade ou preencha o formulário para falarmos diretamente.'
+    answer: 'A Oportunidade NeoLife permite-lhe construir um negócio independente de bem-estar com o nosso apoio direto como Ofélia e José Machado. Terá acesso a formação passo a passo, plataforma digital própria, produtos patenteados de alta procura e um plano de compensação transparente. Pode iniciar em regime de tempo parcial. Saiba mais na nossa página de Oportunidade ou preencha o formulário para falarmos diretamente.'
   },
   {
     keywords: ['como ganhar dinheiro', 'renda extra', 'ganhar renda', 'rendimento', 'lucro', 'comissao', 'comissão'],
-    answer: 'Para ganhar renda extra com a NeoLife, comece com um kit de início acessível que inclui produtos para uso pessoal e partilha. Ganhe comissões de 15 a 25% em vendas diretas. Construa uma equipa de parceiros e receba bónus de equipa quando eles venderem. Ao promover líderes, ganha bónus de liderança, ajudas de custo e viagens internacionais. Os produtos são de consumo recorrente, criando rendimento passivo com o tempo. Pode começar em tempo parcial sem stock obrigatório.'
+    answer: 'Para ganhar renda extra com a NeoLife, comece com um kit de início acessível que inclui produtos para uso pessoal e partilha. Ganhe comissões de 15 a 25% em vendas diretas. Construa uma equipa de parceiros e receba bónus de equipa quando eles venderem. Ao promover líderes, ganha bónus de liderança, ajudas de custo e viagens internacionais. Os produtos são de consumo recorrente, criando rendimento passivo com o tempo. Nós, Ofélia e José, vamos guiá-lo em cada passo.'
   },
   {
     keywords: ['plano de compensacao', 'plano de compensação', 'comissoes', 'comissões', 'bonus', 'bónus', 'quanto ganho'],
@@ -75,23 +75,23 @@ export const FALLBACK_FAQS: FallbackFAQ[] = [
   },
   {
     keywords: ['investimento', 'quanto custa', 'custo inicial', 'kit inicio', 'kit de início', 'dinheiro para começar'],
-    answer: 'O investimento inicial é acessível através de um kit de início que inclui produtos para uso pessoal e partilha. Não é obrigatório manter stock. Pode começar com um investimento mínimo e reinvestir os lucros gradualmente. A mentoria de José e Ofélia Machado ensina a começar com pouco e crescer de forma sustentável. Preencha o formulário para receber informações detalhadas sobre os kits disponíveis.'
+    answer: 'O investimento inicial é acessível através de um kit de início que inclui produtos para uso pessoal e partilha. Não é obrigatório manter stock. Pode começar com um investimento mínimo e reinvestir os lucros gradualmente. Nós, Ofélia e José, ensinamos a começar com pouco e crescer de forma sustentável. Preencha o formulário para receber informações detalhadas sobre os kits disponíveis.'
   },
   {
     keywords: ['tempo parcial', 'tempo integral', 'horario', 'horário', 'trabalhar', 'dedicar tempo'],
-    answer: 'Pode começar o negócio NeoLife em tempo parcial, dedicando apenas algumas horas por semana. Muitos empreendedores começam enquanto trabalham noutro emprego. A mentoria de José e Ofélia Machado ensina estratégias para ser eficiente e maximizar resultados com pouco tempo. Conforme o negócio cresce, pode fazer a transição para tempo integral se desejar. A flexibilidade é uma das grandes vantagens deste modelo.'
+    answer: 'Pode começar o negócio NeoLife em tempo parcial, dedicando apenas algumas horas por semana. Muitos empreendedores começam enquanto trabalham noutro emprego. Nós, Ofélia e José, ensinamos estratégias para ser eficiente e maximizar resultados com pouco tempo. Conforme o negócio cresce, pode fazer a transição para tempo integral se desejar. A flexibilidade é uma das grandes vantagens deste modelo.'
   },
   {
     keywords: ['vender', 'como vender', 'estrategia', 'estratégia', 'clientes', 'encontrar clientes'],
-    answer: 'Para vender produtos NeoLife, comece usando os produtos pessoalmente e partilhando a sua experiência com familiares e amigos. Os produtos de consumo diário como o Pack de Pequeno Almoço e Tre-en-en são fáceis de recomendar. Use os materiais de formação da mentoria para aprender a abordar pessoas de forma natural. Organize pequenas apresentações, compartilhe testemunhos e use as redes sociais. A mentoria guia cada passo.'
+    answer: 'Para vender produtos NeoLife, comece usando os produtos pessoalmente e partilhando a sua experiência com familiares e amigos. Os produtos de consumo diário como o Pack de Pequeno Almoço e Tre-en-en são fáceis de recomendar. Use os materiais de formação que nós oferecemos para aprender a abordar pessoas de forma natural. Organize pequenas apresentações, compartilhe testemunhos e use as redes sociais. Nós guiamos cada passo.'
   },
   {
     keywords: ['equipa', 'construir equipa', 'recrutar', 'parceiros', 'liderar'],
-    answer: 'Para construir uma equipa bem-sucedida, comece identificando pessoas interessadas em saúde ou em renda extra. Apresente a oportunidade de forma honesta, sem pressão. Ofereça formação e apoio constante através da mentoria de José e Ofélia Machado. O sucesso da sua equipa é o seu sucesso. Quando os seus parceiros vendem, você ganha bónus de equipa. Foque em ajudar os outros a terem sucesso e o seu rendimento crescerá naturalmente.'
+    answer: 'Para construir uma equipa bem-sucedida, comece identificando pessoas interessadas em saúde ou em renda extra. Apresente a oportunidade de forma honesta, sem pressão. Ofereça formação e apoio constante através da nossa mentoria como Ofélia e José. O sucesso da sua equipa é o seu sucesso. Quando os seus parceiros vendem, você ganha bónus de equipa. Foque em ajudar os outros a terem sucesso e o seu rendimento crescerá naturalmente.'
   },
   {
     keywords: ['primeiros passos', 'começar', 'como iniciar', 'primeiro passo', 'iniciar negocio'],
-    answer: 'Os primeiros passos para começar são: 1) Preencha o formulário no site para contacto com a mentoria, 2) Escolha o kit de início adequado ao seu orçamento, 3) Comece a usar os produtos pessoalmente, 4) Partilhe a sua experiência com pessoas próximas, 5) Participe das formações oferecidas por José e Ofélia Machado, 6) Defina objectivos realistas e trabalhe consistentemente. A mentoria está disponível em cada etapa para garantir o seu sucesso.'
+    answer: 'Os primeiros passos para começar são: 1) Preencha o formulário no site para contacto connosco, 2) Escolha o kit de início adequado ao seu orçamento, 3) Comece a usar os produtos pessoalmente, 4) Partilhe a sua experiência com pessoas próximas, 5) Participe das formações que nós oferecemos, 6) Defina objectivos realistas e trabalhe consistentemente. Nós, Ofélia e José, estamos disponíveis em cada etapa para garantir o seu sucesso.'
   },
   {
     keywords: ['pais', 'países', 'paises', 'mocambique', 'moçambique', 'angola', 'africa do sul', 'zimbabwe', 'portugal', 'onde opera', 'global', 'mundo', 'continente', 'europa', 'america', 'asia'],
