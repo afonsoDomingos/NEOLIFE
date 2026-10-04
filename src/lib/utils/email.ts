@@ -93,11 +93,7 @@ export async function sendEmail({ to, subject, html }: SendEmailOptions): Promis
   }
 
   // 3. Fallback / Simulation mode (when neither Resend nor SMTP is configured)
-  console.log('--------------------------------------------------');
-  console.log('[EMAIL SIMULADO - CONFIGURE RESEND_API_KEY OU SMTP_HOST NO .env.local]');
-  console.log(`Para: ${to}`);
-  console.log(`Assunto: ${subject}`);
-  console.log('--------------------------------------------------');
+  // Silently simulate email - form will work without error
   return { success: true, simulated: true };
 }
 
