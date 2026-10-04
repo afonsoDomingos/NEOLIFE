@@ -70,6 +70,7 @@ export function AICopilot() {
   const [currentVideo, setCurrentVideo] = useState<{ title: string; videoUrl: string; thumbnailUrl?: string } | null>(null);
   const [suggestedVideos, setSuggestedVideos] = useState<{ title: string; videoUrl: string; thumbnailUrl?: string }[]>([]);
   const [showVideos, setShowVideos] = useState(true);
+  const [productImages, setProductImages] = useState<{ imageUrl: string; altText?: string }[]>([]);
 
   // Auto-hide videos after 5 seconds
   useEffect(() => {
@@ -106,6 +107,63 @@ export function AICopilot() {
       }
     } catch (error) {
       console.error('Error fetching videos:', error);
+    }
+  };
+
+  // Fetch product images based on keywords
+  const fetchProductImages = async (topic: string) => {
+    try {
+      // Map common product names to IDs
+      const productMap: Record<string, string> = {
+        'pequeno almoço': 'breakfast',
+        'pequeno-almoço': 'breakfast',
+        'breakfast': 'breakfast',
+        'perda peso': 'weight',
+        'perda-peso': 'weight',
+        'weight': 'weight',
+        'omega-3': 'omega3',
+        'omega3': 'omega3',
+        'pensa rápido': 'thinkfast',
+        'pensa-rápido': 'thinkfast',
+        'thinkfast': 'thinkfast',
+        'homem': 'men',
+        'mulher': 'women',
+        'pré-natal': 'prenatal',
+        'prenatal': 'prenatal',
+        'energia': 'energy',
+        'flexibilidade': 'joint',
+        'digestão': 'digestive',
+        'imunidade': 'immune',
+        'infantil': 'children',
+        'detox': 'detox',
+        'tre-en-en': 'treenen',
+        'treenen': 'treenen',
+        'carotenoid': 'carotenoid',
+        'vitamin': 'vitamin',
+      };
+
+      let productId = '';
+      for (const [keyword, id] of Object.entries(productMap)) {
+        if (topic.toLowerCase().includes(keyword)) {
+          productId = id;
+          break;
+        }
+      }
+
+      if (!productId) return;
+
+      const response = await fetch(`/api/admin/product-images?productId=${productId}`);
+      const data = await response.json();
+
+      if (Array.isArray(data) && data.length > 0) {
+        const images = data.slice(0, 3).map((img: any) => ({
+          imageUrl: img.imageUrl,
+          altText: img.altText,
+        }));
+        setProductImages(images);
+      }
+    } catch (error) {
+      console.error('Error fetching product images:', error);
     }
   };
 
@@ -417,6 +475,11 @@ export function AICopilot() {
 
       // Fetch and suggest videos based on topic
       fetchVideos(text);
+
+      // Fetch product images if user asks for images
+      if (text.toLowerCase().includes('imagem') || text.toLowerCase().includes('image') || text.toLowerCase().includes('foto') || text.toLowerCase().includes('photo')) {
+        fetchProductImages(text);
+      }
 
       // Show identity form after first response if not yet identified
       if (!isIdentified && messages.length === 0) {
@@ -962,6 +1025,48 @@ export function AICopilot() {
                         </div>
                       </div>
                     </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Product Images */}
+            {productImages.length > 0 && (
+              <div style={{ padding: '14px 18px', background: '#f0fdf4', borderTop: '1px solid #bbf7d0' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                  <div style={{ fontSize: '11px', fontWeight: 600, color: '#059669', letterSpacing: '0.5px' }}>
+                    {isPt ? 'IMAGENS DO PRODUTO:' : 'PRODUCT IMAGES:'}
+                  </div>
+                  <button
+                    onClick={() => setProductImages([])}
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      color: '#64748b',
+                      fontSize: '18px',
+                      cursor: 'pointer',
+                      padding: '0 5px',
+                    }}
+                    title={isPt ? 'Fechar' : 'Close'}
+                  >
+                    ×
+                  </button>
+                </div>
+                <div style={{ display: 'flex', gap: '10px', overflowX: 'auto', paddingBottom: '5px' }}>
+                  {productImages.map((img, idx) => (
+                    <img
+                      key={idx}
+                      src={img.imageUrl}
+                      alt={img.altText || 'Product image'}
+                      style={{
+                        width: '120px',
+                        height: '120px',
+                        objectFit: 'cover',
+                        borderRadius: '12px',
+                        border: '1px solid #bbf7d0',
+                        flexShrink: 0,
+                      }}
+                    />
                   ))}
                 </div>
               </div>
