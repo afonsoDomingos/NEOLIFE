@@ -115,7 +115,7 @@ export const FALLBACK_FAQS: FallbackFAQ[] = [
   },
   {
     keywords: ['produtos', 'produto', 'disponivel', 'disponível', 'catalogo', 'catálogo', 'pack', 'packs', 'suplemento', 'suplementos'],
-    answer: 'Temos uma variedade de Packs de Saúde e Suplementos Celulares disponíveis. Packs de Saúde: Pack de Pequeno Almoço (30 Dias), Pack de Gestão e Perda de Peso, Omega-3 Salmon Oil Plus, Pack de Energia Celular, Pack de Flexibilidade e Articulações, Pack de Digestão, Pack de Imunidade, Pack para Mente Inteligente, Pack para Homens, Pack para Mulheres, Pack Pré-Natal, Pack Nutrição Infantil, Programa de Detox. Suplementos Celulares Básicos: Tre-en-en (Base Celular), Carotenoid Complex (Defesa), Omega-3 Salmon Oil Plus (Coração e Cérebro), Essential Vitamin and Mineral Complex (Metabolismo). Visite a nossa página de Saúde para ver todos os detalhes.'
+    answer: 'Temos uma variedade de Packs de Saúde e Suplementos Celulares disponíveis.\n\nPacks de Saúde:\n1. Pack de Pequeno Almoço (30 Dias)\n2. Pack de Gestão e Perda de Peso\n3. Omega-3 Salmon Oil Plus\n4. Pack de Energia Celular\n5. Pack de Flexibilidade e Articulações\n6. Pack de Digestão\n7. Pack de Imunidade\n8. Pack para Mente Inteligente\n9. Pack para Homens\n10. Pack para Mulheres\n11. Pack Pré-Natal\n12. Pack Nutrição Infantil\n13. Programa de Detox\n\nSuplementos Celulares Básicos:\n1. Tre-en-en (Base Celular)\n2. Carotenoid Complex (Defesa)\n3. Omega-3 Salmon Oil Plus (Coração e Cérebro)\n4. Essential Vitamin and Mineral Complex (Metabolismo)\n\nVisite a nossa página de Saúde para ver todos os detalhes.'
   },
   {
     keywords: ['energia', 'cansado', 'cansaço', 'fadiga', 'vitalidade', 'mais energia'],

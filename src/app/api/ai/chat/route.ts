@@ -92,6 +92,16 @@ export async function POST(req: NextRequest) {
       .replace(/~~(.*?)~~/g, '$1'); // Remove strikethrough
     // Keep links for clickable functionality
 
+    // Convert comma-separated lists to numbered lists
+    cleanResponse = cleanResponse.replace(/([^:\n]+:\s*)([^:\n]+)/g, (match: string, prefix: string, items: string) => {
+      const itemList = items.split(',').map((item: string) => item.trim()).filter((item: string) => item.length > 0);
+      if (itemList.length > 2) {
+        const numberedItems = itemList.map((item: string, index: number) => `${index + 1}. ${item}`).join('\n');
+        return prefix + '\n' + numberedItems;
+      }
+      return match;
+    });
+
     // Format lists
     const lines = cleanResponse.split('\n');
     const formattedLines = lines.map((line: string) => {
@@ -109,6 +119,7 @@ export async function POST(req: NextRequest) {
 
     cleanResponse = formattedLines.join('\n');
     cleanResponse = cleanResponse.replace(/\n{3,}/g, '\n\n');
+    cleanResponse = cleanResponse.replace(/(\d+\.|•)\s+[^\n]+\n/g, (match: string) => match.trim() + '\n');
     cleanResponse = cleanResponse.replace(/([^\n•\d])\n(?![•\d])/g, '$1 ');
     cleanResponse = cleanResponse.trim();
 

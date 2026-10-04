@@ -124,6 +124,18 @@ export function AICopilot() {
       .replace(/~~(.*?)~~/g, '$1'); // Remove strikethrough
     // Keep links for clickable functionality
 
+    // Convert comma-separated lists to numbered lists
+    // Pattern: "categoria: item1, item2, item3" -> "categoria:\n1. item1\n2. item2\n3. item3"
+    processed = processed.replace(/([^:\n]+:\s*)([^:\n]+)/g, (match: string, prefix: string, items: string) => {
+      const itemList = items.split(',').map((item: string) => item.trim()).filter((item: string) => item.length > 0);
+      if (itemList.length > 2) {
+        // This looks like a list, convert to numbered format
+        const numberedItems = itemList.map((item: string, index: number) => `${index + 1}. ${item}`).join('\n');
+        return prefix + '\n' + numberedItems;
+      }
+      return match;
+    });
+
     // Detect and format numbered lists
     // Pattern: "1. item" or "1) item" or "- item" or "* item"
     const lines = processed.split('\n');
@@ -144,8 +156,10 @@ export function AICopilot() {
 
     // Join lines with proper spacing, preserve list structure
     let result = formattedLines.join('\n');
-    // Replace multiple newlines with single newline
+    // Replace multiple newlines with double newline for better spacing
     result = result.replace(/\n{3,}/g, '\n\n');
+    // Replace single newlines after numbered/bullet items with single newline
+    result = result.replace(/(\d+\.|•)\s+[^\n]+\n/g, (match) => match.trim() + '\n');
     // Replace other newlines with spaces for non-list content
     result = result.replace(/([^\n•\d])\n(?![•\d])/g, '$1 ');
 
