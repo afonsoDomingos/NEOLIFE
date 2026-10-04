@@ -43,9 +43,37 @@ export function AICopilot() {
   const [isIdentified, setIsIdentified] = useState(false);
   const [userData, setUserData] = useState({ name: '', email: '' });
   const [isSubmittingIdentity, setIsSubmittingIdentity] = useState(false);
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [currentVideo, setCurrentVideo] = useState<{ title: string; videoUrl: string; thumbnailUrl?: string } | null>(null);
+  const [suggestedVideos, setSuggestedVideos] = useState<{ title: string; videoUrl: string; thumbnailUrl?: string }[]>([]);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Fetch videos based on topic
+  const fetchVideos = async (topic: string) => {
+    try {
+      let category = '';
+      if (topic.includes('negocio') || topic.includes('business') || topic.includes('oportunidade')) {
+        category = 'business';
+      } else if (topic.includes('experiencia') || topic.includes('travel') || topic.includes('viagem')) {
+        category = 'experiencias';
+      } else if (topic.includes('saude') || topic.includes('health') || topic.includes('produto')) {
+        category = 'health';
+      }
+
+      const url = category ? `/api/videos?page=${category}` : '/api/videos';
+      const res = await fetch(url);
+      if (res.ok) {
+        const videos = await res.json();
+        if (Array.isArray(videos) && videos.length > 0) {
+          setSuggestedVideos(videos.slice(0, 3)); // Show max 3 videos
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching videos:', error);
+    }
+  };
 
   // Typing effect for title
   const fullTitle = 'AI Copilot';
@@ -301,6 +329,9 @@ export function AICopilot() {
       };
 
       setMessages([...newMessages, assistantMessage]);
+
+      // Fetch and suggest videos based on topic
+      fetchVideos(text);
 
       // Show identity form after first response if not yet identified
       if (!isIdentified && messages.length === 0) {
@@ -733,6 +764,80 @@ export function AICopilot() {
               </div>
             )}
             <div ref={messagesEndRef} />
+
+            {/* Suggested Videos */}
+            {suggestedVideos.length > 0 && (
+              <div style={{ padding: '14px 18px', background: '#f0fdf4', borderTop: '1px solid #bbf7d0' }}>
+                <div style={{ fontSize: '11px', fontWeight: 600, color: '#059669', marginBottom: '10px', letterSpacing: '0.5px' }}>
+                  {isPt ? 'VÍDEOS RECOMENDADOS:' : 'RECOMMENDED VIDEOS:'}
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {suggestedVideos.map((video, idx) => (
+                    <div
+                      key={idx}
+                      onClick={() => {
+                        setCurrentVideo(video);
+                        setShowVideoModal(true);
+                      }}
+                      style={{
+                        display: 'flex',
+                        gap: '10px',
+                        padding: '8px',
+                        borderRadius: '12px',
+                        background: 'white',
+                        border: '1px solid #bbf7d0',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                      }}
+                      onMouseEnter={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = '#10b981';
+                        (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(16, 185, 129, 0.15)';
+                      }}
+                      onMouseLeave={(e) => {
+                        (e.currentTarget as HTMLElement).style.borderColor = '#bbf7d0';
+                        (e.currentTarget as HTMLElement).style.boxShadow = 'none';
+                      }}
+                    >
+                      {video.thumbnailUrl ? (
+                        <img
+                          src={video.thumbnailUrl}
+                          alt={video.title}
+                          style={{
+                            width: '60px',
+                            height: '40px',
+                            objectFit: 'cover',
+                            borderRadius: '8px',
+                          }}
+                        />
+                      ) : (
+                        <div
+                          style={{
+                            width: '60px',
+                            height: '40px',
+                            borderRadius: '8px',
+                            background: '#e2e8f0',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontSize: '20px',
+                          }}
+                        >
+                          ▶
+                        </div>
+                      )}
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontSize: '12px', fontWeight: 600, color: '#1e293b', marginBottom: '2px' }}>
+                          {video.title}
+                        </div>
+                        <div style={{ fontSize: '10px', color: '#64748b' }}>
+                          {isPt ? 'Clique para assistir' : 'Click to watch'}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Services/Quick prompts (like the image) */}
@@ -1020,6 +1125,140 @@ export function AICopilot() {
               Powered by Wehosthere
             </a>
           </div>
+
+          {/* Video Modal */}
+          {showVideoModal && currentVideo && (
+            <div
+              style={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: 'rgba(0,0,0,0.8)',
+                zIndex: 2000,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: '20px',
+              }}
+              onClick={() => setShowVideoModal(false)}
+            >
+              <div
+                style={{
+                  background: 'white',
+                  borderRadius: '20px',
+                  maxWidth: '800px',
+                  width: '100%',
+                  maxHeight: '90vh',
+                  overflow: 'hidden',
+                  position: 'relative',
+                }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Header */}
+                <div
+                  style={{
+                    padding: '16px 20px',
+                    borderBottom: '1px solid #e5e7eb',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                  }}
+                >
+                  <div style={{ fontSize: '16px', fontWeight: 700, color: '#1e293b' }}>
+                    {currentVideo.title}
+                  </div>
+                  <button
+                    onClick={() => setShowVideoModal(false)}
+                    style={{
+                      background: '#f1f5f9',
+                      border: 'none',
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '18px',
+                      color: '#64748b',
+                    }}
+                  >
+                    ×
+                  </button>
+                </div>
+
+                {/* Video Player */}
+                <div
+                  style={{
+                    position: 'relative',
+                    paddingTop: '56.25%', // 16:9 aspect ratio
+                    background: '#000',
+                  }}
+                >
+                  <iframe
+                    src={currentVideo.videoUrl}
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      border: 'none',
+                    }}
+                    allowFullScreen
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  />
+                </div>
+
+                {/* Footer */}
+                <div
+                  style={{
+                    padding: '16px 20px',
+                    borderTop: '1px solid #e5e7eb',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                    gap: '10px',
+                  }}
+                >
+                  <button
+                    onClick={() => setShowVideoModal(false)}
+                    style={{
+                      padding: '10px 20px',
+                      borderRadius: '12px',
+                      border: '1px solid #e2e8f0',
+                      background: 'white',
+                      color: '#64748b',
+                      fontSize: '13px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {isPt ? 'Fechar' : 'Close'}
+                  </button>
+                  <a
+                    href={currentVideo.videoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      padding: '10px 20px',
+                      borderRadius: '12px',
+                      border: 'none',
+                      background: 'linear-gradient(135deg, #10b981, #059669)',
+                      color: 'white',
+                      fontSize: '13px',
+                      fontWeight: 600,
+                      cursor: 'pointer',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    {isPt ? 'Abrir em nova aba' : 'Open in new tab'}
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
