@@ -82,16 +82,34 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    // Remove markdown formatting from AI response
-    const cleanResponse = candidateText
+    // Remove markdown formatting from AI response but preserve lists
+    let cleanResponse = candidateText
       .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
       .replace(/\*(.*?)\*/g, '$1') // Remove italic
       .replace(/`(.*?)`/g, '$1') // Remove inline code
       .replace(/__(.*?)__/g, '$1') // Remove underline
       .replace(/~~(.*?)~~/g, '$1') // Remove strikethrough
-      .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Remove links, keep text
-      .replace(/\n/g, ' ') // Replace newlines with spaces
-      .trim();
+      .replace(/\[(.*?)\]\(.*?\)/g, '$1'); // Remove links, keep text
+
+    // Format lists
+    const lines = cleanResponse.split('\n');
+    const formattedLines = lines.map((line: string) => {
+      const trimmed = line.trim();
+      const numberedMatch = trimmed.match(/^(\d+)[\.\)]\s+(.+)/);
+      if (numberedMatch) {
+        return `${numberedMatch[1]}. ${numberedMatch[2]}`;
+      }
+      const bulletMatch = trimmed.match(/^[-*•]\s+(.+)/);
+      if (bulletMatch) {
+        return `• ${bulletMatch[1]}`;
+      }
+      return trimmed;
+    });
+
+    cleanResponse = formattedLines.join('\n');
+    cleanResponse = cleanResponse.replace(/\n{3,}/g, '\n\n');
+    cleanResponse = cleanResponse.replace(/([^\n•\d])\n(?![•\d])/g, '$1 ');
+    cleanResponse = cleanResponse.trim();
 
     return NextResponse.json({
       content: cleanResponse,

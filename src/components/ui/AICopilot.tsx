@@ -54,17 +54,42 @@ export function AICopilot() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Remove markdown formatting for clean text display
+  // Remove markdown formatting and format lists for clean text display
   const cleanMarkdown = (text: string): string => {
-    return text
+    let processed = text
       .replace(/\*\*(.*?)\*\*/g, '$1') // Remove bold
       .replace(/\*(.*?)\*/g, '$1') // Remove italic
       .replace(/`(.*?)`/g, '$1') // Remove inline code
       .replace(/__(.*?)__/g, '$1') // Remove underline
       .replace(/~~(.*?)~~/g, '$1') // Remove strikethrough
-      .replace(/\[(.*?)\]\(.*?\)/g, '$1') // Remove links, keep text
-      .replace(/\n/g, ' ') // Replace newlines with spaces
-      .trim();
+      .replace(/\[(.*?)\]\(.*?\)/g, '$1'); // Remove links, keep text
+
+    // Detect and format numbered lists
+    // Pattern: "1. item" or "1) item" or "- item" or "* item"
+    const lines = processed.split('\n');
+    const formattedLines = lines.map((line: string) => {
+      const trimmed = line.trim();
+      // Check if line starts with a number pattern
+      const numberedMatch = trimmed.match(/^(\d+)[\.\)]\s+(.+)/);
+      if (numberedMatch) {
+        return `${numberedMatch[1]}. ${numberedMatch[2]}`;
+      }
+      // Check if line starts with bullet point
+      const bulletMatch = trimmed.match(/^[-*•]\s+(.+)/);
+      if (bulletMatch) {
+        return `• ${bulletMatch[1]}`;
+      }
+      return trimmed;
+    });
+
+    // Join lines with proper spacing, preserve list structure
+    let result = formattedLines.join('\n');
+    // Replace multiple newlines with single newline
+    result = result.replace(/\n{3,}/g, '\n\n');
+    // Replace other newlines with spaces for non-list content
+    result = result.replace(/([^\n•\d])\n(?![•\d])/g, '$1 ');
+
+    return result.trim();
   };
 
   useEffect(() => {
@@ -468,11 +493,12 @@ export function AICopilot() {
                     padding: '10px 14px',
                     borderRadius: '18px',
                     fontSize: '13px',
-                    lineHeight: 1.5,
+                    lineHeight: 1.6,
                     wordBreak: 'break-word',
                     background: m.role === 'user' ? 'linear-gradient(135deg, #3b82f6, #2563eb)' : 'white',
                     color: m.role === 'user' ? 'white' : '#1e293b',
                     boxShadow: m.role === 'user' ? '0 2px 8px rgba(59, 130, 246, 0.25)' : '0 1px 3px rgba(0,0,0,0.08)',
+                    whiteSpace: 'pre-wrap',
                   }}
                 >
                   {m.role === 'assistant' ? cleanMarkdown(m.content) : m.content}
