@@ -112,7 +112,7 @@ export function AICopilot() {
     }
   };
 
-  // Minimized banner (like the image)
+  // Minimized banner (inspired by the image)
   if (!isOpen) {
     return (
       <div
@@ -127,79 +127,81 @@ export function AICopilot() {
       >
         <div
           style={{
-            background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
-            borderRadius: '12px',
-            padding: '12px 16px',
+            background: 'linear-gradient(135deg, #1e40af, #3b82f6)',
+            borderRadius: '16px',
+            padding: '14px 20px',
             display: 'flex',
             alignItems: 'center',
-            gap: '12px',
-            boxShadow: '0 4px 20px rgba(59, 130, 246, 0.4)',
+            gap: '14px',
+            boxShadow: '0 8px 32px rgba(59, 130, 246, 0.3)',
             color: 'white',
-            fontSize: '14px',
+            fontSize: '15px',
             fontWeight: 600,
             transition: 'all 0.3s',
+            border: '1px solid rgba(255,255,255,0.1)',
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.02)';
-            e.currentTarget.style.boxShadow = '0 6px 24px rgba(59, 130, 246, 0.5)';
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 12px 40px rgba(59, 130, 246, 0.4)';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-            e.currentTarget.style.boxShadow = '0 4px 20px rgba(59, 130, 246, 0.4)';
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 8px 32px rgba(59, 130, 246, 0.3)';
           }}
         >
-          {/* Icon */}
+          {/* AI Icon */}
           <div
             style={{
-              width: '24px',
-              height: '24px',
-              background: 'rgba(255,255,255,0.2)',
-              borderRadius: '50%',
+              width: '32px',
+              height: '32px',
+              background: 'rgba(255,255,255,0.15)',
+              borderRadius: '10px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              backdropFilter: 'blur(10px)',
             }}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
               <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" />
               <path d="M12 6v6l4 2" />
             </svg>
           </div>
 
           {/* Text */}
-          <span>AI Copilot</span>
+          <div>
+            <div style={{ fontSize: '15px', fontWeight: 700, letterSpacing: '-0.3px' }}>
+              {isPt ? 'NeoLife AI Copilot' : 'NeoLife AI Copilot'}
+            </div>
+            <div style={{ fontSize: '11px', opacity: 0.85, fontWeight: 400 }}>
+              {isPt ? 'Assistente Inteligente' : 'Intelligent Assistant'}
+            </div>
+          </div>
 
           {/* Green dot */}
           <div
             style={{
-              width: '8px',
-              height: '8px',
+              width: '10px',
+              height: '10px',
               background: '#10b981',
               borderRadius: '50%',
-              boxShadow: '0 0 8px #10b981',
+              boxShadow: '0 0 12px #10b981',
+              marginLeft: 'auto',
             }}
           />
-
-          {/* Mic icon */}
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
-            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
-            <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-            <line x1="12" y1="19" x2="12" y2="23" />
-            <line x1="8" y1="23" x2="16" y2="23" />
-          </svg>
         </div>
       </div>
     );
   }
 
-  // Open chat window
+  // Open chat window (inspired by the image)
   return (
     <div
       style={{
         position: 'fixed',
         top: '120px',
         right: '20px',
-        width: '380px',
+        width: '400px',
         maxWidth: 'calc(100vw - 40px)',
         zIndex: 1000,
         fontFamily: 'Inter, -apple-system, sans-serif',
@@ -208,62 +210,65 @@ export function AICopilot() {
       {/* Header */}
       <div
         style={{
-          background: 'linear-gradient(135deg, #3b82f6, #2563eb)',
-          borderRadius: '12px 12px 0 0',
-          padding: '14px 16px',
+          background: 'linear-gradient(135deg, #1e40af, #3b82f6)',
+          borderRadius: '16px 16px 0 0',
+          padding: '16px 20px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           color: 'white',
-          boxShadow: '0 4px 20px rgba(59, 130, 246, 0.3)',
+          boxShadow: '0 4px 24px rgba(59, 130, 246, 0.25)',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div
             style={{
-              width: '28px',
-              height: '28px',
-              background: 'rgba(255,255,255,0.2)',
-              borderRadius: '50%',
+              width: '36px',
+              height: '36px',
+              background: 'rgba(255,255,255,0.15)',
+              borderRadius: '12px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              backdropFilter: 'blur(10px)',
             }}
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
               <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" />
               <path d="M12 6v6l4 2" />
             </svg>
           </div>
           <div>
-            <div style={{ fontSize: '15px', fontWeight: 700 }}>AI Copilot</div>
-            <div style={{ fontSize: '11px', opacity: 0.9 }}>
-              {isPt ? 'NeoLife Assistant' : 'NeoLife Assistant'}
+            <div style={{ fontSize: '16px', fontWeight: 700, letterSpacing: '-0.3px' }}>
+              NeoLife AI Copilot
+            </div>
+            <div style={{ fontSize: '12px', opacity: 0.9, fontWeight: 400 }}>
+              {isPt ? 'Assistente Inteligente' : 'Intelligent Assistant'}
             </div>
           </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
           {/* Minimize button */}
           <button
             onClick={() => setIsMinimized(!isMinimized)}
             style={{
-              background: 'rgba(255,255,255,0.15)',
+              background: 'rgba(255,255,255,0.12)',
               border: 'none',
               color: 'white',
-              width: '28px',
-              height: '28px',
-              borderRadius: '6px',
+              width: '32px',
+              height: '32px',
+              borderRadius: '8px',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               transition: 'background 0.2s',
             }}
-            onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.25)'}
-            onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.15)'}
+            onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.2)'}
+            onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.12)'}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
               {isMinimized ? (
                 <polyline points="18 15 12 9 6 15" />
               ) : (
@@ -276,22 +281,22 @@ export function AICopilot() {
           <button
             onClick={() => setIsOpen(false)}
             style={{
-              background: 'rgba(255,255,255,0.15)',
+              background: 'rgba(255,255,255,0.12)',
               border: 'none',
               color: 'white',
-              width: '28px',
-              height: '28px',
-              borderRadius: '6px',
+              width: '32px',
+              height: '32px',
+              borderRadius: '8px',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               transition: 'background 0.2s',
             }}
-            onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.25)'}
-            onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.15)'}
+            onMouseEnter={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.2)'}
+            onMouseLeave={(e) => (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.12)'}
           >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -304,24 +309,24 @@ export function AICopilot() {
         <div
           style={{
             background: 'white',
-            borderRadius: '0 0 12px 12px',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+            borderRadius: '0 0 16px 16px',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
             overflow: 'hidden',
-            border: '1px solid rgba(59, 130, 246, 0.2)',
+            border: '1px solid rgba(59, 130, 246, 0.15)',
             borderTop: 'none',
           }}
         >
           {/* Messages */}
           <div
             style={{
-              height: '400px',
-              maxHeight: '60vh',
+              height: '420px',
+              maxHeight: '65vh',
               overflowY: 'auto',
-              padding: '16px',
+              padding: '20px',
               display: 'flex',
               flexDirection: 'column',
-              gap: '12px',
-              background: '#f9fafb',
+              gap: '14px',
+              background: '#f8fafc',
             }}
           >
             {messages.map((m) => (
@@ -330,20 +335,20 @@ export function AICopilot() {
                 style={{
                   display: 'flex',
                   flexDirection: m.role === 'user' ? 'row-reverse' : 'row',
-                  gap: '8px',
+                  gap: '10px',
                 }}
               >
                 <div
                   style={{
-                    maxWidth: '80%',
-                    padding: '10px 14px',
-                    borderRadius: '12px',
-                    fontSize: '13px',
-                    lineHeight: 1.5,
+                    maxWidth: '85%',
+                    padding: '12px 16px',
+                    borderRadius: '16px',
+                    fontSize: '14px',
+                    lineHeight: 1.6,
                     wordBreak: 'break-word',
-                    background: m.role === 'user' ? '#3b82f6' : 'white',
-                    color: m.role === 'user' ? 'white' : '#1f2937',
-                    boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+                    background: m.role === 'user' ? 'linear-gradient(135deg, #3b82f6, #2563eb)' : 'white',
+                    color: m.role === 'user' ? 'white' : '#1e293b',
+                    boxShadow: m.role === 'user' ? '0 2px 8px rgba(59, 130, 246, 0.25)' : '0 1px 3px rgba(0,0,0,0.08)',
                   }}
                 >
                   {m.content}
@@ -351,20 +356,20 @@ export function AICopilot() {
               </div>
             ))}
             {isLoading && (
-              <div style={{ display: 'flex', gap: '8px' }}>
+              <div style={{ display: 'flex', gap: '10px' }}>
                 <div
                   style={{
-                    padding: '10px 14px',
-                    borderRadius: '12px',
+                    padding: '12px 16px',
+                    borderRadius: '16px',
                     background: 'white',
-                    boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
                   }}
                 >
-                  <div style={{ display: 'flex', gap: '4px' }}>
+                  <div style={{ display: 'flex', gap: '5px' }}>
                     <div
                       style={{
-                        width: '6px',
-                        height: '6px',
+                        width: '7px',
+                        height: '7px',
                         background: '#3b82f6',
                         borderRadius: '50%',
                         animation: 'bounce 1.4s infinite ease-in-out',
@@ -372,8 +377,8 @@ export function AICopilot() {
                     />
                     <div
                       style={{
-                        width: '6px',
-                        height: '6px',
+                        width: '7px',
+                        height: '7px',
                         background: '#3b82f6',
                         borderRadius: '50%',
                         animation: 'bounce 1.4s infinite ease-in-out 0.2s',
@@ -381,8 +386,8 @@ export function AICopilot() {
                     />
                     <div
                       style={{
-                        width: '6px',
-                        height: '6px',
+                        width: '7px',
+                        height: '7px',
                         background: '#3b82f6',
                         borderRadius: '50%',
                         animation: 'bounce 1.4s infinite ease-in-out 0.4s',
@@ -401,38 +406,46 @@ export function AICopilot() {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Quick prompts */}
+          {/* Services/Quick prompts (like the image) */}
           {messages.length <= 2 && (
-            <div style={{ padding: '12px 16px', background: 'white', borderTop: '1px solid #e5e7eb' }}>
-              <div style={{ fontSize: '11px', fontWeight: 600, color: '#6b7280', marginBottom: '8px', textTransform: 'uppercase' }}>
-                {isPt ? 'Perguntas Frequentes' : 'Frequently Asked'}
+            <div style={{ padding: '16px 20px', background: 'white', borderTop: '1px solid #e5e7eb' }}>
+              <div style={{ fontSize: '12px', fontWeight: 600, color: '#64748b', marginBottom: '12px', letterSpacing: '0.5px' }}>
+                {isPt ? 'POSSO AJUDAR COM:' : 'I CAN HELP WITH:'}
               </div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 {quickPrompts.map((prompt, idx) => (
                   <button
                     key={idx}
                     onClick={() => handleSend(prompt)}
                     style={{
-                      padding: '6px 12px',
-                      borderRadius: '16px',
-                      border: '1px solid #e5e7eb',
-                      background: '#f9fafb',
-                      color: '#374151',
-                      fontSize: '12px',
+                      padding: '10px 14px',
+                      borderRadius: '10px',
+                      border: '1px solid #e2e8f0',
+                      background: '#f8fafc',
+                      color: '#334155',
+                      fontSize: '13px',
                       cursor: 'pointer',
                       transition: 'all 0.2s',
+                      textAlign: 'left',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '8px',
                     }}
                     onMouseEnter={(e) => {
                       (e.currentTarget as HTMLElement).style.background = '#eff6ff';
                       (e.currentTarget as HTMLElement).style.borderColor = '#3b82f6';
-                      (e.currentTarget as HTMLElement).style.color = '#3b82f6';
+                      (e.currentTarget as HTMLElement).style.color = '#1e40af';
                     }}
                     onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.background = '#f9fafb';
-                      (e.currentTarget as HTMLElement).style.borderColor = '#e5e7eb';
-                      (e.currentTarget as HTMLElement).style.color = '#374151';
+                      (e.currentTarget as HTMLElement).style.background = '#f8fafc';
+                      (e.currentTarget as HTMLElement).style.borderColor = '#e2e8f0';
+                      (e.currentTarget as HTMLElement).style.color = '#334155';
                     }}
                   >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2}>
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 6v6l4 2" />
+                    </svg>
                     {prompt}
                   </button>
                 ))}
@@ -441,45 +454,53 @@ export function AICopilot() {
           )}
 
           {/* Input */}
-          <div style={{ padding: '12px 16px', background: 'white', borderTop: '1px solid #e5e7eb' }}>
+          <div style={{ padding: '16px 20px', background: 'white', borderTop: '1px solid #e5e7eb' }}>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 handleSend();
               }}
-              style={{ display: 'flex', gap: '8px' }}
+              style={{ display: 'flex', gap: '10px' }}
             >
               <input
                 ref={inputRef}
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder={isPt ? 'Pergunte sobre produtos...' : 'Ask about products...'}
+                placeholder={isPt ? 'Digite sua pergunta...' : 'Type your question...'}
                 style={{
                   flex: 1,
-                  padding: '10px 14px',
-                  borderRadius: '8px',
-                  border: '1px solid #e5e7eb',
-                  fontSize: '13px',
+                  padding: '12px 16px',
+                  borderRadius: '12px',
+                  border: '1px solid #e2e8f0',
+                  fontSize: '14px',
                   outline: 'none',
-                  transition: 'border-color 0.2s',
+                  transition: 'all 0.2s',
+                  background: '#f8fafc',
                 }}
-                onFocus={(e) => (e.currentTarget as HTMLElement).style.borderColor = '#3b82f6'}
-                onBlur={(e) => (e.currentTarget as HTMLElement).style.borderColor = '#e5e7eb'}
+                onFocus={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = '#3b82f6';
+                  (e.currentTarget as HTMLElement).style.background = 'white';
+                }}
+                onBlur={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = '#e2e8f0';
+                  (e.currentTarget as HTMLElement).style.background = '#f8fafc';
+                }}
               />
               <button
                 type="submit"
                 disabled={!input.trim() || isLoading}
                 style={{
-                  padding: '10px 14px',
-                  borderRadius: '8px',
+                  padding: '12px 20px',
+                  borderRadius: '12px',
                   border: 'none',
-                  background: input.trim() ? '#3b82f6' : '#9ca3af',
+                  background: input.trim() ? 'linear-gradient(135deg, #3b82f6, #2563eb)' : '#cbd5e1',
                   color: 'white',
-                  fontSize: '13px',
+                  fontSize: '14px',
                   fontWeight: 600,
                   cursor: input.trim() ? 'pointer' : 'not-allowed',
-                  transition: 'background 0.2s',
+                  transition: 'all 0.2s',
+                  boxShadow: input.trim() ? '0 2px 8px rgba(59, 130, 246, 0.3)' : 'none',
                 }}
               >
                 {isPt ? 'Enviar' : 'Send'}
