@@ -32,9 +32,6 @@ export function AICopilot() {
   const [isMinimized, setIsMinimized] = useState(false);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [showLeadForm, setShowLeadForm] = useState(false);
-  const [leadData, setLeadData] = useState({ name: '', email: '', phone: '', country: '', interest: '' });
-  const [isSubmittingLead, setIsSubmittingLead] = useState(false);
   const quickPrompts = isPt ? QUICK_PROMPTS_PT : QUICK_PROMPTS_EN;
 
   const [messages, setMessages] = useState<Message[]>([]);
@@ -42,6 +39,10 @@ export function AICopilot() {
   const [isListening, setIsListening] = useState(false);
   const [typingText, setTypingText] = useState('');
   const [typingIndex, setTypingIndex] = useState(0);
+  const [showIdentifyForm, setShowIdentifyForm] = useState(false);
+  const [isIdentified, setIsIdentified] = useState(false);
+  const [userData, setUserData] = useState({ name: '', email: '' });
+  const [isSubmittingIdentity, setIsSubmittingIdentity] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -158,9 +159,58 @@ export function AICopilot() {
     }
   }, [isOpen, isMinimized, messages]);
 
+  const handleIdentitySubmit = async () => {
+    setIsSubmittingIdentity(true);
+    try {
+      // Save user data to leads API
+      if (userData.name || userData.email) {
+        await fetch('/api/leads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: userData.name,
+            email: userData.email,
+            phone: '',
+            country: '',
+            theme: 'ai-copilot-identity',
+            source: 'ai-copilot',
+          }),
+        });
+      }
+      setIsIdentified(true);
+      setShowIdentifyForm(false);
+      
+      // Add welcome message with user's name
+      const welcomeMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        content: isPt
+          ? userData.name
+            ? `Olá, ${userData.name}! Somos Ofélia e José Machado, os seus consultores NeoLife. Como podemos ajudar?`
+            : 'Olá! Somos Ofélia e José Machado, os seus consultores NeoLife. Como podemos ajudar?'
+          : userData.name
+          ? `Hello, ${userData.name}! We are Ofélia and José Machado, your NeoLife consultants. How can we help?`
+          : 'Hello! We are Ofélia and José Machado, your NeoLife consultants. How can we help?',
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      };
+      setMessages(prev => [...prev, welcomeMessage]);
+    } catch (error) {
+      console.error('Error saving identity:', error);
+      setIsIdentified(true);
+      setShowIdentifyForm(false);
+    } finally {
+      setIsSubmittingIdentity(false);
+    }
+  };
+
   const handleSend = async (textToSend?: string) => {
     const text = (textToSend || input).trim();
     if (!text || isLoading) return;
+
+    // Show identity form on first message if not yet identified
+    if (!isIdentified && messages.length === 0) {
+      setShowIdentifyForm(true);
+    }
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -190,32 +240,22 @@ export function AICopilot() {
       if (!res.ok) throw new Error('Error');
 
       const data = await res.json();
+      // Personalize response if user provided name
+      let responseContent = data.content || (isPt ? 'Desculpe, ocorreu um erro.' : 'Sorry, an error occurred.');
+      if (userData.name && isPt) {
+        responseContent = `${userData.name}, ${responseContent.toLowerCase()}`;
+      } else if (userData.name && !isPt) {
+        responseContent = `${userData.name}, ${responseContent.charAt(0).toLowerCase() + responseContent.slice(1)}`;
+      }
+      
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'assistant',
-        content: data.content || (isPt ? 'Desculpe, ocorreu um erro.' : 'Sorry, an error occurred.'),
+        content: responseContent,
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
 
       setMessages([...newMessages, assistantMessage]);
-
-      // Check if user is interested and offer lead capture
-      const interestKeywords = ['quero', 'interessado', 'interessada', 'gostaria', 'comprar', 'encomendar', 'começar', 'iniciar', 'negócio', 'oportunidade'];
-      const hasInterest = interestKeywords.some(kw => text.toLowerCase().includes(kw));
-      if (hasInterest && messages.length < 5) {
-        setTimeout(() => {
-          const leadPrompt: Message = {
-            id: (Date.now() + 2).toString(),
-            role: 'assistant',
-            content: isPt
-              ? 'Para continuarmos, gostaríamos de capturar os seus dados para lhe enviar informações personalizadas. Poderia partilhar o seu nome e contacto?'
-              : 'To continue, we would like to capture your details to send you personalized information. Could you share your name and contact?',
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          };
-          setMessages(prev => [...prev, leadPrompt]);
-          setShowLeadForm(true);
-        }, 1000);
-      }
     } catch (error) {
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -228,58 +268,6 @@ export function AICopilot() {
       setMessages([...newMessages, errorMessage]);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const handleLeadSubmit = async () => {
-    if (!leadData.name || !leadData.phone) {
-      alert(isPt ? 'Por favor, preencha pelo menos o nome e telefone.' : 'Please fill in at least name and phone.');
-      return;
-    }
-
-    setIsSubmittingLead(true);
-
-    try {
-      const res = await fetch('/api/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: leadData.name,
-          email: leadData.email,
-          phone: leadData.phone,
-          country: leadData.country,
-          theme: leadData.interest || 'ai-copilot',
-          source: 'ai-copilot',
-        }),
-      });
-
-      if (res.ok) {
-        const successMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          role: 'assistant',
-          content: isPt
-            ? 'Obrigado! Os seus dados foram registados com sucesso. Nós, Ofélia e José, entraremos em contacto em breve.'
-            : 'Thank you! Your details have been registered successfully. We, Ofélia and José, will contact you soon.',
-          time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        };
-        setMessages(prev => [...prev, successMessage]);
-        setShowLeadForm(false);
-        setLeadData({ name: '', email: '', phone: '', country: '', interest: '' });
-      } else {
-        throw new Error('Failed to submit lead');
-      }
-    } catch (error) {
-      const errorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: isPt
-          ? 'Desculpe, ocorreu um erro ao registar os seus dados. Tente novamente mais tarde.'
-          : 'Sorry, there was an error registering your details. Please try again later.',
-        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      };
-      setMessages(prev => [...prev, errorMessage]);
-    } finally {
-      setIsSubmittingLead(false);
     }
   };
 
@@ -850,69 +838,48 @@ export function AICopilot() {
             </form>
           </div>
 
-          {/* Lead Capture Form */}
-          {showLeadForm && (
+          {/* Identity Form (optional, appears on first message) */}
+          {showIdentifyForm && !isIdentified && (
             <div style={{ padding: '14px 18px', background: '#f0fdf4', borderTop: '1px solid #bbf7d0' }}>
               <div style={{ fontSize: '12px', fontWeight: 600, color: '#059669', marginBottom: '10px' }}>
-                {isPt ? 'Informações de Contacto' : 'Contact Information'}
+                {isPt ? 'Como gostaria de ser chamado?' : 'How would you like to be called?'}
+                <span style={{ fontSize: '10px', fontWeight: 400, color: '#64748b', marginLeft: '8px' }}>
+                  ({isPt ? 'Opcional' : 'Optional'})
+                </span>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <input
                   type="text"
-                  placeholder={isPt ? 'Nome *' : 'Name *'}
-                  value={leadData.name}
-                  onChange={(e) => setLeadData({ ...leadData, name: e.target.value })}
+                  placeholder={isPt ? 'Seu nome' : 'Your name'}
+                  value={userData.name}
+                  onChange={(e) => setUserData({ ...userData, name: e.target.value })}
                   style={{
                     padding: '8px 12px',
                     borderRadius: '12px',
-                    border: '1px solid #e2e8f0',
+                    border: '1px solid #bbf7d0',
                     fontSize: '12px',
                     outline: 'none',
-                  }}
-                />
-                <input
-                  type="tel"
-                  placeholder={isPt ? 'Telefone *' : 'Phone *'}
-                  value={leadData.phone}
-                  onChange={(e) => setLeadData({ ...leadData, phone: e.target.value })}
-                  style={{
-                    padding: '8px 12px',
-                    borderRadius: '12px',
-                    border: '1px solid #e2e8f0',
-                    fontSize: '12px',
-                    outline: 'none',
+                    background: 'white',
                   }}
                 />
                 <input
                   type="email"
-                  placeholder={isPt ? 'Email' : 'Email'}
-                  value={leadData.email}
-                  onChange={(e) => setLeadData({ ...leadData, email: e.target.value })}
+                  placeholder={isPt ? 'Seu email (opcional)' : 'Your email (optional)'}
+                  value={userData.email}
+                  onChange={(e) => setUserData({ ...userData, email: e.target.value })}
                   style={{
                     padding: '8px 12px',
                     borderRadius: '12px',
-                    border: '1px solid #e2e8f0',
+                    border: '1px solid #bbf7d0',
                     fontSize: '12px',
                     outline: 'none',
+                    background: 'white',
                   }}
                 />
-                <input
-                  type="text"
-                  placeholder={isPt ? 'País' : 'Country'}
-                  value={leadData.country}
-                  onChange={(e) => setLeadData({ ...leadData, country: e.target.value })}
-                  style={{
-                    padding: '8px 12px',
-                    borderRadius: '12px',
-                    border: '1px solid #e2e8f0',
-                    fontSize: '12px',
-                    outline: 'none',
-                  }}
-                />
-                <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
+                <div style={{ display: 'flex', gap: '8px' }}>
                   <button
-                    onClick={handleLeadSubmit}
-                    disabled={isSubmittingLead}
+                    onClick={handleIdentitySubmit}
+                    disabled={isSubmittingIdentity}
                     style={{
                       flex: 1,
                       padding: '8px 16px',
@@ -922,18 +889,30 @@ export function AICopilot() {
                       color: 'white',
                       fontSize: '12px',
                       fontWeight: 600,
-                      cursor: isSubmittingLead ? 'not-allowed' : 'pointer',
-                      opacity: isSubmittingLead ? 0.7 : 1,
+                      cursor: isSubmittingIdentity ? 'not-allowed' : 'pointer',
+                      opacity: isSubmittingIdentity ? 0.7 : 1,
                     }}
                   >
-                    {isSubmittingLead ? (isPt ? 'A enviar...' : 'Sending...') : (isPt ? 'Enviar' : 'Send')}
+                    {isSubmittingIdentity ? (isPt ? 'A guardar...' : 'Saving...') : (isPt ? 'Continuar' : 'Continue')}
                   </button>
                   <button
-                    onClick={() => setShowLeadForm(false)}
+                    onClick={() => {
+                      setShowIdentifyForm(false);
+                      setIsIdentified(true);
+                      const welcomeMessage: Message = {
+                        id: (Date.now() + 1).toString(),
+                        role: 'assistant',
+                        content: isPt
+                          ? 'Olá! Somos Ofélia e José Machado, os seus consultores NeoLife. Como podemos ajudar?'
+                          : 'Hello! We are Ofélia and José Machado, your NeoLife consultants. How can we help?',
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                      };
+                      setMessages(prev => [...prev, welcomeMessage]);
+                    }}
                     style={{
                       padding: '8px 16px',
                       borderRadius: '12px',
-                      border: '1px solid #e2e8f0',
+                      border: '1px solid #bbf7d0',
                       background: 'white',
                       color: '#64748b',
                       fontSize: '12px',
@@ -941,7 +920,7 @@ export function AICopilot() {
                       cursor: 'pointer',
                     }}
                   >
-                    {isPt ? 'Cancelar' : 'Cancel'}
+                    {isPt ? 'Ignorar' : 'Skip'}
                   </button>
                 </div>
               </div>
