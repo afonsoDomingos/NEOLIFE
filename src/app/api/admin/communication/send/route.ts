@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendBulkEmail } from '@/lib/email/resend';
-import { MongoClient, Db } from 'mongodb';
+import { MongoClient, Db, ObjectId } from 'mongodb';
 
 let db: Db;
 
@@ -16,7 +16,7 @@ async function getDatabase(): Promise<Db> {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { subject, content, targetGroup, sendToAll } = body;
+    const { subject, content, targetGroup, sendToAll, sendToSpecific, selectedLeads } = body;
 
     if (!subject || !content) {
       return NextResponse.json(
@@ -29,7 +29,18 @@ export async function POST(request: NextRequest) {
     const leadsCollection = database.collection('leads');
 
     let leads = [];
-    if (sendToAll) {
+    if (sendToSpecific && selectedLeads && selectedLeads.length > 0) {
+      // Get specific leads by IDs
+      leads = await leadsCollection.find({
+        _id: { $in: selectedLeads.map((id: string) => {
+          try {
+            return new ObjectId(id);
+          } catch {
+            return id;
+          }
+        })}
+      }).toArray();
+    } else if (sendToAll) {
       leads = await leadsCollection.find({}).toArray();
     } else if (targetGroup) {
       leads = await leadsCollection.find({ theme: targetGroup }).toArray();

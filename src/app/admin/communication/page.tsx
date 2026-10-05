@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { emailTemplates, getTemplateById } from '@/lib/email/templates';
 
 export default function CommunicationPage() {
@@ -8,9 +8,34 @@ export default function CommunicationPage() {
   const [content, setContent] = useState('');
   const [targetGroup, setTargetGroup] = useState('');
   const [sendToAll, setSendToAll] = useState(false);
+  const [sendToSpecific, setSendToSpecific] = useState(false);
+  const [selectedLeads, setSelectedLeads] = useState<string[]>([]);
+  const [leads, setLeads] = useState<any[]>([]);
+  const [loadingLeads, setLoadingLeads] = useState(false);
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState<{ success: boolean; message: string } | null>(null);
   const [selectedTemplate, setSelectedTemplate] = useState('');
+
+  useEffect(() => {
+    if (sendToSpecific) {
+      loadLeads();
+    }
+  }, [sendToSpecific]);
+
+  const loadLeads = async () => {
+    setLoadingLeads(true);
+    try {
+      const response = await fetch('/api/admin/leads');
+      if (response.ok) {
+        const data = await response.json();
+        setLeads(Array.isArray(data) ? data : []);
+      }
+    } catch (error) {
+      console.error('Error loading leads:', error);
+    } finally {
+      setLoadingLeads(false);
+    }
+  };
 
   const handleTemplateChange = (templateId: string) => {
     setSelectedTemplate(templateId);
@@ -21,13 +46,40 @@ export default function CommunicationPage() {
     }
   };
 
+  const handleLeadToggle = (leadId: string) => {
+    setSelectedLeads(prev =>
+      prev.includes(leadId)
+        ? prev.filter(id => id !== leadId)
+        : [...prev, leadId]
+    );
+  };
+
+  const handleSelectAll = () => {
+    if (selectedLeads.length === leads.length) {
+      setSelectedLeads([]);
+    } else {
+      setSelectedLeads(leads.map(lead => lead._id || lead.id));
+    }
+  };
+
   const handleSend = async () => {
     if (!subject || !content) {
       alert('Por favor, preencha o assunto e o conteúdo do email.');
       return;
     }
 
-    if (!confirm(`Tem certeza que deseja enviar este email para ${sendToAll ? 'todos os leads' : 'leads do grupo ' + targetGroup}?`)) {
+    if (sendToSpecific && selectedLeads.length === 0) {
+      alert('Por favor, selecione pelo menos um lead.');
+      return;
+    }
+
+    const targetDescription = sendToAll
+      ? 'todos os leads'
+      : sendToSpecific
+      ? `${selectedLeads.length} leads selecionados`
+      : 'leads do grupo ' + targetGroup;
+
+    if (!confirm(`Tem certeza que deseja enviar este email para ${targetDescription}?`)) {
       return;
     }
 
@@ -43,6 +95,8 @@ export default function CommunicationPage() {
           content,
           targetGroup,
           sendToAll,
+          sendToSpecific,
+          selectedLeads,
         }),
       });
 
@@ -52,6 +106,7 @@ export default function CommunicationPage() {
         setResult({ success: true, message: data.message });
         setSubject('');
         setContent('');
+        setSelectedLeads([]);
       } else {
         setResult({ success: false, message: data.error || 'Erro ao enviar email' });
       }
@@ -116,7 +171,7 @@ export default function CommunicationPage() {
                 <input
                   type="radio"
                   checked={sendToAll}
-                  onChange={() => setSendToAll(true)}
+                  onChange={() => { setSendToAll(true); setSendToSpecific(false); }}
                   name="target"
                 />
                 <span>Todos os leads</span>
@@ -124,13 +179,13 @@ export default function CommunicationPage() {
               <label className="flex items-center gap-2">
                 <input
                   type="radio"
-                  checked={!sendToAll}
-                  onChange={() => setSendToAll(false)}
+                  checked={!sendToAll && !sendToSpecific}
+                  onChange={() => { setSendToAll(false); setSendToSpecific(false); }}
                   name="target"
                 />
                 <span>Grupo específico (tema)</span>
               </label>
-              {!sendToAll && (
+              {!sendToAll && !sendToSpecific && (
                 <input
                   type="text"
                   value={targetGroup}
@@ -139,8 +194,61 @@ export default function CommunicationPage() {
                   placeholder="Nome do tema (ex: conheca-neolife)"
                 />
               )}
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  checked={sendToSpecific}
+                  onChange={() => { setSendToAll(false); setSendToSpecific(true); }}
+                  name="target"
+                />
+                <span>Leads específicos (selecionar da lista)</span>
+              </label>
             </div>
           </div>
+
+          {sendToSpecific && (
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-sm font-medium">Selecionar Leads</label>
+                <button
+                  type="button"
+                  onClick={handleSelectAll}
+                  className="text-xs text-blue-600 hover:text-blue-800"
+                >
+                  {selectedLeads.length === leads.length ? 'Desmarcar todos' : 'Selecionar todos'}
+                </button>
+              </div>
+              {loadingLeads ? (
+                <div className="text-sm text-gray-500">Carregando leads...</div>
+              ) : (
+                <div className="border rounded max-h-60 overflow-y-auto">
+                  {leads.length === 0 ? (
+                    <div className="p-4 text-sm text-gray-500">Nenhum lead encontrado</div>
+                  ) : (
+                    leads.map((lead) => (
+                      <label
+                        key={lead._id || lead.id}
+                        className="flex items-center gap-2 p-2 hover:bg-gray-50 border-b last:border-b-0 cursor-pointer"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedLeads.includes(lead._id || lead.id)}
+                          onChange={() => handleLeadToggle(lead._id || lead.id)}
+                        />
+                        <div className="flex-1 text-sm">
+                          <div className="font-medium">{lead.name || 'Sem nome'}</div>
+                          <div className="text-gray-500">{lead.email}</div>
+                        </div>
+                      </label>
+                    ))
+                  )}
+                </div>
+              )}
+              <div className="text-xs text-gray-500 mt-1">
+                {selectedLeads.length} lead(s) selecionado(s)
+              </div>
+            </div>
+          )}
 
           <button
             onClick={handleSend}
