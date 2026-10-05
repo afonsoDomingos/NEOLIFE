@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 
@@ -11,12 +11,14 @@ interface AdminHeaderProps {
   showWebsiteLink?: boolean;
 }
 
-export function AdminHeader({ 
+export function AdminHeader({
   title = 'Painel de Administração',
   showRefresh = false,
   onRefresh,
   showWebsiteLink = true,
 }: AdminHeaderProps) {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const handleLogout = async () => {
     try {
       await fetch('/api/admin/logout', { method: 'POST' });
@@ -25,6 +27,17 @@ export function AdminHeader({
       console.error('Error logging out:', error);
     }
   };
+
+  const menuItems = [
+    { href: '/admin/dashboard', label: 'Dashboard' },
+    { href: '/admin/leads', label: 'Leads' },
+    { href: '/admin/communication', label: 'Comunicação' },
+    { href: '/admin/events', label: 'Eventos' },
+    { href: '/admin/themes', label: 'Temas' },
+    { href: '/admin/product-links', label: 'Produtos' },
+    { href: '/admin/banners', label: 'Banners' },
+    { href: '/admin/videos', label: 'Vídeos' },
+  ];
 
   return (
     <header className="bg-white border-b border-gray-200">
@@ -42,6 +55,36 @@ export function AdminHeader({
             <span className="text-gray-700 font-semibold text-sm">{title}</span>
           </div>
           <div className="flex items-center gap-2.5">
+            {/* Menu Dropdown */}
+            <div className="relative">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="text-xs flex items-center gap-1.5 text-gray-600 hover:text-black font-medium"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                Menu
+              </Button>
+              {menuOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                  <div className="py-1">
+                    {menuItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        onClick={() => setMenuOpen(false)}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-700"
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
             {showWebsiteLink && (
               <Link
                 href="/"
