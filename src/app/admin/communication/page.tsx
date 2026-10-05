@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { emailTemplates, getTemplateById } from '@/lib/email/templates';
 
 export default function CommunicationPage() {
   const [subject, setSubject] = useState('');
@@ -9,6 +10,16 @@ export default function CommunicationPage() {
   const [sendToAll, setSendToAll] = useState(false);
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState<{ success: boolean; message: string } | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState('');
+
+  const handleTemplateChange = (templateId: string) => {
+    setSelectedTemplate(templateId);
+    const template = getTemplateById(templateId);
+    if (template) {
+      setSubject(template.subject);
+      setContent(template.content);
+    }
+  };
 
   const handleSend = async () => {
     if (!subject || !content) {
@@ -60,6 +71,22 @@ export default function CommunicationPage() {
         <h2 className="text-xl font-bold mb-4">Novo Email</h2>
 
         <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">Modelo (opcional)</label>
+            <select
+              value={selectedTemplate}
+              onChange={(e) => handleTemplateChange(e.target.value)}
+              className="w-full p-2 border rounded"
+            >
+              <option value="">Selecione um modelo...</option>
+              {emailTemplates.map((template) => (
+                <option key={template.id} value={template.id}>
+                  {template.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <div>
             <label className="block text-sm font-medium mb-1">Assunto</label>
             <input
