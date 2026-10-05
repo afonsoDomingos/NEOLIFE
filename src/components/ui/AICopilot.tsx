@@ -41,7 +41,7 @@ export function AICopilot() {
   const [typingIndex, setTypingIndex] = useState(0);
   const [showIdentifyForm, setShowIdentifyForm] = useState(false);
   const [isIdentified, setIsIdentified] = useState(false);
-  const [userData, setUserData] = useState({ name: '', email: '' });
+  const [userData, setUserData] = useState({ name: '', email: '', phone: '', country: 'mz' });
   const [isSubmittingIdentity, setIsSubmittingIdentity] = useState(false);
 
   // Load saved user data from localStorage on mount
@@ -50,7 +50,12 @@ export function AICopilot() {
     if (savedData) {
       try {
         const parsed = JSON.parse(savedData);
-        setUserData(parsed);
+        setUserData({
+          name: parsed.name || '',
+          email: parsed.email || '',
+          phone: parsed.phone || '',
+          country: parsed.country || 'mz',
+        });
         if (parsed.name || parsed.email) {
           setIsIdentified(true);
         }
@@ -62,7 +67,7 @@ export function AICopilot() {
 
   // Save user data to localStorage when changed
   useEffect(() => {
-    if (userData.name || userData.email) {
+    if (userData.name || userData.email || userData.phone || userData.country) {
       localStorage.setItem('ai-copilot-user-data', JSON.stringify(userData));
     }
   }, [userData]);
@@ -391,8 +396,8 @@ export function AICopilot() {
           body: JSON.stringify({
             name: userData.name,
             email: userData.email,
-            phone: '',
-            country: '',
+            phone: userData.phone || '+258 8xxxxxxxx',
+            country: userData.country || 'mz',
             theme: 'ai-copilot-identity',
             source: 'ai-copilot',
           }),
@@ -1269,6 +1274,38 @@ export function AICopilot() {
                     background: userData.email ? '#f0fdf4' : 'white',
                   }}
                 />
+                <input
+                  type="tel"
+                  placeholder={userData.phone ? (isPt ? 'Telefone já salvo' : 'Phone already saved') : (isPt ? 'Seu telefone (opcional)' : 'Your phone (optional)')}
+                  value={userData.phone}
+                  onChange={(e) => setUserData({ ...userData, phone: e.target.value })}
+                  style={{
+                    padding: '8px 12px',
+                    borderRadius: '12px',
+                    border: '1px solid #bbf7d0',
+                    fontSize: '12px',
+                    outline: 'none',
+                    background: userData.phone ? '#f0fdf4' : 'white',
+                  }}
+                />
+                <select
+                  value={userData.country}
+                  onChange={(e) => setUserData({ ...userData, country: e.target.value })}
+                  style={{
+                    padding: '8px 12px',
+                    borderRadius: '12px',
+                    border: '1px solid #bbf7d0',
+                    fontSize: '12px',
+                    outline: 'none',
+                    background: userData.country ? '#f0fdf4' : 'white',
+                  }}
+                >
+                  <option value="mz">Moçambique</option>
+                  <option value="ao">Angola</option>
+                  <option value="za">África do Sul</option>
+                  <option value="pt">Portugal</option>
+                  <option value="other">Outro</option>
+                </select>
                 <div style={{ display: 'flex', gap: '8px' }}>
                   <button
                     onClick={handleIdentitySubmit}
