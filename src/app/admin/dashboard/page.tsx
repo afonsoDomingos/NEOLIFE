@@ -463,6 +463,22 @@ export default function AdminDashboard() {
               </Card>
             </Link>
 
+            <Link href="/admin/communication">
+              <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
+                <CardContent className="p-5 flex items-start gap-3">
+                  <div className="p-2.5 bg-blue-50 text-blue-700 rounded-lg group-hover:scale-105 transition-transform flex items-center justify-center">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M3 8l7.89 5.26a2 2 0 002.22 0l7.89-5.26a2 2 0 002.22 0L21 8M9 9h.01M15 9h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-black group-hover:text-emerald-700 transition-colors text-sm">Comunicação</h3>
+                    <p className="text-xs text-gray-500 mt-0.5">Enviar emails para leads</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+
             <Link href="/admin/pillar-cards">
               <Card className="hover:shadow-md hover:border-emerald-400 transition-all cursor-pointer group">
                 <CardContent className="p-5 flex items-start gap-3">
