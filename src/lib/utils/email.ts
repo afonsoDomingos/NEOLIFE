@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { sendAdminNotification as sendResendAdminNotification } from '@/lib/email/resend';
 
 interface SendEmailOptions {
   to: string;
@@ -201,51 +202,31 @@ export async function sendAdminNotificationEmail(lead: AdminEmailData): Promise<
   const cleanPhone = lead.phone.replace(/[^0-9]/g, '');
   const cleanWhatsapp = (lead.whatsapp || lead.phone).replace(/[^0-9]/g, '');
 
-  const html = `
-    <!DOCTYPE html>
-    <html lang="pt">
-    <head>
-      <meta charset="utf-8">
-      <style>
-        body { font-family: sans-serif; background-color: #f3f4f6; padding: 20px; color: #111827; }
-        .card { max-width: 550px; margin: 0 auto; background: #ffffff; border-radius: 8px; padding: 24px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-        h2 { color: #16a34a; margin-top: 0; }
-        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
-        td { padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px; }
-        td.label { font-weight: bold; width: 35%; color: #4b5563; }
-        .cta-btn { display: inline-block; background: #25D366; color: #fff !important; text-decoration: none; padding: 10px 18px; border-radius: 6px; font-weight: bold; font-size: 14px; margin-top: 16px; }
-      </style>
-    </head>
-    <body>
-      <div class="card">
-        <h2>Novo Lead Registado!</h2>
-        <p>Um novo contacto acabou de submeter o formulário no website NeoLife África:</p>
-        
-        <table>
-          <tr><td class="label">Nome:</td><td><strong>${lead.name}</strong></td></tr>
-          <tr><td class="label">País:</td><td>${lead.country}</td></tr>
-          <tr><td class="label">Telefone:</td><td><a href="tel:${cleanPhone}">${lead.phone}</a></td></tr>
-          <tr><td class="label">Email:</td><td><a href="mailto:${lead.email}">${lead.email}</a></td></tr>
-          <tr><td class="label">WhatsApp:</td><td>${lead.whatsapp || lead.phone}</td></tr>
-          <tr><td class="label">Tema de Interesse:</td><td><strong>${lead.theme}</strong></td></tr>
-          ${lead.campaign ? `<tr><td class="label">Campanha:</td><td>${lead.campaign}</td></tr>` : ''}
-          ${lead.notes ? `<tr><td class="label">Observações:</td><td>${lead.notes}</td></tr>` : ''}
-          <tr><td class="label">Data/Hora:</td><td>${new Date().toLocaleString('pt-PT')}</td></tr>
-        </table>
+  const content = `
+<h2>Novo Lead Registado!</h2>
+<p>Um novo contacto acabou de submeter o formulário no website NeoLife África:</p>
 
-        <div style="text-align: center;">
-          <a href="https://wa.me/${cleanWhatsapp}" class="cta-btn" target="_blank">
-            Iniciar Conversa no WhatsApp
-          </a>
-        </div>
-      </div>
-    </body>
-    </html>
-  `;
+<table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
+  <tr><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px; font-weight: bold; width: 35%; color: #4b5563;">Nome:</td><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px;"><strong>${lead.name}</strong></td></tr>
+  <tr><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px; font-weight: bold; width: 35%; color: #4b5563;">País:</td><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px;">${lead.country}</td></tr>
+  <tr><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px; font-weight: bold; width: 35%; color: #4b5563;">Telefone:</td><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px;"><a href="tel:${cleanPhone}">${lead.phone}</a></td></tr>
+  <tr><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px; font-weight: bold; width: 35%; color: #4b5563;">Email:</td><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px;"><a href="mailto:${lead.email}">${lead.email}</a></td></tr>
+  <tr><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px; font-weight: bold; width: 35%; color: #4b5563;">WhatsApp:</td><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px;">${lead.whatsapp || lead.phone}</td></tr>
+  <tr><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px; font-weight: bold; width: 35%; color: #4b5563;">Tema de Interesse:</td><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px;"><strong>${lead.theme}</strong></td></tr>
+  ${lead.campaign ? `<tr><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px; font-weight: bold; width: 35%; color: #4b5563;">Campanha:</td><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px;">${lead.campaign}</td></tr>` : ''}
+  ${lead.notes ? `<tr><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px; font-weight: bold; width: 35%; color: #4b5563;">Observações:</td><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px;">${lead.notes}</td></tr>` : ''}
+  <tr><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px; font-weight: bold; width: 35%; color: #4b5563;">Data/Hora:</td><td style="padding: 10px; border-bottom: 1px solid #e5e7eb; font-size: 14px;">${new Date().toLocaleString('pt-PT')}</td></tr>
+</table>
 
-  await sendEmail({
-    to: adminEmail,
+<div style="text-align: center; margin-top: 16px;">
+  <a href="https://wa.me/${cleanWhatsapp}" style="display: inline-block; background: #25D366; color: #fff !important; text-decoration: none; padding: 10px 18px; border-radius: 6px; font-weight: bold; font-size: 14px;" target="_blank">
+    Iniciar Conversa no WhatsApp
+  </a>
+</div>
+`;
+
+  await sendResendAdminNotification({
     subject: `Novo Lead: ${lead.name} (${lead.country}) - ${lead.theme}`,
-    html,
+    content,
   });
 }
