@@ -87,7 +87,7 @@ export default function CommunicationPage() {
     setResult(null);
 
     try {
-      const response = await fetch('/admin/api/communication/send', {
+      const response = await fetch('/api/admin/communication/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
