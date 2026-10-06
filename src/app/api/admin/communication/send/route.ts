@@ -18,6 +18,8 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { subject, content, targetGroup, sendToAll, sendToSpecific, selectedLeads } = body;
 
+    console.log('[COMMUNICATION SEND] Request received:', { subject, sendToAll, sendToSpecific, targetGroup, selectedLeadsCount: selectedLeads?.length });
+
     if (!subject || !content) {
       return NextResponse.json(
         { error: 'subject and content are required' },
@@ -31,6 +33,7 @@ export async function POST(request: NextRequest) {
     let leads = [];
     if (sendToSpecific && selectedLeads && selectedLeads.length > 0) {
       // Get specific leads by IDs
+      console.log('[COMMUNICATION SEND] Fetching specific leads by IDs:', selectedLeads);
       leads = await leadsCollection.find({
         _id: { $in: selectedLeads.map((id: string) => {
           try {
@@ -41,23 +44,37 @@ export async function POST(request: NextRequest) {
         })}
       }).toArray();
     } else if (sendToAll) {
+      console.log('[COMMUNICATION SEND] Fetching all leads');
       leads = await leadsCollection.find({}).toArray();
     } else if (targetGroup) {
+      console.log('[COMMUNICATION SEND] Fetching leads by theme:', targetGroup);
       leads = await leadsCollection.find({ theme: targetGroup }).toArray();
     } else {
+      console.log('[COMMUNICATION SEND] Fetching first 100 leads');
       leads = await leadsCollection.find({}).limit(100).toArray();
     }
 
+    console.log('[COMMUNICATION SEND] Leads found:', leads.length);
+
     if (leads.length === 0) {
-      return NextResponse.json({ error: 'No leads found' }, { status: 404 });
+      console.log('[COMMUNICATION SEND] No leads found - returning error');
+      return NextResponse.json(
+        { error: 'No leads found in database. Please add leads first.' },
+        { status: 404 }
+      );
     }
 
     const emails = leads
       .map((lead: any) => lead.email)
       .filter((email: string) => email && email.includes('@'));
 
+    console.log('[COMMUNICATION SEND] Valid emails found:', emails.length);
+
     if (emails.length === 0) {
-      return NextResponse.json({ error: 'No valid email addresses found' }, { status: 404 });
+      return NextResponse.json(
+        { error: 'No valid email addresses found among leads' },
+        { status: 404 }
+      );
     }
 
     const html = `
@@ -84,6 +101,7 @@ export async function POST(request: NextRequest) {
       </html>
     `;
 
+    console.log('[COMMUNICATION SEND] Sending bulk email to', emails.length, 'recipients');
     const result = await sendBulkEmail({
       to: emails,
       subject,
@@ -91,19 +109,24 @@ export async function POST(request: NextRequest) {
     });
 
     if (result.success) {
+      console.log('[COMMUNICATION SEND] Email sent successfully');
       return NextResponse.json({
         success: true,
         sentTo: emails.length,
         message: `Email enviado para ${emails.length} leads`,
       });
     } else {
+      console.log('[COMMUNICATION SEND] Email send failed:', result.error);
       return NextResponse.json(
         { error: 'Failed to send emails', details: result.error },
         { status: 500 }
       );
     }
   } catch (error) {
-    console.error('Error sending communication email:', error);
-    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });
+    console.error('[COMMUNICATION SEND] Error:', error);
+    return NextResponse.json(
+      { error: 'Failed to send email' },
+      { status: 500 }
+    );
   }
 }
