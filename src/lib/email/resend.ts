@@ -20,8 +20,11 @@ export async function sendEmail({
   try {
     const resend = getResend();
     if (!resend) {
+      console.error('[EMAIL] RESEND_API_KEY not configured');
       return { success: false, error: 'RESEND_API_KEY not configured' };
     }
+
+    console.log('[EMAIL] Sending email:', { to, subject, from: process.env.RESEND_FROM_EMAIL });
 
     const data = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
@@ -29,9 +32,11 @@ export async function sendEmail({
       subject,
       html,
     });
+
+    console.log('[EMAIL] Email sent successfully:', data);
     return { success: true, data };
   } catch (error) {
-    console.error('Error sending email via Resend:', error);
+    console.error('[EMAIL] Error sending email via Resend:', error);
     return { success: false, error };
   }
 }
@@ -48,8 +53,11 @@ export async function sendBulkEmail({
   try {
     const resend = getResend();
     if (!resend) {
+      console.error('[EMAIL BULK] RESEND_API_KEY not configured');
       return { success: false, error: 'RESEND_API_KEY not configured' };
     }
+
+    console.log('[EMAIL BULK] Sending bulk email:', { count: to.length, subject, from: process.env.RESEND_FROM_EMAIL });
 
     const emailsArray = to.map(email => ({
       from: process.env.RESEND_FROM_EMAIL || 'onboarding@resend.dev',
@@ -57,11 +65,12 @@ export async function sendBulkEmail({
       subject,
       html,
     }));
-    
+
     const data = await resend.batch.send(emailsArray);
+    console.log('[EMAIL BULK] Bulk email sent successfully:', data);
     return { success: true, data };
   } catch (error) {
-    console.error('Error sending bulk email via Resend:', error);
+    console.error('[EMAIL BULK] Error sending bulk email via Resend:', error);
     return { success: false, error };
   }
 }
@@ -75,9 +84,11 @@ export async function sendAdminNotification({
 }) {
   const adminEmail = process.env.ADMIN_NOTIFICATION_EMAIL || process.env.RESEND_FROM_EMAIL;
   if (!adminEmail) {
-    console.warn('ADMIN_NOTIFICATION_EMAIL not configured');
+    console.error('[ADMIN NOTIFICATION] ADMIN_NOTIFICATION_EMAIL not configured');
     return { success: false, error: 'Admin email not configured' };
   }
+
+  console.log('[ADMIN NOTIFICATION] Sending admin notification:', { adminEmail, subject });
 
   const html = `
     <!DOCTYPE html>
@@ -103,9 +114,12 @@ export async function sendAdminNotification({
     </html>
   `;
 
-  return sendEmail({
+  const result = await sendEmail({
     to: adminEmail,
     subject: `[NeoLife Admin] ${subject}`,
     html,
   });
+
+  console.log('[ADMIN NOTIFICATION] Result:', result);
+  return result;
 }

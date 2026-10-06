@@ -73,12 +73,14 @@ export async function POST(request: NextRequest) {
 
     // Send automated email to the lead and notification to the admin
     try {
+      console.log('[LEADS API] Sending automated emails...');
       const dbTheme = await getThemeBySlug(theme).catch(() => null);
       const staticTheme = getStaticThemeBySlug(theme);
       const matchedTheme = dbTheme || staticTheme;
       const matchedCountry = getCountryById(country);
 
       // Automated email to lead with video link
+      console.log('[LEADS API] Sending confirmation email to lead:', email);
       await sendLeadConfirmationEmail({
         name,
         email,
@@ -87,8 +89,10 @@ export async function POST(request: NextRequest) {
         themeSlug: matchedTheme?.slug || theme,
         videoUrl: matchedTheme?.videoUrl,
       });
+      console.log('[LEADS API] Lead confirmation email sent');
 
       // Automated notification to site administrator
+      console.log('[LEADS API] Sending admin notification');
       await sendAdminNotificationEmail({
         name,
         email,
@@ -99,8 +103,9 @@ export async function POST(request: NextRequest) {
         campaign,
         notes,
       });
+      console.log('[LEADS API] Admin notification sent');
     } catch (emailError) {
-      console.error('Error sending automated emails (lead was successfully saved):', emailError);
+      console.error('[LEADS API] Error sending automated emails (lead was successfully saved):', emailError);
     }
     
     return NextResponse.json(
