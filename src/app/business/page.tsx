@@ -99,9 +99,9 @@ export default function BusinessPage() {
           {/* Heading */}
           <h2 className="text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
             {isPt ? (
-              <>Queres juntar-te à <span className="text-emerald-400">NeoLife</span>? 😊</>
+              <>Queres juntar-te à <span className="text-emerald-400">NeoLife</span>?</>
             ) : (
-              <>Want to join <span className="text-emerald-400">NeoLife</span>? 😊</>
+              <>Want to join <span className="text-emerald-400">NeoLife</span>?</>
             )}
           </h2>
 
@@ -118,7 +118,6 @@ export default function BusinessPage() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-3 px-10 py-4 bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-extrabold text-lg rounded-2xl shadow-2xl shadow-emerald-900/60 transition-all duration-300 hover:scale-105 hover:shadow-emerald-500/40"
           >
-            <span>👉</span>
             {isPt ? 'Fazer a minha Inscrição' : 'Register Now'}
           </a>
 
