@@ -13,9 +13,17 @@ export async function POST(request: NextRequest) {
     const { country, name, phone, email, whatsapp, theme, source, campaign, notes } = body;
 
     // Validate required fields
-    if (!country || !name || !phone || !email || !theme) {
+    // For ai-copilot source, phone and email are optional
+    const isAiCopilot = source === 'ai-copilot';
+    if (!country || !name || !theme) {
       return NextResponse.json(
-        { error: 'Campos obrigatórios: país, nome, telefone, email e tema' },
+        { error: 'Campos obrigatórios: país, nome e tema' },
+        { status: 400 }
+      );
+    }
+    if (!isAiCopilot && (!phone || !email)) {
+      return NextResponse.json(
+        { error: 'Campos obrigatórios: telefone e email' },
         { status: 400 }
       );
     }

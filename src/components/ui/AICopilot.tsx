@@ -387,17 +387,36 @@ export function AICopilot() {
 
   const handleIdentitySubmit = async () => {
     setIsSubmittingIdentity(true);
+
+    // Map short country codes to full country IDs used in the leads API
+    const countryIdMap: Record<string, string> = {
+      'mz': 'mz-pt',
+      'ao': 'ao-pt',
+      'za': 'za',
+      'pt': 'pt',
+      'other': 'mz-pt',
+    };
+
+    // Email validation
+    const isValidEmail = (e: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+
+    // Only submit if there's at least a name or a valid email
+    const hasValidEmail = userData.email.trim() && isValidEmail(userData.email.trim());
+    const hasName = !!userData.name.trim();
+    // Only include phone if actually filled in (not empty)
+    const hasPhone = !!userData.phone.trim();
+
     try {
-      // Save user data to leads API
-      if (userData.name || userData.email) {
+      if (hasName || hasValidEmail) {
         await fetch('/api/leads', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            name: userData.name,
-            email: userData.email,
-            phone: userData.phone || '+258 8xxxxxxxx',
-            country: userData.country || 'mz',
+            name: userData.name.trim() || (isPt ? 'Utilizador AI Copilot' : 'AI Copilot User'),
+            email: hasValidEmail ? userData.email.trim() : undefined,
+            // Only include phone if user actually typed a number
+            phone: hasPhone ? userData.phone.trim() : undefined,
+            country: countryIdMap[userData.country] || 'mz-pt',
             theme: 'ai-copilot-identity',
             source: 'ai-copilot',
           }),
@@ -405,7 +424,7 @@ export function AICopilot() {
       }
       setIsIdentified(true);
       setShowIdentifyForm(false);
-      
+
       // Add welcome message with user's name
       const welcomeMessage: Message = {
         id: (Date.now() + 1).toString(),
