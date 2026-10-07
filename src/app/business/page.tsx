@@ -83,6 +83,51 @@ export default function BusinessPage() {
       {/* ── VÍDEOS & MASTERCLASSES DO MODELO DE NEGÓCIO ── */}
       <VideoSection pageTarget="business" />
 
+      {/* ── CTA DE INSCRIÇÃO NA NEOLIFE ── */}
+      <section className="py-20 bg-gradient-to-br from-emerald-950 via-gray-900 to-emerald-900 relative overflow-hidden">
+        {/* Glow decorations */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-emerald-400/15 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-800/80 backdrop-blur-md border border-emerald-400/40 text-emerald-300 text-xs font-bold uppercase tracking-widest mb-8 shadow-lg">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            {isPt ? 'Começa Hoje' : 'Start Today'}
+          </div>
+
+          {/* Heading */}
+          <h2 className="text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
+            {isPt ? (
+              <>Queres juntar-te à <span className="text-emerald-400">NeoLife</span>? 😊</>
+            ) : (
+              <>Want to join <span className="text-emerald-400">NeoLife</span>? 😊</>
+            )}
+          </h2>
+
+          <p className="text-lg text-gray-300 mb-10 leading-relaxed max-w-xl mx-auto">
+            {isPt
+              ? 'Clica no link abaixo e faz a tua inscrição. É rápido, simples e o primeiro passo para a tua liberdade financeira!'
+              : 'Click the link below and complete your registration. It\'s quick, simple, and the first step toward your financial freedom!'}
+          </p>
+
+          {/* CTA Button */}
+          <a
+            href="https://shopneolife.com/OFELIAJOSEMACHADO/enrollment/enrollmentconfiguration"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 px-10 py-4 bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-extrabold text-lg rounded-2xl shadow-2xl shadow-emerald-900/60 transition-all duration-300 hover:scale-105 hover:shadow-emerald-500/40"
+          >
+            <span>👉</span>
+            {isPt ? 'Fazer a minha Inscrição' : 'Register Now'}
+          </a>
+
+          <p className="mt-6 text-sm text-emerald-400/70 font-medium">
+            shopneolife.com/OFELIAJOSEMACHADO
+          </p>
+        </div>
+      </section>
+
       {/* ── MENTORIA PROFILE CARD ── */}
       <section className="py-20 bg-gray-50 border-t border-gray-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
