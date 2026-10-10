@@ -114,10 +114,21 @@ export default function AdminDashboard() {
     { key: 'nao_interessado', label: 'Não Interessado', count: stats?.byStatus?.nao_interessado || 0, color: 'text-red-700', bg: 'bg-red-500' },
   ];
 
+  const MetricLoadingSpinner = ({ color = 'text-indigo-500' }: { color?: string }) => (
+    <div className="flex items-center gap-2 py-1">
+      <svg className={`animate-spin h-5 w-5 ${color}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+      <span className="text-xs font-medium text-gray-400 animate-pulse">A processar...</span>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-gray-50">
       <AdminHeader 
         showRefresh={true}
+        isRefreshing={loading}
         onRefresh={() => {
           setLoading(true);
           setLoadingLeads(true);
@@ -167,13 +178,17 @@ export default function AdminDashboard() {
             <CardHeader className="pb-2">
               <p className="text-sm font-medium text-gray-600">Visitantes Únicos</p>
               {loading ? (
-                <div className="h-9 w-16 bg-gray-200 animate-pulse rounded mt-1" />
+                <MetricLoadingSpinner color="text-indigo-500" />
               ) : (
                 <p className="text-3xl font-bold text-gray-900">{visits.totalVisitors}</p>
               )}
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-xs text-indigo-600 font-semibold">{visits.todayVisitors} hoje</p>
+              {loading ? (
+                <p className="text-xs text-gray-400">A sincronizar...</p>
+              ) : (
+                <p className="text-xs text-indigo-600 font-semibold">{visits.todayVisitors} hoje</p>
+              )}
             </CardContent>
           </Card>
 
@@ -182,13 +197,17 @@ export default function AdminDashboard() {
             <CardHeader className="pb-2">
               <p className="text-sm font-medium text-gray-600">Visualizações</p>
               {loading ? (
-                <div className="h-9 w-16 bg-gray-200 animate-pulse rounded mt-1" />
+                <MetricLoadingSpinner color="text-cyan-500" />
               ) : (
                 <p className="text-3xl font-bold text-gray-900">{visits.totalViews}</p>
               )}
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-xs text-cyan-600 font-semibold">{visits.todayViews} hoje</p>
+              {loading ? (
+                <p className="text-xs text-gray-400">A sincronizar...</p>
+              ) : (
+                <p className="text-xs text-cyan-600 font-semibold">{visits.todayViews} hoje</p>
+              )}
             </CardContent>
           </Card>
 
@@ -197,13 +216,17 @@ export default function AdminDashboard() {
             <CardHeader className="pb-2">
               <p className="text-sm font-medium text-gray-600">Total de Leads</p>
               {loading ? (
-                <div className="h-9 w-16 bg-gray-200 animate-pulse rounded mt-1" />
+                <MetricLoadingSpinner color="text-emerald-500" />
               ) : (
                 <p className="text-3xl font-bold text-gray-900">{totalLeads}</p>
               )}
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-xs text-emerald-600 font-semibold">{stats?.today || 0} nas últimas 24h</p>
+              {loading ? (
+                <p className="text-xs text-gray-400">A sincronizar...</p>
+              ) : (
+                <p className="text-xs text-emerald-600 font-semibold">{stats?.today || 0} nas últimas 24h</p>
+              )}
             </CardContent>
           </Card>
 
@@ -212,13 +235,17 @@ export default function AdminDashboard() {
             <CardHeader className="pb-2">
               <p className="text-sm font-medium text-gray-600">Taxa Conversão</p>
               {loading ? (
-                <div className="h-9 w-16 bg-gray-200 animate-pulse rounded mt-1" />
+                <MetricLoadingSpinner color="text-violet-500" />
               ) : (
                 <p className="text-3xl font-bold text-gray-900">{conversionRate}%</p>
               )}
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-xs text-gray-500">Visitantes que viraram leads</p>
+              {loading ? (
+                <p className="text-xs text-gray-400">A sincronizar...</p>
+              ) : (
+                <p className="text-xs text-gray-500">Visitantes que viraram leads</p>
+              )}
             </CardContent>
           </Card>
 
@@ -227,7 +254,7 @@ export default function AdminDashboard() {
             <CardHeader className="pb-2">
               <p className="text-sm font-medium text-gray-600">Países Ativos</p>
               {loading ? (
-                <div className="h-9 w-14 bg-gray-200 animate-pulse rounded mt-1" />
+                <MetricLoadingSpinner color="text-amber-500" />
               ) : (
                 <p className="text-3xl font-bold text-gray-900">
                   {stats?.activeCountries ?? 4}
@@ -235,7 +262,11 @@ export default function AdminDashboard() {
               )}
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-xs text-gray-500">Mercados configurados</p>
+              {loading ? (
+                <p className="text-xs text-gray-400">A sincronizar...</p>
+              ) : (
+                <p className="text-xs text-gray-500">Mercados configurados</p>
+              )}
             </CardContent>
           </Card>
 
@@ -244,7 +275,7 @@ export default function AdminDashboard() {
             <CardHeader className="pb-2">
               <p className="text-sm font-medium text-gray-600">Temas Ativos</p>
               {loading ? (
-                <div className="h-9 w-14 bg-gray-200 animate-pulse rounded mt-1" />
+                <MetricLoadingSpinner color="text-purple-500" />
               ) : (
                 <p className="text-3xl font-bold text-gray-900">
                   {stats?.activeThemes ?? 6}
@@ -252,7 +283,11 @@ export default function AdminDashboard() {
               )}
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-xs text-gray-500">Cards publicados</p>
+              {loading ? (
+                <p className="text-xs text-gray-400">A sincronizar...</p>
+              ) : (
+                <p className="text-xs text-gray-500">Cards publicados</p>
+              )}
             </CardContent>
           </Card>
         </div>
@@ -286,7 +321,13 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent>
               {loading ? (
-                <div className="h-[300px] bg-gray-200 animate-pulse rounded-lg" />
+                <div className="h-[300px] flex flex-col items-center justify-center gap-3 bg-gray-50/50 rounded-lg border border-gray-100">
+                  <svg className="animate-spin h-8 w-8 text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <p className="text-xs font-medium text-gray-400 animate-pulse">A carregar e processar métricas de tráfego...</p>
+                </div>
               ) : (
                 <DailyVisitorsChart data={visits.dailyTrend || []} />
               )}
@@ -323,7 +364,13 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent>
               {loading ? (
-                <div className="h-[300px] bg-gray-200 animate-pulse rounded-lg" />
+                <div className="h-[300px] flex flex-col items-center justify-center gap-3 bg-gray-50/50 rounded-lg border border-gray-100">
+                  <svg className="animate-spin h-8 w-8 text-emerald-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  <p className="text-xs font-medium text-gray-400 animate-pulse">A carregar e processar histórico de leads...</p>
+                </div>
               ) : (
                 <DailyLeadsChart data={dailyTrend} />
               )}
