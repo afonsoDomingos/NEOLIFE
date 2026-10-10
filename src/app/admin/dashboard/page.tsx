@@ -10,6 +10,7 @@ import { getThemeBySlug } from '@/data/themes';
 import { AdminAIAssistant } from '@/components/admin/AdminAIAssistant';
 import { AdminHeader } from '@/components/admin/AdminHeader';
 import { DailyLeadsChart } from '@/components/admin/charts/DailyLeadsChart';
+import { DailyVisitorsChart } from '@/components/admin/charts/DailyVisitorsChart';
 import { LeadsByCountryChart } from '@/components/admin/charts/LeadsByCountryChart';
 import { LeadStatusChart } from '@/components/admin/charts/LeadStatusChart';
 import { LeadsByPillarChart } from '@/components/admin/charts/LeadsByPillarChart';
@@ -89,6 +90,19 @@ export default function AdminDashboard() {
   const dailyTrend = stats?.dailyTrend || [];
   const maxDailyCount = Math.max(...dailyTrend.map((d: any) => d.count), 1);
 
+  const visits = stats?.visits || {
+    totalViews: 0,
+    totalVisitors: 0,
+    todayViews: 0,
+    todayVisitors: 0,
+    topPages: [],
+    dailyTrend: []
+  };
+
+  const conversionRate = visits.totalVisitors > 0
+    ? ((totalLeads / visits.totalVisitors) * 100).toFixed(1)
+    : '0';
+
   const countryEntries = Object.entries(stats?.byCountry || {}) as [string, number][];
   const themeEntries = Object.entries(stats?.byTheme || {}) as [string, number][];
   const statusEntries: { key: string; label: string; count: number; color: string; bg: string }[] = [
@@ -147,35 +161,68 @@ export default function AdminDashboard() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-5">
+          {/* Visitantes Únicos */}
+          <Card className="border-l-4 border-l-indigo-500 shadow-sm">
+            <CardHeader className="pb-2">
+              <p className="text-sm font-medium text-gray-600">Visitantes Únicos</p>
+              {loading ? (
+                <div className="h-9 w-16 bg-gray-200 animate-pulse rounded mt-1" />
+              ) : (
+                <p className="text-3xl font-bold text-gray-900">{visits.totalVisitors}</p>
+              )}
+            </CardHeader>
+            <CardContent className="pt-0">
+              <p className="text-xs text-indigo-600 font-semibold">{visits.todayVisitors} hoje</p>
+            </CardContent>
+          </Card>
+
+          {/* Visualizações de Página */}
+          <Card className="border-l-4 border-l-cyan-500 shadow-sm">
+            <CardHeader className="pb-2">
+              <p className="text-sm font-medium text-gray-600">Visualizações</p>
+              {loading ? (
+                <div className="h-9 w-16 bg-gray-200 animate-pulse rounded mt-1" />
+              ) : (
+                <p className="text-3xl font-bold text-gray-900">{visits.totalViews}</p>
+              )}
+            </CardHeader>
+            <CardContent className="pt-0">
+              <p className="text-xs text-cyan-600 font-semibold">{visits.todayViews} hoje</p>
+            </CardContent>
+          </Card>
+
+          {/* Total de Leads */}
           <Card className="border-l-4 border-l-emerald-500 shadow-sm">
             <CardHeader className="pb-2">
               <p className="text-sm font-medium text-gray-600">Total de Leads</p>
               {loading ? (
-                <div className="h-9 w-20 bg-gray-200 animate-pulse rounded mt-1" />
+                <div className="h-9 w-16 bg-gray-200 animate-pulse rounded mt-1" />
               ) : (
-                <p className="text-3xl font-bold text-gray-900">{stats?.total || 0}</p>
+                <p className="text-3xl font-bold text-gray-900">{totalLeads}</p>
               )}
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-xs text-gray-500">Contactos registados no sistema</p>
+              <p className="text-xs text-emerald-600 font-semibold">{stats?.today || 0} nas últimas 24h</p>
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-blue-500 shadow-sm">
+          {/* Taxa de Conversão */}
+          <Card className="border-l-4 border-l-violet-500 shadow-sm">
             <CardHeader className="pb-2">
-              <p className="text-sm font-medium text-gray-600">Leads Hoje</p>
+              <p className="text-sm font-medium text-gray-600">Taxa Conversão</p>
               {loading ? (
-                <div className="h-9 w-14 bg-gray-200 animate-pulse rounded mt-1" />
+                <div className="h-9 w-16 bg-gray-200 animate-pulse rounded mt-1" />
               ) : (
-                <p className="text-3xl font-bold text-gray-900">{stats?.today || 0}</p>
+                <p className="text-3xl font-bold text-gray-900">{conversionRate}%</p>
               )}
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-xs text-gray-500">Submetidos nas últimas 24h</p>
+              <p className="text-xs text-gray-500">Visitantes que viraram leads</p>
             </CardContent>
           </Card>
 
+          {/* Países Ativos */}
           <Card className="border-l-4 border-l-amber-500 shadow-sm">
             <CardHeader className="pb-2">
               <p className="text-sm font-medium text-gray-600">Países Ativos</p>
@@ -192,6 +239,7 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
 
+          {/* Temas Ativos */}
           <Card className="border-l-4 border-l-purple-500 shadow-sm">
             <CardHeader className="pb-2">
               <p className="text-sm font-medium text-gray-600">Temas Ativos</p>
@@ -204,7 +252,7 @@ export default function AdminDashboard() {
               )}
             </CardHeader>
             <CardContent className="pt-0">
-              <p className="text-xs text-gray-500">Cards de interesse publicados</p>
+              <p className="text-xs text-gray-500">Cards publicados</p>
             </CardContent>
           </Card>
         </div>
@@ -218,6 +266,56 @@ export default function AdminDashboard() {
             />
           </h2>
           
+          {/* Daily Visitors & Views Chart - Full Width */}
+          <Card className="mb-6">
+            <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-2">
+              <div>
+                <p className="text-base font-bold text-gray-900">Tráfego do Website (Últimos 7 dias)</p>
+                <p className="text-xs text-gray-500">Visitantes únicos vs. visualizações totais</p>
+              </div>
+              <div className="flex items-center gap-2 text-xs">
+                <span className="inline-flex items-center gap-1.5 font-semibold text-indigo-700 bg-indigo-50 px-2.5 py-1 rounded-full border border-indigo-100">
+                  <span className="w-2 h-2 rounded-full bg-indigo-600" />
+                  {visits.todayVisitors} visitantes hoje
+                </span>
+                <span className="inline-flex items-center gap-1.5 font-semibold text-cyan-700 bg-cyan-50 px-2.5 py-1 rounded-full border border-cyan-100">
+                  <span className="w-2 h-2 rounded-full bg-cyan-500" />
+                  {visits.todayViews} visualizações hoje
+                </span>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {loading ? (
+                <div className="h-[300px] bg-gray-200 animate-pulse rounded-lg" />
+              ) : (
+                <DailyVisitorsChart data={visits.dailyTrend || []} />
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Top Pages Pills (if any) */}
+          {visits.topPages && visits.topPages.length > 0 && (
+            <Card className="mb-6">
+              <CardHeader className="pb-2">
+                <p className="text-sm font-semibold text-gray-900">Páginas Mais Acessadas</p>
+              </CardHeader>
+              <CardContent className="pt-1">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2.5">
+                  {visits.topPages.map((page: any, idx: number) => (
+                    <div key={idx} className="bg-gray-50 rounded-lg p-2.5 border border-gray-200/70 flex items-center justify-between">
+                      <span className="text-xs font-mono font-medium text-gray-700 truncate mr-2" title={page.path}>
+                        {page.path === '/' ? 'Home (/)' : page.path}
+                      </span>
+                      <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full shrink-0">
+                        {page.views}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
           {/* Daily Leads Chart - Full Width */}
           <Card className="mb-6">
             <CardHeader>

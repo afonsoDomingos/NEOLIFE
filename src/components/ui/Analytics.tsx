@@ -4,14 +4,46 @@ import { useEffect, Suspense } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { trackPageView, getCampaignDataFromUrl } from '@/lib/utils/tracking';
 
+function getOrCreateVisitorId(): string {
+  if (typeof window === 'undefined') return '';
+  try {
+    let id = localStorage.getItem('neolife_visitor_id');
+    if (!id) {
+      id = 'v_' + Math.random().toString(36).substring(2, 11) + Date.now().toString(36);
+      localStorage.setItem('neolife_visitor_id', id);
+    }
+    return id;
+  } catch {
+    return 'v_anon_' + Date.now();
+  }
+}
+
 function AnalyticsContent() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Track page views
+    // Track campaign data
     const campaignData = getCampaignDataFromUrl(searchParams);
     trackPageView(pathname, campaignData);
+
+    // Record internal visit if not admin
+    if (pathname && !pathname.startsWith('/admin')) {
+      const visitorId = getOrCreateVisitorId();
+      if (visitorId) {
+        fetch('/api/track/visit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            path: pathname,
+            visitorId,
+            referrer: typeof document !== 'undefined' ? document.referrer : '',
+            country: typeof window !== 'undefined' ? (localStorage.getItem('selectedCountry') || undefined) : undefined,
+          }),
+          keepalive: true,
+        }).catch(() => {});
+      }
+    }
   }, [pathname, searchParams]);
 
   return null;

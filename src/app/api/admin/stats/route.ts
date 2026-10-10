@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import { getLeadStats } from '@/lib/db/leads-mongodb';
 import { getActiveThemes } from '@/lib/db/themes-mongodb';
+import { getVisitStats } from '@/lib/db/visits-mongodb';
 import { getAvailableCountries } from '@/data/countries';
 
 export async function GET(request: NextRequest) {
@@ -21,7 +22,7 @@ export async function GET(request: NextRequest) {
       }
     }
 
-    const [stats, themes] = await Promise.all([
+    const [stats, themes, visitStats] = await Promise.all([
       getLeadStats().catch(() => ({
         total: 0,
         today: 0,
@@ -31,7 +32,15 @@ export async function GET(request: NextRequest) {
         byStatus: { novo: 0, contactado: 0, acompanhamento: 0, interessado: 0, convertido: 0, nao_interessado: 0 },
         dailyTrend: []
       })),
-      getActiveThemes().catch(() => [])
+      getActiveThemes().catch(() => []),
+      getVisitStats().catch(() => ({
+        totalViews: 0,
+        totalVisitors: 0,
+        todayViews: 0,
+        todayVisitors: 0,
+        topPages: [],
+        dailyTrend: []
+      }))
     ]);
 
     const activeCountriesCount = getAvailableCountries().length;
@@ -40,7 +49,8 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       ...stats,
       activeCountries: activeCountriesCount,
-      activeThemes: activeThemesCount
+      activeThemes: activeThemesCount,
+      visits: visitStats
     });
   } catch (error) {
     console.error('Error fetching stats:', error);
