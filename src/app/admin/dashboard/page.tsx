@@ -172,7 +172,45 @@ export default function AdminDashboard() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4">
+          {/* Total de Leads */}
+          <Card className="border-l-4 border-l-emerald-500 shadow-sm">
+            <CardHeader className="pb-2">
+              <p className="text-sm font-medium text-gray-600">Total de Leads</p>
+              {loading ? (
+                <MetricLoadingSpinner color="text-emerald-500" />
+              ) : (
+                <p className="text-3xl font-bold text-gray-900">{totalLeads}</p>
+              )}
+            </CardHeader>
+            <CardContent className="pt-0">
+              {loading ? (
+                <p className="text-xs text-gray-400">A sincronizar...</p>
+              ) : (
+                <p className="text-xs text-emerald-600 font-semibold">Contactos no sistema</p>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Leads Hoje */}
+          <Card className="border-l-4 border-l-blue-500 shadow-sm">
+            <CardHeader className="pb-2">
+              <p className="text-sm font-medium text-gray-600">Leads Hoje</p>
+              {loading ? (
+                <MetricLoadingSpinner color="text-blue-500" />
+              ) : (
+                <p className="text-3xl font-bold text-gray-900">{stats?.today || 0}</p>
+              )}
+            </CardHeader>
+            <CardContent className="pt-0">
+              {loading ? (
+                <p className="text-xs text-gray-400">A sincronizar...</p>
+              ) : (
+                <p className="text-xs text-blue-600 font-semibold">Últimas 24 horas</p>
+              )}
+            </CardContent>
+          </Card>
+
           {/* Visitantes Únicos */}
           <Card className="border-l-4 border-l-indigo-500 shadow-sm">
             <CardHeader className="pb-2">
@@ -207,25 +245,6 @@ export default function AdminDashboard() {
                 <p className="text-xs text-gray-400">A sincronizar...</p>
               ) : (
                 <p className="text-xs text-cyan-600 font-semibold">{visits.todayViews} hoje</p>
-              )}
-            </CardContent>
-          </Card>
-
-          {/* Total de Leads */}
-          <Card className="border-l-4 border-l-emerald-500 shadow-sm">
-            <CardHeader className="pb-2">
-              <p className="text-sm font-medium text-gray-600">Total de Leads</p>
-              {loading ? (
-                <MetricLoadingSpinner color="text-emerald-500" />
-              ) : (
-                <p className="text-3xl font-bold text-gray-900">{totalLeads}</p>
-              )}
-            </CardHeader>
-            <CardContent className="pt-0">
-              {loading ? (
-                <p className="text-xs text-gray-400">A sincronizar...</p>
-              ) : (
-                <p className="text-xs text-emerald-600 font-semibold">{stats?.today || 0} nas últimas 24h</p>
               )}
             </CardContent>
           </Card>
