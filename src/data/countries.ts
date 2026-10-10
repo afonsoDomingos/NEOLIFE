@@ -528,11 +528,19 @@ export const getAvailableCountries = (): Country[] => {
 };
 
 export const getCountryById = (id: string): Country | undefined => {
-  return countries.find(country => country.id === id);
+  if (!id) return undefined;
+  const exact = countries.find(country => country.id === id);
+  if (exact) return exact;
+  const normalized = id.toLowerCase().trim();
+  if (normalized === 'mz') return countries.find(c => c.id === 'mz-pt');
+  if (normalized === 'us') return countries.find(c => c.id === 'us-en');
+  if (normalized === 'ca') return countries.find(c => c.id === 'ca-en');
+  return countries.find(country => country.code.toLowerCase() === normalized || country.id.toLowerCase() === normalized);
 };
 
 export const getCountryByCode = (code: string): Country | undefined => {
-  return countries.find(country => country.code === code);
+  if (!code) return undefined;
+  return countries.find(country => country.code.toLowerCase() === code.toLowerCase().trim());
 };
 
 /**
